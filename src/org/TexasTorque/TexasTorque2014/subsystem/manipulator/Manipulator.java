@@ -25,14 +25,6 @@ public class Manipulator extends TorqueSubsystem {
 
             if (driverInput.restoreToDefault()) {
                 restoreDefaultPositions();
-            } else if (driverInput.runIntake()) {
-                intakeFrisbees();
-            } else if (driverInput.reverseIntake()) {
-                reverseIntake();
-            } else if (driverInput.shootHigh()) {
-                shootHigh();
-            } else if (driverInput.shootLow()) {
-                shootLow();
             } else {
                 setLightsNormal();
             }

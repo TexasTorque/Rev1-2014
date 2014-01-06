@@ -19,6 +19,19 @@ public class DriverInputState
         inOverrideState = false;
     }
     
+    public synchronized void setAutonomousDelay(double autonDelay)
+    {
+        this.autonDelay = autonDelay;
+    }
+    public synchronized void setAutonomousMode(int autonMode)
+    {
+        this.autonMode = autonMode;
+    }
+    public synchronized void setOverrideState(boolean overrides)
+    {
+        this.inOverrideState = overrides;
+    }
+
     public synchronized double getAutonomousDelay()
     {
         return autonDelay;
@@ -58,7 +71,10 @@ public class DriverInputState
     
 //---------- Manipulator ----------    
     
-    
+    public synchronized boolean restoreToDefault()
+    {
+        return operatorControllerState.getBottomLeftBumper();
+    }
     
 //---------- Overrides ----------
     

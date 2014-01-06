@@ -5,11 +5,13 @@ import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Watchdog;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
+import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
 import org.TexasTorque.TorqueLib.component.TorqueEncoder;
 
 public class SensorInput
 {
     private static SensorInput instance;
+    private static SensorInputState state;
     private Watchdog watchdog;
 
     //----- Encoder -----
@@ -43,6 +45,14 @@ public class SensorInput
     public synchronized static SensorInput getInstance()
     {
         return (instance == null) ? instance = new SensorInput() : instance;
+    }
+    public synchronized static SensorInputState getState()
+    {
+        return state;
+    }
+    public synchronized void updateState()
+    {
+        state = new SensorInputState(this);
     }
     
     private void startEncoders()

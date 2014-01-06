@@ -1,79 +1,76 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
 import org.TexasTorque.TexasTorque2014.io.*;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
-import java.util.Vector;
-import org.TexasTorque.TexasTorque2014.constants.Ports;
-import org.TexasTorque.TorqueLib.component.Motor;
 
 public class RobotOutputState
 {
-    private static RobotOutputState instance;
-    
-//    private AdaFruitLights lights;
-    private Vector lightsVector;
+    private int lightState;
     
     //----- Pneumatics -----
-    private Compressor compressor;
-    private Solenoid driveShifter;
+    private boolean compressorEnabled;
+    private boolean highGear;
 
     //----- Drive Motors -----
-    private Motor frontLeftDriveMotor;
-    private Motor rearLeftDriveMotor;
-    private Motor frontRightDriveMotor;
-    private Motor rearRightDriveMotor;
+    private double frontLeftMotorSpeed;
+    private double rearLeftMotorSpeed;
+    private double frontRightMotorSpeed;
+    private double rearRightMotorSpeed;
     
-    public RobotOutputState()
+    public RobotOutputState(RobotOutput output)
     {   
-        
-/*        lightsVector = new Vector();
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_A_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_B_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_C_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_D_PORT));
-        lights = new AdaFruitLights(lightsVector);*/
-        
+        lightState = output.getLightState();
         //----- Pneumatics -----
-        compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
-        driveShifter = new Solenoid(Ports.DRIVE_SHIFTER_PORT);
+        compressorEnabled = output.getCompressorEnabled();
+        highGear = output.getShiftState();
         
         //----- Drive Motors -----
-        frontLeftDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.FRONT_LEFT_DRIVE_MOTOR_PORT), false, true);
-        rearLeftDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.REAR_LEFT_DRIVE_MOTOR_PORT), false, true);
-        frontRightDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.FRONT_RIGHT_DRIVE_MOTOR_PORT), true, true);
-        rearRightDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.REAR_RIGHT_DRIVE_MOTOR_PORT), true, true);
-        
-        //----- Misc Misc -----
-        compressor.start();
+        frontLeftMotorSpeed = output.getFrontLeftMotorSpeed();
+        rearLeftMotorSpeed = output.getRearLeftMotorSpeed();
+        frontRightMotorSpeed = output.getFrontRightMotorSpeed();
+        rearRightMotorSpeed = output.getRearRightMotorSpeed();
     }
- 
-    public synchronized static RobotOutputState getInstance()
+    public synchronized void setDriveMotors(double leftMotorSpeed, double rightMotorSpeed)
     {
-        return (instance == null) ? instance = new RobotOutputState() : instance;
+        frontLeftMotorSpeed = leftMotorSpeed;
+        rearLeftMotorSpeed = leftMotorSpeed;
+        frontRightMotorSpeed = rightMotorSpeed;
+        rearRightMotorSpeed = rightMotorSpeed;
     }
-    
-    public void setLightsState(int state)
+    public synchronized void setLightsState(int state)
     {
-        //lights.setDesiredState(state);
+        lightState = state;
     }
-    
-    public void runLights()
+    public synchronized void setShifters(boolean highGear)
     {
-        //lights.run();
+        this.highGear = highGear;
     }
     
-    public void setDriveMotors(double leftSpeed, double rightSpeed)
+    public double getFrontLeftMotorSpeed()
     {
-        frontLeftDriveMotor.Set(leftSpeed);
-        rearLeftDriveMotor.Set(leftSpeed);
-        frontRightDriveMotor.Set(rightSpeed);
-        rearRightDriveMotor.Set(rightSpeed);
+        return frontLeftMotorSpeed;
     }
-    
-    public void setShifters(boolean highGear)
+    public double getRearLeftMotorSpeed()
     {
-        driveShifter.set(highGear);
+        return rearLeftMotorSpeed;
+    }
+    public double getFrontRightMotorSpeed()
+    {
+        return frontRightMotorSpeed;
+    }
+    public double getRearRightMotorSpeed()
+    {
+        return rearRightMotorSpeed;
+    }
+    public boolean getCompressorEnabled()
+    {
+        return compressorEnabled;
+    }
+    public boolean getShiftState()
+    {
+        return highGear;
+    }
+    public int getLightState()
+    {
+        return lightState;
     }
 }

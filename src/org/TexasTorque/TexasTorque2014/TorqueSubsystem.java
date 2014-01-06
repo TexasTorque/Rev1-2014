@@ -3,6 +3,9 @@ package org.TexasTorque.TexasTorque2014;
 import org.TexasTorque.TexasTorque2014.io.DriverInput;
 import org.TexasTorque.TexasTorque2014.io.RobotOutput;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
+import org.TexasTorque.TexasTorque2014.io.dependency.DriverInputState;
+import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
+import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
 import org.TexasTorque.TorqueLib.util.DashboardManager;
 import org.TexasTorque.TorqueLib.util.Parameters;
 
@@ -10,17 +13,17 @@ public abstract class TorqueSubsystem
 {
     
     protected DashboardManager dashboardManager;
-    protected RobotOutput robotOutput;
-    protected DriverInput driverInput;
-    protected SensorInput sensorInput;
+    protected RobotOutputState robotOutput;
+    protected DriverInputState driverInput;
+    protected SensorInputState sensorInput;
     protected Parameters params;
     
     protected TorqueSubsystem()
     {
         dashboardManager = DashboardManager.getInstance();
-        robotOutput = RobotOutput.getInstance();
-        driverInput = DriverInput.getInstance();
-        sensorInput = SensorInput.getInstance();
+        robotOutput = RobotOutput.getState();
+        driverInput = DriverInput.getState();
+        sensorInput = SensorInput.getState();
         params = Parameters.getTeleopInstance();
     }
     
