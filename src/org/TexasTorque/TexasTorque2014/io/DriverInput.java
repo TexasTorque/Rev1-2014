@@ -3,12 +3,14 @@ package org.TexasTorque.TexasTorque2014.io;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
+import org.TexasTorque.TexasTorque2014.io.dependency.DriverInputState;
 import org.TexasTorque.TorqueLib.util.GenericController;
 import org.TexasTorque.TorqueLib.util.Parameters;
 
 public class DriverInput
 {
     private static DriverInput instance;
+    private static DriverInputState state;
     private Parameters params;
     public GenericController driveController;
     private GenericController operatorController;
@@ -23,10 +25,19 @@ public class DriverInput
         
         inOverrideState = false;
     }
+    public synchronized void updateState()
+    {
+        state = new DriverInputState(getInstance());
+    }
     
     public synchronized static DriverInput getInstance()
     {
         return (instance == null) ? instance = new DriverInput() : instance;
+    }
+    
+    public synchronized static DriverInputState getState()
+    {
+        return state;
     }
     
     public synchronized void pullJoystickTypes()
@@ -251,5 +262,14 @@ public class DriverInput
     public synchronized boolean fireUnjam()
     {
         return operatorController.getLeftStickClick();
+    }
+    
+    public synchronized GenericController getDriverController()
+    {
+        return driveController;
+    }
+    public synchronized GenericController getOperatorController()
+    {
+        return operatorController;
     }
 }

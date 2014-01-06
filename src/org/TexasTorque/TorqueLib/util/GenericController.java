@@ -29,6 +29,11 @@ public class GenericController extends Joystick
         isLogitechController = false;
     }
     
+    public synchronized boolean isLogitech()
+    {
+        return isLogitechController;
+    }
+    
     public synchronized double getLeftYAxis()
     {
         if(isLogitechController)
