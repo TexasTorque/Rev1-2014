@@ -18,6 +18,14 @@ public class DriverInputState
         autonMode = input.getAutonomousMode();
         inOverrideState = false;
     }
+    public void update(DriverInput input)
+    {
+        driveControllerState = new GenericControllerState(input.getDriverController());
+        operatorControllerState = new GenericControllerState(input.getOperatorController());
+        autonDelay = input.getAutonomousDelay();
+        autonMode = input.getAutonomousMode();
+        inOverrideState = false;
+    }
     
     public synchronized void setAutonomousDelay(double autonDelay)
     {

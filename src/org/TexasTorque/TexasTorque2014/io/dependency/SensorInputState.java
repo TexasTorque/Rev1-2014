@@ -86,6 +86,65 @@ public class SensorInputState
         //----- Misc -----
         pressureSensor = input.getPSI();
     }
+    public void update(SensorInput input)
+    {
+        //----- Encoders/Counters -----
+        frontLeftDriveEncoder = input.getFrontLeftDriveEncoder();
+        frontRightDriveEncoder = input.getFrontRightDriveEncoder();
+        frontLeftDriveEncoderVelocity = input.getFrontLeftDriveEncoderRate();
+        frontRightDriveEncoderVelocity = input.getFrontRightDriveEncoderRate();
+        frontLeftDriveEncoderAcceleration = input.getFrontLeftDriveEncoderAcceleration();
+        frontRightDriveEncoderAcceleration = input.getFrontRightDriveEncoderAcceleration();
+        rearLeftDriveEncoder = input.getRearLeftDriveEncoder();
+        rearRightDriveEncoder = input.getRearRightDriveEncoder();
+        rearLeftDriveEncoderVelocity = input.getRearLeftDriveEncoderRate();
+        rearRightDriveEncoderVelocity = input.getRearRightDriveEncoderRate();
+        rearLeftDriveEncoderAcceleration = input.getRearLeftDriveEncoderAcceleration();
+        rearRightDriveEncoderAcceleration = input.getRearRightDriveEncoderAcceleration();
+        frontLeftDriveAngle = (input.getFrontLeftDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
+        rearLeftDriveAngle = (input.getRearLeftDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
+        frontRightDriveAngle = (input.getFrontRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
+        rearRightDriveAngle = (input.getRearRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
+        //Angle Limitation
+        while(frontLeftDriveAngle > Math.PI)
+        {
+            frontLeftDriveAngle -= Math.PI * 2;
+        }
+        while(frontLeftDriveAngle < Math.PI)
+        {
+            frontLeftDriveAngle += Math.PI * 2;
+        }
+        while(frontRightDriveAngle > Math.PI)
+        {
+            frontRightDriveAngle -= Math.PI * 2;
+        }
+        while(frontRightDriveAngle < Math.PI)
+        {
+            frontRightDriveAngle += Math.PI * 2;
+        }
+        while(rearLeftDriveAngle > Math.PI)
+        {
+            rearLeftDriveAngle -= Math.PI * 2;
+        }
+        while(rearLeftDriveAngle < Math.PI)
+        {
+            rearLeftDriveAngle += Math.PI * 2;
+        }
+        while(rearRightDriveAngle > Math.PI)
+        {
+            rearRightDriveAngle -= Math.PI * 2;
+        }
+        while(rearRightDriveAngle < Math.PI)
+        {
+            rearRightDriveAngle += Math.PI * 2;
+        }
+        
+        //----- Gyro -----
+        gyroAngle = input.getGyroAngle();
+        
+        //----- Misc -----
+        pressureSensor = input.getPSI();
+    }
     public double getFrontLeftDriveAngle()
     {
         return frontLeftDriveAngle;

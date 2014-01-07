@@ -87,7 +87,7 @@ public class RobotOutput
     }
     public synchronized void updateState()
     {
-        state = new RobotOutputState(this);
+        state.update(this);
     }
     public synchronized void pullFromState()
     {

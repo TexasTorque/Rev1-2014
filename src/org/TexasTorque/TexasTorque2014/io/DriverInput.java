@@ -27,7 +27,7 @@ public class DriverInput
     }
     public synchronized void updateState()
     {
-        state = new DriverInputState(getInstance());
+        state.update(this);
     }
     
     public synchronized static DriverInput getInstance()

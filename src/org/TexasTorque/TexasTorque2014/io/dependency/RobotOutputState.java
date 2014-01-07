@@ -37,6 +37,23 @@ public class RobotOutputState
         frontRightAngleMotorSpeed = output.getFrontRightAngleMotorSpeed();
         rearRightAngleMotorSpeed = output.getRearRightAngleMotorSpeed();
     }
+    public void update(RobotOutput output)
+    {
+        lightState = output.getLightState();
+        //----- Pneumatics -----
+        compressorEnabled = output.getCompressorEnabled();
+        highGear = output.getShiftState();
+        
+        //----- Drive Motors -----
+        frontLeftMotorSpeed = output.getFrontLeftMotorSpeed();
+        rearLeftMotorSpeed = output.getRearLeftMotorSpeed();
+        frontRightMotorSpeed = output.getFrontRightMotorSpeed();
+        rearRightMotorSpeed = output.getRearRightMotorSpeed();
+        frontLeftAngleMotorSpeed = output.getFrontLeftAngleMotorSpeed();
+        rearLeftAngleMotorSpeed = output.getRearLeftAngleMotorSpeed();
+        frontRightAngleMotorSpeed = output.getFrontRightAngleMotorSpeed();
+        rearRightAngleMotorSpeed = output.getRearRightAngleMotorSpeed();
+    }
     public synchronized void setDriveSpeedMotors(double frontRightMotorSpeed, double frontLeftMotorSpeed, double rearRightMotorSpeed, double rearLeftMotorSpeed)
     {
         this.frontLeftMotorSpeed = frontLeftMotorSpeed;

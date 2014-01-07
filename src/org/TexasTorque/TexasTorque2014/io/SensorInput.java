@@ -56,7 +56,7 @@ public class SensorInput
     }
     public synchronized void updateState()
     {
-        state = new SensorInputState(this);
+        state.update(this);
     }
     
     private void startEncoders()

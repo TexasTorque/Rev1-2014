@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.subsystem.drivebase;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
@@ -126,6 +127,18 @@ public class Drivebase extends TorqueSubsystem {
                 + "RearRightSpeed,RearRightAngleSpeed,RearRightDesiredAngle,RearRightAngle,";
 
         return names;
+    }
+    public void pushToDashboard()
+    {
+        SmartDashboard.putNumber("FrontLeftAngle", frontLeftPID.getSetpoint());
+        SmartDashboard.putNumber("FrontRightAngle", frontRightPID.getSetpoint());
+        SmartDashboard.putNumber("RearLeftAngle", rearLeftPID.getSetpoint());
+        SmartDashboard.putNumber("RearRightAngle", rearRightPID.getSetpoint());
+        
+        SmartDashboard.putNumber("FrontLeftSpeed", frontLeftSpeed);
+        SmartDashboard.putNumber("FrontRightSpeed", frontRightPID.getSetpoint());
+        SmartDashboard.putNumber("RearLeftSpeed", rearLeftPID.getSetpoint());
+        SmartDashboard.putNumber("RearRightSpeed", rearRightPID.getSetpoint());
     }
 
     public String logData() {

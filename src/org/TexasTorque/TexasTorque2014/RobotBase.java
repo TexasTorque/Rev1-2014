@@ -4,7 +4,12 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Watchdog;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousManager;
-import org.TexasTorque.TexasTorque2014.io.*;
+import org.TexasTorque.TexasTorque2014.io.DriverInput;
+import org.TexasTorque.TexasTorque2014.io.RobotOutput;
+import org.TexasTorque.TexasTorque2014.io.SensorInput;
+import org.TexasTorque.TexasTorque2014.io.dependency.DriverInputState;
+import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
+import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
 import org.TexasTorque.TorqueLib.util.DashboardManager;
@@ -18,9 +23,12 @@ public class RobotBase extends IterativeRobot implements Runnable {
     Parameters params;
     TorqueLogging logging;
     DashboardManager dashboardManager;
-    DriverInput driverInput;
+    DriverInputState driverInputState;
+    SensorInputState sensorInputState;
+    RobotOutputState robotOutputState;
     SensorInput sensorInput;
     RobotOutput robotOutput;
+    DriverInput driverInput;
     Drivebase drivebase;
     Manipulator manipulator;
     AutonomousManager autoManager;
@@ -31,6 +39,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     double previousTime;
 
     public void robotInit() {
+        drivebase = Drivebase.getInstance();
+        manipulator = Manipulator.getInstance();
 
         continuousThread = new Thread(this);
         continuousThread.start();
@@ -68,18 +78,27 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousPeriodic() {
+        robotOutput.pullFromState();
     }
 
     public void autonomousContinuous() {
     }
 
     public void teleopPeriodic() {
+        drivebase.run();
+        manipulator.run();
+        drivebase.pushToDashboard();
+        //robotOutput.pullFromState();
     }
 
     public void teleopContinuous() {
+        //sensorInput.updateState();
+        //driverInput.updateState();
+        //robotOutput.updateState();
     }
 
     public void disabledPeriodic() {
+        robotOutput.pullFromState();
     }
 
     public void disabledContinuous() {
