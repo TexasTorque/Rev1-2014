@@ -42,10 +42,43 @@ public class SensorInputState
         rearRightDriveEncoderVelocity = input.getRearRightDriveEncoderRate();
         rearLeftDriveEncoderAcceleration = input.getRearLeftDriveEncoderAcceleration();
         rearRightDriveEncoderAcceleration = input.getRearRightDriveEncoderAcceleration();
-        frontLeftDriveAngle = input.getFrontLeftDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2;
-        rearLeftDriveAngle = input.getRearLeftDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2;
-        frontRightDriveAngle = input.getFrontRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2;
-        rearRightDriveAngle = input.getRearRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2;
+        frontLeftDriveAngle = (input.getFrontLeftDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
+        rearLeftDriveAngle = (input.getRearLeftDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
+        frontRightDriveAngle = (input.getFrontRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
+        rearRightDriveAngle = (input.getRearRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
+        //Angle Limitation
+        while(frontLeftDriveAngle > Math.PI)
+        {
+            frontLeftDriveAngle -= Math.PI * 2;
+        }
+        while(frontLeftDriveAngle < Math.PI)
+        {
+            frontLeftDriveAngle += Math.PI * 2;
+        }
+        while(frontRightDriveAngle > Math.PI)
+        {
+            frontRightDriveAngle -= Math.PI * 2;
+        }
+        while(frontRightDriveAngle < Math.PI)
+        {
+            frontRightDriveAngle += Math.PI * 2;
+        }
+        while(rearLeftDriveAngle > Math.PI)
+        {
+            rearLeftDriveAngle -= Math.PI * 2;
+        }
+        while(rearLeftDriveAngle < Math.PI)
+        {
+            rearLeftDriveAngle += Math.PI * 2;
+        }
+        while(rearRightDriveAngle > Math.PI)
+        {
+            rearRightDriveAngle -= Math.PI * 2;
+        }
+        while(rearRightDriveAngle < Math.PI)
+        {
+            rearRightDriveAngle += Math.PI * 2;
+        }
         
         //----- Gyro -----
         gyroAngle = input.getGyroAngle();

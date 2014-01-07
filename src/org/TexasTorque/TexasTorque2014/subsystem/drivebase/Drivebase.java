@@ -55,16 +55,21 @@ public class Drivebase extends TorqueSubsystem {
         double B = strafeX + rotation * (Constants.WHEEL_DISTANCE / r);
         double C = strafeY - rotation * (Constants.WHEEL_WIDTH / r);
         double D = strafeY + rotation * (Constants.WHEEL_WIDTH / r);
-
+        //-----Calc Target WheelSpeeds and Angles-----
         double ws1 = Math.sqrt(B * B + C * C);
-        double wa1 = TorqueTrigMath.atan2(B, C) * 180 / Math.PI;
+        double wa1 = TorqueTrigMath.atan2(B, C);
         double ws2 = Math.sqrt(B * B + D * D);
-        double wa2 = TorqueTrigMath.atan2(B, D) * 180 / Math.PI;
+        double wa2 = TorqueTrigMath.atan2(B, D);
         double ws3 = Math.sqrt(A * A + D * D);
-        double wa3 = TorqueTrigMath.atan2(A, D) * 180 / Math.PI;
+        double wa3 = TorqueTrigMath.atan2(A, D);
         double ws4 = Math.sqrt(A * A + C * C);
-        double wa4 = TorqueTrigMath.atan2(A, C) * 180 / Math.PI;
-        
+        double wa4 = TorqueTrigMath.atan2(A, C);
+        //-----Find Shortest Path for PID Setpoint-----
+        wa1 = wheelAngle(wa1, sensorInput.getFrontRightDriveAngle());
+        wa2 = wheelAngle(wa2, sensorInput.getFrontLeftDriveAngle());
+        wa3 = wheelAngle(wa3, sensorInput.getRearLeftDriveAngle());
+        wa4 = wheelAngle(wa4, sensorInput.getRearRightDriveAngle());
+        //-----Normalize Speeds-----
         double max = Math.max(Math.max(ws1, ws2), Math.max(ws3, ws4));
         if(max > 1)
         {
@@ -73,6 +78,7 @@ public class Drivebase extends TorqueSubsystem {
             ws3/=max;
             ws4/=max;
         }
+        //-----Apply Calculations-----
         frontRightSpeed = ws1;
         frontLeftSpeed = ws2;
         rearLeftSpeed = ws3;
@@ -87,6 +93,21 @@ public class Drivebase extends TorqueSubsystem {
         frontLeftAngleSpeed = frontLeftPID.calculate(sensorInput.getFrontLeftDriveAngle());
         rearLeftAngleSpeed = rearLeftPID.calculate(sensorInput.getRearLeftDriveAngle());
         rearRightAngleSpeed = rearRightPID.calculate(sensorInput.getRearRightDriveAngle());
+    }
+    
+    public double wheelAngle(double angle, double current)
+    {
+        double aBig = angle + Math.PI * 2;
+        double aSmall = angle - Math.PI * 2;
+        if(Math.abs(angle- current) > Math.abs(aSmall - current))
+        {
+            angle = aSmall;
+        }
+        if(Math.abs(angle- current) > Math.abs(aBig - current))
+        {
+            angle = aBig;
+        }
+        return angle;
     }
 
     public void run() {
