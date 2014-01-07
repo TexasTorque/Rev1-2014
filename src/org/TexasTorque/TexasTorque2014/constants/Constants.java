@@ -42,5 +42,6 @@ public class Constants
     public final static double PRESSURE_THRESHOLD = 2.0;
     public final static int RED_ALLIANCE = 0;
     public final static int BLUE_ALLIANCE = 1;
+    public final static double ENCODER_RESOLUTION = 100;
     
 }

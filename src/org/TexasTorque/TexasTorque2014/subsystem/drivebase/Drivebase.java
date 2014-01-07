@@ -83,10 +83,10 @@ public class Drivebase extends TorqueSubsystem {
         rearLeftPID.setSetpoint(wa3);
         rearRightPID.setSetpoint(wa4);
         
-        frontRightAngleSpeed = frontRightPID.calculate(sensorInput.getFrontRightAngle());
-        frontLeftAngleSpeed = frontLeftPID.calculate(sensorInput.getFrontLeftAngle());
-        rearLeftAngleSpeed = rearLeftPID.calculate(sensorInput.getRearLeftAngle());
-        rearRightAngleSpeed = rearRightPID.calculate(sensorInput.getRearRightAngle());
+        frontRightAngleSpeed = frontRightPID.calculate(sensorInput.getFrontRightDriveAngle());
+        frontLeftAngleSpeed = frontLeftPID.calculate(sensorInput.getFrontLeftDriveAngle());
+        rearLeftAngleSpeed = rearLeftPID.calculate(sensorInput.getRearLeftDriveAngle());
+        rearRightAngleSpeed = rearRightPID.calculate(sensorInput.getRearRightDriveAngle());
     }
 
     public void run() {

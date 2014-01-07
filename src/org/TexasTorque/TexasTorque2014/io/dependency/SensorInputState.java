@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
+import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
 
 public class SensorInputState
@@ -17,6 +18,10 @@ public class SensorInputState
     private double rearRightDriveEncoderVelocity;
     private double rearLeftDriveEncoderAcceleration;
     private double rearRightDriveEncoderAcceleration;
+    private double frontLeftDriveAngle;
+    private double frontRightDriveAngle;
+    private double rearLeftDriveAngle;
+    private double rearRightDriveAngle;
 
     //----- Analog -----
     private double pressureSensor;
@@ -37,11 +42,32 @@ public class SensorInputState
         rearRightDriveEncoderVelocity = input.getRearRightDriveEncoderRate();
         rearLeftDriveEncoderAcceleration = input.getRearLeftDriveEncoderAcceleration();
         rearRightDriveEncoderAcceleration = input.getRearRightDriveEncoderAcceleration();
+        frontLeftDriveAngle = input.getFrontLeftDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2;
+        rearLeftDriveAngle = input.getRearLeftDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2;
+        frontRightDriveAngle = input.getFrontRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2;
+        rearRightDriveAngle = input.getRearRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2;
+        
         //----- Gyro -----
         gyroAngle = input.getGyroAngle();
         
         //----- Misc -----
         pressureSensor = input.getPSI();
+    }
+    public double getFrontLeftDriveAngle()
+    {
+        return frontLeftDriveAngle;
+    }
+    public double getFrontRightDriveAngle()
+    {
+        return frontRightDriveAngle;
+    }
+    public double getRearLeftDriveAngle()
+    {
+        return rearLeftDriveAngle;
+    }
+    public double getRearRightDriveAngle()
+    {
+        return rearRightDriveAngle;
     }
     
     public double getFrontLeftDriveEncoder()
