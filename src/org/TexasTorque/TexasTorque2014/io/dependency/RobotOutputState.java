@@ -15,6 +15,10 @@ public class RobotOutputState
     private double rearLeftMotorSpeed;
     private double frontRightMotorSpeed;
     private double rearRightMotorSpeed;
+    private double frontLeftAngleMotorSpeed;
+    private double rearLeftAngleMotorSpeed;
+    private double frontRightAngleMotorSpeed;
+    private double rearRightAngleMotorSpeed;
     
     public RobotOutputState(RobotOutput output)
     {   
@@ -28,13 +32,24 @@ public class RobotOutputState
         rearLeftMotorSpeed = output.getRearLeftMotorSpeed();
         frontRightMotorSpeed = output.getFrontRightMotorSpeed();
         rearRightMotorSpeed = output.getRearRightMotorSpeed();
+        frontLeftAngleMotorSpeed = output.getFrontLeftAngleMotorSpeed();
+        rearLeftAngleMotorSpeed = output.getRearLeftAngleMotorSpeed();
+        frontRightAngleMotorSpeed = output.getFrontRightAngleMotorSpeed();
+        rearRightAngleMotorSpeed = output.getRearRightAngleMotorSpeed();
     }
-    public synchronized void setDriveMotors(double leftMotorSpeed, double rightMotorSpeed)
+    public synchronized void setDriveSpeedMotors(double frontRightMotorSpeed, double frontLeftMotorSpeed, double rearRightMotorSpeed, double rearLeftMotorSpeed)
     {
-        frontLeftMotorSpeed = leftMotorSpeed;
-        rearLeftMotorSpeed = leftMotorSpeed;
-        frontRightMotorSpeed = rightMotorSpeed;
-        rearRightMotorSpeed = rightMotorSpeed;
+        this.frontLeftMotorSpeed = frontLeftMotorSpeed;
+        this.rearLeftMotorSpeed = rearLeftMotorSpeed;
+        this.frontRightMotorSpeed = frontRightMotorSpeed;
+        this.rearRightMotorSpeed = rearRightMotorSpeed;
+    }
+    public synchronized void setDriveAngleMotors(double frontRightMotorSpeed, double frontLeftMotorSpeed, double rearRightMotorSpeed, double rearLeftMotorSpeed)
+    {
+        this.frontLeftAngleMotorSpeed = frontLeftMotorSpeed;
+        this.rearLeftAngleMotorSpeed = rearLeftMotorSpeed;
+        this.frontRightAngleMotorSpeed = frontRightMotorSpeed;
+        this.rearRightAngleMotorSpeed = rearRightMotorSpeed;
     }
     public synchronized void setLightsState(int state)
     {
@@ -60,6 +75,22 @@ public class RobotOutputState
     public double getRearRightMotorSpeed()
     {
         return rearRightMotorSpeed;
+    }
+    public double getFrontLeftAngleMotorSpeed()
+    {
+        return frontLeftAngleMotorSpeed;
+    }
+    public double getRearLeftAngleMotorSpeed()
+    {
+        return rearLeftAngleMotorSpeed;
+    }
+    public double getFrontRightAngleMotorSpeed()
+    {
+        return frontRightAngleMotorSpeed;
+    }
+    public double getRearRightAngleMotorSpeed()
+    {
+        return rearRightAngleMotorSpeed;
     }
     public boolean getCompressorEnabled()
     {

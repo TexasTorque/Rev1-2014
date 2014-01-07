@@ -31,6 +31,14 @@ public class RobotOutput
     private double rearLeftMotorSpeed;
     private double frontRightMotorSpeed;
     private double rearRightMotorSpeed;
+    private Motor frontLeftAngleDriveMotor;
+    private Motor rearLeftAngleDriveMotor;
+    private Motor frontRightAngleDriveMotor;
+    private Motor rearRightAngleDriveMotor;
+    private double frontLeftAngleMotorSpeed;
+    private double rearLeftAngleMotorSpeed;
+    private double frontRightAngleMotorSpeed;
+    private double rearRightAngleMotorSpeed;
     
     public RobotOutput()
     {   
@@ -52,10 +60,18 @@ public class RobotOutput
         rearLeftDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.REAR_LEFT_DRIVE_MOTOR_PORT), false, true);
         frontRightDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.FRONT_RIGHT_DRIVE_MOTOR_PORT), true, true);
         rearRightDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.REAR_RIGHT_DRIVE_MOTOR_PORT), true, true);
+        frontLeftAngleDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.FRONT_LEFT_ANGLE_DRIVE_MOTOR_PORT), false, true);
+        rearLeftAngleDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.REAR_LEFT_ANGLE_DRIVE_MOTOR_PORT), false, true);
+        frontRightAngleDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.FRONT_RIGHT_ANGLE_DRIVE_MOTOR_PORT), true, true);
+        rearRightAngleDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.REAR_RIGHT_ANGLE_DRIVE_MOTOR_PORT), true, true);
         frontRightMotorSpeed = Constants.MOTOR_STOPPED;
         rearRightMotorSpeed = Constants.MOTOR_STOPPED;
         frontLeftMotorSpeed = Constants.MOTOR_STOPPED;
         rearLeftMotorSpeed = Constants.MOTOR_STOPPED;
+        frontRightAngleMotorSpeed = Constants.MOTOR_STOPPED;
+        rearRightAngleMotorSpeed = Constants.MOTOR_STOPPED;
+        frontLeftAngleMotorSpeed = Constants.MOTOR_STOPPED;
+        rearLeftAngleMotorSpeed = Constants.MOTOR_STOPPED;
         
         //----- Misc Misc -----
         compressor.start();
@@ -75,8 +91,9 @@ public class RobotOutput
     }
     public synchronized void pullFromState()
     {
+        setDriveSpeedMotors(state.getFrontRightMotorSpeed(), state.getFrontLeftMotorSpeed(), state.getRearRightMotorSpeed(), state.getRearLeftMotorSpeed());
+        setDriveAngleMotors(state.getFrontRightAngleMotorSpeed(), state.getFrontLeftAngleMotorSpeed(), state.getRearRightAngleMotorSpeed(), state.getRearLeftAngleMotorSpeed());
         setLightsState(state.getLightState());
-        setDriveMotors(state.getFrontLeftMotorSpeed(), state.getFrontRightMotorSpeed());
         setShifters(state.getShiftState());
     }
     
@@ -95,16 +112,28 @@ public class RobotOutput
         return lightState;
     }
     
-    public void setDriveMotors(double leftSpeed, double rightSpeed)
+    public synchronized void setDriveSpeedMotors(double frontRightMotorSpeed, double frontLeftMotorSpeed, double rearRightMotorSpeed, double rearLeftMotorSpeed)
     {
-        frontLeftDriveMotor.Set(leftSpeed);
-        rearLeftDriveMotor.Set(leftSpeed);
-        frontRightDriveMotor.Set(rightSpeed);
-        rearRightDriveMotor.Set(rightSpeed);
-        frontLeftMotorSpeed = leftSpeed;
-        frontRightMotorSpeed = rightSpeed;
-        rearLeftMotorSpeed = leftSpeed;
-        rearRightMotorSpeed = rightSpeed;
+        this.frontLeftMotorSpeed = frontLeftMotorSpeed;
+        this.rearLeftMotorSpeed = rearLeftMotorSpeed;
+        this.frontRightMotorSpeed = frontRightMotorSpeed;
+        this.rearRightMotorSpeed = rearRightMotorSpeed;
+        frontLeftDriveMotor.Set(frontLeftMotorSpeed);
+        frontRightDriveMotor.Set(frontRightMotorSpeed);
+        rearLeftDriveMotor.Set(rearLeftMotorSpeed);
+        rearRightDriveMotor.Set(rearRightMotorSpeed);
+        
+    }
+    public synchronized void setDriveAngleMotors(double frontRightMotorSpeed, double frontLeftMotorSpeed, double rearRightMotorSpeed, double rearLeftMotorSpeed)
+    {
+        this.frontLeftAngleMotorSpeed = frontLeftMotorSpeed;
+        this.rearLeftAngleMotorSpeed = rearLeftMotorSpeed;
+        this.frontRightAngleMotorSpeed = frontRightMotorSpeed;
+        this.rearRightAngleMotorSpeed = rearRightMotorSpeed;
+        frontLeftAngleDriveMotor.Set(frontLeftMotorSpeed);
+        frontRightAngleDriveMotor.Set(frontRightMotorSpeed);
+        rearLeftAngleDriveMotor.Set(rearLeftMotorSpeed);
+        rearRightAngleDriveMotor.Set(rearRightMotorSpeed);
     }
     
     public double getFrontLeftMotorSpeed()
@@ -122,6 +151,22 @@ public class RobotOutput
     public double getRearRightMotorSpeed()
     {
         return rearRightMotorSpeed;
+    }
+    public double getFrontLeftAngleMotorSpeed()
+    {
+        return frontLeftAngleMotorSpeed;
+    }
+    public double getRearLeftAngleMotorSpeed()
+    {
+        return rearLeftAngleMotorSpeed;
+    }
+    public double getFrontRightAngleMotorSpeed()
+    {
+        return frontRightAngleMotorSpeed;
+    }
+    public double getRearRightAngleMotorSpeed()
+    {
+        return rearRightAngleMotorSpeed;
     }
     public void setShifters(boolean highGear)
     {

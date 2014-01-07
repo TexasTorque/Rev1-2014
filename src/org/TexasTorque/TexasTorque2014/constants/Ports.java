@@ -20,6 +20,10 @@ public class Ports
         public final static int REAR_RIGHT_DRIVE_MOTOR_PORT = 0;
         public final static int FRONT_LEFT_DRIVE_MOTOR_PORT = 0;
         public final static int REAR_LEFT_DRIVE_MOTOR_PORT = 0;
+        public final static int FRONT_RIGHT_ANGLE_DRIVE_MOTOR_PORT = 0;
+        public final static int REAR_RIGHT_ANGLE_DRIVE_MOTOR_PORT = 0;
+        public final static int FRONT_LEFT_ANGLE_DRIVE_MOTOR_PORT = 0;
+        public final static int REAR_LEFT_ANGLE_DRIVE_MOTOR_PORT = 0;
     
     //----- Solenoids -----
     public final static int DRIVE_SHIFTER_PORT = 0;

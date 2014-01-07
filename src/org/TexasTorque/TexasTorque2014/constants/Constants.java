@@ -9,6 +9,10 @@ public class Constants
     public final static boolean DEFAULT_FIRST_CONTROLLER_TYPE = true;
     public final static boolean DEFAULT_SECOND_CONTROLLER_TYPE = false;
     
+    //----- Robot Statistics -----
+    public final static double WHEEL_DISTANCE = 1.0;
+    public final static double WHEEL_WIDTH = 1.0;
+    
     //----- Light States -----
     public final static int WHITE_SOLID = 0;
     public final static int BLUE_SOLID = 1;
