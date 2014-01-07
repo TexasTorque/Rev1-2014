@@ -32,11 +32,15 @@ public class Ports
         //----- Sidecar 1 -----
         //----- Sidecar 2 -----
     
-        public final static int RIGHT_DRIVE_ENCODER_A_PORT = 0;
-        public final static int RIGHT_DRIVE_ENCODER_B_PORT = 0;
+        public final static int FRONT_RIGHT_DRIVE_ENCODER_A_PORT = 0;
+        public final static int FRONT_RIGHT_DRIVE_ENCODER_B_PORT = 0;
+        public final static int REAR_RIGHT_DRIVE_ENCODER_A_PORT = 0;
+        public final static int REAR_RIGHT_DRIVE_ENCODER_B_PORT = 0;
         public final static int PRESSURE_SWITCH_PORT = 0;
-        public final static int LEFT_DRIVE_ENCODER_A_PORT = 0;
-        public final static int LEFT_DRIVE_ENCODER_B_PORT = 0;
+        public final static int FRONT_LEFT_DRIVE_ENCODER_A_PORT = 0;
+        public final static int FRONT_LEFT_DRIVE_ENCODER_B_PORT = 0;
+        public final static int REAR_LEFT_DRIVE_ENCODER_A_PORT = 0;
+        public final static int REAR_LEFT_DRIVE_ENCODER_B_PORT = 0;
         public final static int LIGHTS_A_PORT = 0;
         public final static int LIGHTS_B_PORT = 0;
         public final static int LIGHTS_C_PORT = 0;
