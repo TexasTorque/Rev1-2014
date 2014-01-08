@@ -43,7 +43,10 @@ public class SensorInput
         
         //----- Misc -----
         pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
+        
         startEncoders();
+        
+        state = new SensorInputState(this);
     }
     
     public synchronized static SensorInput getInstance()

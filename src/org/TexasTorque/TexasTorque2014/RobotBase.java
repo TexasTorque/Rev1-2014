@@ -93,7 +93,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopContinuous() {
         //sensorInput.updateState();
-        //driverInput.updateState();
+        driverInput.updateState();
         //robotOutput.updateState();
     }
 

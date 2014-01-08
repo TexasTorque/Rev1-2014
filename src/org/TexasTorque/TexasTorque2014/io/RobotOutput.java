@@ -73,8 +73,11 @@ public class RobotOutput
         frontLeftAngleMotorSpeed = Constants.MOTOR_STOPPED;
         rearLeftAngleMotorSpeed = Constants.MOTOR_STOPPED;
         
+        state = new RobotOutputState(this);
+        
         //----- Misc Misc -----
         compressor.start();
+        
     }
  
     public synchronized static RobotOutput getInstance()
