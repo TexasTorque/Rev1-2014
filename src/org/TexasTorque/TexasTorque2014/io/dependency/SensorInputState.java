@@ -3,9 +3,9 @@ package org.TexasTorque.TexasTorque2014.io.dependency;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
 
-public class SensorInputState
-{
+public class SensorInputState {
     //----- Encoder -----
+
     private double frontLeftDriveEncoder;
     private double frontRightDriveEncoder;
     private double frontLeftDriveEncoderVelocity;
@@ -22,13 +22,11 @@ public class SensorInputState
     private double frontRightDriveAngle;
     private double rearLeftDriveAngle;
     private double rearRightDriveAngle;
-
     //----- Analog -----
     private double pressureSensor;
     private double gyroAngle;
 
-    public SensorInputState(SensorInput input)
-    {
+    public SensorInputState(SensorInput input) {
         //----- Encoders/Counters -----
         frontLeftDriveEncoder = input.getFrontLeftDriveEncoder();
         frontRightDriveEncoder = input.getFrontRightDriveEncoder();
@@ -47,47 +45,39 @@ public class SensorInputState
         frontRightDriveAngle = (input.getFrontRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
         rearRightDriveAngle = (input.getRearRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
         //Angle Limitation
-        while(frontLeftDriveAngle > Math.PI)
-        {
+        while (frontLeftDriveAngle > Math.PI) {
             frontLeftDriveAngle -= Math.PI * 2;
         }
-        while(frontLeftDriveAngle < Math.PI)
-        {
+        while (frontLeftDriveAngle < Math.PI) {
             frontLeftDriveAngle += Math.PI * 2;
         }
-        while(frontRightDriveAngle > Math.PI)
-        {
+        while (frontRightDriveAngle > Math.PI) {
             frontRightDriveAngle -= Math.PI * 2;
         }
-        while(frontRightDriveAngle < Math.PI)
-        {
+        while (frontRightDriveAngle < Math.PI) {
             frontRightDriveAngle += Math.PI * 2;
         }
-        while(rearLeftDriveAngle > Math.PI)
-        {
+        while (rearLeftDriveAngle > Math.PI) {
             rearLeftDriveAngle -= Math.PI * 2;
         }
-        while(rearLeftDriveAngle < Math.PI)
-        {
+        while (rearLeftDriveAngle < Math.PI) {
             rearLeftDriveAngle += Math.PI * 2;
         }
-        while(rearRightDriveAngle > Math.PI)
-        {
+        while (rearRightDriveAngle > Math.PI) {
             rearRightDriveAngle -= Math.PI * 2;
         }
-        while(rearRightDriveAngle < Math.PI)
-        {
+        while (rearRightDriveAngle < Math.PI) {
             rearRightDriveAngle += Math.PI * 2;
         }
-        
+
         //----- Gyro -----
         gyroAngle = input.getGyroAngle();
-        
+
         //----- Misc -----
         pressureSensor = input.getPSI();
     }
-    public void update(SensorInput input)
-    {
+
+    public void update(SensorInput input) {
         //----- Encoders/Counters -----
         frontLeftDriveEncoder = input.getFrontLeftDriveEncoder();
         frontRightDriveEncoder = input.getFrontRightDriveEncoder();
@@ -106,128 +96,107 @@ public class SensorInputState
         frontRightDriveAngle = (input.getFrontRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
         rearRightDriveAngle = (input.getRearRightDriveEncoder() / Constants.ENCODER_RESOLUTION * Math.PI * 2);
         //Angle Limitation
-        while(frontLeftDriveAngle > Math.PI)
-        {
+        while (frontLeftDriveAngle > Math.PI) {
             frontLeftDriveAngle -= Math.PI * 2;
         }
-        while(frontLeftDriveAngle < Math.PI)
-        {
+        while (frontLeftDriveAngle < Math.PI) {
             frontLeftDriveAngle += Math.PI * 2;
         }
-        while(frontRightDriveAngle > Math.PI)
-        {
+        while (frontRightDriveAngle > Math.PI) {
             frontRightDriveAngle -= Math.PI * 2;
         }
-        while(frontRightDriveAngle < Math.PI)
-        {
+        while (frontRightDriveAngle < Math.PI) {
             frontRightDriveAngle += Math.PI * 2;
         }
-        while(rearLeftDriveAngle > Math.PI)
-        {
+        while (rearLeftDriveAngle > Math.PI) {
             rearLeftDriveAngle -= Math.PI * 2;
         }
-        while(rearLeftDriveAngle < Math.PI)
-        {
+        while (rearLeftDriveAngle < Math.PI) {
             rearLeftDriveAngle += Math.PI * 2;
         }
-        while(rearRightDriveAngle > Math.PI)
-        {
+        while (rearRightDriveAngle > Math.PI) {
             rearRightDriveAngle -= Math.PI * 2;
         }
-        while(rearRightDriveAngle < Math.PI)
-        {
+        while (rearRightDriveAngle < Math.PI) {
             rearRightDriveAngle += Math.PI * 2;
         }
-        
+
         //----- Gyro -----
         gyroAngle = input.getGyroAngle();
-        
+
         //----- Misc -----
         pressureSensor = input.getPSI();
     }
-    public double getFrontLeftDriveAngle()
-    {
+
+    public double getFrontLeftDriveAngle() {
         return frontLeftDriveAngle;
     }
-    public double getFrontRightDriveAngle()
-    {
+
+    public double getFrontRightDriveAngle() {
         return frontRightDriveAngle;
     }
-    public double getRearLeftDriveAngle()
-    {
+
+    public double getRearLeftDriveAngle() {
         return rearLeftDriveAngle;
     }
-    public double getRearRightDriveAngle()
-    {
+
+    public double getRearRightDriveAngle() {
         return rearRightDriveAngle;
     }
-    
-    public double getFrontLeftDriveEncoder()
-    {
+
+    public double getFrontLeftDriveEncoder() {
         return frontLeftDriveEncoder;
     }
-    
-    public double getFrontRightDriveEncoder()
-    {
+
+    public double getFrontRightDriveEncoder() {
         return frontRightDriveEncoder;
     }
-    
-    public double getFrontLeftDriveEncoderRate()
-    {
+
+    public double getFrontLeftDriveEncoderRate() {
         return frontLeftDriveEncoderVelocity;
     }
-    
-    public double getFrontRightDriveEncoderRate()
-    {
+
+    public double getFrontRightDriveEncoderRate() {
         return frontRightDriveEncoderVelocity;
     }
-    
-    public double getFrontLeftDriveEncoderAcceleration()
-    {
+
+    public double getFrontLeftDriveEncoderAcceleration() {
         return frontLeftDriveEncoderAcceleration;
     }
-    
-    public double getFrontRightDriveEncoderAcceleration()
-    {
+
+    public double getFrontRightDriveEncoderAcceleration() {
         return frontRightDriveEncoderAcceleration;
     }
-    public double getRearLeftDriveEncoder()
-    {
+
+    public double getRearLeftDriveEncoder() {
         return rearLeftDriveEncoder;
     }
-    
-    public double getRearRightDriveEncoder()
-    {
+
+    public double getRearRightDriveEncoder() {
         return rearRightDriveEncoder;
     }
-    
-    public double getRearLeftDriveEncoderRate()
-    {
+
+    public double getRearLeftDriveEncoderRate() {
         return rearLeftDriveEncoderVelocity;
     }
-    
-    public double getRearRightDriveEncoderRate()
-    {
+
+    public double getRearRightDriveEncoderRate() {
         return rearRightDriveEncoderVelocity;
     }
-    
-    public double getRearLeftDriveEncoderAcceleration()
-    {
+
+    public double getRearLeftDriveEncoderAcceleration() {
         return rearLeftDriveEncoderAcceleration;
     }
-    
-    public double getRearRightDriveEncoderAcceleration()
-    {
+
+    public double getRearRightDriveEncoderAcceleration() {
         return rearRightDriveEncoderAcceleration;
     }
-    
-    public double getPSI()
-    {
+
+    public double getPSI() {
         return pressureSensor;
     }
-    
-    public double getGyroAngle()
-    {
+
+    public double getGyroAngle() {
         return gyroAngle;
     }
 }

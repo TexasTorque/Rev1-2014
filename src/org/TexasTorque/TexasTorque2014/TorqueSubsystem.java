@@ -9,29 +9,31 @@ import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
 import org.TexasTorque.TorqueLib.util.DashboardManager;
 import org.TexasTorque.TorqueLib.util.Parameters;
 
-public abstract class TorqueSubsystem
-{
-    
+public abstract class TorqueSubsystem {
+
     protected DashboardManager dashboardManager;
     protected RobotOutputState robotOutput;
     protected DriverInputState driverInput;
     protected SensorInputState sensorInput;
     protected Parameters params;
-    
-    protected TorqueSubsystem()
-    {
+
+    protected TorqueSubsystem() {
         dashboardManager = DashboardManager.getInstance();
         robotOutput = RobotOutput.getState();
         driverInput = DriverInput.getState();
         sensorInput = SensorInput.getState();
         params = Parameters.getTeleopInstance();
     }
-    
-    
+
     public abstract void run();
+
     public abstract void setToRobot();
+
     public abstract void loadParameters();
+
     public abstract void pushToDashboard();
+
     public abstract String logData();
+
     public abstract String getKeyNames();
 }

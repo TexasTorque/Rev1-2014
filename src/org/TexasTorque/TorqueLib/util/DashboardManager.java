@@ -3,47 +3,39 @@ package org.TexasTorque.TorqueLib.util;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 
-public class DashboardManager
-{
+public class DashboardManager {
+
     private static DashboardManager instance;
     private DriverStation ds;
     private DriverStationLCD dslcd;
-    
-    public DashboardManager()
-    {
+
+    public DashboardManager() {
         ds = DriverStation.getInstance();
         dslcd = DriverStationLCD.getInstance();
     }
-    
-    public synchronized static DashboardManager getInstance()
-    {
+
+    public synchronized static DashboardManager getInstance() {
         return (instance == null) ? instance = new DashboardManager() : instance;
     }
-    
-    public synchronized void printToErr(String output)
-    {
+
+    public synchronized void printToErr(String output) {
         System.err.println(output);
     }
-    
-    public synchronized void printToErr(int output)
-    {
+
+    public synchronized void printToErr(int output) {
         printToErr("" + output);
     }
-    
-    public synchronized void printToErr(double output)
-    {
+
+    public synchronized void printToErr(double output) {
         printToErr("" + output);
     }
-    
-    public synchronized void printToErr(boolean output)
-    {
+
+    public synchronized void printToErr(boolean output) {
         printToErr("" + output);
     }
-    
-    public synchronized void printToLCD(int line, String output)
-    {
-        switch(line)
-        {
+
+    public synchronized void printToLCD(int line, String output) {
+        switch (line) {
             case 2:
                 dslcd.println(DriverStationLCD.Line.kUser2, 1, output);
                 break;
@@ -63,20 +55,16 @@ public class DashboardManager
                 break;
         }
     }
-    
-    public synchronized void updateLCD()
-    {
+
+    public synchronized void updateLCD() {
         dslcd.updateLCD();
     }
-    
-    public synchronized DriverStation getDS()
-    {
+
+    public synchronized DriverStation getDS() {
         return ds;
     }
-    
-    public synchronized DriverStationLCD getDSCLD()
-    {
+
+    public synchronized DriverStationLCD getDSCLD() {
         return dslcd;
     }
-    
 }

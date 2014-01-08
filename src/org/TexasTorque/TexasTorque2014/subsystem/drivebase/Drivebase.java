@@ -72,40 +72,36 @@ public class Drivebase extends TorqueSubsystem {
         wa4 = wheelAngle(wa4, sensorInput.getRearRightDriveAngle());
         //-----Normalize Speeds-----
         double max = Math.max(Math.max(ws1, ws2), Math.max(ws3, ws4));
-        if(max > 1)
-        {
-            ws1/=max;
-            ws2/=max;
-            ws3/=max;
-            ws4/=max;
+        if (max > 1) {
+            ws1 /= max;
+            ws2 /= max;
+            ws3 /= max;
+            ws4 /= max;
         }
         //-----Apply Calculations-----
         frontRightSpeed = ws1;
         frontLeftSpeed = ws2;
         rearLeftSpeed = ws3;
         rearRightSpeed = ws4;
-        
+
         frontRightPID.setSetpoint(wa1);
         frontLeftPID.setSetpoint(wa2);
         rearLeftPID.setSetpoint(wa3);
         rearRightPID.setSetpoint(wa4);
-        
+
         frontRightAngleSpeed = frontRightPID.calculate(sensorInput.getFrontRightDriveAngle());
         frontLeftAngleSpeed = frontLeftPID.calculate(sensorInput.getFrontLeftDriveAngle());
         rearLeftAngleSpeed = rearLeftPID.calculate(sensorInput.getRearLeftDriveAngle());
         rearRightAngleSpeed = rearRightPID.calculate(sensorInput.getRearRightDriveAngle());
     }
-    
-    public double wheelAngle(double angle, double current)
-    {
+
+    public double wheelAngle(double angle, double current) {
         double aBig = angle + Math.PI * 2;
         double aSmall = angle - Math.PI * 2;
-        if(Math.abs(angle- current) > Math.abs(aSmall - current))
-        {
+        if (Math.abs(angle - current) > Math.abs(aSmall - current)) {
             angle = aSmall;
         }
-        if(Math.abs(angle- current) > Math.abs(aBig - current))
-        {
+        if (Math.abs(angle - current) > Math.abs(aBig - current)) {
             angle = aBig;
         }
         return angle;
@@ -128,13 +124,13 @@ public class Drivebase extends TorqueSubsystem {
 
         return names;
     }
-    public void pushToDashboard()
-    {
+
+    public void pushToDashboard() {
         SmartDashboard.putNumber("FrontLeftAngle", frontLeftPID.getSetpoint());
         SmartDashboard.putNumber("FrontRightAngle", frontRightPID.getSetpoint());
         SmartDashboard.putNumber("RearLeftAngle", rearLeftPID.getSetpoint());
         SmartDashboard.putNumber("RearRightAngle", rearRightPID.getSetpoint());
-        
+
         SmartDashboard.putNumber("FrontLeftSpeed", frontLeftSpeed);
         SmartDashboard.putNumber("FrontRightSpeed", frontRightPID.getSetpoint());
         SmartDashboard.putNumber("RearLeftSpeed", rearLeftPID.getSetpoint());
@@ -151,12 +147,12 @@ public class Drivebase extends TorqueSubsystem {
         data += frontLeftAngleSpeed + ",";
         data += frontLeftPID.getSetpoint() + ",";
         data += frontLeftPID.getPreviousValue() + ",";
-        
+
         data += rearLeftSpeed + ",";
         data += rearLeftAngleSpeed + ",";
         data += rearLeftPID.getSetpoint() + ",";
         data += rearLeftPID.getPreviousValue() + ",";
-        
+
         data += rearRightSpeed + ",";
         data += rearRightAngleSpeed + ",";
         data += rearRightPID.getSetpoint() + ",";
@@ -166,34 +162,34 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void loadParameters() {
-        double p,i,d,e;
+        double p, i, d, e;
         p = params.getAsDouble("D_FtLftAngP", 0.0);
         i = params.getAsDouble("D_FtLftAngI", 0.0);
         d = params.getAsDouble("D_FtLftAngD", 0.0);
         e = params.getAsDouble("D_FtLftAngE", 0.0);
         frontLeftPID.setPIDGains(p, i, d);
         frontLeftPID.setEpsilon(e);
-        
+
         p = params.getAsDouble("D_FtRtAngP", 0.0);
         i = params.getAsDouble("D_FtRtAngI", 0.0);
         d = params.getAsDouble("D_FtRtAngD", 0.0);
         e = params.getAsDouble("D_FtRtAngE", 0.0);
         frontRightPID.setPIDGains(p, i, d);
         frontRightPID.setEpsilon(e);
-        
+
         p = params.getAsDouble("D_RrRtAngP", 0.0);
         i = params.getAsDouble("D_RrRtAngI", 0.0);
         d = params.getAsDouble("D_RrRtAngD", 0.0);
         e = params.getAsDouble("D_RrRtAngE", 0.0);
         rearRightPID.setPIDGains(p, i, d);
         rearRightPID.setEpsilon(e);
-        
+
         p = params.getAsDouble("D_RrLftAngP", 0.0);
         i = params.getAsDouble("D_RrLftAngI", 0.0);
         d = params.getAsDouble("D_RrLftAngD", 0.0);
         e = params.getAsDouble("D_RrLftAngE", 0.0);
         rearLeftPID.setPIDGains(p, i, d);
         rearLeftPID.setEpsilon(e);
-        
+
     }
 }
