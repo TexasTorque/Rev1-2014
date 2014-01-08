@@ -4,12 +4,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Watchdog;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousManager;
-import org.TexasTorque.TexasTorque2014.io.DriverInput;
-import org.TexasTorque.TexasTorque2014.io.RobotOutput;
-import org.TexasTorque.TexasTorque2014.io.SensorInput;
-import org.TexasTorque.TexasTorque2014.io.dependency.DriverInputState;
-import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
-import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
+import org.TexasTorque.TexasTorque2014.io.*;
+import org.TexasTorque.TexasTorque2014.io.dependency.*;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
 import org.TexasTorque.TorqueLib.util.DashboardManager;
@@ -50,9 +46,13 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void teleopInit() {
+        drivebase.loadParameters();
+        manipulator.loadParameters();
     }
 
     public void disabledInit() {
+        drivebase.loadParameters();
+        manipulator.loadParameters();
     }
 
     public void run() {
@@ -78,29 +78,37 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousPeriodic() {
-        robotOutput.pullFromState();
+        //robotOutput.pullFromState();
+        drivebase.pushToDashboard();
+        manipulator.pushToDashboard();
     }
 
     public void autonomousContinuous() {
+        //sensorInput.updateState();
+        //robotOutput.updateState();
     }
 
     public void teleopPeriodic() {
         drivebase.run();
         manipulator.run();
         drivebase.pushToDashboard();
+        manipulator.pushToDashboard();
         //robotOutput.pullFromState();
     }
 
     public void teleopContinuous() {
-        //sensorInput.updateState();
         driverInput.updateState();
+        //sensorInput.updateState();
         //robotOutput.updateState();
     }
 
     public void disabledPeriodic() {
-        robotOutput.pullFromState();
+        drivebase.pushToDashboard();
+        manipulator.pushToDashboard();
     }
 
     public void disabledContinuous() {
+        driverInput.updateState();
+        sensorInput.updateState();
     }
 }

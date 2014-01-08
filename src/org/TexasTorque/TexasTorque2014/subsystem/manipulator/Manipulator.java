@@ -1,13 +1,12 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
-import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 
 public class Manipulator extends TorqueSubsystem {
 
     private static Manipulator instance;
-    private Drivebase drivebase;
 
     public static Manipulator getInstance() {
         return (instance == null) ? instance = new Manipulator() : instance;
@@ -15,8 +14,6 @@ public class Manipulator extends TorqueSubsystem {
 
     private Manipulator() {
         super();
-
-        drivebase = Drivebase.getInstance();
     }
 
     public void run() {
@@ -49,6 +46,11 @@ public class Manipulator extends TorqueSubsystem {
     }
 
     public void loadParameters() {
+    }
+    
+    public void pushToDashboard()
+    {
+        SmartDashboard.putBoolean("InOverrideState", driverInput.overrideState());
     }
 
     private void calcOverrides() {

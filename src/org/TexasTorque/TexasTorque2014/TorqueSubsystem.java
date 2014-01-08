@@ -31,6 +31,7 @@ public abstract class TorqueSubsystem
     public abstract void run();
     public abstract void setToRobot();
     public abstract void loadParameters();
+    public abstract void pushToDashboard();
     public abstract String logData();
     public abstract String getKeyNames();
 }
