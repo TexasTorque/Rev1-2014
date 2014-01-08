@@ -58,6 +58,11 @@ public class DriverInputState {
     public synchronized double getTurn() {
         return driveControllerState.getRightXAxis();
     }
+    
+    public synchronized double getRotation()
+    {
+        return operatorControllerState.getLeftXAxis();
+    }
 
     public synchronized boolean shiftHighGear() {
         return driveControllerState.getTopLeftBumper();

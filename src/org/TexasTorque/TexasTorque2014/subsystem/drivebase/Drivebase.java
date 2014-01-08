@@ -108,7 +108,7 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void run() {
-        calcDriveSpeeds(driverInput.getThrottle(), driverInput.getTurn(), driverInput.getTurn());
+        calcDriveSpeeds(driverInput.getThrottle(), driverInput.getTurn(), driverInput.getRotation());
     }
 
     public void setToRobot() {
