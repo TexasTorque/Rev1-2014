@@ -3,6 +3,7 @@ package org.TexasTorque.TexasTorque2014;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Watchdog;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousManager;
 import org.TexasTorque.TexasTorque2014.io.*;
 import org.TexasTorque.TexasTorque2014.io.dependency.*;
@@ -79,8 +80,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void autonomousPeriodic() {
         //robotOutput.pullFromState();
-        drivebase.pushToDashboard();
-        manipulator.pushToDashboard();
+        pushToDashboard();
     }
 
     public void autonomousContinuous() {
@@ -91,8 +91,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     public void teleopPeriodic() {
         drivebase.run();
         manipulator.run();
-        drivebase.pushToDashboard();
-        manipulator.pushToDashboard();
+        pushToDashboard();
         //robotOutput.pullFromState();
     }
 
@@ -103,12 +102,19 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void disabledPeriodic() {
-        drivebase.pushToDashboard();
-        manipulator.pushToDashboard();
+        pushToDashboard();
     }
 
     public void disabledContinuous() {
         driverInput.updateState();
         sensorInput.updateState();
+    }
+    
+    public void pushToDashboard()
+    {
+        SmartDashboard.putNumber("NumCycles", numCycles);
+        
+        drivebase.pushToDashboard();
+        manipulator.pushToDashboard();
     }
 }
