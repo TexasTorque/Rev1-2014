@@ -19,6 +19,7 @@ public class RobotOutputState {
     private double rearRightAngleMotorSpeed;
 
     public RobotOutputState(RobotOutput output) {
+        /*
         lightState = output.getLightState();
         //----- Pneumatics -----
         compressorEnabled = output.getCompressorEnabled();
@@ -33,6 +34,7 @@ public class RobotOutputState {
         rearLeftAngleMotorSpeed = output.getRearLeftAngleMotorSpeed();
         frontRightAngleMotorSpeed = output.getFrontRightAngleMotorSpeed();
         rearRightAngleMotorSpeed = output.getRearRightAngleMotorSpeed();
+        */
     }
 
     public void update(RobotOutput output) {

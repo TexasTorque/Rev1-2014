@@ -38,6 +38,14 @@ public class RobotBase extends IterativeRobot implements Runnable {
     public void robotInit() {
         drivebase = Drivebase.getInstance();
         manipulator = Manipulator.getInstance();
+        driverInput = DriverInput.getInstance();
+        sensorInput = SensorInput.getInstance();
+        robotOutput = RobotOutput.getInstance();
+        driverInputState = DriverInput.getState();
+        sensorInputState = SensorInput.getState();
+        robotOutputState = RobotOutput.getState();
+        driverInput.updateState();
+        watchdog = getWatchdog();
 
         continuousThread = new Thread(this);
         continuousThread.start();
@@ -73,7 +81,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
                 Timer.delay(0.05);
             }
 
-            sensorInput.calcEncoders();
+            //sensorInput.calcEncoders();
             numCycles++;
         }
     }
@@ -106,8 +114,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void disabledContinuous() {
-        driverInput.updateState();
-        sensorInput.updateState();
+        //driverInput.updateState();
+        //sensorInput.updateState();
     }
     
     public void pushToDashboard()
@@ -116,5 +124,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
         
         drivebase.pushToDashboard();
         manipulator.pushToDashboard();
+        driverInputState.pushToDashboard();
     }
 }

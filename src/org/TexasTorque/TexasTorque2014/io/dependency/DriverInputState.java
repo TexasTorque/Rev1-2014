@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.io.DriverInput;
 
 public class DriverInputState {
@@ -10,12 +11,7 @@ public class DriverInputState {
     private int autonMode;
     private boolean inOverrideState;
 
-    public DriverInputState(DriverInput input) {
-        driveControllerState = new GenericControllerState(input.getDriverController());
-        operatorControllerState = new GenericControllerState(input.getOperatorController());
-        autonDelay = input.getAutonomousDelay();
-        autonMode = input.getAutonomousMode();
-        inOverrideState = false;
+    public DriverInputState() {
     }
 
     public void update(DriverInput input) {
@@ -86,5 +82,12 @@ public class DriverInputState {
         }
 
         return inOverrideState;
+    }
+    
+    public void pushToDashboard()
+    {
+        SmartDashboard.putNumber("Strafe X", getThrottle());
+        SmartDashboard.putNumber("Strafe Y", getTurn());
+        SmartDashboard.putNumber("Rotation", getRotation());
     }
 }

@@ -49,7 +49,7 @@ public class Manipulator extends TorqueSubsystem {
     }
     
     public void pushToDashboard() {
-        SmartDashboard.putBoolean("InOverrideState", driverInput.overrideState());
+        SmartDashboard.putBoolean("InOverrideState", false);//driverInput.overrideState());
     }
     
     private void calcOverrides() {

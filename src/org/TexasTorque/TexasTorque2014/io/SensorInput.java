@@ -27,7 +27,7 @@ public class SensorInput {
         watchdog = Watchdog.getInstance();
 
         //----- Encoders/Counters -----
-        frontLeftDriveEncoder = new TorqueEncoder(Ports.LEFT_DRIVE_SIDECAR, Ports.FRONT_LEFT_DRIVE_ENCODER_A_PORT, Ports.LEFT_DRIVE_SIDECAR, Ports.FRONT_LEFT_DRIVE_ENCODER_B_PORT, false);
+        /*frontLeftDriveEncoder = new TorqueEncoder(Ports.LEFT_DRIVE_SIDECAR, Ports.FRONT_LEFT_DRIVE_ENCODER_A_PORT, Ports.LEFT_DRIVE_SIDECAR, Ports.FRONT_LEFT_DRIVE_ENCODER_B_PORT, false);
         frontRightDriveEncoder = new TorqueEncoder(Ports.RIGHT_DRIVE_SIDECAR, Ports.FRONT_RIGHT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_DRIVE_SIDECAR, Ports.FRONT_RIGHT_DRIVE_ENCODER_B_PORT, false);
         rearLeftDriveEncoder = new TorqueEncoder(Ports.LEFT_DRIVE_SIDECAR, Ports.REAR_LEFT_DRIVE_ENCODER_A_PORT, Ports.LEFT_DRIVE_SIDECAR, Ports.REAR_LEFT_DRIVE_ENCODER_B_PORT, false);
         rearRightDriveEncoder = new TorqueEncoder(Ports.RIGHT_DRIVE_SIDECAR, Ports.REAR_RIGHT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_DRIVE_SIDECAR, Ports.REAR_RIGHT_DRIVE_ENCODER_B_PORT, false);
@@ -41,9 +41,7 @@ public class SensorInput {
         //----- Misc -----
         pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
 
-        startEncoders();
-
-        state = new SensorInputState(this);
+        startEncoders();*/
     }
 
     public synchronized static SensorInput getInstance() {
@@ -51,7 +49,7 @@ public class SensorInput {
     }
 
     public synchronized static SensorInputState getState() {
-        return state;
+        return (state == null) ? state = new SensorInputState() : state;
     }
 
     public synchronized void updateState() {
@@ -62,11 +60,15 @@ public class SensorInput {
         // 1 foot = ??? clicks
         frontLeftDriveEncoder.start();
         frontRightDriveEncoder.start();
+        rearLeftDriveEncoder.start();
+        rearRightDriveEncoder.start();
     }
 
     public void resetEncoders() {
         frontLeftDriveEncoder.reset();
         frontRightDriveEncoder.reset();
+        rearLeftDriveEncoder.reset();
+        rearRightDriveEncoder.reset();
     }
 
     public void calcEncoders() {

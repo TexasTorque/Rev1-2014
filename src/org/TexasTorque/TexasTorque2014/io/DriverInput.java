@@ -21,7 +21,6 @@ public class DriverInput {
         driveController = new GenericController(Ports.DRIVE_CONTROLLER_PORT, Constants.DEFAULT_FIRST_CONTROLLER_TYPE);
         operatorController = new GenericController(Ports.OPERATOR_CONTROLLER_PORT, Constants.DEFAULT_SECOND_CONTROLLER_TYPE);
         inOverrideState = false;
-        state = new DriverInputState(this);
     }
 
     public synchronized void updateState() {
@@ -33,7 +32,7 @@ public class DriverInput {
     }
 
     public synchronized static DriverInputState getState() {
-        return state;
+        return (state == null) ? state = new DriverInputState() : state;
     }
 
     public synchronized void pullJoystickTypes() {

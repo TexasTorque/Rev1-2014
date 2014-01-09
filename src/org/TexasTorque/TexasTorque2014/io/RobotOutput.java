@@ -2,9 +2,6 @@ package org.TexasTorque.TexasTorque2014.io;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
-import org.TexasTorque.TexasTorque2014.constants.Constants;
-import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
 import org.TexasTorque.TorqueLib.component.Motor;
 
@@ -46,6 +43,7 @@ public class RobotOutput {
          lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_D_PORT));
          lights = new AdaFruitLights(lightsVector);*/
 
+        /*
         //----- Pneumatics -----
         compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
         driveShifter = new Solenoid(Ports.DRIVE_SHIFTER_PORT);
@@ -68,12 +66,10 @@ public class RobotOutput {
         rearRightAngleMotorSpeed = Constants.MOTOR_STOPPED;
         frontLeftAngleMotorSpeed = Constants.MOTOR_STOPPED;
         rearLeftAngleMotorSpeed = Constants.MOTOR_STOPPED;
-
-        state = new RobotOutputState(this);
-
+        
         //----- Misc Misc -----
         compressor.start();
-
+        * */
     }
 
     public synchronized static RobotOutput getInstance() {
@@ -81,7 +77,7 @@ public class RobotOutput {
     }
 
     public synchronized static RobotOutputState getState() {
-        return state;
+        return (state == null) ? state = new RobotOutputState(getInstance()) : state;
     }
 
     public synchronized void updateState() {

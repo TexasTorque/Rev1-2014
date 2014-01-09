@@ -3,6 +3,8 @@ package org.TexasTorque.TexasTorque2014.subsystem.drivebase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
+import org.TexasTorque.TexasTorque2014.io.DriverInput;
+import org.TexasTorque.TexasTorque2014.io.SensorInput;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
 import org.TexasTorque.TorqueLib.util.TorqueTrigMath;
 
@@ -23,12 +25,16 @@ public class Drivebase extends TorqueSubsystem {
     private TorquePID rearRightPID;
 
     public static Drivebase getInstance() {
+        
         return (instance == null) ? instance = new Drivebase() : instance;
     }
 
     private Drivebase() {
         super();
-
+        
+        driverInput = DriverInput.getState();
+        sensorInput = SensorInput.getState();
+        
         frontLeftSpeed = Constants.MOTOR_STOPPED;
         frontRightSpeed = Constants.MOTOR_STOPPED;
         rearLeftSpeed = Constants.MOTOR_STOPPED;
@@ -47,9 +53,9 @@ public class Drivebase extends TorqueSubsystem {
 
     public void calcDriveSpeeds(double strafeY, double strafeX, double rotation) {
         // ----- Field Centric Calculations -----
-        double temp = strafeY * Math.cos(sensorInput.getGyroAngle()) + strafeX * Math.sin(sensorInput.getGyroAngle());
-        strafeY = -strafeY * Math.sin(sensorInput.getGyroAngle()) + strafeX * Math.cos(sensorInput.getGyroAngle());
-        strafeX = temp;
+        //double temp = strafeY * Math.cos(sensorInput.getGyroAngle()) + strafeX * Math.sin(sensorInput.getGyroAngle());
+        //strafeY = -strafeY * Math.sin(sensorInput.getGyroAngle()) + strafeX * Math.cos(sensorInput.getGyroAngle());
+        //strafeX = temp;
         // ----- 3 DoF Inverse Kinematics -----
         double r = Math.sqrt(Constants.WHEEL_DISTANCE * Constants.WHEEL_DISTANCE + Constants.WHEEL_WIDTH * Constants.WHEEL_WIDTH);
         double A = strafeX - rotation * (Constants.WHEEL_DISTANCE / r);
@@ -59,12 +65,16 @@ public class Drivebase extends TorqueSubsystem {
         //-----Calc Target WheelSpeeds and Angles-----
         double ws1 = Math.sqrt(B * B + C * C);
         double wa1 = TorqueTrigMath.atan2(B, C);
+        
         double ws2 = Math.sqrt(B * B + D * D);
         double wa2 = TorqueTrigMath.atan2(B, D);
+        
         double ws3 = Math.sqrt(A * A + D * D);
         double wa3 = TorqueTrigMath.atan2(A, D);
+        
         double ws4 = Math.sqrt(A * A + C * C);
         double wa4 = TorqueTrigMath.atan2(A, C);
+        
         //-----Find Shortest Path for PID Setpoint-----
         wa1 = wheelAngle(wa1, sensorInput.getFrontRightDriveAngle());
         wa2 = wheelAngle(wa2, sensorInput.getFrontLeftDriveAngle());
@@ -132,9 +142,9 @@ public class Drivebase extends TorqueSubsystem {
         SmartDashboard.putNumber("RearRightAngle", rearRightPID.getSetpoint());
 
         SmartDashboard.putNumber("FrontLeftSpeed", frontLeftSpeed);
-        SmartDashboard.putNumber("FrontRightSpeed", frontRightPID.getSetpoint());
-        SmartDashboard.putNumber("RearLeftSpeed", rearLeftPID.getSetpoint());
-        SmartDashboard.putNumber("RearRightSpeed", rearRightPID.getSetpoint());
+        SmartDashboard.putNumber("FrontRightSpeed", frontRightSpeed);
+        SmartDashboard.putNumber("RearLeftSpeed", rearLeftSpeed);
+        SmartDashboard.putNumber("RearRightSpeed", rearRightSpeed);
     }
 
     public String logData() {
