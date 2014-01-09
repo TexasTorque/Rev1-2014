@@ -101,6 +101,11 @@ public class RobotBase extends IterativeRobot implements Runnable {
         manipulator.run();
         pushToDashboard();
         //robotOutput.pullFromState();
+        
+        SmartDashboard.putNumber("Period", previousTime - robotTime.get());
+        SmartDashboard.putNumber("Hertz", 1 / SmartDashboard.getNumber("Period"));
+        previousTime = robotTime.get();
+        
     }
 
     public void teleopContinuous() {
