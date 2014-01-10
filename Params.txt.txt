@@ -1,0 +1,19 @@
+D_FtLftAngP 0.0
+D_FtLftAngI 0.0
+D_FtLftAngD 0.0
+D_FtLftAngE 0.0
+
+D_RrLftAngP 0.0
+D_RrLftAngI 0.0
+D_RrLftAngD 0.0
+D_RrLftAngE 0.0
+
+D_FtRtAngP 0.0
+D_FtRtAngI 0.0
+D_FtRtAngD 0.0
+D_FtRtAngE 0.0
+
+D_RrRtAngP 0.0
+D_RrRtAngI 0.0
+D_RrRtAngD 0.0
+D_RrRtAngE 0.0
