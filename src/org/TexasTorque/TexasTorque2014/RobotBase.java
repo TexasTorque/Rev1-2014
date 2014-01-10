@@ -102,9 +102,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
         pushToDashboard();
         //robotOutput.pullFromState();
         
-        SmartDashboard.putNumber("Period", previousTime - robotTime.get());
-        SmartDashboard.putNumber("Hertz", 1 / SmartDashboard.getNumber("Period"));
-        previousTime = robotTime.get();
         
     }
 
@@ -112,6 +109,9 @@ public class RobotBase extends IterativeRobot implements Runnable {
         driverInput.updateState();
         //sensorInput.updateState();
         //robotOutput.updateState();
+        SmartDashboard.putNumber("Period", Timer.getFPGATimestamp() - previousTime);
+        SmartDashboard.putNumber("Hertz", 1 / SmartDashboard.getNumber("Period"));
+        previousTime = Timer.getFPGATimestamp();
     }
 
     public void disabledPeriodic() {
