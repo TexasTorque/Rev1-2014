@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.subsystem.drivebase;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TorqueLib.util.TorqueUtil;
@@ -91,7 +92,10 @@ public class Drivebase extends TorqueSubsystem {
 
         return names;
     }
-
+    public void pushToDashboard()
+    {
+        SmartDashboard.putNumber("LeftDriveSpeed", leftRearDriveSpeed);
+    }
     public String logData() {
         String data = leftFrontDriveSpeed + ",";
         data += sensorInput.getLeftDriveEncoder() + ",";
