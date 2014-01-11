@@ -11,10 +11,10 @@ public class RobotOutputState
     private boolean highGear;
 
     //----- Drive Motors -----
-    private double frontLeftMotorSpeed;
-    private double rearLeftMotorSpeed;
-    private double frontRightMotorSpeed;
-    private double rearRightMotorSpeed;
+    private double leftFrontMotorSpeed;
+    private double leftRearMotorSpeed;
+    private double rightFrontMotorSpeed;
+    private double rightRearMotorSpeed;
     
     public RobotOutputState(RobotOutput output)
     {   
@@ -24,17 +24,17 @@ public class RobotOutputState
         highGear = output.getShiftState();
         
         //----- Drive Motors -----
-        frontLeftMotorSpeed = output.getFrontLeftMotorSpeed();
-        rearLeftMotorSpeed = output.getRearLeftMotorSpeed();
-        frontRightMotorSpeed = output.getFrontRightMotorSpeed();
-        rearRightMotorSpeed = output.getRearRightMotorSpeed();
+        leftFrontMotorSpeed = output.getLeftFrontMotorSpeed();
+        leftRearMotorSpeed = output.getLeftRearMotorSpeed();
+        rightFrontMotorSpeed = output.getRightFrontMotorSpeed();
+        rightRearMotorSpeed = output.getRightRearMotorSpeed();
     }
-    public synchronized void setDriveMotors(double leftMotorSpeed, double rightMotorSpeed)
+    public synchronized void setDriveMotors(double leftFrontMotorSpeed, double leftRightMotorSpeed, double rightFrontMotorSpeed, double rightRearMotorSpeed)
     {
-        frontLeftMotorSpeed = leftMotorSpeed;
-        rearLeftMotorSpeed = leftMotorSpeed;
-        frontRightMotorSpeed = rightMotorSpeed;
-        rearRightMotorSpeed = rightMotorSpeed;
+        leftFrontMotorSpeed = leftFrontMotorSpeed;
+        leftRearMotorSpeed = leftRearMotorSpeed;
+        rightFrontMotorSpeed = rightRearMotorSpeed;
+        rightRearMotorSpeed = rightFrontMotorSpeed;
     }
     public synchronized void setLightsState(int state)
     {
@@ -45,21 +45,21 @@ public class RobotOutputState
         this.highGear = highGear;
     }
     
-    public double getFrontLeftMotorSpeed()
+    public double getLeftFrontMotorSpeed()
     {
-        return frontLeftMotorSpeed;
+        return leftFrontMotorSpeed;
     }
-    public double getRearLeftMotorSpeed()
+    public double getLeftRearMotorSpeed()
     {
-        return rearLeftMotorSpeed;
+        return leftRearMotorSpeed;
     }
-    public double getFrontRightMotorSpeed()
+    public double getRightFrontMotorSpeed()
     {
-        return frontRightMotorSpeed;
+        return rightFrontMotorSpeed;
     }
-    public double getRearRightMotorSpeed()
+    public double getRightRearMotorSpeed()
     {
-        return rearRightMotorSpeed;
+        return rightRearMotorSpeed;
     }
     public boolean getCompressorEnabled()
     {

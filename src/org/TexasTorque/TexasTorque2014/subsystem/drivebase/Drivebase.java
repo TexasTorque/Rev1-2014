@@ -7,8 +7,10 @@ import org.TexasTorque.TorqueLib.util.TorqueUtil;
 public class Drivebase extends TorqueSubsystem {
 
     private static Drivebase instance;
-    private double leftDriveSpeed;
-    private double rightDriveSpeed;
+    private double leftFrontDriveSpeed;
+    private double leftRearDriveSpeed;
+    private double rightFrontDriveSpeed;
+    private double rightRearDriveSpeed;
     private boolean shiftState;
 
     public static Drivebase getInstance() {
@@ -18,26 +20,30 @@ public class Drivebase extends TorqueSubsystem {
     private Drivebase() {
         super();
 
-        leftDriveSpeed = Constants.MOTOR_STOPPED;
-        rightDriveSpeed = Constants.MOTOR_STOPPED;
+        leftFrontDriveSpeed = Constants.MOTOR_STOPPED;
+        leftRearDriveSpeed = Constants.MOTOR_STOPPED;
+        rightFrontDriveSpeed = Constants.MOTOR_STOPPED;
+        rightRearDriveSpeed = Constants.MOTOR_STOPPED;
 
         shiftState = Constants.LOW_GEAR;
     }
 
     public void run() {
-        mixChannels(driverInput.getThrottle(), driverInput.getTurn());
+        mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
 
         shiftState = driverInput.shiftHighGear();
     }
 
     public void setToRobot() {
         robotOutput.setShifters(shiftState);
-        robotOutput.setDriveMotors(leftDriveSpeed, rightDriveSpeed);
+        robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed);
     }
 
-    public void setDriveSpeeds(double leftSpeed, double rightSpeed) {
-        leftDriveSpeed = leftSpeed;
-        rightDriveSpeed = rightSpeed;
+    public void setDriveSpeeds(double leftFrontSpeed,double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed) {
+        leftFrontDriveSpeed = leftFrontSpeed;
+        leftRearDriveSpeed = leftRearSpeed;
+        rightFrontDriveSpeed = rightFrontSpeed;
+        rightRearDriveSpeed = rightRearSpeed;
     }
 
     public void setShifters(boolean highGear) {
@@ -46,21 +52,48 @@ public class Drivebase extends TorqueSubsystem {
         }
     }
 
-    private void mixChannels(double yAxis, double xAxis) {
-        yAxis = TorqueUtil.applyDeadband(yAxis, Constants.SPEED_AXIS_DEADBAND);
-        xAxis = TorqueUtil.applyDeadband(xAxis, Constants.TURN_AXIS_DEADBAND);
+    private void mixChannels(double yAxis, double xAxis, double rotation) {
+        yAxis = TorqueUtil.applyDeadband(yAxis, Constants.Y_AXIS_DEADBAND);
+        xAxis = TorqueUtil.applyDeadband(xAxis, Constants.X_AXIS_DEADBAND);
+        rotation = TorqueUtil.applyDeadband(rotation, Constants.ROTATION_DEADBAND);
 
-        simpleDrive(yAxis, xAxis);
+        mecanumDrive(yAxis, xAxis, rotation);
     }
-
-    private void simpleDrive(double yAxis, double xAxis) {
-        yAxis = TorqueUtil.sqrtHoldSign(yAxis);
-        xAxis = TorqueUtil.sqrtHoldSign(xAxis);
-
-        double leftSpeed = yAxis + xAxis;
-        double rightSpeed = yAxis - xAxis;
-
-        setDriveSpeeds(leftSpeed, rightSpeed);
+    
+    private void mecanumDrive(double yAxis, double xAxis, double rotation)
+    {
+        double leftFrontSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT + xAxis*Constants.STRAFE_COEFFICIENT + rotation*Constants.ROTATION_COEFFICIENT;
+        double leftRearSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT - xAxis*Constants.STRAFE_COEFFICIENT + rotation*Constants.ROTATION_COEFFICIENT;
+        double rightFrontSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT - xAxis*Constants.STRAFE_COEFFICIENT - rotation*Constants.ROTATION_COEFFICIENT;
+        double rightRearSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT + xAxis*Constants.STRAFE_COEFFICIENT - rotation*Constants.ROTATION_COEFFICIENT;
+        
+        double max = 1;
+        if (leftFrontSpeed > max)
+        {
+            max = leftFrontSpeed;
+        }
+        if (leftRearSpeed > max)
+        {
+            max = leftRearSpeed;
+        }
+        if (rightFrontSpeed > max)
+        {
+            max = rightFrontSpeed;
+        }
+        if (rightRearSpeed > max)
+        {
+            max = rightRearSpeed;
+        }
+        
+        if (max > 1)
+        {
+            leftFrontSpeed = leftFrontSpeed / max;
+            rightFrontSpeed = rightFrontSpeed / max;
+            leftRearSpeed = leftRearSpeed / max;
+            rightRearSpeed = rightRearSpeed / max;
+        }
+        
+        setDriveSpeeds(leftFrontSpeed, leftRearSpeed, rightFrontSpeed, rightRearSpeed);
     }
 
     public String getKeyNames() {
@@ -72,11 +105,11 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public String logData() {
-        String data = leftDriveSpeed + ",";
+        String data = leftFrontDriveSpeed + ",";
         data += sensorInput.getLeftDriveEncoder() + ",";
         data += sensorInput.getLeftDriveEncoderRate() + ",";
 
-        data += rightDriveSpeed + ",";
+        data += rightFrontDriveSpeed + ",";
         data += sensorInput.getRightDriveEncoder() + ",";
         data += sensorInput.getRightDriveEncoderRate() + ",";
 

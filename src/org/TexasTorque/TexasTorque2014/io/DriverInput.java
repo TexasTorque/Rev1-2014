@@ -81,14 +81,19 @@ public class DriverInput
     
 //---------- Drivebase ----------
     
-    public synchronized double getThrottle()
+    public synchronized double getXAxis()
     {
-        return -1 * driveController.getLeftYAxis();
+        return driveController.getLeftYAxis();
     }
     
-    public synchronized double getTurn()
+    public synchronized double getYAxis()
     {
-        return driveController.getRightXAxis();
+        return driveController.getLeftXAxis();
+    }
+    
+    public synchronized double getRotation()
+    {
+        return operatorController.getRightXAxis();
     }
     
     public synchronized boolean shiftHighGear()
@@ -98,7 +103,7 @@ public class DriverInput
     
     public synchronized boolean hasInput()
     {
-        return (Math.abs(getThrottle())>.07 || Math.abs(getTurn())>.07);
+        return (Math.abs(getXAxis())>Constants.X_AXIS_DEADBAND || Math.abs(getYAxis())>Constants.Y_AXIS_DEADBAND || Math.abs(getRotation())>Constants.ROTATION_DEADBAND);
     }
     
 //---------- Manipulator ----------    

@@ -23,14 +23,14 @@ public class RobotOutput
     private boolean shiftState;
 
     //----- Drive Motors -----
-    private Motor frontLeftDriveMotor;
-    private Motor rearLeftDriveMotor;
-    private Motor frontRightDriveMotor;
-    private Motor rearRightDriveMotor;
-    private double frontLeftMotorSpeed;
-    private double rearLeftMotorSpeed;
-    private double frontRightMotorSpeed;
-    private double rearRightMotorSpeed;
+    private Motor leftFrontDriveMotor;
+    private Motor leftRearDriveMotor;
+    private Motor rightFrontDriveMotor;
+    private Motor rightRearDriveMotor;
+    private double leftFrontMotorSpeed;
+    private double leftRearMotorSpeed;
+    private double rightFrontMotorSpeed;
+    private double rightRearMotorSpeed;
     
     public RobotOutput()
     {   
@@ -48,14 +48,14 @@ public class RobotOutput
         shiftState = Constants.LOW_GEAR;
         
         //----- Drive Motors -----
-        frontLeftDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.FRONT_LEFT_DRIVE_MOTOR_PORT), false, true);
-        rearLeftDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.REAR_LEFT_DRIVE_MOTOR_PORT), false, true);
-        frontRightDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.FRONT_RIGHT_DRIVE_MOTOR_PORT), true, true);
-        rearRightDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.REAR_RIGHT_DRIVE_MOTOR_PORT), true, true);
-        frontRightMotorSpeed = Constants.MOTOR_STOPPED;
-        rearRightMotorSpeed = Constants.MOTOR_STOPPED;
-        frontLeftMotorSpeed = Constants.MOTOR_STOPPED;
-        rearLeftMotorSpeed = Constants.MOTOR_STOPPED;
+        leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
+        leftRearDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
+        rightFrontDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
+        rightRearDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
+        rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
+        rightRearMotorSpeed = Constants.MOTOR_STOPPED;
+        leftFrontMotorSpeed = Constants.MOTOR_STOPPED;
+        leftRearMotorSpeed = Constants.MOTOR_STOPPED;
         
         //----- Misc Misc -----
         compressor.start();
@@ -76,7 +76,7 @@ public class RobotOutput
     public synchronized void pullFromState()
     {
         setLightsState(state.getLightState());
-        setDriveMotors(state.getFrontLeftMotorSpeed(), state.getFrontRightMotorSpeed());
+        setDriveMotors(state.getLeftFrontMotorSpeed(),state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed());
         setShifters(state.getShiftState());
     }
     
@@ -95,33 +95,33 @@ public class RobotOutput
         return lightState;
     }
     
-    public void setDriveMotors(double leftSpeed, double rightSpeed)
+    public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed)
     {
-        frontLeftDriveMotor.Set(leftSpeed);
-        rearLeftDriveMotor.Set(leftSpeed);
-        frontRightDriveMotor.Set(rightSpeed);
-        rearRightDriveMotor.Set(rightSpeed);
-        frontLeftMotorSpeed = leftSpeed;
-        frontRightMotorSpeed = rightSpeed;
-        rearLeftMotorSpeed = leftSpeed;
-        rearRightMotorSpeed = rightSpeed;
+        leftFrontDriveMotor.Set(leftFrontSpeed);
+        leftRearDriveMotor.Set(leftRearSpeed);
+        rightFrontDriveMotor.Set(rightFrontSpeed);
+        rightRearDriveMotor.Set(rightRearSpeed);
+        leftFrontMotorSpeed = leftFrontSpeed;
+        rightFrontMotorSpeed = rightFrontSpeed;
+        leftRearMotorSpeed = leftRearSpeed;
+        rightRearMotorSpeed = rightRearSpeed;
     }
     
-    public double getFrontLeftMotorSpeed()
+    public double getLeftFrontMotorSpeed()
     {
-        return frontLeftMotorSpeed;
+        return leftFrontMotorSpeed;
     }
-    public double getFrontRightMotorSpeed()
+    public double getRightFrontMotorSpeed()
     {
-        return frontRightMotorSpeed;
+        return rightFrontMotorSpeed;
     }
-    public double getRearLeftMotorSpeed()
+    public double getLeftRearMotorSpeed()
     {
-        return rearLeftMotorSpeed;
+        return leftRearMotorSpeed;
     }
-    public double getRearRightMotorSpeed()
+    public double getRightRearMotorSpeed()
     {
-        return rearRightMotorSpeed;
+        return rightRearMotorSpeed;
     }
     public void setShifters(boolean highGear)
     {
