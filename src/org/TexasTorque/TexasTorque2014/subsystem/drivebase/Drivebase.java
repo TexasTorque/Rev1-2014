@@ -56,21 +56,21 @@ public class Drivebase extends TorqueSubsystem {
         double rightRearSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT + xAxis*Constants.STRAFE_COEFFICIENT - rotation*Constants.ROTATION_COEFFICIENT;
         
         double max = 1;
-        if (leftFrontSpeed > max)
+        if (Math.abs(leftFrontSpeed) > max)
         {
-            max = leftFrontSpeed;
+            max = Math.abs(leftFrontSpeed);
         }
-        if (leftRearSpeed > max)
+        if (Math.abs(leftRearSpeed) > max)
         {
-            max = leftRearSpeed;
+            max = Math.abs(leftRearSpeed);
         }
-        if (rightFrontSpeed > max)
+        if (Math.abs(rightFrontSpeed) > max)
         {
-            max = rightFrontSpeed;
+            max = Math.abs(rightFrontSpeed);
         }
-        if (rightRearSpeed > max)
+        if (Math.abs(rightRearSpeed) > max)
         {
-            max = rightRearSpeed;
+            max = Math.abs(rightRearSpeed);
         }
         
         if (max > 1)
