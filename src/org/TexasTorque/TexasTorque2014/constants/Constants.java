@@ -27,8 +27,6 @@ public class Constants
     
     //----- Drivebase -----
     public final static double DEFAULT_HIGH_SENSITIVITY = 0.7;
-    public final static boolean HIGH_GEAR = true;
-    public final static boolean LOW_GEAR = false;
     public final static double STRAFE_COEFFICIENT = 1;
     public final static double FORWARD_REVERSE_COEFFICIENT = 1;
     public final static double ROTATION_COEFFICIENT = 1;

@@ -19,8 +19,6 @@ public class RobotOutput
     
     //----- Pneumatics -----
     private Compressor compressor;
-    private Solenoid driveShifter;
-    private boolean shiftState;
 
     //----- Drive Motors -----
     private Motor leftFrontDriveMotor;
@@ -44,8 +42,6 @@ public class RobotOutput
         
         //----- Pneumatics -----
         compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
-        driveShifter = new Solenoid(Ports.DRIVE_SHIFTER_PORT);
-        shiftState = Constants.LOW_GEAR;
         
         //----- Drive Motors -----
         leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
@@ -77,7 +73,6 @@ public class RobotOutput
     {
         setLightsState(state.getLightState());
         setDriveMotors(state.getLeftFrontMotorSpeed(),state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed());
-        setShifters(state.getShiftState());
     }
     
     public void setLightsState(int state)
@@ -123,17 +118,8 @@ public class RobotOutput
     {
         return rightRearMotorSpeed;
     }
-    public void setShifters(boolean highGear)
-    {
-        driveShifter.set(highGear);
-        shiftState = highGear;
-    }
     public boolean getCompressorEnabled()
     {
         return compressor.enabled();
-    }
-    public boolean getShiftState()
-    {
-        return shiftState;
     }
 }

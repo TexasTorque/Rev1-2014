@@ -65,11 +65,6 @@ public class DriverInputState
         return operatorControllerState.getRightXAxis();
     }
     
-    public synchronized boolean shiftHighGear()
-    {
-        return driveControllerState.getTopLeftBumper();
-    }
-    
     public synchronized boolean hasInput()
     {
         return (Math.abs(getXAxis())>Constants.X_AXIS_DEADBAND || Math.abs(getYAxis())>Constants.Y_AXIS_DEADBAND || Math.abs(getRotation())>Constants.ROTATION_DEADBAND);

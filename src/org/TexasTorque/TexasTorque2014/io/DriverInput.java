@@ -7,274 +7,103 @@ import org.TexasTorque.TexasTorque2014.io.dependency.DriverInputState;
 import org.TexasTorque.TorqueLib.util.GenericController;
 import org.TexasTorque.TorqueLib.util.Parameters;
 
-public class DriverInput
-{
+public class DriverInput {
+
     private static DriverInput instance;
     private static DriverInputState state;
     private Parameters params;
     public GenericController driveController;
     private GenericController operatorController;
-    
+
     private boolean inOverrideState;
-        
-    public DriverInput()
-    {
+
+    public DriverInput() {
         params = Parameters.getTeleopInstance();
         driveController = new GenericController(Ports.DRIVE_CONTROLLER_PORT, Constants.DEFAULT_FIRST_CONTROLLER_TYPE);
         operatorController = new GenericController(Ports.OPERATOR_CONTROLLER_PORT, Constants.DEFAULT_SECOND_CONTROLLER_TYPE);
-        
+
         inOverrideState = false;
     }
-    public synchronized void updateState()
-    {
+
+    public synchronized void updateState() {
         state = new DriverInputState(getInstance());
     }
-    
-    public synchronized static DriverInput getInstance()
-    {
+
+    public synchronized static DriverInput getInstance() {
         return (instance == null) ? instance = new DriverInput() : instance;
     }
-    
-    public synchronized static DriverInputState getState()
-    {
+
+    public synchronized static DriverInputState getState() {
         return state;
     }
-    
-    public synchronized void pullJoystickTypes()
-    {
+
+    public synchronized void pullJoystickTypes() {
         boolean firstControllerType = SmartDashboard.getBoolean("firstControllerIsLogitech", Constants.DEFAULT_FIRST_CONTROLLER_TYPE);
         boolean secondControllerType = SmartDashboard.getBoolean("secondControllerIsLogitech", Constants.DEFAULT_SECOND_CONTROLLER_TYPE);
-        
-        if(firstControllerType)
-        {
+
+        if (firstControllerType) {
             driveController.setAsLogitech();
-        }
-        else
-        {
+        } else {
             driveController.setAsXBox();
         }
-        
-        if(secondControllerType)
-        {
+
+        if (secondControllerType) {
             operatorController.setAsLogitech();
-        }
-        else
-        {
+        } else {
             operatorController.setAsXBox();
         }
     }
-    
-    public synchronized double getAutonomousDelay()
-    {
+
+    public synchronized double getAutonomousDelay() {
         return SmartDashboard.getNumber("Autonomous Delay", 0.0);
     }
-    
-    public synchronized int getAutonomousMode()
-    {
+
+    public synchronized int getAutonomousMode() {
         return (int) SmartDashboard.getNumber("AutonomousMode", Constants.DO_NOTHING_AUTO);
     }
-    
-    public synchronized boolean resetSensors()
-    {
+
+    public synchronized boolean resetSensors() {
         return operatorController.getBottomActionButton();
     }
-    
+
 //---------- Drivebase ----------
-    
-    public synchronized double getXAxis()
-    {
+    public synchronized double getXAxis() {
         return driveController.getLeftYAxis();
     }
-    
-    public synchronized double getYAxis()
-    {
+
+    public synchronized double getYAxis() {
         return driveController.getLeftXAxis();
     }
-    
-    public synchronized double getRotation()
-    {
+
+    public synchronized double getRotation() {
         return operatorController.getRightXAxis();
     }
-    
-    public synchronized boolean shiftHighGear()
-    {
-        return driveController.getTopLeftBumper();
+
+    public synchronized boolean hasInput() {
+        return (Math.abs(getXAxis()) > Constants.X_AXIS_DEADBAND || Math.abs(getYAxis()) > Constants.Y_AXIS_DEADBAND || Math.abs(getRotation()) > Constants.ROTATION_DEADBAND);
     }
-    
-    public synchronized boolean hasInput()
-    {
-        return (Math.abs(getXAxis())>Constants.X_AXIS_DEADBAND || Math.abs(getYAxis())>Constants.Y_AXIS_DEADBAND || Math.abs(getRotation())>Constants.ROTATION_DEADBAND);
-    }
-    
+
 //---------- Manipulator ----------    
-    
-    public synchronized boolean runIntake()
-    {
-        return operatorController.getTopLeftBumper();
-    }
-    
-    public synchronized boolean reverseIntake()
-    {
-        return operatorController.getTopRightBumper();
-    }
-    
-    public synchronized boolean restoreToDefault()
-    {
+    public synchronized boolean restoreToDefault() {
         return operatorController.getBottomLeftBumper();
     }
-    
-    public synchronized boolean shootHigh()
-    {
-        return operatorController.getRightActionButton();
-    }
-    
-    public synchronized boolean shootSide()
-    {
-        return operatorController.getLeftActionButton();
-    }
-    
-    public synchronized boolean shootLow()
-    {
-        return false; //operatorController.getBottomActionButton();
-    }
-    
-    public synchronized boolean shootFar()
-    {
-        return operatorController.getTopActionButton();
-    }
-    
-    public synchronized boolean shootClose()
-    {
-        return operatorController.getTopActionButton();
-    }
-    
-    public synchronized boolean fireFrisbee()
-    {
-        return operatorController.getBottomRightBumper();
-    }
-    
-    public synchronized boolean gotoSlotHeight()
-    {
-        return operatorController.getLeftStickClick();
-    }
-    
-    public synchronized boolean incrementAngle()
-    {
-        return operatorController.getRightDPAD();
-    }
-    
-    public synchronized boolean decrementAngle()
-    {
-        return operatorController.getLeftDPAD();
-    }
-    
-    public synchronized boolean getAutoTargeting()
-    {
-        return operatorController.getBottomActionButton(); // Need to know what control to put it on.
-    }
-    
-    public synchronized boolean passiveHang()
-    {
-        return operatorController.getRightStickClick();
-    }
-    
+
 //---------- Overrides ----------
-    
-    public synchronized boolean overrideState()
-    {
-        if(operatorController.getLeftCenterButton())
-        {
+    public synchronized boolean overrideState() {
+        if (operatorController.getLeftCenterButton()) {
             inOverrideState = true;
-        }
-        else if(operatorController.getRightCenterButton())
-        {
+        } else if (operatorController.getRightCenterButton()) {
             inOverrideState = false;
         }
-        
+
         return inOverrideState;
     }
-    
-    public synchronized boolean intakeOverride()
-    {
-        return operatorController.getTopLeftBumper();
-    }
-    
-    public synchronized boolean outtakeOverride()
-    {
-        return operatorController.getTopRightBumper();
-    }
-    
-    public synchronized boolean tiltUpOverride()
-    {
-        return (operatorController.getRightYAxis() < -0.3);
-    }
-    
-    public synchronized boolean tiltDownOverride()
-    {
-        return (operatorController.getRightYAxis() > 0.3);
-    }
-    
-    public synchronized double getTiltOverride()
-    {
-        return (operatorController.getRightYAxis());    
-    }
-    
-    public synchronized boolean shootLowOverride()
-    {
-        return operatorController.getLeftActionButton();
-    }
-    
-    public synchronized boolean shootSideOverride()
-    {
-        return operatorController.getBottomActionButton();
-    }
-    
-    public synchronized boolean shootFarOverride()
-    {
-        return false;
-    }
-    
-    public synchronized boolean magazineShootOverride()
-    {
-        return operatorController.getBottomRightBumper();
-    }
-    
-    public synchronized boolean restoreToDefaultOverride()
-    {
-        return operatorController.getBottomLeftBumper();
-    }
-    
-    public synchronized boolean elevatorTopOverride()
-    {
-        return (operatorController.getLeftYAxis() < -0.5);
-    }
-    
-    public synchronized boolean elevatorBottomOverride()
-    {
-        return (operatorController.getLeftYAxis() > 0.5);
-    }
-    
-    public synchronized double getElevatorJoystick()
-    {
-        return (operatorController.getLeftYAxis());
-    }
-    
-    public synchronized boolean getMadtownUnjam()
-    {
-        return operatorController.getTopActionButton();
-    }
-    
-    public synchronized boolean fireUnjam()
-    {
-        return operatorController.getLeftStickClick();
-    }
-    
-    public synchronized GenericController getDriverController()
-    {
+
+    public synchronized GenericController getDriverController() {
         return driveController;
     }
-    public synchronized GenericController getOperatorController()
-    {
+
+    public synchronized GenericController getOperatorController() {
         return operatorController;
     }
 }

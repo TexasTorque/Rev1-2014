@@ -11,7 +11,6 @@ public class Drivebase extends TorqueSubsystem {
     private double leftRearDriveSpeed;
     private double rightFrontDriveSpeed;
     private double rightRearDriveSpeed;
-    private boolean shiftState;
 
     public static Drivebase getInstance() {
         return (instance == null) ? instance = new Drivebase() : instance;
@@ -24,18 +23,13 @@ public class Drivebase extends TorqueSubsystem {
         leftRearDriveSpeed = Constants.MOTOR_STOPPED;
         rightFrontDriveSpeed = Constants.MOTOR_STOPPED;
         rightRearDriveSpeed = Constants.MOTOR_STOPPED;
-
-        shiftState = Constants.LOW_GEAR;
     }
 
     public void run() {
         mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
-
-        shiftState = driverInput.shiftHighGear();
     }
 
     public void setToRobot() {
-        robotOutput.setShifters(shiftState);
         robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed);
     }
 
@@ -44,12 +38,6 @@ public class Drivebase extends TorqueSubsystem {
         leftRearDriveSpeed = leftRearSpeed;
         rightFrontDriveSpeed = rightFrontSpeed;
         rightRearDriveSpeed = rightRearSpeed;
-    }
-
-    public void setShifters(boolean highGear) {
-        if (highGear != shiftState) {
-            shiftState = highGear;
-        }
     }
 
     private void mixChannels(double yAxis, double xAxis, double rotation) {
@@ -99,7 +87,7 @@ public class Drivebase extends TorqueSubsystem {
     public String getKeyNames() {
         String names = "LeftDriveSpeed,LeftDriveEncoderPosition,LeftDriveEncoderVelocity,"
                 + "RightDriveSpeed,RightDriveEncoderPosition,RightDriveEncoderVelocity,"
-                + "GyroAngle,ShiftState";
+                + "GyroAngle";
 
         return names;
     }
@@ -114,7 +102,6 @@ public class Drivebase extends TorqueSubsystem {
         data += sensorInput.getRightDriveEncoderRate() + ",";
 
         data += sensorInput.getGyroAngle() + ",";
-        data += shiftState + ",";
 
         return data;
     }

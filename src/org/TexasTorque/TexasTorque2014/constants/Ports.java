@@ -22,7 +22,6 @@ public class Ports
         public final static int LEFT_REAR_DRIVE_MOTOR_PORT = 0;
     
     //----- Solenoids -----
-    public final static int DRIVE_SHIFTER_PORT = 0;
     
     //----- Digital Inputs -----
         //----- Sidecar 1 -----
