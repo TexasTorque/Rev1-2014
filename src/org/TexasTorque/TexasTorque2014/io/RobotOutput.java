@@ -31,10 +31,10 @@ public class RobotOutput
         //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
         
         //----- Drive Motors -----
-        leftFrontDriveMotor = new Motor(new Victor(1, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
-        leftRearDriveMotor = new Motor(new Victor(1, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
-        rightFrontDriveMotor = new Motor(new Victor(1, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
-        rightRearDriveMotor = new Motor(new Victor(1, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
+        leftFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
+        leftRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
+        rightFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
+        rightRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
         rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
         rightRearMotorSpeed = Constants.MOTOR_STOPPED;
         leftFrontMotorSpeed = Constants.MOTOR_STOPPED;

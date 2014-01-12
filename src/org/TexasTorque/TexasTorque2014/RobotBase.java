@@ -13,6 +13,7 @@ import org.TexasTorque.TorqueLib.util.TorqueLogging;
 public class RobotBase extends IterativeRobot implements Runnable {
 
     Thread continuousThread;
+
     Watchdog watchdog;
     Parameters params;
     TorqueLogging logging;
@@ -21,8 +22,10 @@ public class RobotBase extends IterativeRobot implements Runnable {
     SensorInput sensorInput;
     RobotOutput robotOutput;
     Drivebase drivebase;
-    Manipulator manipulator;
+    //Manipulator manipulator;
+
     Timer robotTime;
+
     boolean logData;
     int logCycles;
     double numCycles;
@@ -32,16 +35,20 @@ public class RobotBase extends IterativeRobot implements Runnable {
         watchdog = getWatchdog();
         watchdog.setEnabled(true);
         watchdog.setExpiration(0.5);
-        
+
+        //params = Parameters.getTeleopInstance();
+
         dashboardManager = DashboardManager.getInstance();
         robotOutput = RobotOutput.getInstance();
         driverInput = DriverInput.getInstance();
+        //sensorInput = SensorInput.getInstance();
         drivebase = Drivebase.getInstance();
-        
+        //manipulator = Manipulator.getInstance();
+
         driverInput.pullJoystickTypes();
-        
+
         robotTime = new Timer();
-        
+
         numCycles = 0.0;
 
         continuousThread = new Thread(this);
@@ -49,12 +56,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
-    }
-
-    public void teleopInit() {
-        driverInput.pullJoystickTypes();
-        robotTime.reset();
-        robotTime.start();
     }
 
     public void disabledInit() {
@@ -83,27 +84,39 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousPeriodic() {
+        watchdog.feed();
     }
 
     public void autonomousContinuous() {
     }
 
+    public void teleopInit() {
+        driverInput.pullJoystickTypes();
+        
+        robotTime.reset();
+        robotTime.start();
+    }
+
     public void teleopPeriodic() {
+        watchdog.feed();
+        
+        drivebase.setToRobot();
+        //manipulator.setToRobot();
     }
 
     public void teleopContinuous() {
         drivebase.run();
-        
+        //manipulator.run();
+
         driverInput.updateState();
         robotOutput.updateState();
-        
-        drivebase.run();
-        
-        //drivebase.pushToDashboard();
+
+        drivebase.pushToDashboard();
         robotOutput.pullFromState();
     }
 
     public void disabledPeriodic() {
+        watchdog.feed();
     }
 
     public void disabledContinuous() {
