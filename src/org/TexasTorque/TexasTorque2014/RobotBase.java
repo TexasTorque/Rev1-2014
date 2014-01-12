@@ -3,7 +3,6 @@ package org.TexasTorque.TexasTorque2014;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Watchdog;
-import org.TexasTorque.TexasTorque2014.autonomous.AutonomousManager;
 import org.TexasTorque.TexasTorque2014.io.*;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
@@ -23,7 +22,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
     RobotOutput robotOutput;
     Drivebase drivebase;
     Manipulator manipulator;
-    AutonomousManager autoManager;
     Timer robotTime;
     boolean logData;
     int logCycles;
@@ -39,8 +37,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
         robotOutput = RobotOutput.getInstance();
         driverInput = DriverInput.getInstance();
         drivebase = Drivebase.getInstance();
-        
-        autoManager = new AutonomousManager();
         
         driverInput.pullJoystickTypes();
         

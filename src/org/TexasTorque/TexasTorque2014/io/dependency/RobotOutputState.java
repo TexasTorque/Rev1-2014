@@ -4,8 +4,6 @@ import org.TexasTorque.TexasTorque2014.io.*;
 
 public class RobotOutputState {
 
-    private int lightState;
-
     //----- Pneumatics -----
     private boolean compressorEnabled;
 
@@ -21,7 +19,6 @@ public class RobotOutputState {
     
     public void updateState(RobotOutput output)
     {
-        lightState = output.getLightState();
         //----- Pneumatics -----
         compressorEnabled = output.getCompressorEnabled();
 
@@ -37,10 +34,6 @@ public class RobotOutputState {
         leftRearMotorSpeed = leftRearSpeed;
         rightFrontMotorSpeed = rightRearSpeed;
         rightRearMotorSpeed = rightRearSpeed;
-    }
-
-    public synchronized void setLightsState(int state) {
-        lightState = state;
     }
 
     public double getLeftFrontMotorSpeed() {
@@ -61,9 +54,5 @@ public class RobotOutputState {
 
     public boolean getCompressorEnabled() {
         return compressorEnabled;
-    }
-
-    public int getLightState() {
-        return lightState;
     }
 }

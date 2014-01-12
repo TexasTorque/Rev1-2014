@@ -1,7 +1,6 @@
 package org.TexasTorque.TexasTorque2014.io;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
@@ -12,10 +11,6 @@ public class RobotOutput
 {
     private static RobotOutput instance;
     private static RobotOutputState state;
-    
-//    private AdaFruitLights lights;
-    //private Vector lightsVector;
-    private int lightState;
     
     //----- Pneumatics -----
     private Compressor compressor;
@@ -31,15 +26,7 @@ public class RobotOutput
     private double rightRearMotorSpeed;
     
     public RobotOutput()
-    {   
-        lightState = 0;
-/*        lightsVector = new Vector();
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_A_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_B_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_C_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_D_PORT));
-        lights = new AdaFruitLights(lightsVector);*/
-        
+    {           
         //----- Pneumatics -----
         //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
         
@@ -71,23 +58,7 @@ public class RobotOutput
     }
     public synchronized void pullFromState()
     {
-        setLightsState(state.getLightState());
         setDriveMotors(state.getLeftFrontMotorSpeed(),state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed());
-    }
-    
-    public void setLightsState(int state)
-    {
-        //lights.setDesiredState(state);
-    }
-    
-    public void runLights()
-    {
-        //lights.run();
-    }
-    
-    public int getLightState()
-    {
-        return lightState;
     }
     
     public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed)
