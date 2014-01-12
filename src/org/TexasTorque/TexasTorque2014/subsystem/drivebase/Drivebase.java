@@ -28,13 +28,14 @@ public class Drivebase extends TorqueSubsystem {
 
     public void run() {
         mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
+        setToRobot();
     }
 
     public void setToRobot() {
         robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed);
     }
 
-    public void setDriveSpeeds(double leftFrontSpeed,double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed) {
+    public void setDriveSpeeds(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed) {
         leftFrontDriveSpeed = leftFrontSpeed;
         leftRearDriveSpeed = leftRearSpeed;
         rightFrontDriveSpeed = rightFrontSpeed;
@@ -48,40 +49,34 @@ public class Drivebase extends TorqueSubsystem {
 
         mecanumDrive(yAxis, xAxis, rotation);
     }
-    
-    private void mecanumDrive(double yAxis, double xAxis, double rotation)
-    {
-        double leftFrontSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT + xAxis*Constants.STRAFE_COEFFICIENT + rotation*Constants.ROTATION_COEFFICIENT;
-        double leftRearSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT - xAxis*Constants.STRAFE_COEFFICIENT + rotation*Constants.ROTATION_COEFFICIENT;
-        double rightFrontSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT - xAxis*Constants.STRAFE_COEFFICIENT - rotation*Constants.ROTATION_COEFFICIENT;
-        double rightRearSpeed = yAxis*Constants.FORWARD_REVERSE_COEFFICIENT + xAxis*Constants.STRAFE_COEFFICIENT - rotation*Constants.ROTATION_COEFFICIENT;
-        
+
+    private void mecanumDrive(double yAxis, double xAxis, double rotation) {
+        double leftFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
+        double leftRearSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
+        double rightFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
+        double rightRearSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
+
         double max = 1;
-        if (Math.abs(leftFrontSpeed) > max)
-        {
+        if (Math.abs(leftFrontSpeed) > max) {
             max = Math.abs(leftFrontSpeed);
         }
-        if (Math.abs(leftRearSpeed) > max)
-        {
+        if (Math.abs(leftRearSpeed) > max) {
             max = Math.abs(leftRearSpeed);
         }
-        if (Math.abs(rightFrontSpeed) > max)
-        {
+        if (Math.abs(rightFrontSpeed) > max) {
             max = Math.abs(rightFrontSpeed);
         }
-        if (Math.abs(rightRearSpeed) > max)
-        {
+        if (Math.abs(rightRearSpeed) > max) {
             max = Math.abs(rightRearSpeed);
         }
-        
-        if (max > 1)
-        {
+
+        if (max > 1) {
             leftFrontSpeed = leftFrontSpeed / max;
             rightFrontSpeed = rightFrontSpeed / max;
             leftRearSpeed = leftRearSpeed / max;
             rightRearSpeed = rightRearSpeed / max;
         }
-        
+
         setDriveSpeeds(leftFrontSpeed, leftRearSpeed, rightFrontSpeed, rightRearSpeed);
     }
 
@@ -92,18 +87,30 @@ public class Drivebase extends TorqueSubsystem {
 
         return names;
     }
-    public void pushToDashboard()
-    {
-        SmartDashboard.putNumber("LeftDriveSpeed", leftRearDriveSpeed);
+
+    public void pushToDashboard() {
+        SmartDashboard.putNumber("LeftFrontDriveSpeed", leftFrontDriveSpeed);
+        SmartDashboard.putNumber("LeftRearDriveSpeed", leftRearDriveSpeed);
+        SmartDashboard.putNumber("RightFrontDriveSpeed", rightFrontDriveSpeed);
+        SmartDashboard.putNumber("RightRearDriveSpeed", rightRearDriveSpeed);
     }
+
     public String logData() {
         String data = leftFrontDriveSpeed + ",";
-        data += sensorInput.getLeftDriveEncoder() + ",";
-        data += sensorInput.getLeftDriveEncoderRate() + ",";
+        data += sensorInput.getLeftFrontDriveEncoder() + ",";
+        data += sensorInput.getLeftFrontDriveEncoderRate() + ",";
+        
+        data += leftRearDriveSpeed + ",";
+        data += sensorInput.getLeftRearDriveEncoder() + ",";
+        data += sensorInput.getLeftRearDriveEncoderRate() + ",";
 
         data += rightFrontDriveSpeed + ",";
-        data += sensorInput.getRightDriveEncoder() + ",";
-        data += sensorInput.getRightDriveEncoderRate() + ",";
+        data += sensorInput.getRightFrontDriveEncoder() + ",";
+        data += sensorInput.getRightFrontDriveEncoderRate() + ",";
+        
+        data += rightRearDriveSpeed + ",";
+        data += sensorInput.getRightRearDriveEncoder() + ",";
+        data += sensorInput.getRightRearDriveEncoderRate() + ",";
 
         data += sensorInput.getGyroAngle() + ",";
 

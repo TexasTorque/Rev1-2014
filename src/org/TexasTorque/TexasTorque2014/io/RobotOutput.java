@@ -41,20 +41,20 @@ public class RobotOutput
         lights = new AdaFruitLights(lightsVector);*/
         
         //----- Pneumatics -----
-        compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
+        //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
         
         //----- Drive Motors -----
-        leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
-        leftRearDriveMotor = new Motor(new Victor(Ports.LEFT_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
-        rightFrontDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
-        rightRearDriveMotor = new Motor(new Victor(Ports.RIGHT_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
+        leftFrontDriveMotor = new Motor(new Victor(1, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
+        leftRearDriveMotor = new Motor(new Victor(1, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
+        rightFrontDriveMotor = new Motor(new Victor(1, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
+        rightRearDriveMotor = new Motor(new Victor(1, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
         rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
         rightRearMotorSpeed = Constants.MOTOR_STOPPED;
         leftFrontMotorSpeed = Constants.MOTOR_STOPPED;
         leftRearMotorSpeed = Constants.MOTOR_STOPPED;
         
         //----- Misc Misc -----
-        compressor.start();
+        //compressor.start();
     }
  
     public synchronized static RobotOutput getInstance()
@@ -63,11 +63,11 @@ public class RobotOutput
     }
     public synchronized static RobotOutputState getState()
     {
-        return state;
+        return (state == null) ? state = new RobotOutputState() : state;
     }
     public synchronized void updateState()
     {
-        state = new RobotOutputState(this);
+        state.updateState(this);
     }
     public synchronized void pullFromState()
     {
@@ -120,6 +120,7 @@ public class RobotOutput
     }
     public boolean getCompressorEnabled()
     {
-        return compressor.enabled();
+        //return compressor.enabled();
+        return false;
     }
 }

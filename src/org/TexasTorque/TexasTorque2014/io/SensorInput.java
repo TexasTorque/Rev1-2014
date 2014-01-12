@@ -15,8 +15,10 @@ public class SensorInput
     private Watchdog watchdog;
 
     //----- Encoder -----
-    private TorqueEncoder leftDriveEncoder;
-    private TorqueEncoder rightDriveEncoder;
+    private TorqueEncoder leftFrontDriveEncoder;
+    private TorqueEncoder rightFrontDriveEncoder;
+    private TorqueEncoder leftRearDriveEncoder;
+    private TorqueEncoder rightRearDriveEncoder;
 
     //----- Analog -----
     private AnalogChannel pressureSensor;
@@ -25,11 +27,15 @@ public class SensorInput
 
     public SensorInput()
     {
+        /*
         watchdog = Watchdog.getInstance();
         
         //----- Encoders/Counters -----
-        leftDriveEncoder = new TorqueEncoder(Ports.LEFT_DRIVE_SIDECAR, Ports.LEFT_DRIVE_ENCODER_A_PORT, Ports.LEFT_DRIVE_SIDECAR, Ports.LEFT_DRIVE_ENCODER_B_PORT, false);
-        rightDriveEncoder = new TorqueEncoder(Ports.RIGHT_DRIVE_SIDECAR, Ports.RIGHT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_DRIVE_SIDECAR, Ports.RIGHT_DRIVE_ENCODER_B_PORT, false);
+        leftFrontDriveEncoder = new TorqueEncoder(Ports.LEFT_FRONT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_A_PORT, Ports.LEFT_FRONT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_B_PORT, false);
+        leftRearDriveEncoder = new TorqueEncoder(Ports.LEFT_REAR_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_ENCODER_A_PORT, Ports.LEFT_REAR_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_ENCODER_B_PORT, false);
+        rightFrontDriveEncoder = new TorqueEncoder(Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_B_PORT, false);
+        rightRearDriveEncoder = new TorqueEncoder(Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_A_PORT, Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_B_PORT, false);
+        
         
         //----- Gyro -----
         gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
@@ -40,6 +46,7 @@ public class SensorInput
         //----- Misc -----
         pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
         startEncoders();
+                */
     }
     
     public synchronized static SensorInput getInstance()
@@ -48,30 +55,36 @@ public class SensorInput
     }
     public synchronized static SensorInputState getState()
     {
-        return state;
+        return (state == null) ? state = new SensorInputState() : state;
     }
     public synchronized void updateState()
     {
-        state = new SensorInputState(this);
+        state.updateState(this);
     }
     
     private void startEncoders()
     {
         // 1 foot = ??? clicks
-        leftDriveEncoder.start();
-        rightDriveEncoder.start();        
+        leftFrontDriveEncoder.start();
+        rightFrontDriveEncoder.start();    
+        leftRearDriveEncoder.start();
+        rightRearDriveEncoder.start();
     }
     
     public void resetEncoders()
     {
-        leftDriveEncoder.reset();
-        rightDriveEncoder.reset();
+        leftFrontDriveEncoder.reset();
+        rightFrontDriveEncoder.reset();
+        leftRearDriveEncoder.reset();
+        rightRearDriveEncoder.reset();
     }
     
     public void calcEncoders()
     {
-        leftDriveEncoder.calc();
-        rightDriveEncoder.calc();
+        leftFrontDriveEncoder.calc();
+        rightFrontDriveEncoder.calc();
+        leftRearDriveEncoder.calc();
+        rightRearDriveEncoder.calc();
     }
     
     public void resetGyro()
@@ -80,34 +93,64 @@ public class SensorInput
         gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
     }
     
-    public double getLeftDriveEncoder()
+    public double getLeftFrontDriveEncoder()
     {
-        return (leftDriveEncoder.get()); 
+        return (leftFrontDriveEncoder.get()); 
     }
     
-    public double getRightDriveEncoder()
+    public double getRightFrontDriveEncoder()
     {
-        return (rightDriveEncoder.get());
+        return (rightFrontDriveEncoder.get());
     }
     
-    public double getLeftDriveEncoderRate()
+    public double getLeftFrontDriveEncoderRate()
     {
-        return (leftDriveEncoder.getRate());
+        return (leftFrontDriveEncoder.getRate());
     }
     
-    public double getRightDriveEncoderRate()
+    public double getRightFrontDriveEncoderRate()
     {
-        return (rightDriveEncoder.getRate());
+        return (rightFrontDriveEncoder.getRate());
     }
     
-    public double getLeftDriveEncoderAcceleration()
+    public double getLeftFrontDriveEncoderAcceleration()
     {
-        return (leftDriveEncoder.getAcceleration());
+        return (leftFrontDriveEncoder.getAcceleration());
     }
     
-    public double getRightDriveEncoderAcceleration()
+    public double getRightFrontDriveEncoderAcceleration()
     {
-        return (rightDriveEncoder.getAcceleration());
+        return (rightFrontDriveEncoder.getAcceleration());
+    }
+    
+    public double getLeftRearDriveEncoder()
+    {
+        return (leftRearDriveEncoder.get()); 
+    }
+    
+    public double getRightRearDriveEncoder()
+    {
+        return (rightRearDriveEncoder.get());
+    }
+    
+    public double getLeftRearDriveEncoderRate()
+    {
+        return (leftRearDriveEncoder.getRate());
+    }
+    
+    public double getRightRearDriveEncoderRate()
+    {
+        return (rightRearDriveEncoder.getRate());
+    }
+    
+    public double getLeftRearDriveEncoderAcceleration()
+    {
+        return (leftRearDriveEncoder.getAcceleration());
+    }
+    
+    public double getRightRearDriveEncoderAcceleration()
+    {
+        return (rightRearDriveEncoder.getAcceleration());
     }
     
     public double getPSI()

@@ -5,26 +5,42 @@ import org.TexasTorque.TexasTorque2014.io.SensorInput;
 public class SensorInputState
 {
     //----- Encoder -----
-    private double leftDriveEncoder;
-    private double rightDriveEncoder;
-    private double leftDriveEncoderVelocity;
-    private double rightDriveEncoderVelocity;
-    private double leftDriveEncoderAcceleration;
-    private double rightDriveEncoderAcceleration;
+    private double leftFrontDriveEncoder;
+    private double rightFrontDriveEncoder;
+    private double leftFrontDriveEncoderVelocity;
+    private double rightFrontDriveEncoderVelocity;
+    private double leftFrontDriveEncoderAcceleration;
+    private double rightFrontDriveEncoderAcceleration;
+    private double leftRearDriveEncoder;
+    private double rightRearDriveEncoder;
+    private double leftRearDriveEncoderVelocity;
+    private double rightRearDriveEncoderVelocity;
+    private double leftRearDriveEncoderAcceleration;
+    private double rightRearDriveEncoderAcceleration;
 
     //----- Analog -----
     private double pressureSensor;
     private double gyroAngle;
 
-    public SensorInputState(SensorInput input)
+    public SensorInputState()
+    {
+        
+    }
+    public void updateState(SensorInput input)
     {
         //----- Encoders/Counters -----
-        leftDriveEncoder = input.getLeftDriveEncoder();
-        rightDriveEncoder = input.getRightDriveEncoder();
-        leftDriveEncoderVelocity = input.getLeftDriveEncoderRate();
-        rightDriveEncoderVelocity = input.getRightDriveEncoderRate();
-        leftDriveEncoderAcceleration = input.getLeftDriveEncoderAcceleration();
-        rightDriveEncoderAcceleration = input.getRightDriveEncoderAcceleration();
+        leftFrontDriveEncoder = input.getLeftFrontDriveEncoder();
+        rightFrontDriveEncoder = input.getRightFrontDriveEncoder();
+        leftFrontDriveEncoderVelocity = input.getLeftFrontDriveEncoderRate();
+        rightFrontDriveEncoderVelocity = input.getRightFrontDriveEncoderRate();
+        leftFrontDriveEncoderAcceleration = input.getLeftFrontDriveEncoderAcceleration();
+        rightFrontDriveEncoderAcceleration = input.getRightFrontDriveEncoderAcceleration();
+        leftRearDriveEncoder = input.getLeftRearDriveEncoder();
+        rightRearDriveEncoder = input.getRightRearDriveEncoder();
+        leftRearDriveEncoderVelocity = input.getLeftRearDriveEncoderRate();
+        rightRearDriveEncoderVelocity = input.getRightRearDriveEncoderRate();
+        leftRearDriveEncoderAcceleration = input.getLeftRearDriveEncoderAcceleration();
+        rightRearDriveEncoderAcceleration = input.getRightRearDriveEncoderAcceleration();
         
         //----- Gyro -----
         gyroAngle = input.getGyroAngle();
@@ -33,34 +49,64 @@ public class SensorInputState
         pressureSensor = input.getPSI();
     }
     
-    public double getLeftDriveEncoder()
+    public double getLeftFrontDriveEncoder()
     {
-        return leftDriveEncoder;
+        return leftFrontDriveEncoder;
     }
     
-    public double getRightDriveEncoder()
+    public double getRightFrontDriveEncoder()
     {
-        return rightDriveEncoder;
+        return rightFrontDriveEncoder;
     }
     
-    public double getLeftDriveEncoderRate()
+    public double getLeftFrontDriveEncoderRate()
     {
-        return leftDriveEncoderVelocity;
+        return leftFrontDriveEncoderVelocity;
     }
     
-    public double getRightDriveEncoderRate()
+    public double getRightFrontDriveEncoderRate()
     {
-        return rightDriveEncoderVelocity;
+        return rightFrontDriveEncoderVelocity;
     }
     
-    public double getLeftDriveEncoderAcceleration()
+    public double getLeftFrontDriveEncoderAcceleration()
     {
-        return leftDriveEncoderAcceleration;
+        return leftFrontDriveEncoderAcceleration;
     }
     
-    public double getRightDriveEncoderAcceleration()
+    public double getRightFrontDriveEncoderAcceleration()
     {
-        return rightDriveEncoderAcceleration;
+        return rightFrontDriveEncoderAcceleration;
+    }
+    
+    public double getLeftRearDriveEncoder()
+    {
+        return leftRearDriveEncoder;
+    }
+    
+    public double getRightRearDriveEncoder()
+    {
+        return rightRearDriveEncoder;
+    }
+    
+    public double getLeftRearDriveEncoderRate()
+    {
+        return leftRearDriveEncoderVelocity;
+    }
+    
+    public double getRightRearDriveEncoderRate()
+    {
+        return rightRearDriveEncoderVelocity;
+    }
+    
+    public double getLeftRearDriveEncoderAcceleration()
+    {
+        return leftRearDriveEncoderAcceleration;
+    }
+    
+    public double getRightRearDriveEncoderAcceleration()
+    {
+        return rightRearDriveEncoderAcceleration;
     }
     
     public double getPSI()

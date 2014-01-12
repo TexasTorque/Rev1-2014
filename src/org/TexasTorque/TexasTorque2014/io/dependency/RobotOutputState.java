@@ -15,7 +15,12 @@ public class RobotOutputState {
     private double rightFrontMotorSpeed;
     private double rightRearMotorSpeed;
 
-    public RobotOutputState(RobotOutput output) {
+    public RobotOutputState() {
+        
+    }
+    
+    public void updateState(RobotOutput output)
+    {
         lightState = output.getLightState();
         //----- Pneumatics -----
         compressorEnabled = output.getCompressorEnabled();

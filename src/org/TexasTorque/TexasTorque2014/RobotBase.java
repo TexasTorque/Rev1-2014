@@ -31,6 +31,22 @@ public class RobotBase extends IterativeRobot implements Runnable {
     double previousTime;
 
     public void robotInit() {
+        watchdog = getWatchdog();
+        watchdog.setEnabled(true);
+        watchdog.setExpiration(0.5);
+        
+        dashboardManager = DashboardManager.getInstance();
+        robotOutput = RobotOutput.getInstance();
+        driverInput = DriverInput.getInstance();
+        drivebase = Drivebase.getInstance();
+        
+        autoManager = new AutonomousManager();
+        
+        driverInput.pullJoystickTypes();
+        
+        robotTime = new Timer();
+        
+        numCycles = 0.0;
 
         continuousThread = new Thread(this);
         continuousThread.start();
@@ -40,6 +56,9 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void teleopInit() {
+        driverInput.pullJoystickTypes();
+        robotTime.reset();
+        robotTime.start();
     }
 
     public void disabledInit() {
@@ -62,7 +81,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
                 Timer.delay(0.05);
             }
 
-            sensorInput.calcEncoders();
+            //sensorInput.calcEncoders();
             numCycles++;
         }
     }
@@ -77,6 +96,15 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void teleopContinuous() {
+        drivebase.run();
+        
+        driverInput.updateState();
+        robotOutput.updateState();
+        
+        drivebase.run();
+        
+        //drivebase.pushToDashboard();
+        robotOutput.pullFromState();
     }
 
     public void disabledPeriodic() {

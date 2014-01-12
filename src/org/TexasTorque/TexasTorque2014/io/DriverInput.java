@@ -26,7 +26,7 @@ public class DriverInput {
     }
 
     public synchronized void updateState() {
-        state = new DriverInputState(getInstance());
+        state.updateState(getInstance());
     }
 
     public synchronized static DriverInput getInstance() {
@@ -34,7 +34,7 @@ public class DriverInput {
     }
 
     public synchronized static DriverInputState getState() {
-        return state;
+        return (state == null) ? state = new DriverInputState() : state;
     }
 
     public synchronized void pullJoystickTypes() {
@@ -67,11 +67,11 @@ public class DriverInput {
     }
 
 //---------- Drivebase ----------
-    public synchronized double getXAxis() {
+    public synchronized double getYAxis() {
         return driveController.getLeftYAxis();
     }
 
-    public synchronized double getYAxis() {
+    public synchronized double getXAxis() {
         return driveController.getLeftXAxis();
     }
 
