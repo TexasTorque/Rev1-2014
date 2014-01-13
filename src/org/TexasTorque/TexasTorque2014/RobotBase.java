@@ -22,7 +22,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     SensorInput sensorInput;
     RobotOutput robotOutput;
     Drivebase drivebase;
-    //Manipulator manipulator;
+    Manipulator manipulator;
 
     Timer robotTime;
 
@@ -36,14 +36,14 @@ public class RobotBase extends IterativeRobot implements Runnable {
         watchdog.setEnabled(true);
         watchdog.setExpiration(0.5);
 
-        //params = Parameters.getTeleopInstance();
+        params = Parameters.getTeleopInstance();
 
         dashboardManager = DashboardManager.getInstance();
         robotOutput = RobotOutput.getInstance();
         driverInput = DriverInput.getInstance();
-        //sensorInput = SensorInput.getInstance();
+        sensorInput = SensorInput.getInstance();
         drivebase = Drivebase.getInstance();
-        //manipulator = Manipulator.getInstance();
+        manipulator = Manipulator.getInstance();
 
         driverInput.pullJoystickTypes();
 
@@ -101,15 +101,16 @@ public class RobotBase extends IterativeRobot implements Runnable {
         watchdog.feed();
         
         drivebase.setToRobot();
-        //manipulator.setToRobot();
+        manipulator.setToRobot();
     }
 
     public void teleopContinuous() {
-        drivebase.run();
-        //manipulator.run();
-
         driverInput.updateState();
         robotOutput.updateState();
+        //sensorInput.updateState();
+        
+        drivebase.run();
+        manipulator.run();
 
         drivebase.pushToDashboard();
         robotOutput.pullFromState();
