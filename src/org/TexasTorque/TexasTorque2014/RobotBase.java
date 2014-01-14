@@ -99,21 +99,26 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopPeriodic() {
         watchdog.feed();
-        
-        drivebase.setToRobot();
-        manipulator.setToRobot();
-    }
-
-    public void teleopContinuous() {
+       
         driverInput.updateState();
         robotOutput.updateState();
         //sensorInput.updateState();
         
         drivebase.run();
         manipulator.run();
-
-        drivebase.pushToDashboard();
+        
+        drivebase.setToRobot();
+        manipulator.setToRobot();
+        
+        //drivebase.pushToDashboard();
+        
         robotOutput.pullFromState();
+        
+    }
+
+    public void teleopContinuous() {
+        
+        
     }
 
     public void disabledPeriodic() {

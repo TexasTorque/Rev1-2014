@@ -49,11 +49,11 @@ public class DriverInputState {
 
 //---------- Drivebase ----------
     public synchronized double getXAxis() {
-        return driveControllerState.getLeftYAxis();
+        return operatorControllerState.getLeftXAxis();
     }
 
     public synchronized double getYAxis() {
-        return driveControllerState.getLeftXAxis();
+        return operatorControllerState.getLeftYAxis();
     }
 
     public synchronized double getRotation() {

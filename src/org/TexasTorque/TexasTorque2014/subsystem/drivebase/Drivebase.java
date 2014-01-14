@@ -28,6 +28,7 @@ public class Drivebase extends TorqueSubsystem {
 
     public void run() {
         mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
+        //mixChannels(0,0,0);
         setToRobot();
     }
 
@@ -51,11 +52,22 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     private void mecanumDrive(double yAxis, double xAxis, double rotation) {
-        double leftFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
-        double leftRearSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
-        double rightFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
-        double rightRearSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
-
+        double leftFrontSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
+        double rightFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
+        double leftRearSpeed   = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
+        double rightRearSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
+        
+        SmartDashboard.putNumber("LeftFrontDriveSpeed", leftFrontSpeed);
+        SmartDashboard.putNumber("LeftRearDriveSpeed", leftRearSpeed);
+        SmartDashboard.putNumber("RightFrontDriveSpeed", rightFrontSpeed);
+        SmartDashboard.putNumber("RightRearDriveSpeed", rightRearSpeed);
+        
+        SmartDashboard.putNumber("YAX", yAxis);
+        SmartDashboard.putNumber("XAX", xAxis);
+        SmartDashboard.putNumber("RTA", rotation);
+        //SmartDashboard.putNumber("RRS", rightRearSpeed);
+        
+        
         double max = 1;
         if (Math.abs(leftFrontSpeed) > max) {
             max = Math.abs(leftFrontSpeed);
@@ -78,6 +90,8 @@ public class Drivebase extends TorqueSubsystem {
         }
 
         setDriveSpeeds(leftFrontSpeed, leftRearSpeed, rightFrontSpeed, rightRearSpeed);
+        
+        //pushToDashboard();
     }
 
     public String getKeyNames() {

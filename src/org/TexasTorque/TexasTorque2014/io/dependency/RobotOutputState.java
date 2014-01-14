@@ -32,7 +32,7 @@ public class RobotOutputState {
     public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed) {
         leftFrontMotorSpeed = leftFrontSpeed;
         leftRearMotorSpeed = leftRearSpeed;
-        rightFrontMotorSpeed = rightRearSpeed;
+        rightFrontMotorSpeed = rightFrontSpeed;
         rightRearMotorSpeed = rightRearSpeed;
     }
 
