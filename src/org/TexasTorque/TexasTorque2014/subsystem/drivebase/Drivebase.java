@@ -27,8 +27,8 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void run() {
-        mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
-        //mixChannels(0,0,0);
+        //mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
+        calcCatchingSpeeds();
         setToRobot();
     }
 
@@ -49,6 +49,14 @@ public class Drivebase extends TorqueSubsystem {
         rotation = TorqueUtil.applyDeadband(rotation, Constants.ROTATION_DEADBAND);
 
         mecanumDrive(yAxis, xAxis, rotation);
+    }
+    
+    private void calcCatchingSpeeds()
+    {
+        double yStrafe = SmartDashboard.getNumber("Y_VAR", 0.0);
+        double xStrafe = SmartDashboard.getNumber("X_VAR", 0.0);
+        double rotation = 0.0;
+        mixChannels(yStrafe, xStrafe, rotation);
     }
 
     private void mecanumDrive(double yAxis, double xAxis, double rotation) {
