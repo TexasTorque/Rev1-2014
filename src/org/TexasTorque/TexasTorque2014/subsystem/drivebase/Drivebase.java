@@ -50,37 +50,37 @@ public class Drivebase extends TorqueSubsystem {
 
         mecanumDrive(yAxis, xAxis, rotation);
     }
-    
-    private void calcCatchingSpeeds()
-    {
+
+    private void calcCatchingSpeeds() {
         double yStrafe = SmartDashboard.getNumber("Y_VAR", 0.0);
         double xStrafe = SmartDashboard.getNumber("X_VAR", 0.0);
-        if(xStrafe == -1.0 && yStrafe == -1.0)
-        {
+        if (xStrafe == -1.0 && yStrafe == -1.0) {
             xStrafe = 0.0;
             yStrafe = 0.0;
         }
+        yStrafe *= params.getAsDouble("D_ForwardMultiplier", 1.0);
+        xStrafe *= params.getAsDouble("D_StrafeMultiplier", 1.0);
         double rotation = 0.0;
-        
+
         mixChannels(yStrafe, xStrafe, rotation);
     }
 
     private void mecanumDrive(double yAxis, double xAxis, double rotation) {
-        double leftFrontSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
+        double leftFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
-        double leftRearSpeed   = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
-        double rightRearSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
-        
+        double leftRearSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
+        double rightRearSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
+
         SmartDashboard.putNumber("LeftFrontDriveSpeed", leftFrontSpeed);
         SmartDashboard.putNumber("LeftRearDriveSpeed", leftRearSpeed);
         SmartDashboard.putNumber("RightFrontDriveSpeed", rightFrontSpeed);
         SmartDashboard.putNumber("RightRearDriveSpeed", rightRearSpeed);
-        
+
         SmartDashboard.putNumber("YAX", yAxis);
         SmartDashboard.putNumber("XAX", xAxis);
         SmartDashboard.putNumber("RTA", rotation);
-        
-        
+
+
         double max = 1;
         if (Math.abs(leftFrontSpeed) > max) {
             max = Math.abs(leftFrontSpeed);
@@ -103,7 +103,7 @@ public class Drivebase extends TorqueSubsystem {
         }
 
         setDriveSpeeds(leftFrontSpeed, leftRearSpeed, rightFrontSpeed, rightRearSpeed);
-        
+
         //pushToDashboard();
     }
 
@@ -126,7 +126,7 @@ public class Drivebase extends TorqueSubsystem {
         String data = leftFrontDriveSpeed + ",";
         data += sensorInput.getLeftFrontDriveEncoder() + ",";
         data += sensorInput.getLeftFrontDriveEncoderRate() + ",";
-        
+
         data += leftRearDriveSpeed + ",";
         data += sensorInput.getLeftRearDriveEncoder() + ",";
         data += sensorInput.getLeftRearDriveEncoderRate() + ",";
@@ -134,7 +134,7 @@ public class Drivebase extends TorqueSubsystem {
         data += rightFrontDriveSpeed + ",";
         data += sensorInput.getRightFrontDriveEncoder() + ",";
         data += sensorInput.getRightFrontDriveEncoderRate() + ",";
-        
+
         data += rightRearDriveSpeed + ",";
         data += sensorInput.getRightRearDriveEncoder() + ",";
         data += sensorInput.getRightRearDriveEncoderRate() + ",";
@@ -145,6 +145,5 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void loadParameters() {
-
     }
 }
