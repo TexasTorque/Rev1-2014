@@ -55,7 +55,13 @@ public class Drivebase extends TorqueSubsystem {
     {
         double yStrafe = SmartDashboard.getNumber("Y_VAR", 0.0);
         double xStrafe = SmartDashboard.getNumber("X_VAR", 0.0);
+        if(xStrafe == -1.0 && yStrafe == -1.0)
+        {
+            xStrafe = 0.0;
+            yStrafe = 0.0;
+        }
         double rotation = 0.0;
+        
         mixChannels(yStrafe, xStrafe, rotation);
     }
 
@@ -73,7 +79,6 @@ public class Drivebase extends TorqueSubsystem {
         SmartDashboard.putNumber("YAX", yAxis);
         SmartDashboard.putNumber("XAX", xAxis);
         SmartDashboard.putNumber("RTA", rotation);
-        //SmartDashboard.putNumber("RRS", rightRearSpeed);
         
         
         double max = 1;
