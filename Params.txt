@@ -1,0 +1,2 @@
+D_ForwardMultiplier 2.0
+D_StrafeMultiplier 2.0

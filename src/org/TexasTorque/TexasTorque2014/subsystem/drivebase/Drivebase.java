@@ -12,6 +12,10 @@ public class Drivebase extends TorqueSubsystem {
     private double leftRearDriveSpeed;
     private double rightFrontDriveSpeed;
     private double rightRearDriveSpeed;
+    
+    private double visionPowerCoe;
+    private double visionStrafeCoe;
+    private double visionRotCoe;
 
     public static Drivebase getInstance() {
         return (instance == null) ? instance = new Drivebase() : instance;
@@ -58,9 +62,9 @@ public class Drivebase extends TorqueSubsystem {
             xStrafe = 0.0;
             yStrafe = 0.0;
         }
-        yStrafe *= params.getAsDouble("D_ForwardMultiplier", 1.0);
-        xStrafe *= params.getAsDouble("D_StrafeMultiplier", 1.0);
-        double rotation = 0.0;
+        yStrafe *= visionPowerCoe;
+        xStrafe *= visionStrafeCoe;
+        double rotation = 0.0 * visionRotCoe;
 
         mixChannels(yStrafe, xStrafe, rotation);
     }
@@ -145,5 +149,8 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void loadParameters() {
+        visionPowerCoe = params.getAsDouble("D_ForwardMultiplier", 1.0);
+        visionStrafeCoe = params.getAsDouble("D_StrafeMultiplier", 1.0);
+        visionRotCoe = params.getAsDouble("D_RotationMultiplier", 0.0);
     }
 }
