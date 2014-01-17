@@ -4,6 +4,18 @@ import java.util.Vector;
 
 public class TorqueUtil
 {
+    public static double[] magD2(double magnitude, double theta, double elevation)
+    {
+        double[] returns = new double[3];
+        
+        double flat = magnitude * Math.cos(elevation);
+        returns[0] = flat * Math.cos(theta);
+        returns[1] = flat * Math.sin(theta);
+        returns[2] = magnitude * Math.sin(elevation);
+        
+        return returns;
+    }
+    
     public static double convertToRMP(double unitsPerSecond, double unitsPerRevolution)
     {
         return (unitsPerSecond * 60) / unitsPerRevolution;
