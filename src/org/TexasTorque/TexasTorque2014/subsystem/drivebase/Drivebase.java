@@ -56,16 +56,20 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     private void calcCatchingSpeeds() {
-        double yStrafe = SmartDashboard.getNumber("Y_VAR", 0.0);
-        double xStrafe = SmartDashboard.getNumber("X_VAR", 0.0);
+        double yStrafe = 1 * SmartDashboard.getNumber("Y_Var", 0.0);
+        double xStrafe = 1 * SmartDashboard.getNumber("X_Var", 0.0);
+        //SmartDashboard.putNumber("TEST", xStrafe);
         if (xStrafe == -1.0 && yStrafe == -1.0) {
             xStrafe = 0.0;
             yStrafe = 0.0;
         }
+        double rotation = xStrafe * visionRotCoe;
         yStrafe *= visionPowerCoe;
         xStrafe *= visionStrafeCoe;
-        double rotation = 0.0 * visionRotCoe;
-
+        
+        
+        
+        SmartDashboard.putNumber("TEST", rotation);
         mixChannels(yStrafe, xStrafe, rotation);
     }
 
@@ -152,5 +156,8 @@ public class Drivebase extends TorqueSubsystem {
         visionPowerCoe = params.getAsDouble("D_ForwardMultiplier", 1.0);
         visionStrafeCoe = params.getAsDouble("D_StrafeMultiplier", 1.0);
         visionRotCoe = params.getAsDouble("D_RotationMultiplier", 0.0);
+        SmartDashboard.putNumber("VisionPowerCoe", visionPowerCoe);
+        SmartDashboard.putNumber("VisionStrafeCoe", visionStrafeCoe);
+        SmartDashboard.putNumber("VisionRotationCoe", visionRotCoe);
     }
 }

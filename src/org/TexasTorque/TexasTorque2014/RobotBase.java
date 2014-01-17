@@ -92,6 +92,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopInit() {
         driverInput.pullJoystickTypes();
+        params.load();
+        drivebase.loadParameters();
         
         robotTime.reset();
         robotTime.start();
