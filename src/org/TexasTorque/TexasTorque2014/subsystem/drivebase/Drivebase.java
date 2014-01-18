@@ -3,6 +3,7 @@ package org.TexasTorque.TexasTorque2014.subsystem.drivebase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
+import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
 import org.TexasTorque.TorqueLib.util.TorqueUtil;
 
 public class Drivebase extends TorqueSubsystem {
@@ -16,6 +17,13 @@ public class Drivebase extends TorqueSubsystem {
     private double visionPowerCoe;
     private double visionStrafeCoe;
     private double visionRotCoe;
+    private double targetDistance;
+    
+    private TorquePID visionForwardPID;
+    private TorquePID visionStrafePID;
+    
+    private double kFoV = 32.0 * Math.PI / 180;
+    
 
     public static Drivebase getInstance() {
         return (instance == null) ? instance = new Drivebase() : instance;
@@ -28,6 +36,9 @@ public class Drivebase extends TorqueSubsystem {
         leftRearDriveSpeed = Constants.MOTOR_STOPPED;
         rightFrontDriveSpeed = Constants.MOTOR_STOPPED;
         rightRearDriveSpeed = Constants.MOTOR_STOPPED;
+        
+        visionForwardPID = new TorquePID();
+        visionStrafePID = new TorquePID();
     }
 
     public void run() {
@@ -56,20 +67,33 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     private void calcCatchingSpeeds() {
-        double yStrafe = 1 * SmartDashboard.getNumber("Y_Var", 0.0);
-        double xStrafe = 1 * SmartDashboard.getNumber("X_Var", 0.0);
-        //SmartDashboard.putNumber("TEST", xStrafe);
-        if (xStrafe == -1.0 && yStrafe == -1.0) {
-            xStrafe = 0.0;
-            yStrafe = 0.0;
+        
+        
+        double ballSide = SmartDashboard.getNumber("COG_BOX_SIZE",0.0);
+        double screenWidth = SmartDashboard.getNumber("IMAGE_WIDTH", 320);
+        double distance = 1 / Math.tan(ballSide / 2 / screenWidth * kFoV);
+        SmartDashboard.putNumber("Test", ballSide/2 / screenWidth * kFoV);
+        
+        double[] ballCoordinate = TorqueUtil.magD2(distance, SmartDashboard.getNumber("X_Var"), SmartDashboard.getNumber("Y_Var"));
+        
+        SmartDashboard.putNumber("BallX", ballCoordinate[0]);
+        SmartDashboard.putNumber("BallY", ballCoordinate[1]);
+        SmartDashboard.putNumber("BallZ", ballCoordinate[2]);
+        
+        double xStrafe = 0;
+        double yStrafe = 0;
+        double rotation = 0;
+        
+        if(SmartDashboard.getNumber("X_Var", -1.0) != -1 || SmartDashboard.getNumber("Y_Var", -1.0) != -1)
+        {
+            xStrafe = -ballCoordinate[1];// * visionStrafeCoe;
+            yStrafe = (ballCoordinate[0] - targetDistance);// * visionPowerCoe;
+            //rotation = ballCoordinate[1];// * visionRotCoe;
         }
-        double rotation = xStrafe * visionRotCoe;
-        yStrafe *= visionPowerCoe;
-        xStrafe *= visionStrafeCoe;
+        rotation = visionStrafePID.calculate(xStrafe);
+        xStrafe = 0.0;
+        yStrafe = visionForwardPID.calculate(yStrafe);
         
-        
-        
-        SmartDashboard.putNumber("TEST", rotation);
         mixChannels(yStrafe, xStrafe, rotation);
     }
 
@@ -156,8 +180,22 @@ public class Drivebase extends TorqueSubsystem {
         visionPowerCoe = params.getAsDouble("D_ForwardMultiplier", 1.0);
         visionStrafeCoe = params.getAsDouble("D_StrafeMultiplier", 1.0);
         visionRotCoe = params.getAsDouble("D_RotationMultiplier", 0.0);
+        targetDistance = params.getAsDouble("D_TargetDistance", 6.0);
         SmartDashboard.putNumber("VisionPowerCoe", visionPowerCoe);
         SmartDashboard.putNumber("VisionStrafeCoe", visionStrafeCoe);
         SmartDashboard.putNumber("VisionRotationCoe", visionRotCoe);
+        
+        double p = params.getAsDouble("D_VisionForwardP", 0.0);
+        double i = params.getAsDouble("D_VisionForwardI", 0.0);
+        double d = params.getAsDouble("D_VisionForwardD", 0.0);
+        visionForwardPID.setPIDGains(p, i, d);
+        
+        p = params.getAsDouble("D_VisionStrafeP", 0.0);
+        i = params.getAsDouble("D_VisionStrafeI", 0.0);
+        d = params.getAsDouble("D_VisionStrafeD", 0.0);
+        visionStrafePID.setPIDGains(p, i, d);
+        
+        visionForwardPID.setSetpoint(0.0);
+        visionStrafePID.setSetpoint(0.0);
     }
 }
