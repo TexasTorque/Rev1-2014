@@ -68,7 +68,6 @@ public class Drivebase extends TorqueSubsystem {
 
     private void calcCatchingSpeeds() {
         
-        
         double ballSide = SmartDashboard.getNumber("COG_BOX_SIZE",0.0);
         double screenWidth = SmartDashboard.getNumber("IMAGE_WIDTH", 320);
         double distance = 1 / Math.tan(ballSide / 2 / screenWidth * kFoV);
