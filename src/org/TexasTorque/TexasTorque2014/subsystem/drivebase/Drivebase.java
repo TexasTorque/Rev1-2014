@@ -19,12 +19,12 @@ public class Drivebase extends TorqueSubsystem {
     private double visionRotCoe;
     private double targetDistance;
     
+    private double cameraHeight;
+    private double cameraElevation;
+    
     private TorquePID visionForwardPID;
     private TorquePID visionStrafePID;
     
-    private double kFoV = 32.0 * Math.PI / 180;
-    
-
     public static Drivebase getInstance() {
         return (instance == null) ? instance = new Drivebase() : instance;
     }
@@ -70,10 +70,12 @@ public class Drivebase extends TorqueSubsystem {
         
         double ballSide = SmartDashboard.getNumber("COG_BOX_SIZE",0.0);
         double screenWidth = SmartDashboard.getNumber("IMAGE_WIDTH", 320);
-        double distance = 1 / Math.tan(ballSide / 2 / screenWidth * kFoV);
-        SmartDashboard.putNumber("Test", ballSide/2 / screenWidth * kFoV);
+        double distance = Constants.BALL_DIAMETER / (2 * Math.tan(Constants.kFOV_X * ballSide / (2 * screenWidth)));
         
-        double[] ballCoordinate = TorqueUtil.magD2(distance, SmartDashboard.getNumber("X_Var"), SmartDashboard.getNumber("Y_Var"));
+        //double distance = 1 / Math.tan(ballSide / 2 / screenWidth * kFoVX);
+        //SmartDashboard.putNumber("Test", ballSide/2 / screenWidth * kFoVX);
+        
+        double[] ballCoordinate = TorqueUtil.magD2(distance, SmartDashboard.getNumber("X_Var") * Constants.kFOV_X / 2, SmartDashboard.getNumber("Y_Var") * Constants.kFOV_Y / 2);
         
         SmartDashboard.putNumber("BallX", ballCoordinate[0]);
         SmartDashboard.putNumber("BallY", ballCoordinate[1]);
@@ -180,6 +182,8 @@ public class Drivebase extends TorqueSubsystem {
         visionStrafeCoe = params.getAsDouble("D_StrafeMultiplier", 1.0);
         visionRotCoe = params.getAsDouble("D_RotationMultiplier", 0.0);
         targetDistance = params.getAsDouble("D_TargetDistance", 6.0);
+        cameraHeight = params.getAsDouble("C_Height", 0.0);
+        cameraElevation = params.getAsDouble("E_Elevation", 0.0);
         SmartDashboard.putNumber("VisionPowerCoe", visionPowerCoe);
         SmartDashboard.putNumber("VisionStrafeCoe", visionStrafeCoe);
         SmartDashboard.putNumber("VisionRotationCoe", visionRotCoe);
