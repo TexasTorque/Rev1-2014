@@ -97,9 +97,14 @@ public class Drivebase extends TorqueSubsystem {
                 Viz.reset();
                 firstBallCoordinate = ballCoordinate;
                 firstTime = Timer.getFPGATimestamp();
+                
+                if(SmartDashboard.getNumber("COG_X", 0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_Y",0.0) - ballSide > 0)
+                {
+                    firstFound = false;
+                }
             } else {
 
-                firstFound = false;
+                
                 
                 double time = Timer.getFPGATimestamp() - firstTime;
                 
