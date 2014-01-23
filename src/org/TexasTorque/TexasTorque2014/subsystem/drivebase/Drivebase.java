@@ -26,9 +26,12 @@ public class Drivebase extends TorqueSubsystem {
     private boolean firstFound;
     private TorquePID visionForwardPID;
     private TorquePID visionStrafePID;
-    private MovingAverageFilter Vix;
-    private MovingAverageFilter Viy;
-    private MovingAverageFilter Viz;
+    private double Vix;
+    private double Viy;
+    private double Viz;
+    private MovingAverageFilter xp;
+    private MovingAverageFilter yp;
+    private MovingAverageFilter zp;
     private double ballAccel;
 
     public static Drivebase getInstance() {
@@ -45,12 +48,18 @@ public class Drivebase extends TorqueSubsystem {
 
         visionForwardPID = new TorquePID();
         visionStrafePID = new TorquePID();
+        
+        xp = new MovingAverageFilter(8);
+        yp = new MovingAverageFilter(8);
+        zp = new MovingAverageFilter(8);
+        
+        firstFound = true;
     }
 
     public void run() {
         //mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
         calcCatchingSpeeds();
-        setToRobot();
+        //setToRobot();
     }
 
     public void setToRobot() {
@@ -77,8 +86,9 @@ public class Drivebase extends TorqueSubsystem {
         double xStrafe = 0;
         double yStrafe = 0;
         double rotation = 0;
-
+        SmartDashboard.putBoolean("FirstFound", firstFound);
         if (SmartDashboard.getNumber("X_Var", -1.0) != -1 || SmartDashboard.getNumber("Y_Var", -1.0) != -1) {
+            SmartDashboard.putBoolean("Found", true);
 
             double ballSide = SmartDashboard.getNumber("COG_BOX_SIZE", 0.0);
             double screenWidth = SmartDashboard.getNumber("IMAGE_WIDTH", 320);
@@ -90,15 +100,14 @@ public class Drivebase extends TorqueSubsystem {
             SmartDashboard.putNumber("BallY", ballCoordinate[0]);
             SmartDashboard.putNumber("BallX", ballCoordinate[1]);
             SmartDashboard.putNumber("BallZ", ballCoordinate[2]);
-
             if (firstFound) {
-                Vix.reset();
-                Viy.reset();
-                Viz.reset();
+                //Vix.reset();
+                //Viy.reset();
+                //Viz.reset();
                 firstBallCoordinate = ballCoordinate;
                 firstTime = Timer.getFPGATimestamp();
-                
-                if(SmartDashboard.getNumber("COG_X", 0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_Y",0.0) - ballSide > 0)
+                ballSide /= 2;
+                if(SmartDashboard.getNumber("COG_X", 0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_Y",0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_X", 0.0) + ballSide < SmartDashboard.getNumber("IMAGE_WIDTH", 0.0) && SmartDashboard.getNumber("COG_Y", 0.0) + ballSide < SmartDashboard.getNumber("IMAGE_HEIGHT", 0.0))
                 {
                     firstFound = false;
                 }
@@ -108,14 +117,20 @@ public class Drivebase extends TorqueSubsystem {
                 
                 double time = Timer.getFPGATimestamp() - firstTime;
                 
-                Vix.setInput((ballCoordinate[1] - firstBallCoordinate[1])/(time));
-                Viy.setInput((ballCoordinate[0] - firstBallCoordinate[0])/(time));
-                Viz.setInput((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
-                Vix.run(); Viy.run(); Viz.run();
+                //Vix.setInput((ballCoordinate[1] - firstBallCoordinate[1])/(time));
+                //Viy.setInput((ballCoordinate[0] - firstBallCoordinate[0])/(time));
+                //Viz.setInput((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
+                //Vix.run(); Viy.run(); Viz.run();
+                Vix = ((ballCoordinate[1] - firstBallCoordinate[1])/(time));
+                Viy = ((ballCoordinate[0] - firstBallCoordinate[0])/(time));
+                Viz = ((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
                 
 
-                double quadPartA = Viz.getAverage() / (2 * ballAccel);
-                double quadPartB = Math.sqrt(Viz.getAverage() * Viz.getAverage() + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
+                //double quadPartA = Viz.getAverage() / (2 * ballAccel);
+                //double quadPartB = Math.sqrt(Viz.getAverage() * Viz.getAverage() + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
+                
+                double quadPartA = Viz/ (2 * ballAccel);
+                double quadPartB = Math.sqrt(Viz * Viz + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
                 
                 double quadSolveA = quadPartA + quadPartB;
                 double quadSolveB = quadPartA - quadPartB;
@@ -124,13 +139,18 @@ public class Drivebase extends TorqueSubsystem {
                 
                 quadSolveA = Math.max(quadSolveA, quadSolveB);
                 
-                double predictedX = Vix.getAverage() * quadSolveA + firstBallCoordinate[1];
-                double predictedY = Viy.getAverage() * quadSolveA + firstBallCoordinate[0];
-                double predictedZ = Viy.getAverage() * quadSolveA + - ballAccel * quadSolveA * quadSolveA + firstBallCoordinate[2];
+                double predictedX = Vix * quadSolveA + firstBallCoordinate[1];
+                double predictedY = Viy * quadSolveA + firstBallCoordinate[0];
+                double predictedZ = Viy * quadSolveA + - ballAccel * quadSolveA * quadSolveA + firstBallCoordinate[2];
                 
-                SmartDashboard.putNumber("PredictedX", predictedX);
-                SmartDashboard.putNumber("PredictedY", predictedY);
-                SmartDashboard.putNumber("PredictedZ", predictedZ);
+                xp.setInput(predictedX);
+                yp.setInput(predictedY);
+                zp.setInput(predictedZ);
+                xp.run(); yp.run(); zp.run();
+                
+                SmartDashboard.putNumber("PredictedX", xp.getAverage());
+                SmartDashboard.putNumber("PredictedY", yp.getAverage());
+                SmartDashboard.putNumber("PredictedZ", zp.getAverage());
                 
                 //xStrafe = -ballCoordinate[1];// * visionStrafeCoe;
                 //yStrafe = (ballCoordinate[0] - targetDistance);// * visionPowerCoe;
@@ -139,6 +159,7 @@ public class Drivebase extends TorqueSubsystem {
             
         }//Case for Found Target
         else {
+            SmartDashboard.putBoolean("Found", false);
             firstFound = true;
         }
         //rotation = visionStrafePID.calculate(xStrafe);
@@ -233,7 +254,7 @@ public class Drivebase extends TorqueSubsystem {
         visionRotCoe = params.getAsDouble("D_RotationMultiplier", 0.0);
         targetDistance = params.getAsDouble("D_TargetDistance", 6.0);
         cameraHeight = params.getAsDouble("C_Height", 0.0);
-        cameraElevation = params.getAsDouble("E_Elevation", 0.0);
+        cameraElevation = params.getAsDouble("C_Elevation", 0.0);
         ballAccel = params.getAsDouble("B_Accel", 10.57);
         SmartDashboard.putNumber("VisionPowerCoe", visionPowerCoe);
         SmartDashboard.putNumber("VisionStrafeCoe", visionStrafeCoe);

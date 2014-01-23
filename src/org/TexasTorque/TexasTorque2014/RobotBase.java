@@ -3,6 +3,7 @@ package org.TexasTorque.TexasTorque2014;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Watchdog;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.io.*;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
@@ -106,7 +107,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
         robotOutput.updateState();
         //sensorInput.updateState();
         
-        drivebase.run();
         manipulator.run();
         
         drivebase.setToRobot();
@@ -116,10 +116,12 @@ public class RobotBase extends IterativeRobot implements Runnable {
         
         robotOutput.pullFromState();
         
+        SmartDashboard.putNumber("NumCycles", numCycles);
+        
     }
 
     public void teleopContinuous() {
-        
+        drivebase.run();
         
     }
 
