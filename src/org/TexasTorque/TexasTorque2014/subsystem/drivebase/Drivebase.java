@@ -48,11 +48,11 @@ public class Drivebase extends TorqueSubsystem {
 
         visionForwardPID = new TorquePID();
         visionStrafePID = new TorquePID();
-        
+
         xp = new MovingAverageFilter(8);
         yp = new MovingAverageFilter(8);
         zp = new MovingAverageFilter(8);
-        
+
         firstFound = true;
     }
 
@@ -100,73 +100,74 @@ public class Drivebase extends TorqueSubsystem {
             SmartDashboard.putNumber("BallY", ballCoordinate[0]);
             SmartDashboard.putNumber("BallX", ballCoordinate[1]);
             SmartDashboard.putNumber("BallZ", ballCoordinate[2]);
-            if (firstFound) {
-                //Vix.reset();
-                //Viy.reset();
-                //Viz.reset();
-                firstBallCoordinate = ballCoordinate;
-                firstTime = Timer.getFPGATimestamp();
-                ballSide /= 2;
-                if(SmartDashboard.getNumber("COG_X", 0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_Y",0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_X", 0.0) + ballSide < SmartDashboard.getNumber("IMAGE_WIDTH", 0.0) && SmartDashboard.getNumber("COG_Y", 0.0) + ballSide < SmartDashboard.getNumber("IMAGE_HEIGHT", 0.0))
-                {
-                    firstFound = false;
-                }
-            } else {
+            /*if (firstFound) {
+             //Vix.reset();
+             //Viy.reset();
+             //Viz.reset();
+             firstBallCoordinate = ballCoordinate;
+             firstTime = Timer.getFPGATimestamp();
+             ballSide /= 2;
+             if(SmartDashboard.getNumber("COG_X", 0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_Y",0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_X", 0.0) + ballSide < SmartDashboard.getNumber("IMAGE_WIDTH", 0.0) && SmartDashboard.getNumber("COG_Y", 0.0) + ballSide < SmartDashboard.getNumber("IMAGE_HEIGHT", 0.0))
+             {
+             firstFound = false;
+             }
+             } else {
 
                 
                 
-                double time = Timer.getFPGATimestamp() - firstTime;
+             double time = Timer.getFPGATimestamp() - firstTime;
                 
-                //Vix.setInput((ballCoordinate[1] - firstBallCoordinate[1])/(time));
-                //Viy.setInput((ballCoordinate[0] - firstBallCoordinate[0])/(time));
-                //Viz.setInput((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
-                //Vix.run(); Viy.run(); Viz.run();
-                Vix = ((ballCoordinate[1] - firstBallCoordinate[1])/(time));
-                Viy = ((ballCoordinate[0] - firstBallCoordinate[0])/(time));
-                Viz = ((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
+             //Vix.setInput((ballCoordinate[1] - firstBallCoordinate[1])/(time));
+             //Viy.setInput((ballCoordinate[0] - firstBallCoordinate[0])/(time));
+             //Viz.setInput((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
+             //Vix.run(); Viy.run(); Viz.run();
+             Vix = ((ballCoordinate[1] - firstBallCoordinate[1])/(time));
+             Viy = ((ballCoordinate[0] - firstBallCoordinate[0])/(time));
+             Viz = ((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
                 
 
-                //double quadPartA = Viz.getAverage() / (2 * ballAccel);
-                //double quadPartB = Math.sqrt(Viz.getAverage() * Viz.getAverage() + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
+             //double quadPartA = Viz.getAverage() / (2 * ballAccel);
+             //double quadPartB = Math.sqrt(Viz.getAverage() * Viz.getAverage() + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
                 
-                double quadPartA = Viz/ (2 * ballAccel);
-                double quadPartB = Math.sqrt(Viz * Viz + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
+             double quadPartA = Viz/ (2 * ballAccel);
+             double quadPartB = Math.sqrt(Viz * Viz + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
                 
-                double quadSolveA = quadPartA + quadPartB;
-                double quadSolveB = quadPartA - quadPartB;
+             double quadSolveA = quadPartA + quadPartB;
+             double quadSolveB = quadPartA - quadPartB;
                 
-                SmartDashboard.putNumber("Expected Land Time", Math.max(quadSolveA, quadSolveB));
+             SmartDashboard.putNumber("Expected Land Time", Math.max(quadSolveA, quadSolveB));
                 
-                quadSolveA = Math.max(quadSolveA, quadSolveB);
+             quadSolveA = Math.max(quadSolveA, quadSolveB);
                 
-                double predictedX = Vix * quadSolveA + firstBallCoordinate[1];
-                double predictedY = Viy * quadSolveA + firstBallCoordinate[0];
-                double predictedZ = Viy * quadSolveA + - ballAccel * quadSolveA * quadSolveA + firstBallCoordinate[2];
+             double predictedX = Vix * quadSolveA + firstBallCoordinate[1];
+             double predictedY = Viy * quadSolveA + firstBallCoordinate[0];
+             double predictedZ = Viy * quadSolveA + - ballAccel * quadSolveA * quadSolveA + firstBallCoordinate[2];
                 
-                xp.setInput(predictedX);
-                yp.setInput(predictedY);
-                zp.setInput(predictedZ);
-                xp.run(); yp.run(); zp.run();
+             xp.setInput(predictedX);
+             yp.setInput(predictedY);
+             zp.setInput(predictedZ);
+             xp.run(); yp.run(); zp.run();
                 
-                SmartDashboard.putNumber("PredictedX", xp.getAverage());
-                SmartDashboard.putNumber("PredictedY", yp.getAverage());
-                SmartDashboard.putNumber("PredictedZ", zp.getAverage());
+             SmartDashboard.putNumber("PredictedX", xp.getAverage());
+             SmartDashboard.putNumber("PredictedY", yp.getAverage());
+             SmartDashboard.putNumber("PredictedZ", zp.getAverage());
                 
-                //xStrafe = -ballCoordinate[1];// * visionStrafeCoe;
-                //yStrafe = (ballCoordinate[0] - targetDistance);// * visionPowerCoe;
-            }
-            
-            
+             //xStrafe = -ballCoordinate[1];// * visionStrafeCoe;
+             //yStrafe = (ballCoordinate[0] - targetDistance);// * visionPowerCoe;
+             }*/
+            xStrafe = -ballCoordinate[1];// * visionStrafeCoe;
+            yStrafe = (ballCoordinate[0] - targetDistance);// * visionPowerCoe;   
+
         }//Case for Found Target
         else {
             SmartDashboard.putBoolean("Found", false);
             firstFound = true;
         }
-        //rotation = visionStrafePID.calculate(xStrafe);
-        //xStrafe = 0.0;
-        //yStrafe = visionForwardPID.calculate(yStrafe);
+        rotation = visionStrafePID.calculate(xStrafe);
+        xStrafe = 0.0;
+        yStrafe = visionForwardPID.calculate(yStrafe);
 
-        //mixChannels(yStrafe, xStrafe, rotation);
+        mixChannels(yStrafe, xStrafe, rotation);
     }
 
     private void mecanumDrive(double yAxis, double xAxis, double rotation) {
