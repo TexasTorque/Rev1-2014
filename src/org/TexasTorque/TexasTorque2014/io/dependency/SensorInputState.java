@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
 
 public class SensorInputState
@@ -117,5 +118,14 @@ public class SensorInputState
     public double getGyroAngle()
     {
         return gyroAngle;
+    }
+    
+    public void pushToDashboard()
+    {
+        SmartDashboard.putNumber("FrontLeftSpeed", getLeftFrontDriveEncoderRate());
+        SmartDashboard.putNumber("FrontRightSpeed", getRightFrontDriveEncoderRate());
+        SmartDashboard.putNumber("RearLeftSpeed", getLeftRearDriveEncoderRate());
+        SmartDashboard.putNumber("RearRightSpeed", getRightRearDriveEncoderRate());
+        
     }
 }

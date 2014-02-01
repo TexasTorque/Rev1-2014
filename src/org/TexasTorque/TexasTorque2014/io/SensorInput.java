@@ -27,7 +27,7 @@ public class SensorInput
 
     public SensorInput()
     {
-        /*
+        
         watchdog = Watchdog.getInstance();
         
         //----- Encoders/Counters -----
@@ -38,15 +38,15 @@ public class SensorInput
         
         
         //----- Gyro -----
-        gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
-        gyro = new Gyro(gyroChannel);
-        gyro.reset();
-        gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
+        //gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
+        //gyro = new Gyro(gyroChannel);
+        //gyro.reset();
+        //gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
         
         //----- Misc -----
-        pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
+        //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
         startEncoders();
-                */
+                
     }
     
     public synchronized static SensorInput getInstance()
@@ -155,12 +155,12 @@ public class SensorInput
     
     public double getPSI()
     {
-        return pressureSensor.getVoltage();
+        return 0.0;//pressureSensor.getVoltage();
     }
     
     public double getGyroAngle()
     {
-        return limitGyroAngle(-gyro.getAngle() * 2);
+        return 0.0;//limitGyroAngle(-gyro.getAngle() * 2);
     }
     
     public double limitGyroAngle(double angle)

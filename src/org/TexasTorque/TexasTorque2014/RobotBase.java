@@ -92,7 +92,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopInit() {
         driverInput.pullJoystickTypes();
-        
+        sensorInput.resetEncoders();
         robotTime.reset();
         robotTime.start();
     }
@@ -100,25 +100,20 @@ public class RobotBase extends IterativeRobot implements Runnable {
     public void teleopPeriodic() {
         watchdog.feed();
        
-        driverInput.updateState();
-        robotOutput.updateState();
-        //sensorInput.updateState();
-        
         drivebase.run();
         manipulator.run();
         
-        drivebase.setToRobot();
-        manipulator.setToRobot();
         
         //drivebase.pushToDashboard();
-        
         robotOutput.pullFromState();
-        
+        SensorInput.getState().pushToDashboard();
     }
 
     public void teleopContinuous() {
-        
-        
+        sensorInput.calcEncoders();
+        driverInput.updateState();
+        robotOutput.updateState();
+        sensorInput.updateState();
     }
 
     public void disabledPeriodic() {
