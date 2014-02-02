@@ -99,6 +99,10 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopPeriodic() {
         watchdog.feed();
+        
+        robotOutput.updateState();
+        driverInput.updateState();
+        sensorInput.updateState();
        
         drivebase.run();
         manipulator.run();
@@ -111,9 +115,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopContinuous() {
         sensorInput.calcEncoders();
-        driverInput.updateState();
-        robotOutput.updateState();
-        sensorInput.updateState();
+        
     }
 
     public void disabledPeriodic() {

@@ -76,7 +76,7 @@ public class DriverInput {
     }
 
     public synchronized double getRotation() {
-        return operatorController.getRightXAxis();
+        return driveController.getRightXAxis();
     }
 
     public synchronized boolean hasInput() {

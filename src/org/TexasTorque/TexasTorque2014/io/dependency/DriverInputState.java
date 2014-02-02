@@ -41,7 +41,7 @@ public class DriverInputState {
 
     public synchronized int getAutonomousMode() {
         return autonMode;
-    }
+    } 
 
     public synchronized boolean resetSensors() {
         return operatorControllerState.getBottomActionButton();
