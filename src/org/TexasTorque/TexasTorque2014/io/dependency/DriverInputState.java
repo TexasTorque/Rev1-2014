@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.DriverInput;
 
@@ -79,5 +80,11 @@ public class DriverInputState {
 
         return inOverrideState;
     }
-
+    
+    public synchronized void pushToDashboard()
+    {
+        SmartDashboard.putNumber("X Axis Value", getXAxis());
+        SmartDashboard.putNumber("Y Axis Value", getYAxis());
+        SmartDashboard.putNumber("Rotation Value", getRotation());
+    }
 }

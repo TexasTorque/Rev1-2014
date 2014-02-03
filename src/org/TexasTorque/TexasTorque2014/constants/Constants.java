@@ -3,9 +3,9 @@ package org.TexasTorque.TexasTorque2014.constants;
 public class Constants
 {
     //----- Controller -----
-    public final static double X_AXIS_DEADBAND = 0.12;
+    public final static double X_AXIS_DEADBAND = 0.18;
     public final static double Y_AXIS_DEADBAND = 0.12;
-    public final static double ROTATION_DEADBAND = 0.12;
+    public final static double ROTATION_DEADBAND = 0.2;
     
     public final static boolean DEFAULT_FIRST_CONTROLLER_TYPE = true;
     public final static boolean DEFAULT_SECOND_CONTROLLER_TYPE = false;
