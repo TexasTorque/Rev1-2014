@@ -13,7 +13,6 @@ import org.TexasTorque.TorqueLib.util.TorqueLogging;
 public class RobotBase extends IterativeRobot implements Runnable {
 
     Thread continuousThread;
-
     Watchdog watchdog;
     Parameters params;
     TorqueLogging logging;
@@ -23,9 +22,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     RobotOutput robotOutput;
     Drivebase drivebase;
     Manipulator manipulator;
-
     Timer robotTime;
-
     boolean logData;
     int logCycles;
     double numCycles;
@@ -56,9 +53,17 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
+        sensorInput.resetEncoders();
+        robotTime.reset();
+        robotTime.start();
+
     }
 
     public void disabledInit() {
+        sensorInput.resetEncoders();
+        robotTime.reset();
+        robotTime.start();
+
     }
 
     public void run() {
@@ -85,9 +90,16 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void autonomousPeriodic() {
         watchdog.feed();
+
+        robotOutput.updateState();
+        driverInput.updateState();
+        sensorInput.updateState();
+        robotOutput.pullFromState();
+        SensorInput.getState().pushToDashboard();
     }
 
     public void autonomousContinuous() {
+        sensorInput.calcEncoders();
     }
 
     public void teleopInit() {
@@ -99,29 +111,31 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopPeriodic() {
         watchdog.feed();
-        
+
         robotOutput.updateState();
         driverInput.updateState();
         sensorInput.updateState();
-       
+
         drivebase.run();
         manipulator.run();
-        
-        
-        //drivebase.pushToDashboard();
+
         robotOutput.pullFromState();
         SensorInput.getState().pushToDashboard();
     }
 
     public void teleopContinuous() {
         sensorInput.calcEncoders();
-        
+
     }
 
     public void disabledPeriodic() {
         watchdog.feed();
+        driverInput.updateState();
+        sensorInput.updateState();
+        SensorInput.getState().pushToDashboard();
     }
 
     public void disabledContinuous() {
+        sensorInput.calcEncoders();
     }
 }

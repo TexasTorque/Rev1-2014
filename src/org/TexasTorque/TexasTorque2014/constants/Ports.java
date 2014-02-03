@@ -28,10 +28,10 @@ public class Ports {
             public final static int LEFT_FRONT_DRIVE_ENCODER_B_PORT = 8;
             public final static int RIGHT_FRONT_DRIVE_ENCODER_A_PORT = 1;
             public final static int RIGHT_FRONT_DRIVE_ENCODER_B_PORT = 2;
-            public final static int LEFT_REAR_DRIVE_ENCODER_A_PORT = 9;
-            public final static int LEFT_REAR_DRIVE_ENCODER_B_PORT = 10;
-            public final static int RIGHT_REAR_DRIVE_ENCODER_A_PORT = 3;
-            public final static int RIGHT_REAR_DRIVE_ENCODER_B_PORT = 4;
+            public final static int LEFT_REAR_DRIVE_ENCODER_A_PORT = 12;
+            public final static int LEFT_REAR_DRIVE_ENCODER_B_PORT = 11;
+            public final static int RIGHT_REAR_DRIVE_ENCODER_A_PORT = 9;
+            public final static int RIGHT_REAR_DRIVE_ENCODER_B_PORT = 10;
             public final static int PRESSURE_SWITCH_PORT = 0;
 
     //----- Analog Inputs -----
