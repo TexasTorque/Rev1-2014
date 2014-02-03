@@ -15,7 +15,7 @@ public class DriverInputState {
 
     }
 
-    public void updateState(DriverInput input) {
+    public synchronized void updateState(DriverInput input) {
         driveControllerState = new GenericControllerState(input.getDriverController());
         operatorControllerState = new GenericControllerState(input.getOperatorController());
         autonDelay = input.getAutonomousDelay();

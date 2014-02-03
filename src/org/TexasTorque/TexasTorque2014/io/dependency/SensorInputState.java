@@ -27,7 +27,7 @@ public class SensorInputState
     {
         
     }
-    public void updateState(SensorInput input)
+    public synchronized void updateState(SensorInput input)
     {
         //----- Encoders/Counters -----
         leftFrontDriveEncoder = input.getLeftFrontDriveEncoder();
@@ -50,72 +50,72 @@ public class SensorInputState
         pressureSensor = input.getPSI();
     }
     
-    public double getLeftFrontDriveEncoder()
+    public synchronized double getLeftFrontDriveEncoder()
     {
         return leftFrontDriveEncoder;
     }
     
-    public double getRightFrontDriveEncoder()
+    public synchronized double getRightFrontDriveEncoder()
     {
         return rightFrontDriveEncoder;
     }
     
-    public double getLeftFrontDriveEncoderRate()
+    public synchronized double getLeftFrontDriveEncoderRate()
     {
         return leftFrontDriveEncoderVelocity;
     }
     
-    public double getRightFrontDriveEncoderRate()
+    public synchronized double getRightFrontDriveEncoderRate()
     {
         return rightFrontDriveEncoderVelocity;
     }
     
-    public double getLeftFrontDriveEncoderAcceleration()
+    public synchronized double getLeftFrontDriveEncoderAcceleration()
     {
         return leftFrontDriveEncoderAcceleration;
     }
     
-    public double getRightFrontDriveEncoderAcceleration()
+    public synchronized double getRightFrontDriveEncoderAcceleration()
     {
         return rightFrontDriveEncoderAcceleration;
     }
     
-    public double getLeftRearDriveEncoder()
+    public synchronized double getLeftRearDriveEncoder()
     {
         return leftRearDriveEncoder;
     }
     
-    public double getRightRearDriveEncoder()
+    public synchronized double getRightRearDriveEncoder()
     {
         return rightRearDriveEncoder;
     }
     
-    public double getLeftRearDriveEncoderRate()
+    public synchronized double getLeftRearDriveEncoderRate()
     {
         return leftRearDriveEncoderVelocity;
     }
     
-    public double getRightRearDriveEncoderRate()
+    public synchronized double getRightRearDriveEncoderRate()
     {
         return rightRearDriveEncoderVelocity;
     }
     
-    public double getLeftRearDriveEncoderAcceleration()
+    public synchronized double getLeftRearDriveEncoderAcceleration()
     {
         return leftRearDriveEncoderAcceleration;
     }
     
-    public double getRightRearDriveEncoderAcceleration()
+    public synchronized double getRightRearDriveEncoderAcceleration()
     {
         return rightRearDriveEncoderAcceleration;
     }
     
-    public double getPSI()
+    public synchronized double getPSI()
     {
         return pressureSensor;
     }
     
-    public double getGyroAngle()
+    public synchronized double getGyroAngle()
     {
         return gyroAngle;
     }

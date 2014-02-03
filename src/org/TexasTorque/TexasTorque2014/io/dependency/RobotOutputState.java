@@ -17,7 +17,7 @@ public class RobotOutputState {
         
     }
     
-    public void updateState(RobotOutput output)
+    public synchronized void updateState(RobotOutput output)
     {
         //----- Pneumatics -----
         compressorEnabled = output.getCompressorEnabled();
@@ -36,23 +36,23 @@ public class RobotOutputState {
         rightRearMotorSpeed = rightRearSpeed;
     }
 
-    public double getLeftFrontMotorSpeed() {
+    public synchronized double getLeftFrontMotorSpeed() {
         return leftFrontMotorSpeed;
     }
 
-    public double getLeftRearMotorSpeed() {
+    public synchronized double getLeftRearMotorSpeed() {
         return leftRearMotorSpeed;
     }
 
-    public double getRightFrontMotorSpeed() {
+    public synchronized double getRightFrontMotorSpeed() {
         return rightFrontMotorSpeed;
     }
 
-    public double getRightRearMotorSpeed() {
+    public synchronized double getRightRearMotorSpeed() {
         return rightRearMotorSpeed;
     }
 
-    public boolean getCompressorEnabled() {
+    public synchronized boolean getCompressorEnabled() {
         return compressorEnabled;
     }
 }
