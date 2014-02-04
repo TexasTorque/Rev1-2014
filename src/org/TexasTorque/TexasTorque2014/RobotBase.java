@@ -54,6 +54,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
+        loadParameters();
         sensorInput.resetEncoders();
         robotTime.reset();
         robotTime.start();
@@ -61,6 +62,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void disabledInit() {
+        loadParameters();
         sensorInput.resetEncoders();
         robotTime.reset();
         robotTime.start();
@@ -105,6 +107,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void teleopInit() {
+        loadParameters();
+        
         driverInput.pullJoystickTypes();
         sensorInput.resetEncoders();
         robotTime.reset();
@@ -141,5 +145,12 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void disabledContinuous() {
         sensorInput.calcEncoders();
+    }
+    
+    public void loadParameters()
+    {
+        params.load();
+        drivebase.loadParameters();
+        manipulator.loadParameters();
     }
 }

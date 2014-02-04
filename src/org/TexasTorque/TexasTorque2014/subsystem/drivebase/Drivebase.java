@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.subsystem.drivebase;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
@@ -45,10 +46,14 @@ public class Drivebase extends TorqueSubsystem {
         leftRearDriveSpeed = Constants.MOTOR_STOPPED;
         rightFrontDriveSpeed = Constants.MOTOR_STOPPED;
         rightRearDriveSpeed = Constants.MOTOR_STOPPED;
+        
+        visionForwardPID = new TorquePID(0.0, 0.0, 0.0);
+        visionStrafePID = new TorquePID(0.0, 0.0, 0.0);
     }
 
     public void run() {
-        mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
+        calcCatchingSpeeds();
+        //mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
         setToRobot();
     }
 
@@ -89,6 +94,8 @@ public class Drivebase extends TorqueSubsystem {
             SmartDashboard.putNumber("BallY", ballCoordinate[0]);
             SmartDashboard.putNumber("BallX", ballCoordinate[1]);
             SmartDashboard.putNumber("BallZ", ballCoordinate[2]);
+            SmartDashboard.putNumber("TestTime", Timer.getFPGATimestamp());
+            
             /*if (firstFound) {
              //Vix.reset();
              //Viy.reset();
@@ -156,7 +163,7 @@ public class Drivebase extends TorqueSubsystem {
         xStrafe = 0.0;
         yStrafe = visionForwardPID.calculate(yStrafe);
 
-        mixChannels(yStrafe, xStrafe, rotation);
+        mixChannels(-yStrafe, xStrafe, rotation);
     }
 
     private void mecanumDrive(double yAxis, double xAxis, double rotation) {
@@ -247,13 +254,14 @@ public class Drivebase extends TorqueSubsystem {
         cameraHeight = params.getAsDouble("C_Height", 0.0);
         cameraElevation = params.getAsDouble("C_Elevation", 0.0);
         ballAccel = params.getAsDouble("B_Accel", 10.57);
-        SmartDashboard.putNumber("VisionPowerCoe", visionPowerCoe);
-        SmartDashboard.putNumber("VisionStrafeCoe", visionStrafeCoe);
-        SmartDashboard.putNumber("VisionRotationCoe", visionRotCoe);
 
         double p = params.getAsDouble("D_VisionForwardP", 0.0);
         double i = params.getAsDouble("D_VisionForwardI", 0.0);
         double d = params.getAsDouble("D_VisionForwardD", 0.0);
+        SmartDashboard.putNumber("D_VisionP", p);
+        SmartDashboard.putNumber("D_VisionI", i);
+        SmartDashboard.putNumber("D_VisionD", d);
+        
         visionForwardPID.setPIDGains(p, i, d);
 
         p = params.getAsDouble("D_VisionStrafeP", 0.0);
