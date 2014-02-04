@@ -2,6 +2,11 @@ package org.TexasTorque.TexasTorque2014.constants;
 
 public class Constants
 {
+    //----- Vision Calculations -----
+    public final static double BALL_DIAMETER = 2.0;
+    public final static double kFOV_X = 67.0 * Math.PI / 180;
+    public final static double kFOV_Y = 51.0 * Math.PI / 180;
+    
     //----- Controller -----
     public final static double X_AXIS_DEADBAND = 0.18;
     public final static double Y_AXIS_DEADBAND = 0.12;
