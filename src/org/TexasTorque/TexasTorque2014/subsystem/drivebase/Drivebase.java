@@ -240,6 +240,28 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void loadParameters() {
+        visionPowerCoe = params.getAsDouble("D_ForwardMultiplier", 1.0);
+        visionStrafeCoe = params.getAsDouble("D_StrafeMultiplier", 1.0);
+        visionRotCoe = params.getAsDouble("D_RotationMultiplier", 0.0);
+        targetDistance = params.getAsDouble("D_TargetDistance", 6.0);
+        cameraHeight = params.getAsDouble("C_Height", 0.0);
+        cameraElevation = params.getAsDouble("C_Elevation", 0.0);
+        ballAccel = params.getAsDouble("B_Accel", 10.57);
+        SmartDashboard.putNumber("VisionPowerCoe", visionPowerCoe);
+        SmartDashboard.putNumber("VisionStrafeCoe", visionStrafeCoe);
+        SmartDashboard.putNumber("VisionRotationCoe", visionRotCoe);
 
+        double p = params.getAsDouble("D_VisionForwardP", 0.0);
+        double i = params.getAsDouble("D_VisionForwardI", 0.0);
+        double d = params.getAsDouble("D_VisionForwardD", 0.0);
+        visionForwardPID.setPIDGains(p, i, d);
+
+        p = params.getAsDouble("D_VisionStrafeP", 0.0);
+        i = params.getAsDouble("D_VisionStrafeI", 0.0);
+        d = params.getAsDouble("D_VisionStrafeD", 0.0);
+        visionStrafePID.setPIDGains(p, i, d);
+
+        visionForwardPID.setSetpoint(0.0);
+        visionStrafePID.setSetpoint(0.0);
     }
 }
