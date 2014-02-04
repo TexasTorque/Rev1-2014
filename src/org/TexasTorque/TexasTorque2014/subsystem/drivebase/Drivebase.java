@@ -3,15 +3,36 @@ package org.TexasTorque.TexasTorque2014.subsystem.drivebase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
+import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
+import org.TexasTorque.TorqueLib.util.MovingAverageFilter;
 import org.TexasTorque.TorqueLib.util.TorqueUtil;
 
 public class Drivebase extends TorqueSubsystem {
 
     private static Drivebase instance;
+    
     private double leftFrontDriveSpeed;
     private double leftRearDriveSpeed;
     private double rightFrontDriveSpeed;
     private double rightRearDriveSpeed;
+    private double visionPowerCoe;
+    private double visionStrafeCoe;
+    private double visionRotCoe;
+    private double targetDistance;
+    private double cameraHeight;
+    private double cameraElevation;
+    private double[] firstBallCoordinate;
+    private double firstTime;
+    private boolean firstFound;
+    private TorquePID visionForwardPID;
+    private TorquePID visionStrafePID;
+    private double Vix;
+    private double Viy;
+    private double Viz;
+    private MovingAverageFilter xp;
+    private MovingAverageFilter yp;
+    private MovingAverageFilter zp;
+    private double ballAccel;
 
     public static Drivebase getInstance() {
         return (instance == null) ? instance = new Drivebase() : instance;
