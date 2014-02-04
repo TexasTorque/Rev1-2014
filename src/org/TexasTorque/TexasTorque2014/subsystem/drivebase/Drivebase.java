@@ -70,6 +70,94 @@ public class Drivebase extends TorqueSubsystem {
 
         mecanumDrive(yAxis, xAxis, rotation);
     }
+    private void calcCatchingSpeeds() {
+
+        double xStrafe = 0;
+        double yStrafe = 0;
+        double rotation = 0;
+        SmartDashboard.putBoolean("FirstFound", firstFound);
+        if (SmartDashboard.getNumber("X_Var", -1.0) != -1 || SmartDashboard.getNumber("Y_Var", -1.0) != -1) {
+            SmartDashboard.putBoolean("Found", true);
+
+            double ballSide = SmartDashboard.getNumber("COG_BOX_SIZE", 0.0);
+            double screenWidth = SmartDashboard.getNumber("IMAGE_WIDTH", 320);
+            double distance = Constants.BALL_DIAMETER / (2 * Math.tan(Constants.kFOV_X * ballSide / (2 * screenWidth)));
+
+            double[] ballCoordinate = TorqueUtil.magD2(distance, SmartDashboard.getNumber("X_Var") * Constants.kFOV_X / 2, (SmartDashboard.getNumber("Y_Var") * Constants.kFOV_Y / 2) + cameraElevation);
+            ballCoordinate[2] += cameraHeight - Constants.BALL_DIAMETER / 2;
+
+            SmartDashboard.putNumber("BallY", ballCoordinate[0]);
+            SmartDashboard.putNumber("BallX", ballCoordinate[1]);
+            SmartDashboard.putNumber("BallZ", ballCoordinate[2]);
+            /*if (firstFound) {
+             //Vix.reset();
+             //Viy.reset();
+             //Viz.reset();
+             firstBallCoordinate = ballCoordinate;
+             firstTime = Timer.getFPGATimestamp();
+             ballSide /= 2;
+             if(SmartDashboard.getNumber("COG_X", 0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_Y",0.0) - ballSide > 0 && SmartDashboard.getNumber("COG_X", 0.0) + ballSide < SmartDashboard.getNumber("IMAGE_WIDTH", 0.0) && SmartDashboard.getNumber("COG_Y", 0.0) + ballSide < SmartDashboard.getNumber("IMAGE_HEIGHT", 0.0))
+             {
+             firstFound = false;
+             }
+             } else {
+
+                
+                
+             double time = Timer.getFPGATimestamp() - firstTime;
+                
+             //Vix.setInput((ballCoordinate[1] - firstBallCoordinate[1])/(time));
+             //Viy.setInput((ballCoordinate[0] - firstBallCoordinate[0])/(time));
+             //Viz.setInput((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
+             //Vix.run(); Viy.run(); Viz.run();
+             Vix = ((ballCoordinate[1] - firstBallCoordinate[1])/(time));
+             Viy = ((ballCoordinate[0] - firstBallCoordinate[0])/(time));
+             Viz = ((ballCoordinate[2] - firstBallCoordinate[2])/(time) + ballAccel * time);
+                
+
+             //double quadPartA = Viz.getAverage() / (2 * ballAccel);
+             //double quadPartB = Math.sqrt(Viz.getAverage() * Viz.getAverage() + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
+                
+             double quadPartA = Viz/ (2 * ballAccel);
+             double quadPartB = Math.sqrt(Viz * Viz + 4 * ballAccel * firstBallCoordinate[2]) / (2 * ballAccel);
+                
+             double quadSolveA = quadPartA + quadPartB;
+             double quadSolveB = quadPartA - quadPartB;
+                
+             SmartDashboard.putNumber("Expected Land Time", Math.max(quadSolveA, quadSolveB));
+                
+             quadSolveA = Math.max(quadSolveA, quadSolveB);
+                
+             double predictedX = Vix * quadSolveA + firstBallCoordinate[1];
+             double predictedY = Viy * quadSolveA + firstBallCoordinate[0];
+             double predictedZ = Viy * quadSolveA + - ballAccel * quadSolveA * quadSolveA + firstBallCoordinate[2];
+                
+             xp.setInput(predictedX);
+             yp.setInput(predictedY);
+             zp.setInput(predictedZ);
+             xp.run(); yp.run(); zp.run();
+                
+             SmartDashboard.putNumber("PredictedX", xp.getAverage());
+             SmartDashboard.putNumber("PredictedY", yp.getAverage());
+             SmartDashboard.putNumber("PredictedZ", zp.getAverage());
+                
+             //xStrafe = -ballCoordinate[1];// * visionStrafeCoe;
+             //yStrafe = (ballCoordinate[0] - targetDistance);// * visionPowerCoe;
+             }*/
+            xStrafe = -ballCoordinate[1];// * visionStrafeCoe;
+            yStrafe = (ballCoordinate[0] - targetDistance);// * visionPowerCoe;   
+
+        }//Case for Found Target
+        else {
+            SmartDashboard.putBoolean("Found", false);
+            firstFound = true;
+        }
+        rotation = visionStrafePID.calculate(xStrafe);
+        xStrafe = 0.0;
+        yStrafe = visionForwardPID.calculate(yStrafe);
+
+        mixChannels(yStrafe, xStrafe, rotation);
+    }
 
     private void mecanumDrive(double yAxis, double xAxis, double rotation) {
         double leftFrontSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
