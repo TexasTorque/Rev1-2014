@@ -20,6 +20,8 @@ public class Ports {
             public final static int RIGHT_REAR_DRIVE_MOTOR_PORT = 1;
             public final static int LEFT_FRONT_DRIVE_MOTOR_PORT = 4;
             public final static int LEFT_REAR_DRIVE_MOTOR_PORT = 3;
+            public final static int LEFT_STRAFE_DRIVE_MOTOR_PORT = 7;
+            public final static int RIGHT_STRAFE_DRIVE_MOTOR_PORT = 8;
 
     //----- Solenoids -----
     //----- Digital Inputs -----

@@ -12,6 +12,7 @@ public class RobotOutputState {
     private double leftRearMotorSpeed;
     private double rightFrontMotorSpeed;
     private double rightRearMotorSpeed;
+    private double strafeMotorSpeed;
 
     public RobotOutputState() {
         
@@ -29,11 +30,12 @@ public class RobotOutputState {
         rightRearMotorSpeed = output.getRightRearMotorSpeed();
     }
 
-    public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed) {
+    public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
         leftFrontMotorSpeed = leftFrontSpeed;
         leftRearMotorSpeed = leftRearSpeed;
         rightFrontMotorSpeed = rightFrontSpeed;
         rightRearMotorSpeed = rightRearSpeed;
+        strafeMotorSpeed = strafeSpeed;
     }
 
     public double getLeftFrontMotorSpeed() {
@@ -50,6 +52,11 @@ public class RobotOutputState {
 
     public double getRightRearMotorSpeed() {
         return rightRearMotorSpeed;
+    }
+    
+    public double getStrafeMotorSpeed()
+    {
+        return strafeMotorSpeed;
     }
 
     public boolean getCompressorEnabled() {

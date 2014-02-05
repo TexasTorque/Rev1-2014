@@ -12,6 +12,7 @@ public class Drivebase extends TorqueSubsystem {
     private double leftRearDriveSpeed;
     private double rightFrontDriveSpeed;
     private double rightRearDriveSpeed;
+    private double strafeDriveSpeed;
 
     public static Drivebase getInstance() {
         return (instance == null) ? instance = new Drivebase() : instance;
@@ -24,6 +25,7 @@ public class Drivebase extends TorqueSubsystem {
         leftRearDriveSpeed = Constants.MOTOR_STOPPED;
         rightFrontDriveSpeed = Constants.MOTOR_STOPPED;
         rightRearDriveSpeed = Constants.MOTOR_STOPPED;
+        strafeDriveSpeed = Constants.MOTOR_STOPPED;
     }
 
     public void run() {
@@ -32,14 +34,15 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void setToRobot() {
-        robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed);
+        robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed, strafeDriveSpeed);
     }
 
-    public void setDriveSpeeds(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed) {
+    public void setDriveSpeeds(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
         leftFrontDriveSpeed = leftFrontSpeed;
         leftRearDriveSpeed = leftRearSpeed;
         rightFrontDriveSpeed = rightFrontSpeed;
         rightRearDriveSpeed = rightRearSpeed;
+        strafeDriveSpeed = strafeSpeed;
     }
 
     private void mixChannels(double yAxis, double xAxis, double rotation) {
@@ -47,25 +50,20 @@ public class Drivebase extends TorqueSubsystem {
         xAxis = TorqueUtil.applyDeadband(xAxis, Constants.X_AXIS_DEADBAND);
         rotation = TorqueUtil.applyDeadband(rotation, Constants.ROTATION_DEADBAND);
 
-        mecanumDrive(yAxis, xAxis, rotation);
+        HDrive(yAxis, xAxis, rotation);
     }
 
-    private void mecanumDrive(double yAxis, double xAxis, double rotation) {
-        double leftFrontSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
-        double rightFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
-        double leftRearSpeed   = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + xAxis * Constants.STRAFE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
-        double rightRearSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - xAxis * Constants.STRAFE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
-        
-        SmartDashboard.putNumber("LeftFrontDriveSpeed", leftFrontSpeed);
-        SmartDashboard.putNumber("LeftRearDriveSpeed", leftRearSpeed);
-        SmartDashboard.putNumber("RightFrontDriveSpeed", rightFrontSpeed);
-        SmartDashboard.putNumber("RightRearDriveSpeed", rightRearSpeed);
+    private void HDrive(double yAxis, double xAxis, double rotation) {
+        double leftFrontSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
+        double rightFrontSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
+        double leftRearSpeed   = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
+        double rightRearSpeed  = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
+        double strafeSpeed = xAxis * Constants.STRAFE_COEFFICIENT;
         
         SmartDashboard.putNumber("YAX", yAxis);
         SmartDashboard.putNumber("XAX", xAxis);
         SmartDashboard.putNumber("RTA", rotation);
         //SmartDashboard.putNumber("RRS", rightRearSpeed);
-        
         
         double max = 1;
         if (Math.abs(leftFrontSpeed) > max) {
@@ -87,8 +85,14 @@ public class Drivebase extends TorqueSubsystem {
             leftRearSpeed = leftRearSpeed / max;
             rightRearSpeed = rightRearSpeed / max;
         }
+        
+        SmartDashboard.putNumber("LeftFrontDriveSpeed", leftFrontSpeed);
+        SmartDashboard.putNumber("LeftRearDriveSpeed", leftRearSpeed);
+        SmartDashboard.putNumber("RightFrontDriveSpeed", rightFrontSpeed);
+        SmartDashboard.putNumber("RightRearDriveSpeed", rightRearSpeed);
+        SmartDashboard.putNumber("StrafeDriveSpeed", strafeSpeed);
 
-        setDriveSpeeds(leftFrontSpeed, leftRearSpeed, rightFrontSpeed, rightRearSpeed);
+        setDriveSpeeds(leftFrontSpeed, leftRearSpeed, rightFrontSpeed, rightRearSpeed, strafeSpeed);
         
         //pushToDashboard();
     }
