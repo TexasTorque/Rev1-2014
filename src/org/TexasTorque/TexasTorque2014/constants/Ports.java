@@ -24,6 +24,7 @@ public class Ports {
             public final static int RIGHT_STRAFE_DRIVE_MOTOR_PORT = 8;
 
     //----- Solenoids -----
+            public final static int DRIVEBASE_SWITCHER = 1;
     //----- Digital Inputs -----
         //----- Sidecar 1 -----
             public final static int LEFT_FRONT_DRIVE_ENCODER_A_PORT = 7;

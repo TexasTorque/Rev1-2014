@@ -15,6 +15,8 @@ public class Constants
     public final static double STRAFE_COEFFICIENT = 1;
     public final static double FORWARD_REVERSE_COEFFICIENT = 1;
     public final static double ROTATION_COEFFICIENT = 1;
+    public final static boolean TRACTION_MODE = false;
+    public final static boolean OMNI_MODE = true;
     
     //Autonomous
     public final static int DO_NOTHING_AUTO = 0;

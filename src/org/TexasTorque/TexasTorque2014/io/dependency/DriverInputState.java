@@ -63,6 +63,11 @@ public class DriverInputState {
     public synchronized boolean hasInput() {
         return (Math.abs(getXAxis()) > Constants.X_AXIS_DEADBAND || Math.abs(getYAxis()) > Constants.Y_AXIS_DEADBAND || Math.abs(getRotation()) > Constants.ROTATION_DEADBAND);
     }
+    
+    public synchronized boolean getDriveMode()
+    {
+        return Constants.OMNI_MODE;
+    }
 
 //---------- Manipulator ----------    
     public synchronized boolean restoreToDefault() {

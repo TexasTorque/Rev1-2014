@@ -1,7 +1,6 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
-import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 
 public class Manipulator extends TorqueSubsystem {

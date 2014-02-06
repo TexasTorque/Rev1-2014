@@ -1,6 +1,7 @@
 package org.TexasTorque.TexasTorque2014.io;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
@@ -14,6 +15,8 @@ public class RobotOutput {
 
     //----- Pneumatics -----
     private Compressor compressor;
+    private Solenoid driveBaseSwitcher;
+    private double driveBaseState;
 
     //----- Drive Motors -----
     private Motor leftFrontDriveMotor;
@@ -30,7 +33,8 @@ public class RobotOutput {
 
     public RobotOutput() {
         //----- Pneumatics -----
-        //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
+        compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
+        driveBaseSwitcher = new Solenoid(Ports.DRIVEBASE_SWITCHER);
 
         //----- Drive Motors -----
         leftFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, false);
@@ -46,7 +50,7 @@ public class RobotOutput {
         strafeMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Misc Misc -----
-        //compressor.start();
+        compressor.start();
     }
 
     public synchronized static RobotOutput getInstance() {
@@ -78,6 +82,11 @@ public class RobotOutput {
         rightRearMotorSpeed = rightRearSpeed;
         strafeMotorSpeed = strafeSpeed;
     }
+    
+    public void setDriveBaseState(boolean mode)
+    {
+        driveBaseSwitcher.set(mode);
+    }
 
     public double getLeftFrontMotorSpeed() {
         return leftFrontMotorSpeed;
@@ -101,7 +110,6 @@ public class RobotOutput {
     }
 
     public boolean getCompressorEnabled() {
-        //return compressor.enabled();
-        return false;
+        return compressor.enabled();
     }
 }
