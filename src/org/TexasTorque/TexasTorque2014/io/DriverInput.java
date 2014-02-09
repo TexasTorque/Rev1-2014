@@ -67,31 +67,10 @@ public class DriverInput {
     }
 
 //---------- Drivebase ----------
-    public synchronized double getYAxis() {
-        return driveController.getLeftYAxis();
-    }
-
-    public synchronized double getXAxis() {
-        return driveController.getLeftXAxis();
-    }
-
-    public synchronized double getRotation() {
-        return driveController.getRightXAxis();
-    }
-
-    public synchronized boolean hasInput() {
-        return (Math.abs(getXAxis()) > Constants.X_AXIS_DEADBAND || Math.abs(getYAxis()) > Constants.Y_AXIS_DEADBAND || Math.abs(getRotation()) > Constants.ROTATION_DEADBAND);
-    }
     
-    public synchronized boolean getDriveMode()
-    {
-        return Constants.OMNI_MODE;
-    }
 
 //---------- Manipulator ----------    
-    public synchronized boolean restoreToDefault() {
-        return operatorController.getBottomLeftBumper();
-    }
+    
 
 //---------- Overrides ----------
     public synchronized boolean overrideState() {

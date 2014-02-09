@@ -2,6 +2,7 @@ package org.TexasTorque.TexasTorque2014.io.dependency;
 
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.DriverInput;
+import org.TexasTorque.TorqueLib.util.TorqueToggle;
 
 public class DriverInputState {
 
@@ -10,9 +11,10 @@ public class DriverInputState {
     private double autonDelay;
     private int autonMode;
     private boolean inOverrideState;
+    private TorqueToggle driveBaseMode;
 
     public DriverInputState() {
-
+       driveBaseMode = new TorqueToggle();
     }
 
     public void updateState(DriverInput input) {
@@ -21,6 +23,7 @@ public class DriverInputState {
         autonDelay = input.getAutonomousDelay();
         autonMode = input.getAutonomousMode();
         inOverrideState = false;
+        driveBaseMode.calc(operatorControllerState.getLeftStickClick());
     }
 
     public synchronized void setAutonomousDelay(double autonDelay) {
@@ -46,7 +49,7 @@ public class DriverInputState {
     public synchronized boolean resetSensors() {
         return operatorControllerState.getBottomActionButton();
     }
-
+ 
 //---------- Drivebase ----------
     public synchronized double getXAxis() {
         return operatorControllerState.getLeftXAxis();
@@ -66,7 +69,8 @@ public class DriverInputState {
     
     public synchronized boolean getDriveMode()
     {
-        return Constants.OMNI_MODE;
+        //driveBaseMode.calc(driveControllerState.getLeftStickClick());
+        return driveBaseMode.get();
     }
 
 //---------- Manipulator ----------    

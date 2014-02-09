@@ -15,8 +15,10 @@ public class RobotOutput {
 
     //----- Pneumatics -----
     private Compressor compressor;
-    private Solenoid driveBaseSwitcher;
-    private double driveBaseState;
+    private Solenoid frontDriveBaseSwitcher;
+    private Solenoid middleDriveBaseSwitcher;
+    private Solenoid rearDriveBaseSwitcher;
+    private boolean driveBaseMode;
 
     //----- Drive Motors -----
     private Motor leftFrontDriveMotor;
@@ -33,15 +35,18 @@ public class RobotOutput {
 
     public RobotOutput() {
         //----- Pneumatics -----
-        compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
-        driveBaseSwitcher = new Solenoid(Ports.DRIVEBASE_SWITCHER);
+        //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
+        frontDriveBaseSwitcher = new Solenoid(Ports.FRONT_DRIVEBASE_SWITCHER);
+        middleDriveBaseSwitcher = new Solenoid(Ports.MIDDLE_DRIVEBASE_SWITCHER);
+        rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
+        driveBaseMode = Constants.OMNI_MODE;
 
         //----- Drive Motors -----
-        leftFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, false);
-        leftRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, false);
+        leftFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, false);
+        leftRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, false);
         rightFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, false);
         rightRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, false);
-        leftStrafeMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.LEFT_STRAFE_DRIVE_MOTOR_PORT), true, false);
+        leftStrafeMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_STRAFE_DRIVE_MOTOR_PORT), true, false);
         rightStrafeMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_STRAFE_DRIVE_MOTOR_PORT), true, false);
         rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
         rightRearMotorSpeed = Constants.MOTOR_STOPPED;
@@ -50,7 +55,7 @@ public class RobotOutput {
         strafeMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Misc Misc -----
-        compressor.start();
+        //compressor.start();
     }
 
     public synchronized static RobotOutput getInstance() {
@@ -67,6 +72,7 @@ public class RobotOutput {
 
     public synchronized void pullFromState() {
         setDriveMotors(state.getLeftFrontMotorSpeed(), state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed(), state.getStrafeMotorSpeed());
+        setDriveBaseMode(state.getDriveBaseMode());
     }
 
     public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -81,11 +87,6 @@ public class RobotOutput {
         leftRearMotorSpeed = leftRearSpeed;
         rightRearMotorSpeed = rightRearSpeed;
         strafeMotorSpeed = strafeSpeed;
-    }
-    
-    public void setDriveBaseState(boolean mode)
-    {
-        driveBaseSwitcher.set(mode);
     }
 
     public double getLeftFrontMotorSpeed() {
@@ -103,13 +104,24 @@ public class RobotOutput {
     public double getRightRearMotorSpeed() {
         return rightRearMotorSpeed;
     }
-    
-    public double getStrafeMotorSpeed()
-    {
+
+    public double getStrafeMotorSpeed() {
         return strafeMotorSpeed;
     }
 
     public boolean getCompressorEnabled() {
-        return compressor.enabled();
+        return false;
+        //return compressor.enabled();
+    }
+
+    public void setDriveBaseMode(boolean mode) {
+        frontDriveBaseSwitcher.set(mode);
+        middleDriveBaseSwitcher.set(mode);
+        rearDriveBaseSwitcher.set(mode);
+        driveBaseMode = mode;
+    }
+
+    public boolean getDriveBaseMode() {
+        return driveBaseMode;
     }
 }

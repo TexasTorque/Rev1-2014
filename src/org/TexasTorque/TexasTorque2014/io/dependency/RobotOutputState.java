@@ -6,6 +6,7 @@ public class RobotOutputState {
 
     //----- Pneumatics -----
     private boolean compressorEnabled;
+    private boolean driveBaseMode;
 
     //----- Drive Motors -----
     private double leftFrontMotorSpeed;
@@ -22,6 +23,7 @@ public class RobotOutputState {
     {
         //----- Pneumatics -----
         compressorEnabled = output.getCompressorEnabled();
+        driveBaseMode = output.getDriveBaseMode();
 
         //----- Drive Motors -----
         leftFrontMotorSpeed = output.getLeftFrontMotorSpeed();
@@ -61,5 +63,14 @@ public class RobotOutputState {
 
     public boolean getCompressorEnabled() {
         return compressorEnabled;
+    }
+    
+    public void setDriveBaseMode(boolean mode) {
+        driveBaseMode = mode;
+    }
+    
+    public boolean getDriveBaseMode()
+    {
+        return driveBaseMode;
     }
 }
