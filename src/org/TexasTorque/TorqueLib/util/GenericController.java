@@ -1,6 +1,7 @@
 package org.TexasTorque.TorqueLib.util;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GenericController extends Joystick
 {

@@ -84,8 +84,8 @@ public class Drivebase extends TorqueSubsystem {
             rightSpeed = rightSpeed / max;
         }
 
-        SmartDashboard.putNumber("LeftFrontDriveSpeed", leftSpeed);
-        SmartDashboard.putNumber("RightRearDriveSpeed", rightSpeed);
+        SmartDashboard.putNumber("LeftDriveSpeed", leftSpeed);
+        SmartDashboard.putNumber("RightDriveSpeed", rightSpeed);
         SmartDashboard.putNumber("StrafeDriveSpeed", strafeSpeed);
 
         setDriveSpeeds(leftSpeed, rightSpeed, strafeSpeed);
@@ -117,8 +117,8 @@ public class Drivebase extends TorqueSubsystem {
             strafeSpeed = strafeSpeed / max;
         }
 
-        SmartDashboard.putNumber("LeftFrontDriveSpeed", leftSpeed);
-        SmartDashboard.putNumber("RightRearDriveSpeed", rightSpeed);
+        SmartDashboard.putNumber("LeftDriveSpeed", leftSpeed);
+        SmartDashboard.putNumber("RightDriveSpeed", rightSpeed);
         SmartDashboard.putNumber("StrafeDriveSpeed", strafeSpeed);
 
         setDriveSpeeds(leftSpeed, rightSpeed, strafeSpeed);

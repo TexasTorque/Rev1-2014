@@ -119,6 +119,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void disabledPeriodic() {
+        driverInput.updateState();
+        DriverInput.getState().getDriveMode();
         watchdog.feed();
     }
 

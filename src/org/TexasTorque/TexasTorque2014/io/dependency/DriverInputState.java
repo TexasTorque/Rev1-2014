@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.DriverInput;
 import org.TexasTorque.TorqueLib.util.TorqueToggle;
@@ -69,8 +70,8 @@ public class DriverInputState {
     
     public synchronized boolean getDriveMode()
     {
-        //driveBaseMode.calc(driveControllerState.getLeftStickClick());
-        return driveBaseMode.get();
+        SmartDashboard.putBoolean("DriveMode", driveBaseMode.get() || operatorControllerState.getBottomRightBumper());
+        return (driveBaseMode.get() || operatorControllerState.getBottomRightBumper());
     }
 
 //---------- Manipulator ----------    

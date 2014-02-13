@@ -42,12 +42,12 @@ public class RobotOutput {
         driveBaseMode = Constants.OMNI_MODE;
 
         //----- Drive Motors -----
-        leftFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, false);
-        leftRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, false);
-        rightFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, false);
-        rightRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, false);
-        leftStrafeMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_STRAFE_DRIVE_MOTOR_PORT), true, false);
-        rightStrafeMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_STRAFE_DRIVE_MOTOR_PORT), true, false);
+        leftFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
+        leftRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
+        rightFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
+        rightRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
+        leftStrafeMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_STRAFE_DRIVE_MOTOR_PORT), false, true);
+        rightStrafeMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_STRAFE_DRIVE_MOTOR_PORT), false, true);
         rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
         rightRearMotorSpeed = Constants.MOTOR_STOPPED;
         leftFrontMotorSpeed = Constants.MOTOR_STOPPED;
