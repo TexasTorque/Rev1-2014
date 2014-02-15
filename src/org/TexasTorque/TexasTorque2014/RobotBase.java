@@ -56,9 +56,11 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
+        loadParameters();
     }
 
     public void disabledInit() {
+        loadParameters();
     }
 
     public void run() {
@@ -91,6 +93,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void teleopInit() {
+        loadParameters();
         driverInput.pullJoystickTypes();
         sensorInput.resetEncoders();
         robotTime.reset();
@@ -120,10 +123,17 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void disabledPeriodic() {
         driverInput.updateState();
-        DriverInput.getState().getDriveMode();
         watchdog.feed();
     }
 
     public void disabledContinuous() {
+    }
+    
+    public void loadParameters()
+    {
+        params.load();
+        drivebase.loadParameters();
+        manipulator.loadParameters();
+        SensorInput.getState().loadParamaters();
     }
 }

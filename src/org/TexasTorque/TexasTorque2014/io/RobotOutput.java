@@ -32,6 +32,16 @@ public class RobotOutput {
     private double rightFrontMotorSpeed;
     private double rightRearMotorSpeed;
     private double strafeMotorSpeed;
+    
+    //----- Intake -----
+    private Motor frontIntakeMotor;
+    private Motor rearIntakeMotor;
+    private Motor frontIntakeTiltMotor;
+    private Motor rearIntakeTiltMotor;
+    private double frontIntakeMotorSpeed;
+    private double rearIntakeMotorSpeed;
+    private double frontIntakeTiltMotorSpeed;
+    private double rearIntakeTiltMotorSpeed;
 
     public RobotOutput() {
         //----- Pneumatics -----
@@ -53,6 +63,12 @@ public class RobotOutput {
         leftFrontMotorSpeed = Constants.MOTOR_STOPPED;
         leftRearMotorSpeed = Constants.MOTOR_STOPPED;
         strafeMotorSpeed = Constants.MOTOR_STOPPED;
+        
+        //----- Intake -----
+        frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_MOTOR_PORT, Ports.FRONT_INTAKE_SIDECAR), false, true);
+        rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_MOTOR_PORT, Ports.REAR_INTAKE_SIDECAR), false, true);
+        frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_MOTOR_PORT, Ports.FRONT_INTAKE_TILT_SIDECAR), false, true);
+        rearIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_MOTOR_PORT, Ports.FRONT_INTAKE_TILT_SIDECAR), false, true);
 
         //----- Misc Misc -----
         //compressor.start();
@@ -123,5 +139,37 @@ public class RobotOutput {
 
     public boolean getDriveBaseMode() {
         return driveBaseMode;
+    }
+    
+    public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt)
+    {
+        frontIntakeMotor.Set(frontRoller);
+        rearIntakeMotor.Set(rearRoller);
+        frontIntakeTiltMotor.Set(frontTilt);
+        rearIntakeTiltMotor.Set(rearTilt);
+        frontIntakeMotorSpeed = frontRoller;
+        rearIntakeMotorSpeed = rearRoller;
+        frontIntakeTiltMotorSpeed = frontTilt;
+        rearIntakeTiltMotorSpeed = rearTilt;
+    }
+    
+    public double getFrontIntakeMotorSpeed()
+    {
+        return frontIntakeMotorSpeed;
+    }
+    
+    public double getRearIntakeMotorSpeed()
+    {
+        return rearIntakeMotorSpeed;
+    }
+    
+    public double getFrontIntakeTiltMotorSpeed()
+    {
+        return frontIntakeTiltMotorSpeed;
+    }
+    
+    public double getRearIntakeTiltMotorSpeed()
+    {
+        return rearIntakeTiltMotorSpeed;
     }
 }

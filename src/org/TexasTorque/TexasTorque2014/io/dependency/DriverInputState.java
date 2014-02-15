@@ -24,7 +24,7 @@ public class DriverInputState {
         autonDelay = input.getAutonomousDelay();
         autonMode = input.getAutonomousMode();
         inOverrideState = false;
-        driveBaseMode.calc(operatorControllerState.getLeftStickClick());
+        driveBaseMode.calc(driveControllerState.getLeftStickClick());
     }
 
     public synchronized void setAutonomousDelay(double autonDelay) {
@@ -53,15 +53,15 @@ public class DriverInputState {
  
 //---------- Drivebase ----------
     public synchronized double getXAxis() {
-        return operatorControllerState.getLeftXAxis();
+        return driveControllerState.getLeftXAxis();
     }
 
     public synchronized double getYAxis() {
-        return operatorControllerState.getLeftYAxis();
+        return driveControllerState.getLeftYAxis();
     }
 
     public synchronized double getRotation() {
-        return operatorControllerState.getRightXAxis();
+        return driveControllerState.getRightXAxis();
     }
 
     public synchronized boolean hasInput() {
@@ -70,11 +70,36 @@ public class DriverInputState {
     
     public synchronized boolean getDriveMode()
     {
-        SmartDashboard.putBoolean("DriveMode", driveBaseMode.get() || operatorControllerState.getBottomRightBumper());
-        return (driveBaseMode.get() || operatorControllerState.getBottomRightBumper());
+        //SmartDashboard.putBoolean("DriveMode", driveBaseMode.get() || operatorControllerState.getBottomRightBumper());
+        return (driveBaseMode.get() || driveControllerState.getBottomRightBumper());
     }
 
-//---------- Manipulator ----------    
+//---------- Manipulator ----------  
+    public synchronized boolean frontIntaking()
+    {
+        return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
+    }
+    
+    public synchronized boolean frontOuttaking()
+    {
+        return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
+    }
+    
+    public synchronized boolean rearIntaking()
+    {
+        return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
+    }
+    
+    public synchronized boolean rearOuttaking()
+    {
+        return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
+    }
+    
+    public synchronized boolean catching()
+    {
+        return operatorControllerState.getBottomActionButton();
+    }
+    
     public synchronized boolean restoreToDefault() {
         return operatorControllerState.getBottomLeftBumper();
     }

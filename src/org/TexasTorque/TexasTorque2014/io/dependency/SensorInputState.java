@@ -2,9 +2,10 @@ package org.TexasTorque.TexasTorque2014.io.dependency;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
+import org.TexasTorque.TorqueLib.util.Parameters;
 
-public class SensorInputState
-{
+public class SensorInputState {
+
     //----- Encoder -----
     private double leftFrontDriveEncoder;
     private double rightFrontDriveEncoder;
@@ -22,13 +23,22 @@ public class SensorInputState
     //----- Analog -----
     private double pressureSensor;
     private double gyroAngle;
+    private double frontIntakeTiltPotentiometer;
+    private double rearIntakeTiltPotentiometer;
+    
+    //----- Angles -----
+    private double minFrontIntakeAngle;
+    private double maxFrontIntakeAngle;
+    private double minRearIntakeAngle;
+    private double maxRearIntakeAngle;
+    
+    Parameters params;
 
-    public SensorInputState()
-    {
-        
+    public SensorInputState() {
+        params = Parameters.getTeleopInstance();
     }
-    public void updateState(SensorInput input)
-    {
+
+    public void updateState(SensorInput input) {
         //----- Encoders/Counters -----
         leftFrontDriveEncoder = input.getLeftFrontDriveEncoder();
         rightFrontDriveEncoder = input.getRightFrontDriveEncoder();
@@ -42,90 +52,106 @@ public class SensorInputState
         rightRearDriveEncoderVelocity = input.getRightRearDriveEncoderRate();
         leftRearDriveEncoderAcceleration = input.getLeftRearDriveEncoderAcceleration();
         rightRearDriveEncoderAcceleration = input.getRightRearDriveEncoderAcceleration();
+
+        //----- Potentiometers -----
+        frontIntakeTiltPotentiometer = input.getFrontIntakeTiltPotentiometer();
+        rearIntakeTiltPotentiometer = input.getRearIntakeTiltPotentiometer();
         
         //----- Gyro -----
         gyroAngle = input.getGyroAngle();
-        
+
         //----- Misc -----
         pressureSensor = input.getPSI();
     }
-    
-    public double getLeftFrontDriveEncoder()
-    {
+
+    public double getLeftFrontDriveEncoder() {
         return leftFrontDriveEncoder;
     }
-    
-    public double getRightFrontDriveEncoder()
-    {
+
+    public double getRightFrontDriveEncoder() {
         return rightFrontDriveEncoder;
     }
-    
-    public double getLeftFrontDriveEncoderRate()
-    {
+
+    public double getLeftFrontDriveEncoderRate() {
         return leftFrontDriveEncoderVelocity;
     }
-    
-    public double getRightFrontDriveEncoderRate()
-    {
+
+    public double getRightFrontDriveEncoderRate() {
         return rightFrontDriveEncoderVelocity;
     }
-    
-    public double getLeftFrontDriveEncoderAcceleration()
-    {
+
+    public double getLeftFrontDriveEncoderAcceleration() {
         return leftFrontDriveEncoderAcceleration;
     }
-    
-    public double getRightFrontDriveEncoderAcceleration()
-    {
+
+    public double getRightFrontDriveEncoderAcceleration() {
         return rightFrontDriveEncoderAcceleration;
     }
-    
-    public double getLeftRearDriveEncoder()
-    {
+
+    public double getLeftRearDriveEncoder() {
         return leftRearDriveEncoder;
     }
-    
-    public double getRightRearDriveEncoder()
-    {
+
+    public double getRightRearDriveEncoder() {
         return rightRearDriveEncoder;
     }
-    
-    public double getLeftRearDriveEncoderRate()
-    {
+
+    public double getLeftRearDriveEncoderRate() {
         return leftRearDriveEncoderVelocity;
     }
-    
-    public double getRightRearDriveEncoderRate()
-    {
+
+    public double getRightRearDriveEncoderRate() {
         return rightRearDriveEncoderVelocity;
     }
-    
-    public double getLeftRearDriveEncoderAcceleration()
-    {
+
+    public double getLeftRearDriveEncoderAcceleration() {
         return leftRearDriveEncoderAcceleration;
     }
-    
-    public double getRightRearDriveEncoderAcceleration()
-    {
+
+    public double getRightRearDriveEncoderAcceleration() {
         return rightRearDriveEncoderAcceleration;
     }
-    
-    public double getPSI()
-    {
+
+    public double getPSI() {
         return pressureSensor;
     }
-    
-    public double getGyroAngle()
-    {
+
+    public double getGyroAngle() {
         return gyroAngle;
     }
     
-    public void pushToDashboard()
+    public double getFrontIntakeTiltPotentiometer()
     {
+        return frontIntakeTiltPotentiometer;
+    }
+    
+    public double getRearIntakeTiltPotentiometer()
+    {
+        return rearIntakeTiltPotentiometer;
+    }
+
+    public double getFrontIntakeTiltAngle()
+    {
+        return getFrontIntakeTiltPotentiometer()*(maxFrontIntakeAngle - minFrontIntakeAngle) + minFrontIntakeAngle;
+    }
+    
+    public double getRearIntakeTiltAngle()
+    {
+        return getRearIntakeTiltPotentiometer()*(maxRearIntakeAngle - minRearIntakeAngle) + minRearIntakeAngle;
+    }
+    
+    public void pushToDashboard() {
         SmartDashboard.putNumber("FrontLeftSpeed", getLeftFrontDriveEncoderRate());
         SmartDashboard.putNumber("FrontRightSpeed", getRightFrontDriveEncoderRate());
         SmartDashboard.putNumber("RearLeftSpeed", getLeftRearDriveEncoderRate());
         SmartDashboard.putNumber("RearRightSpeed", getRightRearDriveEncoderRate());
-        
+
+    }
+    public void loadParamaters()
+    {
+        minFrontIntakeAngle = params.getAsDouble("I_MinFrontIntakeAngle", 0.0);
+        maxFrontIntakeAngle = params.getAsDouble("I_MaxFrontIntakeAngle", 100.0);
+        minRearIntakeAngle = params.getAsDouble("I_MinRearIntakeAngle", 0.0);
+        maxRearIntakeAngle = params.getAsDouble("I_MaxRearIntakeAngle", 100.0);
     }
 }

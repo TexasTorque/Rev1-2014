@@ -25,6 +25,15 @@ public class Ports {
             public final static int RIGHT_REAR_DRIVE_MOTOR_PORT = 6;
             public final static int LEFT_REAR_DRIVE_MOTOR_PORT = 6;
             
+            public final static int FRONT_INTAKE_MOTOR_PORT = 4;
+            public final static int REAR_INTAKE_MOTOR_PORT = 0;
+            public final static int FRONT_INTAKE_TILT_MOTOR_PORT = 3;
+            public final static int REAR_INTAKE_TILT_MOTOR_PORT = 0;
+            public final static int FRONT_INTAKE_SIDECAR = 1;
+            public final static int REAR_INTAKE_SIDECAR = 0;
+            public final static int FRONT_INTAKE_TILT_SIDECAR = 1;
+            public final static int REAR_INTAKE_TILT_SIDECAR = 0;
+            
 
     //----- Solenoids -----
             public final static int FRONT_DRIVEBASE_SWITCHER = 5;
@@ -45,6 +54,8 @@ public class Ports {
     //----- Analog Inputs -----
         public final static int GYRO_PORT = 0;
         public final static int ANALOG_PRESSURE_PORT = 0;
+        public final static int FRONT_INTAKE_TILT_POT_PORT = 0;
+        public final static int REAR_INTAKE_TILT_POT_PORT = 0;
 
     //----- Relays -----
         //----- Sidecar 1 -----

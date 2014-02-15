@@ -14,6 +14,12 @@ public class RobotOutputState {
     private double rightFrontMotorSpeed;
     private double rightRearMotorSpeed;
     private double strafeMotorSpeed;
+    
+    //----- Intake -----
+    private double frontIntakeMotorSpeed;
+    private double rearIntakeMotorSpeed;
+    private double frontIntakeTiltMotorSpeed;
+    private double rearIntakeTiltMotorSpeed;
 
     public RobotOutputState() {
         
@@ -30,6 +36,12 @@ public class RobotOutputState {
         leftRearMotorSpeed = output.getLeftRearMotorSpeed();
         rightFrontMotorSpeed = output.getRightFrontMotorSpeed();
         rightRearMotorSpeed = output.getRightRearMotorSpeed();
+        
+        //----- Intake -----
+        frontIntakeMotorSpeed = output.getFrontIntakeMotorSpeed();
+        rearIntakeMotorSpeed = output.getRearIntakeMotorSpeed();
+        frontIntakeTiltMotorSpeed = output.getFrontIntakeTiltMotorSpeed();
+        rearIntakeTiltMotorSpeed = output.getRearIntakeTiltMotorSpeed();
     }
 
     public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -72,5 +84,33 @@ public class RobotOutputState {
     public boolean getDriveBaseMode()
     {
         return driveBaseMode;
+    }
+    
+    public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt)
+    {
+        frontIntakeMotorSpeed = frontRoller;
+        rearIntakeMotorSpeed = rearRoller;
+        frontIntakeTiltMotorSpeed = frontTilt;
+        rearIntakeTiltMotorSpeed = rearTilt;
+    }
+    
+    public double getFrontIntakeMotorSpeed()
+    {
+        return frontIntakeMotorSpeed;
+    }
+    
+    public double getRearIntakeMotorSpeed()
+    {
+        return rearIntakeMotorSpeed;
+    }
+    
+    public double getFrontIntakeTiltMotorSpeed()
+    {
+        return frontIntakeTiltMotorSpeed;
+    }
+    
+    public double getRearIntakeTiltMotorSpeed()
+    {
+        return rearIntakeTiltMotorSpeed;
     }
 }

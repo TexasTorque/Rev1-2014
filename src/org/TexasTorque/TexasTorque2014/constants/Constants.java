@@ -31,4 +31,8 @@ public class Constants
     public final static int RED_ALLIANCE = 0;
     public final static int BLUE_ALLIANCE = 1;
     
+    //----- Potentiometer -----
+    public final static int INTAKE_POTENTIOMETER_LOW = 0;
+    public final static int INTAKE_POTENTIOMETER_HIGH = 0;
+    
 }

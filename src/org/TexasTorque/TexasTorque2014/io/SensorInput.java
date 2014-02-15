@@ -3,10 +3,12 @@ package org.TexasTorque.TexasTorque2014.io;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Watchdog;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
 import org.TexasTorque.TorqueLib.component.TorqueEncoder;
+import org.TexasTorque.TorqueLib.component.TorquePotentiometer;
 
 public class SensorInput
 {
@@ -24,6 +26,8 @@ public class SensorInput
     private AnalogChannel pressureSensor;
     private AnalogChannel gyroChannel;
     public Gyro gyro;
+    private TorquePotentiometer frontIntakeTiltPotentiometer;
+    private TorquePotentiometer rearIntakeTiltPotentiometer;
 
     public SensorInput()
     {
@@ -36,12 +40,17 @@ public class SensorInput
         rightFrontDriveEncoder = new TorqueEncoder(Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_B_PORT, false);
         rightRearDriveEncoder = new TorqueEncoder(Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_A_PORT, Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_B_PORT, false);
         
-        
         //----- Gyro -----
         //gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
         //gyro = new Gyro(gyroChannel);
         //gyro.reset();
         //gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
+        
+        //----- Potentiometers -----
+        frontIntakeTiltPotentiometer = new TorquePotentiometer(Ports.SIDECAR_ONE, Ports.FRONT_INTAKE_TILT_POT_PORT);
+        rearIntakeTiltPotentiometer = new TorquePotentiometer(Ports.SIDECAR_ONE, Ports.REAR_INTAKE_TILT_POT_PORT);
+        frontIntakeTiltPotentiometer.setRange(Constants.INTAKE_POTENTIOMETER_LOW, Constants.INTAKE_POTENTIOMETER_HIGH);
+        rearIntakeTiltPotentiometer.setRange(Constants.INTAKE_POTENTIOMETER_LOW, Constants.INTAKE_POTENTIOMETER_HIGH);
         
         //----- Misc -----
         //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
@@ -151,6 +160,18 @@ public class SensorInput
     public double getRightRearDriveEncoderAcceleration()
     {
         return (rightRearDriveEncoder.getAcceleration());
+    }
+    
+    public double getFrontIntakeTiltPotentiometer()
+    {
+        SmartDashboard.putNumber("FrontIntakeRaw", frontIntakeTiltPotentiometer.get());
+        return frontIntakeTiltPotentiometer.get();
+    }
+    
+    public double getRearIntakeTiltPotentiometer()
+    {
+        SmartDashboard.putNumber("RearIntakeRaw", rearIntakeTiltPotentiometer.get());
+        return rearIntakeTiltPotentiometer.get();
     }
     
     public double getPSI()

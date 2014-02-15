@@ -1,12 +1,15 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
+import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 
 public class Manipulator extends TorqueSubsystem {
 
     private static Manipulator instance;
     private Drivebase drivebase;
+
+    private Intake intake;
 
     public static Manipulator getInstance() {
         return (instance == null) ? instance = new Manipulator() : instance;
@@ -16,15 +19,45 @@ public class Manipulator extends TorqueSubsystem {
         super();
 
         drivebase = Drivebase.getInstance();
+
+        intake = Intake.getInstance();
     }
 
     public void run() {
         if (!driverInput.overrideState()) {
+            boolean intaking = false;
             //----- Normal Ops -----
-
-            if (driverInput.restoreToDefault()) {
-                restoreDefaultPositions();
+            
+            if (driverInput.frontIntaking()) {
+                intaking = true;
+                frontIntake();
+            } else if (driverInput.frontOuttaking()) {
+                intaking = true;
+                frontOuttake();
             } else {
+                resetFrontIntake();
+            }
+
+            if (driverInput.rearIntaking()) {
+                intaking = true;
+                rearIntake();
+            } else if (driverInput.rearOuttaking()) {
+                intaking = true;
+                rearOuttake();
+            } else {
+                resetRearIntake();
+            }
+            
+            if (driverInput.catching())
+            {
+                catchBall();
+            }
+
+            else if (driverInput.restoreToDefault()) {
+                restoreDefaultPositions();
+            } else if (intaking) { }
+            else {
+                resetIntakes();
             }
         } else {
             calcOverrides();
@@ -32,6 +65,53 @@ public class Manipulator extends TorqueSubsystem {
     }
 
     public void setToRobot() {
+        intake.setToRobot();
+    }
+
+    public void frontIntake() {
+        intake.setFrontIntakeSpeed(Intake.intakeSpeed);
+        intake.setFrontAngle(Intake.downAngle);
+    }
+
+    public void rearIntake() {
+        intake.setRearIntakeSpeed(Intake.intakeSpeed);
+        intake.setRearAngle(Intake.downAngle);
+    }
+
+    public void frontOuttake() {
+        intake.setFrontIntakeSpeed(Intake.outtakeSpeed);
+        intake.setFrontAngle(Intake.upAngle);
+        intake.setRearIntakeSpeed(Intake.intakeSpeed);
+        intake.setRearAngle(Intake.inAngle);
+    }
+
+    public void rearOuttake() {
+        intake.setRearIntakeSpeed(Intake.outtakeSpeed);
+        intake.setRearAngle(Intake.upAngle);
+        intake.setFrontIntakeSpeed(Intake.intakeSpeed);
+        intake.setFrontAngle(Intake.inAngle);
+    }
+
+    public void resetFrontIntake() {
+        intake.setFrontAngle(Intake.upAngle);
+        intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
+    }
+
+    public void resetRearIntake() {
+        intake.setRearAngle(Intake.upAngle);
+        intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
+    }
+    
+    public void catchBall()
+    {
+        intake.setFrontAngle(Intake.downAngle);
+        intake.setRearAngle(Intake.downAngle);
+    }
+    
+    public void resetIntakes()
+    {
+        resetFrontIntake();
+        resetRearIntake();
     }
 
     public String getKeyNames() {
@@ -47,6 +127,7 @@ public class Manipulator extends TorqueSubsystem {
     }
 
     public void loadParameters() {
+        intake.loadParameters();
     }
 
     private void calcOverrides() {
