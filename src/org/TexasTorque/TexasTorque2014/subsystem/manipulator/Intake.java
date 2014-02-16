@@ -94,6 +94,34 @@ public class Intake extends TorqueSubsystem {
         downAngle = params.getAsDouble("I_DownAngle", 45);
         upAngle = params.getAsDouble("I_UpAngle", 90);
         inAngle = params.getAsDouble("I_InAngle", 110);
+        
+        double frontP = params.getAsDouble("I_FrontIntakeP", 0.0);
+        double frontI = params.getAsDouble("I_FrontIntakeI", 0.0);
+        double frontD = params.getAsDouble("I_FrontIntakeD", 0.0);
+        double frontE = params.getAsDouble("I_FrontIntakeEpsilon", 0.0);
+        double frontR = params.getAsDouble("I_FrontIntakeDoneRange", 0.0);
+        double frontMaxOut = params.getAsDouble("I_FrontIntakeMaxOutPut", 1.0);
+        
+        frontTiltPID.setPIDGains(frontP, frontI, frontD);
+        frontTiltPID.setEpsilon(frontE);
+        frontTiltPID.setDoneRange(frontR);
+        frontTiltPID.setMaxOutput(frontMaxOut);
+        frontTiltPID.setMinDoneCycles(0);
+        frontTiltPID.reset();
+        
+        double rearP = params.getAsDouble("I_RearIntakeP", 0.0);
+        double rearI = params.getAsDouble("I_RearIntakeI", 0.0);
+        double rearD = params.getAsDouble("I_RearIntakeD", 0.0);
+        double rearE = params.getAsDouble("I_RearIntakeEpsilon", 0.0);
+        double rearR = params.getAsDouble("I_RearIntakeDoneRange", 0.0);
+        double rearMaxOut = params.getAsDouble("I_RearIntakeMaxOutPut", 1.0);
+        
+        rearTiltPID.setPIDGains(rearP, rearI, rearD);
+        rearTiltPID.setEpsilon(rearE);
+        rearTiltPID.setDoneRange(rearR);
+        rearTiltPID.setMaxOutput(frontMaxOut);
+        rearTiltPID.setMinDoneCycles(0);
+        rearTiltPID.reset();
     }
 
     public String logData() { //Have not implemented logging
