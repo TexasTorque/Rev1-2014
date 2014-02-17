@@ -27,7 +27,7 @@ public class Manipulator extends TorqueSubsystem {
         if (!driverInput.overrideState()) {
             boolean intaking = false;
             //----- Normal Ops -----
-            
+
             if (driverInput.frontIntaking()) {
                 intaking = true;
                 frontIntake();
@@ -47,16 +47,13 @@ public class Manipulator extends TorqueSubsystem {
             } else {
                 resetRearIntake();
             }
-            
-            if (driverInput.catching())
-            {
-                catchBall();
-            }
 
-            else if (driverInput.restoreToDefault()) {
+            if (driverInput.catching()) {
+                catchBall();
+            } else if (driverInput.restoreToDefault()) {
                 restoreDefaultPositions();
-            } else if (intaking) { }
-            else {
+            } else if (intaking) {
+            } else {
                 resetIntakes();
             }
         } else {
@@ -67,7 +64,7 @@ public class Manipulator extends TorqueSubsystem {
     public void setToRobot() {
         intake.setToRobot();
     }
-
+    
     public void frontIntake() {
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
         intake.setFrontAngle(Intake.downAngle);
@@ -101,15 +98,15 @@ public class Manipulator extends TorqueSubsystem {
         intake.setRearAngle(Intake.upAngle);
         intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
     }
-    
-    public void catchBall()
-    {
+
+    public void catchBall() {
         intake.setFrontAngle(Intake.downAngle);
         intake.setRearAngle(Intake.downAngle);
+        intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
+        intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
     }
-    
-    public void resetIntakes()
-    {
+
+    public void resetIntakes() {
         resetFrontIntake();
         resetRearIntake();
     }

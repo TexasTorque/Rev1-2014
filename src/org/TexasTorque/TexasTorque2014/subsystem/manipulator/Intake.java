@@ -100,7 +100,7 @@ public class Intake extends TorqueSubsystem {
         double frontD = params.getAsDouble("I_FrontIntakeD", 0.0);
         double frontE = params.getAsDouble("I_FrontIntakeEpsilon", 0.0);
         double frontR = params.getAsDouble("I_FrontIntakeDoneRange", 0.0);
-        double frontMaxOut = params.getAsDouble("I_FrontIntakeMaxOutPut", 1.0);
+        double frontMaxOut = params.getAsDouble("I_FrontIntakeMaxOutput", 1.0);
         
         frontTiltPID.setPIDGains(frontP, frontI, frontD);
         frontTiltPID.setEpsilon(frontE);
@@ -114,7 +114,7 @@ public class Intake extends TorqueSubsystem {
         double rearD = params.getAsDouble("I_RearIntakeD", 0.0);
         double rearE = params.getAsDouble("I_RearIntakeEpsilon", 0.0);
         double rearR = params.getAsDouble("I_RearIntakeDoneRange", 0.0);
-        double rearMaxOut = params.getAsDouble("I_RearIntakeMaxOutPut", 1.0);
+        double rearMaxOut = params.getAsDouble("I_RearIntakeMaxOutput", 1.0);
         
         rearTiltPID.setPIDGains(rearP, rearI, rearD);
         rearTiltPID.setEpsilon(rearE);
