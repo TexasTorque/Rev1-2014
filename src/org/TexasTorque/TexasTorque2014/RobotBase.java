@@ -80,7 +80,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
                 Timer.delay(0.05);
             }
 
-            //sensorInput.calcEncoders();
             numCycles++;
         }
     }
@@ -123,6 +122,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void disabledPeriodic() {
         driverInput.updateState();
+        sensorInput.updateState();
+        sensorInput.getState().pushToDashboard();
         watchdog.feed();
     }
 
