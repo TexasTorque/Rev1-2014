@@ -53,7 +53,7 @@ public class Intake extends TorqueSubsystem {
         frontTiltSpeed = frontTiltPID.calculate(currentFrontAngle);
         rearTiltSpeed = rearTiltPID.calculate(currentRearAngle);
         
-        setToRobot();
+        //setToRobot();
     }
     
     public void setFrontAngle(double angle)

@@ -20,6 +20,9 @@ public class RobotOutputState {
     private double rearIntakeMotorSpeed;
     private double frontIntakeTiltMotorSpeed;
     private double rearIntakeTiltMotorSpeed;
+    
+    //----- Catapult -----
+    private double catapultMotorSpeed;
 
     public RobotOutputState() {
         
@@ -42,6 +45,9 @@ public class RobotOutputState {
         rearIntakeMotorSpeed = output.getRearIntakeMotorSpeed();
         frontIntakeTiltMotorSpeed = output.getFrontIntakeTiltMotorSpeed();
         rearIntakeTiltMotorSpeed = output.getRearIntakeTiltMotorSpeed();
+        
+        //----- Catapult -----
+        catapultMotorSpeed = output.getCatapultMotorSpeed();
     }
 
     public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -112,5 +118,15 @@ public class RobotOutputState {
     public double getRearIntakeTiltMotorSpeed()
     {
         return rearIntakeTiltMotorSpeed;
+    }
+    
+    public void setCatapultMotor(double speed)
+    {
+        catapultMotorSpeed = speed;
+    }
+    
+    public double getCatapultMotorSpeed()
+    {
+        return catapultMotorSpeed;
     }
 }

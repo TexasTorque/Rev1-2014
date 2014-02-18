@@ -7,9 +7,10 @@ import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 public class Manipulator extends TorqueSubsystem {
 
     private static Manipulator instance;
-    private Drivebase drivebase;
 
+    private Drivebase drivebase;
     private Intake intake;
+    private Catapult catapult;
 
     public static Manipulator getInstance() {
         return (instance == null) ? instance = new Manipulator() : instance;
@@ -19,8 +20,8 @@ public class Manipulator extends TorqueSubsystem {
         super();
 
         drivebase = Drivebase.getInstance();
-
         intake = Intake.getInstance();
+        catapult = Catapult.getInstance();
     }
 
     public void run() {
@@ -50,12 +51,18 @@ public class Manipulator extends TorqueSubsystem {
 
             if (driverInput.catching()) {
                 catchBall();
+            } else if (driverInput.shooting()) {
+                shoot();
             } else if (driverInput.restoreToDefault()) {
                 restoreDefaultPositions();
             } else if (intaking) {
             } else {
                 resetIntakes();
+                resetShooter();
             }
+            
+            setToRobot();
+            
         } else {
             calcOverrides();
         }
@@ -63,8 +70,9 @@ public class Manipulator extends TorqueSubsystem {
 
     public void setToRobot() {
         intake.setToRobot();
+        catapult.setToRobot();
     }
-    
+
     public void frontIntake() {
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
         intake.setFrontAngle(Intake.downAngle);
@@ -111,6 +119,14 @@ public class Manipulator extends TorqueSubsystem {
         resetRearIntake();
     }
 
+    public void shoot() {
+        intake.setFrontAngle(Intake.downAngle);
+    }
+
+    public void resetShooter() {
+        intake.setFrontAngle(Intake.upAngle);
+    }
+
     public String getKeyNames() {
         String names = "InOverrideState,";
 
@@ -125,6 +141,7 @@ public class Manipulator extends TorqueSubsystem {
 
     public void loadParameters() {
         intake.loadParameters();
+        catapult.loadParameters();
     }
 
     private void calcOverrides() {

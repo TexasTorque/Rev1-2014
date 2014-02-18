@@ -19,12 +19,15 @@ public class SensorInputState {
     private double rightRearDriveEncoderVelocity;
     private double leftRearDriveEncoderAcceleration;
     private double rightRearDriveEncoderAcceleration;
+    private double catapultEncoder;
 
     //----- Analog -----
     private double pressureSensor;
     private double gyroAngle;
     private double frontIntakeTiltPotentiometer;
     private double rearIntakeTiltPotentiometer;
+    private double frontIntakeTiltVoltage;
+    private double rearIntakeTiltVoltage;
     
     //----- Angles -----
     private double minFrontIntakeAngle;
@@ -52,10 +55,13 @@ public class SensorInputState {
         rightRearDriveEncoderVelocity = input.getRightRearDriveEncoderRate();
         leftRearDriveEncoderAcceleration = input.getLeftRearDriveEncoderAcceleration();
         rightRearDriveEncoderAcceleration = input.getRightRearDriveEncoderAcceleration();
+        catapultEncoder = input.getCatapultEncoder();
 
         //----- Potentiometers -----
         frontIntakeTiltPotentiometer = input.getFrontIntakeTiltPotentiometer();
         rearIntakeTiltPotentiometer = input.getRearIntakeTiltPotentiometer();
+        frontIntakeTiltVoltage = input.getFrontIntakeTiltVoltage();
+        rearIntakeTiltVoltage = input.getRearIntakeTiltVoltage();
         
         //----- Gyro -----
         gyroAngle = input.getGyroAngle();
@@ -129,6 +135,16 @@ public class SensorInputState {
     {
         return rearIntakeTiltPotentiometer;
     }
+    
+    public double getRearIntakeTiltVoltage()
+    {
+        return rearIntakeTiltVoltage;
+    }
+    
+    public double getFrontIntakeTiltVoltage()
+    {
+        return frontIntakeTiltVoltage;
+    }
 
     public double getFrontIntakeTiltAngle()
     {
@@ -140,11 +156,19 @@ public class SensorInputState {
         return getRearIntakeTiltPotentiometer()*(maxRearIntakeAngle - minRearIntakeAngle) + minRearIntakeAngle;
     }
     
+    public double getCatapultEncoder()
+    {
+        return catapultEncoder;
+    }
+    
     public void pushToDashboard() {
         SmartDashboard.putNumber("FrontLeftSpeed", getLeftFrontDriveEncoderRate());
         SmartDashboard.putNumber("FrontRightSpeed", getRightFrontDriveEncoderRate());
         SmartDashboard.putNumber("RearLeftSpeed", getLeftRearDriveEncoderRate());
         SmartDashboard.putNumber("RearRightSpeed", getRightRearDriveEncoderRate());
+        SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
+        SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
+        SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
 
     }
     public void loadParamaters()

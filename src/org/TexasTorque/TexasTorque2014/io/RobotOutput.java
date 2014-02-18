@@ -42,6 +42,10 @@ public class RobotOutput {
     private double rearIntakeMotorSpeed;
     private double frontIntakeTiltMotorSpeed;
     private double rearIntakeTiltMotorSpeed;
+    
+    //----- Catapult -----
+    private Motor catapultMotor;
+    private double catapultMotorSpeed;
 
     public RobotOutput() {
         //----- Pneumatics -----
@@ -69,6 +73,14 @@ public class RobotOutput {
         rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_MOTOR_PORT, Ports.REAR_INTAKE_SIDECAR), false, true);
         frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_MOTOR_PORT, Ports.FRONT_INTAKE_TILT_SIDECAR), false, true);
         rearIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_MOTOR_PORT, Ports.FRONT_INTAKE_TILT_SIDECAR), false, true);
+        frontIntakeMotorSpeed = Constants.MOTOR_STOPPED;
+        rearIntakeMotorSpeed = Constants.MOTOR_STOPPED;
+        frontIntakeTiltMotorSpeed = Constants.MOTOR_STOPPED;
+        rearIntakeTiltMotorSpeed = Constants.MOTOR_STOPPED;
+        
+        //----- Catapult -----
+        catapultMotor = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_MOTOR_PORT), false, true);
+        catapultMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Misc Misc -----
         //compressor.start();
@@ -89,6 +101,7 @@ public class RobotOutput {
     public synchronized void pullFromState() {
         setDriveMotors(state.getLeftFrontMotorSpeed(), state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed(), state.getStrafeMotorSpeed());
         setDriveBaseMode(state.getDriveBaseMode());
+        setCatapultMotor(state.getCatapultMotorSpeed());
     }
 
     public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -171,5 +184,16 @@ public class RobotOutput {
     public double getRearIntakeTiltMotorSpeed()
     {
         return rearIntakeTiltMotorSpeed;
+    }
+    
+    public void setCatapultMotor(double speed)
+    {
+        catapultMotor.Set(speed);
+        catapultMotorSpeed = speed;
+    }
+    
+    public double getCatapultMotorSpeed()
+    {
+        return catapultMotorSpeed;
     }
 }

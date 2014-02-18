@@ -21,6 +21,7 @@ public class SensorInput
     private TorqueEncoder rightFrontDriveEncoder;
     private TorqueEncoder leftRearDriveEncoder;
     private TorqueEncoder rightRearDriveEncoder;
+    private TorqueEncoder catapultEncoder;
 
     //----- Analog -----
     private AnalogChannel pressureSensor;
@@ -39,6 +40,7 @@ public class SensorInput
         leftRearDriveEncoder = new TorqueEncoder(Ports.LEFT_REAR_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_ENCODER_A_PORT, Ports.LEFT_REAR_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_ENCODER_B_PORT, false);
         rightFrontDriveEncoder = new TorqueEncoder(Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_B_PORT, false);
         rightRearDriveEncoder = new TorqueEncoder(Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_A_PORT, Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_B_PORT, false);
+        catapultEncoder = new TorqueEncoder(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_ENCODER_A_PORT, Ports.CATAPULT_SIDECAR, Ports.CATAPULT_ENCODER_B_PORT, true);
         
         //----- Gyro -----
         //gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
@@ -47,8 +49,8 @@ public class SensorInput
         //gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
         
         //----- Potentiometers -----
-        frontIntakeTiltPotentiometer = new TorquePotentiometer(Ports.SIDECAR_ONE, Ports.FRONT_INTAKE_TILT_POT_PORT);
-        rearIntakeTiltPotentiometer = new TorquePotentiometer(Ports.SIDECAR_ONE, Ports.REAR_INTAKE_TILT_POT_PORT);
+        frontIntakeTiltPotentiometer = new TorquePotentiometer(Ports.FRONT_INTAKE_TILT_SIDECAR, Ports.FRONT_INTAKE_TILT_POT_PORT);
+        rearIntakeTiltPotentiometer = new TorquePotentiometer(Ports.REAR_INTAKE_TILT_SIDECAR, Ports.REAR_INTAKE_TILT_POT_PORT);
         frontIntakeTiltPotentiometer.setRange(Constants.INTAKE_POTENTIOMETER_LOW, Constants.INTAKE_POTENTIOMETER_HIGH);
         rearIntakeTiltPotentiometer.setRange(Constants.INTAKE_POTENTIOMETER_LOW, Constants.INTAKE_POTENTIOMETER_HIGH);
         
@@ -86,6 +88,7 @@ public class SensorInput
         rightFrontDriveEncoder.reset();
         leftRearDriveEncoder.reset();
         rightRearDriveEncoder.reset();
+        catapultEncoder.reset();
     }
     
     public void calcEncoders()
@@ -94,6 +97,7 @@ public class SensorInput
         rightFrontDriveEncoder.calc();
         leftRearDriveEncoder.calc();
         rightRearDriveEncoder.calc();
+        catapultEncoder.calc();
     }
     
     public void resetGyro()
@@ -164,14 +168,27 @@ public class SensorInput
     
     public double getFrontIntakeTiltPotentiometer()
     {
-        SmartDashboard.putNumber("FrontIntakeRaw", frontIntakeTiltPotentiometer.get());
         return frontIntakeTiltPotentiometer.get();
     }
     
     public double getRearIntakeTiltPotentiometer()
     {
-        SmartDashboard.putNumber("RearIntakeRaw", rearIntakeTiltPotentiometer.get());
         return rearIntakeTiltPotentiometer.get();
+    }
+    
+    public double getRearIntakeTiltVoltage()
+    {
+        return rearIntakeTiltPotentiometer.getRaw();
+    }
+    
+    public double getFrontIntakeTiltVoltage()
+    {
+        return frontIntakeTiltPotentiometer.getRaw();
+    }
+    
+    public double getCatapultEncoder()
+    {
+        return catapultEncoder.get();
     }
     
     public double getPSI()
