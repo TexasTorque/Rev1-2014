@@ -34,29 +34,34 @@ public class Ports {
             public final static int FRONT_INTAKE_TILT_SIDECAR = 2;
             public final static int REAR_INTAKE_TILT_SIDECAR = 1;
             
-            public final static int CATAPULT_MOTOR_PORT = 0;
-            public final static int CATAPULT_SIDECAR = 0;
+            public final static int CATAPULT_MOTOR_PORT = 9;
+            public final static int CATAPULT_SIDECAR = 1;
             
 
     //----- Solenoids -----
-            public final static int FRONT_DRIVEBASE_SWITCHER = 5;
-            public final static int MIDDLE_DRIVEBASE_SWITCHER = 6;
-            public final static int REAR_DRIVEBASE_SWITCHER = 8;
-            public final static int CATAPULT_STANDOFFS = 0; 
+            public final static int FRONT_DRIVEBASE_SWITCHER = 1;
+            public final static int MIDDLE_DRIVEBASE_SWITCHER = 2;
+            public final static int REAR_DRIVEBASE_SWITCHER = 3;
+            public final static int CATAPULT_STANDOFFS = 4; 
     //----- Digital Inputs -----
         //----- Sidecar 1 -----
-            public final static int LEFT_FRONT_DRIVE_ENCODER_A_PORT = 7;
-            public final static int LEFT_FRONT_DRIVE_ENCODER_B_PORT = 8;
-            public final static int RIGHT_FRONT_DRIVE_ENCODER_A_PORT = 1;
-            public final static int RIGHT_FRONT_DRIVE_ENCODER_B_PORT = 2;
-            public final static int LEFT_REAR_DRIVE_ENCODER_A_PORT = 9;
-            public final static int LEFT_REAR_DRIVE_ENCODER_B_PORT = 10;
-            public final static int RIGHT_REAR_DRIVE_ENCODER_A_PORT = 3;
-            public final static int RIGHT_REAR_DRIVE_ENCODER_B_PORT = 4;
-            public final static int CATAPULT_ENCODER_A_PORT = 0;
-            public final static int CATAPULT_ENCODER_B_PORT = 0;
-            public final static int CATAPULT_ENCODER_SIDECAR = 0;
+            public final static int LEFT_FRONT_DRIVE_ENCODER_PORT = 3;
+            public final static int RIGHT_FRONT_DRIVE_ENCODER_PORT = 8;
+            public final static int LEFT_REAR_DRIVE_ENCODER_PORT = 6;
+            public final static int RIGHT_REAR_DRIVE_ENCODER_PORT = 6;
+            public final static int RIGHT_STRAFE_DRIVE_COUNTER_PORT = 5;
+            public final static int LEFT_STRAFE_DRIVE_COUNTER_PORT = 5;
+            public final static int LEFT_FRONT_DRIVE_ENCODER_SIDECAR = 2;
+            public final static int RIGHT_FRONT_DRIVE_ENCODER_SIDECAR = 1;
+            public final static int LEFT_REAR_DRIVE_ENCODER_SIDECAR = 2;
+            public final static int RIGHT_REAR_DRIVE_ENCODER_SIDECAR = 1;
+            public final static int RIGHT_STRAFE_DRIVE_COUNTER_SIDECAR = 1;
+            public final static int LEFT_STRAFE_DRIVE_COUNTER_SIDECAR = 2;
+            public final static int CATAPULT_ENCODER_A_PORT = 13;
+            public final static int CATAPULT_ENCODER_B_PORT = 14;
+            public final static int CATAPULT_ENCODER_SIDECAR = 1;
             public final static int PRESSURE_SWITCH_PORT = 0;
+            public final static int PRESSURE_SWITCH_SIDECAR = 1;
 
     //----- Analog Inputs -----
         public final static int GYRO_PORT = 0;

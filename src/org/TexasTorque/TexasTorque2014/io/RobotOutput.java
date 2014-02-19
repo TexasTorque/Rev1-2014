@@ -60,12 +60,12 @@ public class RobotOutput {
         catapultMode = Constants.FAR_SHOT;
 
         //----- Drive Motors -----
-        leftFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
-        leftRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
-        rightFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
-        rightRearDriveMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
-        leftStrafeMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_STRAFE_DRIVE_MOTOR_PORT), false, true);
-        rightStrafeMotor = new Motor(new Victor(Ports.SIDECAR_ONE, Ports.RIGHT_STRAFE_DRIVE_MOTOR_PORT), false, true);
+        leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_FRONT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
+        leftRearDriveMotor = new Motor(new Victor(Ports.LEFT_REAR_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
+        rightFrontDriveMotor = new Motor(new Victor(Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
+        rightRearDriveMotor = new Motor(new Victor(Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
+        leftStrafeMotor = new Motor(new Victor(Ports.LEFT_STRAFE_DRIVE_SIDECAR, Ports.LEFT_STRAFE_DRIVE_MOTOR_PORT), false, true);
+        rightStrafeMotor = new Motor(new Victor(Ports.RIGHT_STRAFE_DRIVE_SIDECAR, Ports.RIGHT_STRAFE_DRIVE_MOTOR_PORT), false, true);
         rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
         rightRearMotorSpeed = Constants.MOTOR_STOPPED;
         leftFrontMotorSpeed = Constants.MOTOR_STOPPED;
@@ -73,18 +73,20 @@ public class RobotOutput {
         strafeMotorSpeed = Constants.MOTOR_STOPPED;
         
         //----- Intake -----
+        
         frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_MOTOR_PORT, Ports.FRONT_INTAKE_SIDECAR), false, true);
         rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_MOTOR_PORT, Ports.REAR_INTAKE_SIDECAR), false, true);
         frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_MOTOR_PORT, Ports.FRONT_INTAKE_TILT_SIDECAR), false, true);
         rearIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_MOTOR_PORT, Ports.FRONT_INTAKE_TILT_SIDECAR), false, true);
+        
         frontIntakeMotorSpeed = Constants.MOTOR_STOPPED;
         rearIntakeMotorSpeed = Constants.MOTOR_STOPPED;
         frontIntakeTiltMotorSpeed = Constants.MOTOR_STOPPED;
         rearIntakeTiltMotorSpeed = Constants.MOTOR_STOPPED;
         
         //----- Catapult -----
-        catapultMotor = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_MOTOR_PORT), false, true);
-        catapultMotorSpeed = Constants.MOTOR_STOPPED;
+        //catapultMotor = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_MOTOR_PORT), false, true);
+        //catapultMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Misc Misc -----
         //compressor.start();
