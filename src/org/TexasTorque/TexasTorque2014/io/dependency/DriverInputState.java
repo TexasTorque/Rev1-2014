@@ -100,9 +100,14 @@ public class DriverInputState {
         return operatorControllerState.getBottomActionButton();
     }
     
-    public synchronized boolean shooting()
+    public synchronized boolean shoot()
     {
         return operatorControllerState.getBottomRightBumper();
+    }
+    
+    public synchronized boolean getShooterStandoffs()
+    {
+        return operatorControllerState.getLeftActionButton();
     }
     
     public synchronized boolean restoreToDefault() {

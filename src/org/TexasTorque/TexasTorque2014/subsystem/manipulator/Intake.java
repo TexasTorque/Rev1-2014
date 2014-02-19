@@ -43,7 +43,6 @@ public class Intake extends TorqueSubsystem {
         
         desiredFrontTiltAngle = 0.0;
         desiredRearTiltAngle = 0.0;
-        
     }
 
     public void run() {
@@ -119,9 +118,15 @@ public class Intake extends TorqueSubsystem {
         rearTiltPID.setPIDGains(rearP, rearI, rearD);
         rearTiltPID.setEpsilon(rearE);
         rearTiltPID.setDoneRange(rearR);
-        rearTiltPID.setMaxOutput(frontMaxOut);
+        rearTiltPID.setMaxOutput(rearMaxOut);
         rearTiltPID.setMinDoneCycles(0);
         rearTiltPID.reset();
+        
+        upAngle = params.getAsDouble("I_UpAngle", 90);
+        downAngle = params.getAsDouble("I_DownAngle", 45);
+        inAngle = params.getAsDouble("I_InAngle", 100);
+        intakeSpeed = params.getAsDouble("I_IntakeSpeed", 1.0);
+        outtakeSpeed = params.getAsDouble("I_OuttakeSpeed", -1.0);
     }
 
     public String logData() { //Have not implemented logging

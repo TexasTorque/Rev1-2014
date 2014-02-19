@@ -23,6 +23,7 @@ public class RobotOutputState {
     
     //----- Catapult -----
     private double catapultMotorSpeed;
+    private boolean catapultMode;
 
     public RobotOutputState() {
         
@@ -48,6 +49,7 @@ public class RobotOutputState {
         
         //----- Catapult -----
         catapultMotorSpeed = output.getCatapultMotorSpeed();
+        catapultMode = output.getCatapultMode();
     }
 
     public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -128,5 +130,15 @@ public class RobotOutputState {
     public double getCatapultMotorSpeed()
     {
         return catapultMotorSpeed;
+    }
+    
+    public void setCatapultMode(boolean mode)
+    {
+        catapultMode = mode;
+    }
+    
+    public boolean getCatapultMode()
+    {
+        return catapultMode;
     }
 }

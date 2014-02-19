@@ -42,6 +42,7 @@ public class Ports {
             public final static int FRONT_DRIVEBASE_SWITCHER = 5;
             public final static int MIDDLE_DRIVEBASE_SWITCHER = 6;
             public final static int REAR_DRIVEBASE_SWITCHER = 8;
+            public final static int CATAPULT_STANDOFFS = 0; 
     //----- Digital Inputs -----
         //----- Sidecar 1 -----
             public final static int LEFT_FRONT_DRIVE_ENCODER_A_PORT = 7;

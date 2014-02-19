@@ -19,6 +19,8 @@ public class RobotOutput {
     private Solenoid middleDriveBaseSwitcher;
     private Solenoid rearDriveBaseSwitcher;
     private boolean driveBaseMode;
+    private Solenoid catapultStandoffs;
+    private boolean catapultMode;
 
     //----- Drive Motors -----
     private Motor leftFrontDriveMotor;
@@ -54,6 +56,8 @@ public class RobotOutput {
         middleDriveBaseSwitcher = new Solenoid(Ports.MIDDLE_DRIVEBASE_SWITCHER);
         rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
         driveBaseMode = Constants.OMNI_MODE;
+        catapultStandoffs = new Solenoid(Ports.CATAPULT_STANDOFFS);
+        catapultMode = Constants.FAR_SHOT;
 
         //----- Drive Motors -----
         leftFrontDriveMotor = new Motor(new Victor(Ports.SIDECAR_TWO, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
@@ -102,6 +106,7 @@ public class RobotOutput {
         setDriveMotors(state.getLeftFrontMotorSpeed(), state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed(), state.getStrafeMotorSpeed());
         setDriveBaseMode(state.getDriveBaseMode());
         setCatapultMotor(state.getCatapultMotorSpeed());
+        setCatapultMode(state.getCatapultMode());
     }
 
     public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -195,5 +200,16 @@ public class RobotOutput {
     public double getCatapultMotorSpeed()
     {
         return catapultMotorSpeed;
+    }
+    
+    public void setCatapultMode(boolean mode)
+    {
+        catapultStandoffs.set(mode);
+        catapultMode = mode;
+    }
+    
+    public boolean getCatapultMode()
+    {
+        return catapultMode;
     }
 }

@@ -18,6 +18,10 @@ public class Constants
     public final static boolean TRACTION_MODE = false;
     public final static boolean OMNI_MODE = true;
     
+    //----- Manipulator -----
+    public final static boolean HIGH_SHOT = true;
+    public final static boolean FAR_SHOT = false;
+    
     //Autonomous
     public final static int DO_NOTHING_AUTO = 0;
     

@@ -48,10 +48,12 @@ public class Manipulator extends TorqueSubsystem {
             } else {
                 resetRearIntake();
             }
-
+            
+            setShooterStandoffs(driverInput.getShooterStandoffs());
+            
             if (driverInput.catching()) {
                 catchBall();
-            } else if (driverInput.shooting()) {
+            } else if (driverInput.shoot()) {
                 shoot();
             } else if (driverInput.restoreToDefault()) {
                 restoreDefaultPositions();
@@ -121,10 +123,17 @@ public class Manipulator extends TorqueSubsystem {
 
     public void shoot() {
         intake.setFrontAngle(Intake.downAngle);
+        catapult.setPosition(Catapult.shootPosition);
     }
 
     public void resetShooter() {
         intake.setFrontAngle(Intake.upAngle);
+        catapult.setPosition(Catapult.standardPosition);
+    }
+    
+    public void setShooterStandoffs(boolean highshot)
+    {
+        catapult.setStandoffs(highshot);
     }
 
     public String getKeyNames() {
