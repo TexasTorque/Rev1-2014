@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
@@ -62,6 +63,8 @@ public class Manipulator extends TorqueSubsystem {
                 resetIntakes();
                 resetShooter();
             }
+            
+            SmartDashboard.putBoolean("Intakting", intaking);
             
             setToRobot();
             

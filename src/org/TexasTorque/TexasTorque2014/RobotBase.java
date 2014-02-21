@@ -110,7 +110,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
         manipulator.run();
         
         
-        //drivebase.pushToDashboard();
+        drivebase.pushToDashboard();
         robotOutput.pullFromState();
         SensorInput.getState().pushToDashboard();
     }

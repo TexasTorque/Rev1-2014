@@ -139,10 +139,11 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void pushToDashboard() {
-        SmartDashboard.putNumber("LeftFrontDriveSpeed", leftFrontDriveSpeed);
-        SmartDashboard.putNumber("RightFrontDriveSpeed", rightFrontDriveSpeed);
-        SmartDashboard.putNumber("LeftRearDriveSpeed", leftRearDriveSpeed);
-        SmartDashboard.putNumber("RightRearDriveSpeed", rightRearDriveSpeed);
+//        SmartDashboard.putNumber("LeftFrontDriveSpeed", leftFrontDriveSpeed);
+//        SmartDashboard.putNumber("RightFrontDriveSpeed", rightFrontDriveSpeed);
+//        SmartDashboard.putNumber("LeftRearDriveSpeed", leftRearDriveSpeed);
+//        SmartDashboard.putNumber("RightRearDriveSpeed", rightRearDriveSpeed);
+        SmartDashboard.putBoolean("Drive", driveMode);
     }
 
     public String logData() {

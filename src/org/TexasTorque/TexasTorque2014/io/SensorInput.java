@@ -54,10 +54,10 @@ public class SensorInput
         //gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
         
         //----- Potentiometers -----
-        //frontIntakeTiltPotentiometer = new TorquePotentiometer(Ports.SIDECAR_ONE, Ports.FRONT_INTAKE_TILT_POT_PORT);
-        //rearIntakeTiltPotentiometer = new TorquePotentiometer(Ports.SIDECAR_ONE, Ports.REAR_INTAKE_TILT_POT_PORT);
-        //frontIntakeTiltPotentiometer.setRange(Constants.INTAKE_POTENTIOMETER_LOW, Constants.INTAKE_POTENTIOMETER_HIGH);
-        //rearIntakeTiltPotentiometer.setRange(Constants.INTAKE_POTENTIOMETER_LOW, Constants.INTAKE_POTENTIOMETER_HIGH);
+        frontIntakeTiltPotentiometer = new TorquePotentiometer(Ports.SIDECAR_ONE, Ports.FRONT_INTAKE_TILT_POT_PORT);
+        rearIntakeTiltPotentiometer = new TorquePotentiometer(Ports.SIDECAR_ONE, Ports.REAR_INTAKE_TILT_POT_PORT);
+        frontIntakeTiltPotentiometer.setRange(Constants.INTAKE_POTENTIOMETER_LOW, Constants.INTAKE_POTENTIOMETER_HIGH);
+        rearIntakeTiltPotentiometer.setRange(Constants.INTAKE_POTENTIOMETER_LOW, Constants.INTAKE_POTENTIOMETER_HIGH);
         
         //----- Misc -----
         //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
