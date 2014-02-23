@@ -7,8 +7,10 @@ public class Constants
     public final static double Y_AXIS_DEADBAND = 0.16;
     public final static double ROTATION_DEADBAND = 0.18;
     
-    public final static boolean DEFAULT_FIRST_CONTROLLER_TYPE = true;
-    public final static boolean DEFAULT_SECOND_CONTROLLER_TYPE = false;
+    public static final boolean CONTROLLER_IS_XBOX = false;
+    public static final boolean CONTROLLER_IS_LOGITECH = true;
+    public final static boolean DEFAULT_FIRST_CONTROLLER_TYPE = CONTROLLER_IS_XBOX;
+    public final static boolean DEFAULT_SECOND_CONTROLLER_TYPE = CONTROLLER_IS_XBOX;
     
     //----- Drivebase -----
     public final static double DEFAULT_HIGH_SENSITIVITY = 0.7;
@@ -36,7 +38,9 @@ public class Constants
     public final static int BLUE_ALLIANCE = 1;
     
     //----- Potentiometer -----
-    public final static int INTAKE_POTENTIOMETER_LOW = 0;
-    public final static int INTAKE_POTENTIOMETER_HIGH = 0;
+    public final static double FRONT_INTAKE_POTENTIOMETER_LOW = 0.4;
+    public final static double FRONT_INTAKE_POTENTIOMETER_HIGH = 4.5;
+    public final static double REAR_INTAKE_POTENTIOMETER_LOW = 0.4;
+    public final static double REAR_INTAKE_POTENTIOMETER_HIGH = 4.5;
     
 }

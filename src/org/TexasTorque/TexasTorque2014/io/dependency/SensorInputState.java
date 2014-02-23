@@ -160,11 +160,13 @@ public class SensorInputState {
 
     public double getFrontIntakeTiltAngle()
     {
+        
         return getFrontIntakeTiltPotentiometer()*(maxFrontIntakeAngle - minFrontIntakeAngle) + minFrontIntakeAngle;
     }
     
     public double getRearIntakeTiltAngle()
     {
+        SmartDashboard.putNumber("rearpot", getRearIntakeTiltPotentiometer());
         return getRearIntakeTiltPotentiometer()*(maxRearIntakeAngle - minRearIntakeAngle) + minRearIntakeAngle;
     }
     
@@ -187,9 +189,9 @@ public class SensorInputState {
     }
     public void loadParamaters()
     {
-        minFrontIntakeAngle = params.getAsDouble("I_MinFrontIntakeAngle", 0.0);
+        minFrontIntakeAngle = params.getAsDouble("I_MinFrontIntakeAngle", 41.0);
         maxFrontIntakeAngle = params.getAsDouble("I_MaxFrontIntakeAngle", 100.0);
-        minRearIntakeAngle = params.getAsDouble("I_MinRearIntakeAngle", 0.0);
+        minRearIntakeAngle = params.getAsDouble("I_MinRearIntakeAngle", 41.0);
         maxRearIntakeAngle = params.getAsDouble("I_MaxRearIntakeAngle", 100.0);
     }
 }

@@ -70,8 +70,8 @@ public class DriverInputState {
     
     public synchronized boolean getDriveMode()
     {
-        //SmartDashboard.putBoolean("DriveMode", driveBaseMode.get() || operatorControllerState.getBottomRightBumper());
-        return (driveBaseMode.get() || driveControllerState.getBottomRightBumper());
+        SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
+        return (!driveControllerState.getTopRightBumper());
     }
 
 //---------- Manipulator ----------  

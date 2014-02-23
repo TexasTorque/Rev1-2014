@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
@@ -41,13 +42,16 @@ public class Intake extends TorqueSubsystem {
         frontTiltSpeed = Constants.MOTOR_STOPPED;
         rearTiltSpeed = Constants.MOTOR_STOPPED;
         
-        desiredFrontTiltAngle = 0.0;
-        desiredRearTiltAngle = 0.0;
+        desiredFrontTiltAngle = 90.0;
+        desiredRearTiltAngle = 90.0;
     }
 
     public void run() {
         double currentFrontAngle = sensorInput.getFrontIntakeTiltAngle();
         double currentRearAngle = sensorInput.getRearIntakeTiltAngle();
+        
+        SmartDashboard.putNumber("currentfront", currentFrontAngle);
+        SmartDashboard.putNumber("currentrear", currentRearAngle);
         
         frontTiltSpeed = frontTiltPID.calculate(currentFrontAngle);
         rearTiltSpeed = rearTiltPID.calculate(currentRearAngle);
@@ -123,7 +127,7 @@ public class Intake extends TorqueSubsystem {
         rearTiltPID.reset();
         
         upAngle = params.getAsDouble("I_UpAngle", 90);
-        downAngle = params.getAsDouble("I_DownAngle", 45);
+        downAngle = params.getAsDouble("I_DownAngle", 41);
         inAngle = params.getAsDouble("I_InAngle", 100);
         intakeSpeed = params.getAsDouble("I_IntakeSpeed", 1.0);
         outtakeSpeed = params.getAsDouble("I_OuttakeSpeed", -1.0);

@@ -3,6 +3,7 @@ package org.TexasTorque.TexasTorque2014.io;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
@@ -74,10 +75,10 @@ public class RobotOutput {
         
         //----- Intake -----
         
-        frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_SIDECAR, Ports.FRONT_INTAKE_MOTOR_PORT), false, true);
-        rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_SIDECAR, Ports.REAR_INTAKE_MOTOR_PORT), false, true);
+        frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_SIDECAR, Ports.FRONT_INTAKE_MOTOR_PORT), true, true);
+        rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_SIDECAR, Ports.REAR_INTAKE_MOTOR_PORT), true, true);
         frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_SIDECAR, Ports.FRONT_INTAKE_TILT_MOTOR_PORT), false, true);
-        rearIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_SIDECAR, Ports.REAR_INTAKE_TILT_MOTOR_PORT), false, true);
+        rearIntakeTiltMotor = new Motor(new Victor(Ports.REAR_INTAKE_TILT_SIDECAR, Ports.REAR_INTAKE_TILT_MOTOR_PORT), false, true);
         
         frontIntakeMotorSpeed = Constants.MOTOR_STOPPED;
         rearIntakeMotorSpeed = Constants.MOTOR_STOPPED;
@@ -109,6 +110,7 @@ public class RobotOutput {
         setDriveBaseMode(state.getDriveBaseMode());
         setCatapultMotor(state.getCatapultMotorSpeed());
         setCatapultMode(state.getCatapultMode());
+        setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
     }
 
     public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -163,6 +165,8 @@ public class RobotOutput {
     
     public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt)
     {
+        SmartDashboard.putNumber("FrontTilt", frontTilt);
+        SmartDashboard.putNumber("RearTilt", rearTilt);
         frontIntakeMotor.Set(frontRoller);
         rearIntakeMotor.Set(rearRoller);
         frontIntakeTiltMotor.Set(frontTilt);

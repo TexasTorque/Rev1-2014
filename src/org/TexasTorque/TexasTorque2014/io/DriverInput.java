@@ -19,8 +19,8 @@ public class DriverInput {
 
     public DriverInput() {
         params = Parameters.getTeleopInstance();
-        driveController = new GenericController(Ports.DRIVE_CONTROLLER_PORT, Constants.DEFAULT_FIRST_CONTROLLER_TYPE);
-        operatorController = new GenericController(Ports.OPERATOR_CONTROLLER_PORT, Constants.DEFAULT_SECOND_CONTROLLER_TYPE);
+        driveController = new GenericController(Ports.DRIVE_CONTROLLER_PORT, false);
+        operatorController = new GenericController(Ports.OPERATOR_CONTROLLER_PORT, false);
 
         inOverrideState = false;
     }
@@ -38,8 +38,8 @@ public class DriverInput {
     }
 
     public synchronized void pullJoystickTypes() {
-        boolean firstControllerType = SmartDashboard.getBoolean("firstControllerIsLogitech", Constants.DEFAULT_FIRST_CONTROLLER_TYPE);
-        boolean secondControllerType = SmartDashboard.getBoolean("secondControllerIsLogitech", Constants.DEFAULT_SECOND_CONTROLLER_TYPE);
+        boolean firstControllerType = SmartDashboard.getBoolean("firstControllerIsLogitech", false);
+        boolean secondControllerType = SmartDashboard.getBoolean("secondControllerIsLogitech", false);
 
         if (firstControllerType) {
             driveController.setAsLogitech();

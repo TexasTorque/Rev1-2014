@@ -71,6 +71,8 @@ public class Manipulator extends TorqueSubsystem {
         } else {
             calcOverrides();
         }
+        
+        intake.run();
     }
 
     public void setToRobot() {
