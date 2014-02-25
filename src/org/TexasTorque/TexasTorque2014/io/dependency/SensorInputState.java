@@ -166,7 +166,7 @@ public class SensorInputState {
     
     public double getRearIntakeTiltAngle()
     {
-        SmartDashboard.putNumber("rearpot", getRearIntakeTiltPotentiometer());
+        SmartDashboard.putNumber("rearPot", getRearIntakeTiltPotentiometer());
         return getRearIntakeTiltPotentiometer()*(maxRearIntakeAngle - minRearIntakeAngle) + minRearIntakeAngle;
     }
     
@@ -176,12 +176,12 @@ public class SensorInputState {
     }
     
     public void pushToDashboard() {
-        SmartDashboard.putNumber("FrontLeftSpeed", getLeftFrontDriveEncoderRate());
-        SmartDashboard.putNumber("FrontRightSpeed", getRightFrontDriveEncoderRate());
-        SmartDashboard.putNumber("RearLeftSpeed", getLeftRearDriveEncoderRate());
-        SmartDashboard.putNumber("RearRightSpeed", getRightRearDriveEncoderRate());
-        SmartDashboard.putNumber("RightStrafeSpeed", getRightStrafeDriveEncoderRate());
-        SmartDashboard.putNumber("LeftStrafeSpeed", getLeftStrafeDriveEncoderRate());
+        SmartDashboard.putNumber("FrontLeftRate", getLeftFrontDriveEncoderRate());
+        SmartDashboard.putNumber("FrontRightRate", getRightFrontDriveEncoderRate());
+        SmartDashboard.putNumber("RearLeftRate", getLeftRearDriveEncoderRate());
+        SmartDashboard.putNumber("RearRightRate", getRightRearDriveEncoderRate());
+        SmartDashboard.putNumber("RightStrafeRate", getRightStrafeDriveEncoderRate());
+        SmartDashboard.putNumber("LeftStrafeRate", getLeftStrafeDriveEncoderRate());
         SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);

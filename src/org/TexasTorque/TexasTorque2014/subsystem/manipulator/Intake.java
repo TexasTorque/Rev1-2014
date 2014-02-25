@@ -24,6 +24,7 @@ public class Intake extends TorqueSubsystem {
     public static double inAngle;
     public static double intakeSpeed;
     public static double outtakeSpeed;
+    public static double tiltDownTollerance;
     
     public static Intake getInstance()
     {
@@ -56,9 +57,17 @@ public class Intake extends TorqueSubsystem {
         SmartDashboard.putNumber("desiredRear", rearTiltPID.getSetpoint());
         
         frontTiltSpeed = frontTiltPID.calculate(currentFrontAngle);
+        if(frontTiltPID.getSetpoint() == downAngle && Math.abs(downAngle - currentFrontAngle) < tiltDownTollerance)
+        {
+            frontTiltSpeed = Constants.MOTOR_STOPPED;
+        }
         rearTiltSpeed = rearTiltPID.calculate(currentRearAngle);
-        
-        //setToRobot();
+        if(rearTiltPID.getSetpoint() == downAngle && Math.abs(downAngle - currentRearAngle) < tiltDownTollerance)
+        {
+            rearTiltSpeed = Constants.MOTOR_STOPPED;
+        }
+        SmartDashboard.putNumber("FrontTiltSpeed", frontTiltSpeed);
+        SmartDashboard.putNumber("RearTiltSpeed", rearTiltSpeed);
     }
     
     public void setFrontAngle(double angle)
@@ -133,11 +142,13 @@ public class Intake extends TorqueSubsystem {
         inAngle = params.getAsDouble("I_InAngle", 100);
         intakeSpeed = params.getAsDouble("I_IntakeSpeed", 1.0);
         outtakeSpeed = params.getAsDouble("I_OuttakeSpeed", -1.0);
+        tiltDownTollerance = params.getAsDouble("I_TiltDownTollerance", 2.0);
         SmartDashboard.putNumber("upAngle", upAngle);
         SmartDashboard.putNumber("downAngle", downAngle);
         SmartDashboard.putNumber("inAngle", inAngle);
         SmartDashboard.putNumber("intakeSpeed", intakeSpeed);
         SmartDashboard.putNumber("outtakeSpeed", outtakeSpeed);
+        SmartDashboard.putNumber("downTollerance", tiltDownTollerance);
     }
 
     public String logData() { //Have not implemented logging

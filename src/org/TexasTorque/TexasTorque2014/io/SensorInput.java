@@ -45,7 +45,7 @@ public class SensorInput
         leftStrafeCounter = new TorqueCounter(Ports.LEFT_STRAFE_DRIVE_COUNTER_SIDECAR, Ports.LEFT_STRAFE_DRIVE_COUNTER_PORT);
         rightStrafeCounter = new TorqueCounter(Ports.RIGHT_STRAFE_DRIVE_COUNTER_SIDECAR, Ports.RIGHT_STRAFE_DRIVE_COUNTER_PORT);
         
-        catapultEncoder = new TorqueEncoder(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_ENCODER_A_PORT, Ports.CATAPULT_SIDECAR, Ports.CATAPULT_ENCODER_B_PORT, true);
+        catapultEncoder = new TorqueEncoder(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_ENCODER_A_PORT, Ports.CATAPULT_SIDECAR, Ports.CATAPULT_ENCODER_B_PORT, false);
         
         //----- Gyro -----
         //gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
@@ -87,6 +87,7 @@ public class SensorInput
         rightRearDriveCounter.start();
         rightStrafeCounter.start();
         leftStrafeCounter.start();
+        catapultEncoder.start();
     }
     
     public void resetEncoders()

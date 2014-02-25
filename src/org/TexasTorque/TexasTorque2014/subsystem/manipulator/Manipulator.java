@@ -34,18 +34,12 @@ public class Manipulator extends TorqueSubsystem {
             } else if (driverInput.frontOuttaking()) {
                 intaking = true;
                 frontOuttake();
-            } else {
-                resetFrontIntake();
-            }
-
-            if (driverInput.rearIntaking()) {
+            } else if (driverInput.rearIntaking()) {
                 intaking = true;
                 rearIntake();
             } else if (driverInput.rearOuttaking()) {
                 intaking = true;
                 rearOuttake();
-            } else {
-                resetRearIntake();
             }
             
             setShooterStandoffs(driverInput.getShooterStandoffs());
@@ -79,16 +73,21 @@ public class Manipulator extends TorqueSubsystem {
     }
 
     public void frontIntake() {
+        SmartDashboard.putNumber("IntakeState", 1.0);
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
         intake.setFrontAngle(Intake.downAngle);
+        intake.setRearAngle(Intake.inAngle);
     }
 
     public void rearIntake() {
+        SmartDashboard.putNumber("IntakeState", 2.0);
         intake.setRearIntakeSpeed(Intake.intakeSpeed);
         intake.setRearAngle(Intake.downAngle);
+        intake.setFrontAngle(Intake.inAngle);
     }
 
     public void frontOuttake() {
+        SmartDashboard.putNumber("IntakeState", 3.0);
         intake.setFrontIntakeSpeed(Intake.outtakeSpeed);
         intake.setFrontAngle(Intake.upAngle);
         intake.setRearIntakeSpeed(Intake.intakeSpeed);
@@ -96,6 +95,7 @@ public class Manipulator extends TorqueSubsystem {
     }
 
     public void rearOuttake() {
+        SmartDashboard.putNumber("IntakeState", 4.0);
         intake.setRearIntakeSpeed(Intake.outtakeSpeed);
         intake.setRearAngle(Intake.upAngle);
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
@@ -130,7 +130,6 @@ public class Manipulator extends TorqueSubsystem {
     }
 
     public void resetShooter() {
-        intake.setFrontAngle(Intake.upAngle);
         catapult.setPosition(Catapult.standardPosition);
     }
     

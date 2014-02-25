@@ -77,22 +77,26 @@ public class DriverInputState {
 //---------- Manipulator ----------  
     public synchronized boolean frontIntaking()
     {
-        return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
+        return operatorControllerState.getTopLeftBumper();
+        //return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
     }
     
     public synchronized boolean frontOuttaking()
     {
-        return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
+        return operatorControllerState.getBottomLeftBumper();
+        //return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
     }
     
     public synchronized boolean rearIntaking()
     {
-        return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
+        return operatorControllerState.getTopRightBumper();
+        //return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
     }
     
     public synchronized boolean rearOuttaking()
     {
-        return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
+        return operatorControllerState.getBottomRightBumper();
+        //return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
     }
     
     public synchronized boolean catching()
@@ -102,7 +106,7 @@ public class DriverInputState {
     
     public synchronized boolean shoot()
     {
-        return operatorControllerState.getBottomRightBumper();
+        return operatorControllerState.getRightActionButton();
     }
     
     public synchronized boolean getShooterStandoffs()

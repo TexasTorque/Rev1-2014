@@ -89,6 +89,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousContinuous() {
+        sensorInput.calcEncoders();
     }
 
     public void teleopInit() {
@@ -128,6 +129,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void disabledContinuous() {
+        sensorInput.calcEncoders();
     }
     
     public void loadParameters()
