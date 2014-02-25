@@ -50,8 +50,10 @@ public class Intake extends TorqueSubsystem {
         double currentFrontAngle = sensorInput.getFrontIntakeTiltAngle();
         double currentRearAngle = sensorInput.getRearIntakeTiltAngle();
         
-        SmartDashboard.putNumber("currentfront", currentFrontAngle);
-        SmartDashboard.putNumber("currentrear", currentRearAngle);
+        SmartDashboard.putNumber("currentFront", currentFrontAngle);
+        SmartDashboard.putNumber("currentRear", currentRearAngle);
+        SmartDashboard.putNumber("desiredFront", frontTiltPID.getSetpoint());
+        SmartDashboard.putNumber("desiredRear", rearTiltPID.getSetpoint());
         
         frontTiltSpeed = frontTiltPID.calculate(currentFrontAngle);
         rearTiltSpeed = rearTiltPID.calculate(currentRearAngle);
@@ -61,7 +63,7 @@ public class Intake extends TorqueSubsystem {
     
     public void setFrontAngle(double angle)
     {
-        if (angle != desiredFrontTiltAngle)
+        if (angle != frontTiltPID.getSetpoint())
         {
             desiredFrontTiltAngle = angle;
             frontTiltPID.setSetpoint(desiredFrontTiltAngle);
@@ -70,7 +72,7 @@ public class Intake extends TorqueSubsystem {
     
     public void setRearAngle(double angle)
     {
-        if (angle != desiredRearTiltAngle)
+        if (angle != rearTiltPID.getSetpoint())
         {
             desiredRearTiltAngle = angle;
             rearTiltPID.setSetpoint(desiredRearTiltAngle);
@@ -131,6 +133,11 @@ public class Intake extends TorqueSubsystem {
         inAngle = params.getAsDouble("I_InAngle", 100);
         intakeSpeed = params.getAsDouble("I_IntakeSpeed", 1.0);
         outtakeSpeed = params.getAsDouble("I_OuttakeSpeed", -1.0);
+        SmartDashboard.putNumber("upAngle", upAngle);
+        SmartDashboard.putNumber("downAngle", downAngle);
+        SmartDashboard.putNumber("inAngle", inAngle);
+        SmartDashboard.putNumber("intakeSpeed", intakeSpeed);
+        SmartDashboard.putNumber("outtakeSpeed", outtakeSpeed);
     }
 
     public String logData() { //Have not implemented logging

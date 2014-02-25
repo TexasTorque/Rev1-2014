@@ -9,7 +9,6 @@ public class Manipulator extends TorqueSubsystem {
 
     private static Manipulator instance;
 
-    private Drivebase drivebase;
     private Intake intake;
     private Catapult catapult;
 
@@ -20,7 +19,6 @@ public class Manipulator extends TorqueSubsystem {
     private Manipulator() {
         super();
 
-        drivebase = Drivebase.getInstance();
         intake = Intake.getInstance();
         catapult = Catapult.getInstance();
     }
@@ -64,7 +62,7 @@ public class Manipulator extends TorqueSubsystem {
                 resetShooter();
             }
             
-            SmartDashboard.putBoolean("Intakting", intaking);
+            SmartDashboard.putBoolean("Intakeing", intaking);
             
             setToRobot();
             

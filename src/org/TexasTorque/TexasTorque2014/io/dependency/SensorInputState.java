@@ -190,8 +190,8 @@ public class SensorInputState {
     public void loadParamaters()
     {
         minFrontIntakeAngle = params.getAsDouble("I_MinFrontIntakeAngle", 41.0);
-        maxFrontIntakeAngle = params.getAsDouble("I_MaxFrontIntakeAngle", 100.0);
+        maxFrontIntakeAngle = params.getAsDouble("I_MaxFrontIntakeAngle", 90.0);
         minRearIntakeAngle = params.getAsDouble("I_MinRearIntakeAngle", 41.0);
-        maxRearIntakeAngle = params.getAsDouble("I_MaxRearIntakeAngle", 100.0);
+        maxRearIntakeAngle = params.getAsDouble("I_MaxRearIntakeAngle", 90.0);
     }
 }
