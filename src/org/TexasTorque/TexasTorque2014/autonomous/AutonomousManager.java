@@ -1,5 +1,7 @@
 package org.TexasTorque.TexasTorque2014.autonomous;
 
+import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFire;
+import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousWait;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TorqueLib.util.Parameters;
@@ -44,9 +46,13 @@ public class AutonomousManager {
     }
 
     public void loadAutonomous() {
+        autoBuilder.clearCommands();
         switch (autoMode) {
             case Constants.DO_NOTHING_AUTO:
                 doNothingAuto();
+                break;
+            case Constants.ONE_BALL_AUTO:
+                oneBallAuto();
                 break;
             default:
                 doNothingAuto();
@@ -78,6 +84,12 @@ public class AutonomousManager {
     }
 
     public void doNothingAuto() {
-        autoBuilder.clearCommands();
+    }
+    
+    public void oneBallAuto()
+    {
+        autoBuilder.addCommand(new AutonomousWait(1.0));
+        autoBuilder.addCommand(new AutonomousFire());
+        autoBuilder.addCommand(new AutonomousWait(1.0));
     }
 }

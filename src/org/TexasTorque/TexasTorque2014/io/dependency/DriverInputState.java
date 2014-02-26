@@ -1,6 +1,7 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.util.Hashtable;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.DriverInput;
 import org.TexasTorque.TorqueLib.util.TorqueToggle;
@@ -12,10 +13,13 @@ public class DriverInputState {
     private double autonDelay;
     private int autonMode;
     private boolean inOverrideState;
+
+    private Hashtable autonomousData;
+
     private TorqueToggle driveBaseMode;
 
     public DriverInputState() {
-       driveBaseMode = new TorqueToggle();
+        driveBaseMode = new TorqueToggle();
     }
 
     public void updateState(DriverInput input) {
@@ -25,8 +29,33 @@ public class DriverInputState {
         autonMode = input.getAutonomousMode();
         inOverrideState = false;
         driveBaseMode.calc(driveControllerState.getLeftStickClick());
+
+        autonomousData.clear();
     }
 
+    public void updateAutonData(Hashtable table) {
+        driveControllerState = null;
+        operatorControllerState = null;
+        inOverrideState = false;
+        driveBaseMode.calc(false);
+        
+        autonomousData = table;
+    }
+
+    public synchronized boolean getAutonBool(String key, boolean def) {
+        if (autonomousData.containsKey(key)) {
+            return ((Boolean) autonomousData.get(key)).booleanValue();
+        }
+        return def;
+    }
+
+    public synchronized double getAutonDouble(String key, double def) {
+        if (autonomousData.containsKey(key)) {
+            return ((Double) autonomousData.get(key)).doubleValue();
+        }
+        return def;
+    }
+    
     public synchronized void setAutonomousDelay(double autonDelay) {
         this.autonDelay = autonDelay;
     }
@@ -45,12 +74,12 @@ public class DriverInputState {
 
     public synchronized int getAutonomousMode() {
         return autonMode;
-    } 
+    }
 
     public synchronized boolean resetSensors() {
         return operatorControllerState.getBottomActionButton();
     }
- 
+
 //---------- Drivebase ----------
     public synchronized double getXAxis() {
         return driveControllerState.getLeftXAxis();
@@ -67,73 +96,61 @@ public class DriverInputState {
     public synchronized boolean hasInput() {
         return (Math.abs(getXAxis()) > Constants.X_AXIS_DEADBAND || Math.abs(getYAxis()) > Constants.Y_AXIS_DEADBAND || Math.abs(getRotation()) > Constants.ROTATION_DEADBAND);
     }
-    
-    public synchronized boolean getDriveMode()
-    {
+
+    public synchronized boolean getDriveMode() {
         SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
         return (!driveControllerState.getTopRightBumper());
     }
 
 //---------- Manipulator ----------  
-    public synchronized boolean ChooChooOverride()
-    {
+    public synchronized boolean ChooChooOverride() {
         return operatorControllerState.getRightStickClick() && (operatorControllerState.getRightActionButton() || operatorControllerState.getLeftActionButton());
     }
-    
-    public synchronized double frontIntakeOverride()
-    {
+
+    public synchronized double frontIntakeOverride() {
         return operatorControllerState.getLeftYAxis();
     }
-    
-    public synchronized double rearIntakeOverride()
-    {
+
+    public synchronized double rearIntakeOverride() {
         return operatorControllerState.getRightYAxis();
     }
-    
-    public synchronized boolean frontIntaking()
-    {
+
+    public synchronized boolean frontIntaking() {
         return operatorControllerState.getTopLeftBumper();
         //return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
     }
-    
-    public synchronized boolean frontOuttaking()
-    {
+
+    public synchronized boolean frontOuttaking() {
         return operatorControllerState.getBottomLeftBumper();
         //return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
     }
-    
-    public synchronized boolean rearIntaking()
-    {
+
+    public synchronized boolean rearIntaking() {
         return operatorControllerState.getTopRightBumper();
         //return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
     }
-    
-    public synchronized boolean rearOuttaking()
-    {
+
+    public synchronized boolean rearOuttaking() {
         return operatorControllerState.getBottomRightBumper();
         //return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
     }
-    
-    public synchronized boolean catching()
-    {
+
+    public synchronized boolean catching() {
         return operatorControllerState.getBottomActionButton();
     }
-    
-    public synchronized boolean shoot()
-    {
+
+    public synchronized boolean shoot() {
         return operatorControllerState.getRightActionButton();
     }
-    
-    public synchronized boolean shootHigh()
-    {
+
+    public synchronized boolean shootHigh() {
         return operatorControllerState.getLeftActionButton();
     }
-    
-    public synchronized boolean getShooterStandoffs()
-    {
+
+    public synchronized boolean getShooterStandoffs() {
         return operatorControllerState.getLeftActionButton();
     }
-    
+
     public synchronized boolean restoreToDefault() {
         return operatorControllerState.getBottomLeftBumper();
     }

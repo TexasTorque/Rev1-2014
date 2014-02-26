@@ -28,6 +28,7 @@ public class Constants
     
     //----- Autonomous -----
     public final static int DO_NOTHING_AUTO = 0;
+    public final static int ONE_BALL_AUTO = 1;
     
     //----- Gyro -----
     public static double GYRO_SENSITIVITY = 0.014;

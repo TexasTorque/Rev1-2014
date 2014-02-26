@@ -39,7 +39,7 @@ public class Catapult extends TorqueSubsystem {
     public void run() {
         if (sensorInput.getCatapultLimitSwitch() == false) {
             firstContact = true;
-            if (driverInput.ChooChooOverride()) {
+            if (driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) {
                 SmartDashboard.putBoolean("CHOOCHOO", true);
                 catapultMotorSpeed = overrideSpeed;
             } else {
@@ -53,7 +53,7 @@ public class Catapult extends TorqueSubsystem {
                 firstContact = false;
             } else {
                 if (Timer.getFPGATimestamp() - contactTime > stallTime) {
-                    catapultMotorSpeed = Constants.MOTOR_STOPPED;
+                    catapultMotorSpeed = overrideSpeed;//ready to move
                 } else  {
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;
                 }
