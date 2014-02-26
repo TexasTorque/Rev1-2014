@@ -1,5 +1,6 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
@@ -14,6 +15,7 @@ public class Catapult extends TorqueSubsystem {
 
     public static double standardPosition;
     public static double shootPosition;
+    public static double overrideSpeed;
 
     private TorquePID pullBackPID;
 
@@ -30,12 +32,20 @@ public class Catapult extends TorqueSubsystem {
     }
 
     public void run() {
-        double currentValue = sensorInput.getCatapultEncoder();
-        if (currentValue < 0.8)
+        //double currentValue = sensorInput.getCatapultEncoder();
+        //if (currentValue < 0.8)
+        //{
+        //    desiredPullbackPosition = standardPosition;
+        //}
+        //catapultMotorSpeed = pullBackPID.calculate(currentValue);
+        if(driverInput.ChooChooOverride())
         {
-            desiredPullbackPosition = standardPosition;
+            SmartDashboard.putBoolean("CHOOCHOO", true);
+            catapultMotorSpeed = overrideSpeed;
+        } else {
+            SmartDashboard.putBoolean("CHOOCHOO", false);
+            catapultMotorSpeed = Constants.MOTOR_STOPPED;
         }
-        catapultMotorSpeed = pullBackPID.calculate(currentValue);
     }
 
     public void setPosition(double desired) {
@@ -72,6 +82,7 @@ public class Catapult extends TorqueSubsystem {
         
         standardPosition = params.getAsDouble("C_StandardPullback", 0.9);
         shootPosition = params.getAsDouble("C_ShootPullback", 1.9);
+        overrideSpeed = params.getAsDouble("C_ChooChooSpeed", 0.0);
     }
 
     public String logData() { //no logging

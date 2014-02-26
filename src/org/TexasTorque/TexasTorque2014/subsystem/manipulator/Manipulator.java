@@ -48,7 +48,9 @@ public class Manipulator extends TorqueSubsystem {
                 catchBall();
             } else if (driverInput.shoot()) {
                 shoot();
-            } else if (driverInput.restoreToDefault()) {
+            } else if (driverInput.shootHigh()) {
+                shootHigh();
+            }else if (driverInput.restoreToDefault()) {
                 restoreDefaultPositions();
             } else if (intaking) {
             } else {
@@ -65,6 +67,7 @@ public class Manipulator extends TorqueSubsystem {
         }
         
         intake.run();
+        catapult.run();
     }
 
     public void setToRobot() {
@@ -126,7 +129,16 @@ public class Manipulator extends TorqueSubsystem {
 
     public void shoot() {
         intake.setFrontAngle(Intake.downAngle);
+        intake.setRearAngle(Intake.downAngle);
         catapult.setPosition(Catapult.shootPosition);
+        catapult.setStandoffs(Constants.FAR_SHOT);
+    }
+    
+    public void shootHigh() {
+        intake.setFrontAngle(Intake.downAngle);
+        intake.setRearAngle(Intake.downAngle);
+        catapult.setPosition(Catapult.shootPosition);
+        catapult.setStandoffs(Constants.HIGH_SHOT);
     }
 
     public void resetShooter() {

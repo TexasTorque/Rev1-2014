@@ -75,6 +75,10 @@ public class DriverInputState {
     }
 
 //---------- Manipulator ----------  
+    public synchronized boolean ChooChooOverride()
+    {
+        return operatorControllerState.getRightStickClick() && (operatorControllerState.getRightActionButton() || operatorControllerState.getLeftActionButton());
+    }
     public synchronized boolean frontIntaking()
     {
         return operatorControllerState.getTopLeftBumper();
@@ -107,6 +111,11 @@ public class DriverInputState {
     public synchronized boolean shoot()
     {
         return operatorControllerState.getRightActionButton();
+    }
+    
+    public synchronized boolean shootHigh()
+    {
+        return operatorControllerState.getLeftActionButton();
     }
     
     public synchronized boolean getShooterStandoffs()
