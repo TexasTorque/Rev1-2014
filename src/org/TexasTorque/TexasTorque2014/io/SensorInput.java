@@ -1,6 +1,7 @@
 package org.TexasTorque.TexasTorque2014.io;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Watchdog;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
@@ -10,11 +11,14 @@ import org.TexasTorque.TorqueLib.component.TorqueCounter;
 import org.TexasTorque.TorqueLib.component.TorqueEncoder;
 import org.TexasTorque.TorqueLib.component.TorquePotentiometer;
 
-public class SensorInput
-{
+public class SensorInput {
+
     private static SensorInput instance;
     private static SensorInputState state;
     private Watchdog watchdog;
+
+    //----- Limit Switch -----
+    private DigitalInput catapultLimitSwitch;
 
     //----- Encoder -----
     private TorqueCounter leftFrontDriveCounter;
@@ -32,11 +36,10 @@ public class SensorInput
     private TorquePotentiometer frontIntakeTiltPotentiometer;
     private TorquePotentiometer rearIntakeTiltPotentiometer;
 
-    public SensorInput()
-    {
-        
+    public SensorInput() {
+
         watchdog = Watchdog.getInstance();
-        
+
         //----- Encoders/Counters -----
         leftFrontDriveCounter = new TorqueCounter(Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_PORT);
         leftRearDriveCounter = new TorqueCounter(Ports.LEFT_REAR_DRIVE_ENCODER_SIDECAR, Ports.LEFT_REAR_DRIVE_ENCODER_PORT);
@@ -44,9 +47,9 @@ public class SensorInput
         rightRearDriveCounter = new TorqueCounter(Ports.RIGHT_REAR_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_PORT);
         leftStrafeCounter = new TorqueCounter(Ports.LEFT_STRAFE_DRIVE_COUNTER_SIDECAR, Ports.LEFT_STRAFE_DRIVE_COUNTER_PORT);
         rightStrafeCounter = new TorqueCounter(Ports.RIGHT_STRAFE_DRIVE_COUNTER_SIDECAR, Ports.RIGHT_STRAFE_DRIVE_COUNTER_PORT);
-        
+
         catapultEncoder = new TorqueEncoder(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_ENCODER_A_PORT, Ports.CATAPULT_SIDECAR, Ports.CATAPULT_ENCODER_B_PORT, false);
-        
+
         //----- Gyro -----
         //gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
         //gyro = new Gyro(gyroChannel);
@@ -58,40 +61,38 @@ public class SensorInput
         rearIntakeTiltPotentiometer = new TorquePotentiometer(Ports.REAR_INTAKE_TILT_POT_PORT);
         frontIntakeTiltPotentiometer.setRange(Constants.FRONT_INTAKE_POTENTIOMETER_LOW, Constants.FRONT_INTAKE_POTENTIOMETER_HIGH);
         rearIntakeTiltPotentiometer.setRange(Constants.REAR_INTAKE_POTENTIOMETER_LOW, Constants.REAR_INTAKE_POTENTIOMETER_HIGH);
-        
+
         //----- Misc -----
+        catapultLimitSwitch = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_PORT);
         //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
         startEncoders();
-                
+
     }
-    
-    public synchronized static SensorInput getInstance()
-    {
+
+    public synchronized static SensorInput getInstance() {
         return (instance == null) ? instance = new SensorInput() : instance;
     }
-    public synchronized static SensorInputState getState()
-    {
+
+    public synchronized static SensorInputState getState() {
         return (state == null) ? state = new SensorInputState() : state;
     }
-    public synchronized void updateState()
-    {
+
+    public synchronized void updateState() {
         state.updateState(this);
     }
-    
-    private void startEncoders()
-    {
+
+    private void startEncoders() {
         // 1 foot = ??? clicks
         leftFrontDriveCounter.start();
-        rightFrontDriveCounter.start();    
+        rightFrontDriveCounter.start();
         leftRearDriveCounter.start();
         rightRearDriveCounter.start();
         rightStrafeCounter.start();
         leftStrafeCounter.start();
         catapultEncoder.start();
     }
-    
-    public void resetEncoders()
-    {
+
+    public void resetEncoders() {
         leftFrontDriveCounter.reset();
         rightFrontDriveCounter.reset();
         leftRearDriveCounter.reset();
@@ -100,9 +101,8 @@ public class SensorInput
         leftStrafeCounter.reset();
         catapultEncoder.reset();
     }
-    
-    public void calcEncoders()
-    {
+
+    public void calcEncoders() {
         leftFrontDriveCounter.calc();
         rightFrontDriveCounter.calc();
         leftRearDriveCounter.calc();
@@ -111,132 +111,110 @@ public class SensorInput
         leftStrafeCounter.calc();
         catapultEncoder.calc();
     }
-    
-    public void resetGyro()
-    {
+
+    public void resetGyro() {
         gyro.reset();
         gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
     }
-    
-    public double getLeftFrontDriveEncoder()
-    {
-        return (leftFrontDriveCounter.get()); 
+
+    public double getLeftFrontDriveEncoder() {
+        return (leftFrontDriveCounter.get());
     }
-    
-    public double getRightFrontDriveEncoder()
-    {
+
+    public double getRightFrontDriveEncoder() {
         return (rightFrontDriveCounter.get());
     }
-    
-    public double getLeftFrontDriveEncoderRate()
-    {
+
+    public double getLeftFrontDriveEncoderRate() {
         return (leftFrontDriveCounter.getRate());
     }
-    
-    public double getRightFrontDriveEncoderRate()
-    {
+
+    public double getRightFrontDriveEncoderRate() {
         return (rightFrontDriveCounter.getRate());
     }
-    
-    public double getLeftFrontDriveEncoderAcceleration()
-    {
+
+    public double getLeftFrontDriveEncoderAcceleration() {
         return (leftFrontDriveCounter.getRate());
     }
-    
-    public double getRightFrontDriveEncoderAcceleration()
-    {
+
+    public double getRightFrontDriveEncoderAcceleration() {
         return (rightFrontDriveCounter.getRate());
     }
-    
-    public double getLeftRearDriveEncoder()
-    {
-        return (leftRearDriveCounter.get()); 
+
+    public double getLeftRearDriveEncoder() {
+        return (leftRearDriveCounter.get());
     }
-    
-    public double getRightRearDriveEncoder()
-    {
+
+    public double getRightRearDriveEncoder() {
         return (rightRearDriveCounter.get());
     }
-    
-    public double getLeftRearDriveEncoderRate()
-    {
+
+    public double getLeftRearDriveEncoderRate() {
         return (leftRearDriveCounter.getRate());
     }
-    
-    public double getRightRearDriveEncoderRate()
-    {
+
+    public double getRightRearDriveEncoderRate() {
         return (rightRearDriveCounter.getRate());
     }
-    
-    public double getLeftRearDriveEncoderAcceleration()
-    {
+
+    public double getLeftRearDriveEncoderAcceleration() {
         return (leftRearDriveCounter.getRate());
     }
-    
-    public double getRightRearDriveEncoderAcceleration()
-    {
+
+    public double getRightRearDriveEncoderAcceleration() {
         return (rightRearDriveCounter.getRate());
     }
-    
-    public double getFrontIntakeTiltPotentiometer()
-    {
+
+    public double getFrontIntakeTiltPotentiometer() {
         return frontIntakeTiltPotentiometer.get();
     }
-    
-    public double getRearIntakeTiltPotentiometer()
-    {
+
+    public double getRearIntakeTiltPotentiometer() {
         return rearIntakeTiltPotentiometer.get();
     }
-    
-    public double getRearIntakeTiltVoltage()
-    {
+
+    public double getRearIntakeTiltVoltage() {
         return rearIntakeTiltPotentiometer.getRaw();
     }
-    
-    public double getFrontIntakeTiltVoltage()
-    {
+
+    public double getFrontIntakeTiltVoltage() {
         return frontIntakeTiltPotentiometer.getRaw();
     }
-    
-    public double getRightStrafeCounterRate()
-    {
+
+    public double getRightStrafeCounterRate() {
         return rightStrafeCounter.getRate();
     }
-    
-    public double getLeftStrafeCounterRate()
-    {
+
+    public double getLeftStrafeCounterRate() {
         return leftStrafeCounter.getRate();
     }
-    
-    public double getCatapultEncoder()
-    {
+
+    public double getCatapultEncoder() {
         return catapultEncoder.get();
     }
-    
-    public double getPSI()
-    {
+
+    public boolean getCatapultLimitSwitch() {
+        return catapultLimitSwitch.get();
+    }
+
+    public double getPSI() {
         return 0.0;//pressureSensor.getVoltage();
     }
-    
-    public double getGyroAngle()
-    {
+
+    public double getGyroAngle() {
         return 0.0;//limitGyroAngle(-gyro.getAngle() * 2);
     }
-    
-    public double limitGyroAngle(double angle)
-    {
-        while(angle >= 360.0)
-        {
+
+    public double limitGyroAngle(double angle) {
+        while (angle >= 360.0) {
             watchdog.feed();
             angle -= 360.0;
         }
-        while(angle < 0.0)
-        {
+        while (angle < 0.0) {
             watchdog.feed();
             angle += 360.0;
         }
-        if(angle > 180)
-        {
+        if (angle > 180) {
             angle -= 360;
         }
         return angle;

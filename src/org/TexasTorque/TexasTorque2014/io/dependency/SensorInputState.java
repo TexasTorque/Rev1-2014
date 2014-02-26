@@ -6,6 +6,9 @@ import org.TexasTorque.TorqueLib.util.Parameters;
 
 public class SensorInputState {
 
+    //----- Digital -----
+    private boolean catapultLimitSwitch;
+
     //----- Encoder -----
     private double leftFrontDriveEncoder;
     private double rightFrontDriveEncoder;
@@ -30,13 +33,13 @@ public class SensorInputState {
     private double rearIntakeTiltPotentiometer;
     private double frontIntakeTiltVoltage;
     private double rearIntakeTiltVoltage;
-    
+
     //----- Angles -----
     private double minFrontIntakeAngle;
     private double maxFrontIntakeAngle;
     private double minRearIntakeAngle;
     private double maxRearIntakeAngle;
-    
+
     Parameters params;
 
     public SensorInputState() {
@@ -66,11 +69,12 @@ public class SensorInputState {
         rearIntakeTiltPotentiometer = input.getRearIntakeTiltPotentiometer();
         frontIntakeTiltVoltage = input.getFrontIntakeTiltVoltage();
         rearIntakeTiltVoltage = input.getRearIntakeTiltVoltage();
-        
+
         //----- Gyro -----
         gyroAngle = input.getGyroAngle();
 
         //----- Misc -----
+        catapultLimitSwitch = input.getCatapultLimitSwitch();
         pressureSensor = input.getPSI();
     }
 
@@ -97,11 +101,11 @@ public class SensorInputState {
     public double getRightFrontDriveEncoderAcceleration() {
         return rightFrontDriveEncoderAcceleration;
     }
-    
+
     public double getRightStrafeDriveEncoderRate() {
         return rightStrafeRate;
     }
-    
+
     public double getLeftStrafeDriveEncoderRate() {
         return leftStrafeRate;
     }
@@ -130,6 +134,10 @@ public class SensorInputState {
         return rightRearDriveEncoderAcceleration;
     }
 
+    public boolean getCatapultLimitSwitch() {
+        return catapultLimitSwitch;
+    }
+
     public double getPSI() {
         return pressureSensor;
     }
@@ -137,44 +145,37 @@ public class SensorInputState {
     public double getGyroAngle() {
         return gyroAngle;
     }
-    
-    public double getFrontIntakeTiltPotentiometer()
-    {
+
+    public double getFrontIntakeTiltPotentiometer() {
         return frontIntakeTiltPotentiometer;
     }
-    
-    public double getRearIntakeTiltPotentiometer()
-    {
+
+    public double getRearIntakeTiltPotentiometer() {
         return rearIntakeTiltPotentiometer;
     }
-    
-    public double getRearIntakeTiltVoltage()
-    {
+
+    public double getRearIntakeTiltVoltage() {
         return rearIntakeTiltVoltage;
     }
-    
-    public double getFrontIntakeTiltVoltage()
-    {
+
+    public double getFrontIntakeTiltVoltage() {
         return frontIntakeTiltVoltage;
     }
 
-    public double getFrontIntakeTiltAngle()
-    {
-        
-        return getFrontIntakeTiltPotentiometer()*(maxFrontIntakeAngle - minFrontIntakeAngle) + minFrontIntakeAngle;
+    public double getFrontIntakeTiltAngle() {
+
+        return getFrontIntakeTiltPotentiometer() * (maxFrontIntakeAngle - minFrontIntakeAngle) + minFrontIntakeAngle;
     }
-    
-    public double getRearIntakeTiltAngle()
-    {
+
+    public double getRearIntakeTiltAngle() {
         SmartDashboard.putNumber("rearPot", getRearIntakeTiltPotentiometer());
-        return getRearIntakeTiltPotentiometer()*(maxRearIntakeAngle - minRearIntakeAngle) + minRearIntakeAngle;
+        return getRearIntakeTiltPotentiometer() * (maxRearIntakeAngle - minRearIntakeAngle) + minRearIntakeAngle;
     }
-    
-    public double getCatapultEncoder()
-    {
+
+    public double getCatapultEncoder() {
         return catapultEncoder;
     }
-    
+
     public void pushToDashboard() {
         SmartDashboard.putNumber("FrontLeftRate", getLeftFrontDriveEncoderRate());
         SmartDashboard.putNumber("FrontRightRate", getRightFrontDriveEncoderRate());
@@ -187,8 +188,8 @@ public class SensorInputState {
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
 
     }
-    public void loadParamaters()
-    {
+
+    public void loadParamaters() {
         minFrontIntakeAngle = params.getAsDouble("I_MinFrontIntakeAngle", 41.0);
         maxFrontIntakeAngle = params.getAsDouble("I_MaxFrontIntakeAngle", 90.0);
         minRearIntakeAngle = params.getAsDouble("I_MinRearIntakeAngle", 41.0);

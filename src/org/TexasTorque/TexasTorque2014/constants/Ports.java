@@ -66,6 +66,8 @@ public class Ports {
             public final static int CATAPULT_ENCODER_A_PORT = 4;
             public final static int CATAPULT_ENCODER_B_PORT = 5;
             public final static int CATAPULT_ENCODER_SIDECAR = 1;
+            public final static int CATAPULT_LIMIT_SWITCH_SIDECAR = 0;
+            public final static int CATAPULT_LIMIT_SWITCH_PORT = 0;
             public final static int PRESSURE_SWITCH_PORT = 0;
             public final static int PRESSURE_SWITCH_SIDECAR = 1;
 
