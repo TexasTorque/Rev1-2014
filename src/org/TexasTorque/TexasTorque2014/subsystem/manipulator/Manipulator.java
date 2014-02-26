@@ -60,14 +60,17 @@ public class Manipulator extends TorqueSubsystem {
             
             SmartDashboard.putBoolean("Intakeing", intaking);
             
+            intake.run();
+            catapult.run();
+            
             setToRobot();
             
         } else {
             calcOverrides();
+            setToRobot();
         }
         
-        intake.run();
-        catapult.run();
+        
     }
 
     public void setToRobot() {
@@ -168,6 +171,17 @@ public class Manipulator extends TorqueSubsystem {
     }
 
     private void calcOverrides() {
+        if(driverInput.ChooChooOverride())
+        {
+            catapult.setMotorSpeed(Catapult.overrideSpeed);
+        }
+        
+        if(Math.abs(driverInput.frontIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND){
+            intake.frontIntakeOverride(driverInput.frontIntakeOverride());
+        }
+        if (Math.abs(driverInput.rearIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND) {
+            intake.rearIntakeOverride(driverInput.rearIntakeOverride());
+        }
     }
 
     public void restoreDefaultPositions() {

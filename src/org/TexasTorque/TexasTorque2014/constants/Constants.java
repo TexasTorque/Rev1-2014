@@ -6,6 +6,7 @@ public class Constants
     public final static double X_AXIS_DEADBAND = 0.16;
     public final static double Y_AXIS_DEADBAND = 0.16;
     public final static double ROTATION_DEADBAND = 0.18;
+    public final static double OVERRIDE_AXIS_DEADBAND = 0.35;
     
     public static final boolean CONTROLLER_IS_XBOX = false;
     public static final boolean CONTROLLER_IS_LOGITECH = true;
@@ -23,8 +24,9 @@ public class Constants
     //----- Manipulator -----
     public final static boolean HIGH_SHOT = true;
     public final static boolean FAR_SHOT = false;
+    public final static double CHOO_CHOO_CLICKS_PER_REV = 617.6471;
     
-    //Autonomous
+    //----- Autonomous -----
     public final static int DO_NOTHING_AUTO = 0;
     
     //----- Gyro -----

@@ -101,6 +101,11 @@ public class SensorInput {
         leftStrafeCounter.reset();
         catapultEncoder.reset();
     }
+    
+    public void resetCatapultEncoder()
+    {
+        catapultEncoder.reset();
+    }
 
     public void calcEncoders() {
         leftFrontDriveCounter.calc();

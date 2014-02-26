@@ -79,6 +79,17 @@ public class DriverInputState {
     {
         return operatorControllerState.getRightStickClick() && (operatorControllerState.getRightActionButton() || operatorControllerState.getLeftActionButton());
     }
+    
+    public synchronized double frontIntakeOverride()
+    {
+        return operatorControllerState.getLeftYAxis();
+    }
+    
+    public synchronized double rearIntakeOverride()
+    {
+        return operatorControllerState.getRightYAxis();
+    }
+    
     public synchronized boolean frontIntaking()
     {
         return operatorControllerState.getTopLeftBumper();

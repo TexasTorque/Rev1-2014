@@ -87,6 +87,14 @@ public class Intake extends TorqueSubsystem {
             rearTiltPID.setSetpoint(desiredRearTiltAngle);
         }
     }
+    public void frontIntakeOverride(double tiltSpeed)
+    {
+        frontTiltSpeed = tiltSpeed;
+    }
+    public void rearIntakeOverride(double tiltSpeed)
+    {
+        rearTiltSpeed = tiltSpeed;
+    }
     
     public void setFrontIntakeSpeed(double speed)
     {
