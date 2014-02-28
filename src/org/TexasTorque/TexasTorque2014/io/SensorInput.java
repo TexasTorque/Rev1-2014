@@ -199,7 +199,7 @@ public class SensorInput {
     }
 
     public boolean getCatapultLimitSwitch() {
-        return catapultLimitSwitch.get();
+        return !catapultLimitSwitch.get();
     }
 
     public double getPSI() {

@@ -41,9 +41,9 @@ public class Constants
     public final static int BLUE_ALLIANCE = 1;
     
     //----- Potentiometer -----
-    public final static double FRONT_INTAKE_POTENTIOMETER_LOW = 4.85;
-    public final static double FRONT_INTAKE_POTENTIOMETER_HIGH = 2.52;
-    public final static double REAR_INTAKE_POTENTIOMETER_LOW = 4.93;
-    public final static double REAR_INTAKE_POTENTIOMETER_HIGH = 2.60;
+    public final static double FRONT_INTAKE_POTENTIOMETER_LOW = 4.8;
+    public final static double FRONT_INTAKE_POTENTIOMETER_HIGH = 2.27;
+    public final static double REAR_INTAKE_POTENTIOMETER_LOW = 4.72;
+    public final static double REAR_INTAKE_POTENTIOMETER_HIGH = 2.26;
     
 }

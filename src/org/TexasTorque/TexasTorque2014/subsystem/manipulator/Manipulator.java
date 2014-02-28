@@ -42,8 +42,6 @@ public class Manipulator extends TorqueSubsystem {
                 rearOuttake();
             }
             
-            setShooterStandoffs(driverInput.getShooterStandoffs());
-            
             if (driverInput.catching()) {
                 catchBall();
             } else if (driverInput.shoot()) {

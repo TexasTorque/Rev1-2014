@@ -82,6 +82,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
             }
 
             numCycles++;
+            SmartDashboard.putNumber("NumCycles", numCycles);
         }
     }
 
@@ -115,6 +116,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
         drivebase.pushToDashboard();
         robotOutput.pullFromState();
         SensorInput.getState().pushToDashboard();
+        
     }
 
     public void teleopContinuous() {

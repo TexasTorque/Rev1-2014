@@ -186,6 +186,8 @@ public class SensorInputState {
         SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
+        SmartDashboard.putBoolean("CatapultLimit", catapultLimitSwitch);
+        SmartDashboard.putBoolean("Logging",true);
 
     }
 

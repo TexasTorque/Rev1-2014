@@ -14,7 +14,7 @@ public class DriverInputState {
     private int autonMode;
     private boolean inOverrideState;
 
-    private Hashtable autonomousData;
+    private Hashtable autonomousData = new Hashtable();
 
     private TorqueToggle driveBaseMode;
 
