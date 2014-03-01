@@ -6,23 +6,23 @@ import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 
 public class Manipulator extends TorqueSubsystem {
-
+    
     private static Manipulator instance;
-
+    
     private Intake intake;
     private Catapult catapult;
-
+    
     public static Manipulator getInstance() {
         return (instance == null) ? instance = new Manipulator() : instance;
     }
-
+    
     private Manipulator() {
         super();
-
+        
         intake = Intake.getInstance();
         catapult = Catapult.getInstance();
     }
-
+    
     public void run() {
         if (!driverInput.overrideState()) {
             boolean intaking = false;
@@ -48,12 +48,15 @@ public class Manipulator extends TorqueSubsystem {
                 shoot();
             } else if (driverInput.shootHigh()) {
                 shootHigh();
-            }else if (driverInput.restoreToDefault()) {
+            } else if (driverInput.restoreToDefault()) {
                 restoreDefaultPositions();
             } else if (intaking) {
             } else {
                 resetIntakes();
                 resetShooter();
+            }
+            if (catapult.getIntakeDownOverride()) {
+                intake.setFrontAngle(Intake.downAngle);
             }
             
             SmartDashboard.putBoolean("Intakeing", intaking);
@@ -68,28 +71,27 @@ public class Manipulator extends TorqueSubsystem {
             setToRobot();
         }
         
-        
     }
-
+    
     public void setToRobot() {
         intake.setToRobot();
         catapult.setToRobot();
     }
-
+    
     public void frontIntake() {
         SmartDashboard.putNumber("IntakeState", 1.0);
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
         intake.setFrontAngle(Intake.downAngle);
         intake.setRearAngle(Intake.inAngle);
     }
-
+    
     public void rearIntake() {
         SmartDashboard.putNumber("IntakeState", 2.0);
         intake.setRearIntakeSpeed(Intake.intakeSpeed);
         intake.setRearAngle(Intake.downAngle);
         intake.setFrontAngle(Intake.inAngle);
     }
-
+    
     public void frontOuttake() {
         SmartDashboard.putNumber("IntakeState", 3.0);
         intake.setFrontIntakeSpeed(Intake.outtakeSpeed);
@@ -97,7 +99,7 @@ public class Manipulator extends TorqueSubsystem {
         intake.setRearIntakeSpeed(Intake.intakeSpeed);
         intake.setRearAngle(Intake.inAngle);
     }
-
+    
     public void rearOuttake() {
         SmartDashboard.putNumber("IntakeState", 4.0);
         intake.setRearIntakeSpeed(Intake.outtakeSpeed);
@@ -105,29 +107,29 @@ public class Manipulator extends TorqueSubsystem {
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
         intake.setFrontAngle(Intake.inAngle);
     }
-
+    
     public void resetFrontIntake() {
         intake.setFrontAngle(Intake.upAngle);
         intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
     }
-
+    
     public void resetRearIntake() {
         intake.setRearAngle(Intake.upAngle);
         intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
     }
-
+    
     public void catchBall() {
         intake.setFrontAngle(Intake.downAngle);
         intake.setRearAngle(Intake.downAngle);
         intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
         intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
     }
-
+    
     public void resetIntakes() {
         resetFrontIntake();
         resetRearIntake();
     }
-
+    
     public void shoot() {
         intake.setFrontAngle(Intake.downAngle);
         intake.setRearAngle(Intake.downAngle);
@@ -141,47 +143,45 @@ public class Manipulator extends TorqueSubsystem {
         catapult.setPosition(Catapult.shootPosition);
         catapult.setStandoffs(Constants.HIGH_SHOT);
     }
-
+    
     public void resetShooter() {
         catapult.setPosition(Catapult.standardPosition);
     }
     
-    public void setShooterStandoffs(boolean highshot)
-    {
+    public void setShooterStandoffs(boolean highshot) {
         catapult.setStandoffs(highshot);
     }
-
+    
     public String getKeyNames() {
         String names = "InOverrideState,";
-
+        
         return names;
     }
-
+    
     public String logData() {
         String data = driverInput.overrideState() + ",";
-
+        
         return data;
     }
-
+    
     public void loadParameters() {
         intake.loadParameters();
         catapult.loadParameters();
     }
-
+    
     private void calcOverrides() {
-        if(driverInput.ChooChooOverride())
-        {
+        if (driverInput.ChooChooOverride()) {
             catapult.setMotorSpeed(Catapult.overrideSpeed);
         }
         
-        if(Math.abs(driverInput.frontIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND){
+        if (Math.abs(driverInput.frontIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND) {
             intake.frontIntakeOverride(driverInput.frontIntakeOverride());
         }
         if (Math.abs(driverInput.rearIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND) {
             intake.rearIntakeOverride(driverInput.rearIntakeOverride());
         }
     }
-
+    
     public void restoreDefaultPositions() {
     }
 }

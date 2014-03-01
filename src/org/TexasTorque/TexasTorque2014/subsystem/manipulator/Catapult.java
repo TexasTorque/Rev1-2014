@@ -18,6 +18,7 @@ public class Catapult extends TorqueSubsystem {
     private boolean firstContact;
     private boolean firstCycle;
     private boolean firstHitSetpoint;
+    private boolean intakeDownOverride;
 
     public static double standardPosition;
     public static double shootPosition;
@@ -47,17 +48,17 @@ public class Catapult extends TorqueSubsystem {
         if (!firstCycle) {
             if (sensorInput.getCatapultLimitSwitch() == false) {
                 firstContact = true;
-                if(driverInput.ChooChooOverride() && sensorInput.getCatapultEncoder() < 100)
+                if(driverInput.ChooChooOverride() && sensorInput.getCatapultEncoder() < 300)
                 {
                     pullBackPID.setSetpoint(pidSetpoint);
                     firstHitSetpoint = false;
+                    intakeDownOverride = false;
                 }
                 else if (driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) {
-                    SmartDashboard.putBoolean("CHOOCHOO", true);
                     pullBackPID.setSetpoint(pidSetpoint + pidSetpoint);//Fire
+                    intakeDownOverride = true;
                     firstHitSetpoint = false;
                 } else {
-                    SmartDashboard.putBoolean("CHOOCHOO", false);
                     //pullBackPID.setSetpoint(sensorInput.getCatapultEncoder());//Stop
                 }
             } else {
@@ -100,7 +101,6 @@ public class Catapult extends TorqueSubsystem {
             {
                 firstCycle = false;
             }
-            //SmartDashboard.putBoolean("FirstCycleCatapult", firstCycle);
         }
     }
 
@@ -109,6 +109,10 @@ public class Catapult extends TorqueSubsystem {
             desiredPullbackPosition = desired;
             pullBackPID.setSetpoint(desired);
         }
+    }
+    
+    public boolean getIntakeDownOverride() {
+        return intakeDownOverride;
     }
 
     public void setMotorSpeed(double speed) {
