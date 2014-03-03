@@ -19,12 +19,19 @@ public class Intake extends TorqueSubsystem {
     private TorquePID frontTiltPID;
     private TorquePID rearTiltPID;
     
-    public static double upAngle;
-    public static double downAngle;
+    public static double frontUpAngle;
+    public static double rearUpAngle;
+    public static double frontDownAngle;
+    public static double rearDownAngle;
+    public static double frontShootAngle;
+    public static double rearShootAngle;
     public static double inAngle;
     public static double intakeSpeed;
     public static double outtakeSpeed;
     public static double tiltDownTollerance;
+    public static double frontIntakeAngle;
+    public static double frontCatchAngle;
+    public static double rearCatchAngle;
     
     public static Intake getInstance()
     {
@@ -57,12 +64,12 @@ public class Intake extends TorqueSubsystem {
         SmartDashboard.putNumber("desiredRear", rearTiltPID.getSetpoint());
         
         frontTiltSpeed = frontTiltPID.calculate(currentFrontAngle);
-        if(frontTiltPID.getSetpoint() == downAngle && Math.abs(downAngle - currentFrontAngle) < tiltDownTollerance)
+        if(frontTiltPID.getSetpoint() == frontDownAngle && Math.abs(frontDownAngle - currentFrontAngle) < tiltDownTollerance)
         {
             frontTiltSpeed = Constants.MOTOR_STOPPED;
         }
         rearTiltSpeed = rearTiltPID.calculate(currentRearAngle);
-        if(rearTiltPID.getSetpoint() == downAngle && Math.abs(downAngle - currentRearAngle) < tiltDownTollerance)
+        if(rearTiltPID.getSetpoint() == rearDownAngle && Math.abs(rearDownAngle - currentRearAngle) < tiltDownTollerance)
         {
             rearTiltSpeed = Constants.MOTOR_STOPPED;
         }
@@ -113,9 +120,16 @@ public class Intake extends TorqueSubsystem {
     public void loadParameters() {
         intakeSpeed = params.getAsDouble("I_IntakeSpeed", 1.0);
         outtakeSpeed = params.getAsDouble("I_OuttakeSpeed", -1.0);
-        downAngle = params.getAsDouble("I_DownAngle", 45);
-        upAngle = params.getAsDouble("I_UpAngle", 90);
+        frontDownAngle = params.getAsDouble("I_FrontDownAngle", 41);
+        rearDownAngle = params.getAsDouble("I_RearDownAngle", 41);
+        frontUpAngle = params.getAsDouble("I_FrontUpAngle", 90);
+        rearUpAngle = params.getAsDouble("I_RearUpAngle", 90);
         inAngle = params.getAsDouble("I_InAngle", 110);
+        frontShootAngle = params.getAsDouble("I_FrontShootAngle", frontDownAngle);
+        rearShootAngle = params.getAsDouble("I_RearShootAngle", rearDownAngle);
+        frontIntakeAngle = params.getAsDouble("I_FrontIntakeAngle", 90);
+        frontCatchAngle = params.getAsDouble("I_FrontCatchAngle", frontDownAngle);
+        rearCatchAngle = params.getAsDouble("I_RearCatchAngle", rearDownAngle);
         
         double frontP = params.getAsDouble("I_FrontIntakeP", 0.0);
         double frontI = params.getAsDouble("I_FrontIntakeI", 0.0);
@@ -145,18 +159,9 @@ public class Intake extends TorqueSubsystem {
         rearTiltPID.setMinDoneCycles(0);
         rearTiltPID.reset();
         
-        upAngle = params.getAsDouble("I_UpAngle", 90);
-        downAngle = params.getAsDouble("I_DownAngle", 41);
-        inAngle = params.getAsDouble("I_InAngle", 100);
         intakeSpeed = params.getAsDouble("I_IntakeSpeed", 1.0);
         outtakeSpeed = params.getAsDouble("I_OuttakeSpeed", -1.0);
         tiltDownTollerance = params.getAsDouble("I_TiltDownTollerance", 2.0);
-        SmartDashboard.putNumber("upAngle", upAngle);
-        SmartDashboard.putNumber("downAngle", downAngle);
-        SmartDashboard.putNumber("inAngle", inAngle);
-        SmartDashboard.putNumber("intakeSpeed", intakeSpeed);
-        SmartDashboard.putNumber("outtakeSpeed", outtakeSpeed);
-        SmartDashboard.putNumber("downTollerance", tiltDownTollerance);
     }
 
     public String logData() { //Have not implemented logging

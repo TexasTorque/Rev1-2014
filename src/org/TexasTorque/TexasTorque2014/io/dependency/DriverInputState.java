@@ -106,6 +106,10 @@ public class DriverInputState {
     public synchronized boolean ChooChooOverride() {
         return operatorControllerState.getRightStickClick() && (operatorControllerState.getRightActionButton() || operatorControllerState.getLeftActionButton());
     }
+    
+    public synchronized boolean ChooChooReset() {
+        return operatorControllerState.getRightStickClick() && operatorControllerState.getTopActionButton();
+    }
 
     public synchronized double frontIntakeOverride() {
         return operatorControllerState.getLeftYAxis();

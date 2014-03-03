@@ -57,6 +57,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
+        sensorInput.resetEncoders();
         loadParameters();
     }
 
