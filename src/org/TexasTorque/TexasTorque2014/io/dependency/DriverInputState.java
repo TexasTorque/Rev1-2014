@@ -41,6 +41,10 @@ public class DriverInputState {
         
         autonomousData = table;
     }
+    
+    public synchronized boolean isAuton() {
+        return !autonomousData.isEmpty();
+    }
 
     public synchronized boolean getAutonBool(String key, boolean def) {
         if (autonomousData.containsKey(key)) {

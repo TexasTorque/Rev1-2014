@@ -28,27 +28,27 @@ public class Manipulator extends TorqueSubsystem {
             boolean intaking = false;
             //----- Normal Ops -----
 
-            if (driverInput.frontIntaking()) {
+            if (driverInput.frontIntaking() || driverInput.getAutonBool("frontIn", false)) {
                 intaking = true;
                 frontIntake();
-            } else if (driverInput.frontOuttaking()) {
+            } else if (driverInput.frontOuttaking() || driverInput.getAutonBool("frontOut", false)) {
                 intaking = true;
                 frontOuttake();
-            } else if (driverInput.rearIntaking()) {
+            } else if (driverInput.rearIntaking() || driverInput.getAutonBool("rearIn", false)) {
                 intaking = true;
                 rearIntake();
-            } else if (driverInput.rearOuttaking()) {
+            } else if (driverInput.rearOuttaking() || driverInput.getAutonBool("rearOut", false)) {
                 intaking = true;
                 rearOuttake();
             }
             
-            if (driverInput.catching()) {
+            if (driverInput.catching() || driverInput.getAutonBool("catch", false)) {
                 catchBall();
-            } else if (driverInput.shoot()) {
+            } else if (driverInput.shoot() || driverInput.getAutonBool("shoot", false)) {
                 shoot();
-            } else if (driverInput.shootHigh()) {
+            } else if (driverInput.shootHigh() || driverInput.getAutonBool("shootHigh", false)) {
                 shootHigh();
-            } else if (driverInput.restoreToDefault()) {
+            } else if (driverInput.restoreToDefault() || driverInput.getAutonBool("restore", false)) {
                 restoreDefaultPositions();
             } else if (intaking) {
             } else {
@@ -160,6 +160,22 @@ public class Manipulator extends TorqueSubsystem {
         String data = driverInput.overrideState() + ",";
         
         return data;
+    }
+    
+    public boolean isFired() {
+        return catapult.isFired();
+    }
+    
+    public void resetFired() {
+        catapult.resetFired();
+    }
+    
+    public boolean intakesDone() {
+        return intake.isDone();
+    }
+    
+    public boolean catapultReady() {
+        return catapult.catapultReady();
     }
     
     public void loadParameters() {

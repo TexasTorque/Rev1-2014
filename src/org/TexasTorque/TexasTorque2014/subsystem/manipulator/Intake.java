@@ -77,6 +77,10 @@ public class Intake extends TorqueSubsystem {
         SmartDashboard.putNumber("RearTiltSpeed", rearTiltSpeed);
     }
     
+    public boolean isDone() {
+        return frontTiltPID.isDone() && rearTiltPID.isDone();
+    }
+    
     public void setFrontAngle(double angle)
     {
         if (angle != frontTiltPID.getSetpoint())

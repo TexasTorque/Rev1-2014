@@ -33,8 +33,13 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void run() {
-        setDriveMode(driverInput.getDriveMode());
-        mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
+        if (driverInput.isAuton()) {
+            mixChannels(driverInput.getAutonDouble("yAxis", 0.0), driverInput.getAutonDouble("xAxis", 0.0), driverInput.getAutonDouble("rotation", 0.0));
+            
+        } else {
+            setDriveMode(driverInput.getDriveMode());
+            mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
+        }
         setToRobot();
     }
 

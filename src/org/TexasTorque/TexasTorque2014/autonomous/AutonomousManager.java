@@ -1,6 +1,7 @@
 package org.TexasTorque.TexasTorque2014.autonomous;
 
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFire;
+import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFireMoveIntakes;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousWait;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
@@ -89,6 +90,7 @@ public class AutonomousManager {
     public void oneBallAuto()
     {
         autoBuilder.addCommand(new AutonomousWait(1.0));
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes());
         autoBuilder.addCommand(new AutonomousFire());
         autoBuilder.addCommand(new AutonomousWait(1.0));
     }
