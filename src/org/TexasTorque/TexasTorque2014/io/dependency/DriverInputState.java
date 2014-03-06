@@ -34,10 +34,8 @@ public class DriverInputState {
     }
 
     public void updateAutonData(Hashtable table) {
-        driveControllerState = null;
-        operatorControllerState = null;
         inOverrideState = false;
-        driveBaseMode.calc(false);
+        driveBaseMode.set(false);
         
         autonomousData = table;
     }

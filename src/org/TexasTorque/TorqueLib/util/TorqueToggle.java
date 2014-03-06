@@ -28,6 +28,11 @@ public class TorqueToggle
         }//if event 
     }//update the toggle
     
+    public void set(boolean override)
+    {
+        toggle = override;
+    }
+    
     public boolean get()
     {
         return toggle;

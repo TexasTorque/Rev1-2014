@@ -1,10 +1,14 @@
 package org.TexasTorque.TexasTorque2014.autonomous;
 
+import edu.wpi.first.wpilibj.Timer;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFire;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFireMoveIntakes;
+import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraight;
+import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousDone;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousWait;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
+import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
 import org.TexasTorque.TorqueLib.util.Parameters;
 
 public class AutonomousManager {
@@ -12,6 +16,7 @@ public class AutonomousManager {
     private AutonomousBuilder autoBuilder;
     private AutonomousCommand[] autoList;
     private Drivebase drivebase;
+    private Manipulator manipulator;
     private Parameters params;
     private int autoMode;
     private double autoDelay;
@@ -25,6 +30,7 @@ public class AutonomousManager {
         autoList = null;
 
         drivebase = Drivebase.getInstance();
+        manipulator = Manipulator.getInstance();
         params = Parameters.getTeleopInstance();
 
         autoMode = Constants.DO_NOTHING_AUTO;
@@ -55,10 +61,14 @@ public class AutonomousManager {
             case Constants.ONE_BALL_AUTO:
                 oneBallAuto();
                 break;
+            case Constants.TEST_AUTO:
+                testAuto();
+                break;
             default:
                 doNothingAuto();
                 break;
         }
+        autoBuilder.addCommand(new AutonomousDone());
 
         firstCycle = true;
         currentIndex = 0;
@@ -79,7 +89,7 @@ public class AutonomousManager {
                 currentIndex++;
                 autoList[currentIndex].reset();
             }
-
+            manipulator.run();
             drivebase.run();
         }
     }
@@ -87,11 +97,19 @@ public class AutonomousManager {
     public void doNothingAuto() {
     }
     
+    public void testAuto() {
+        System.err.println("Loading Test Auto");
+        double time = Timer.getFPGATimestamp();
+        autoBuilder.addCommand(new AutonomousWait(1.0));
+        autoBuilder.addCommand(new AutonomousDriveStraight(1000, 1.0, 3.0));
+        autoBuilder.addCommand(new AutonomousWait(1.0));
+    }
+    
     public void oneBallAuto()
     {
         autoBuilder.addCommand(new AutonomousWait(1.0));
-        autoBuilder.addCommand(new AutonomousFireMoveIntakes());
-        autoBuilder.addCommand(new AutonomousFire());
+        //autoBuilder.addCommand(new AutonomousFireMoveIntakes());
+        //autoBuilder.addCommand(new AutonomousFire());
         autoBuilder.addCommand(new AutonomousWait(1.0));
     }
 }

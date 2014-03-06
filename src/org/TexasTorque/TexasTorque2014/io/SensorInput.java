@@ -19,6 +19,7 @@ public class SensorInput {
 
     //----- Limit Switch -----
     private DigitalInput catapultLimitSwitch;
+    private DigitalInput catapultLimitSwitchB;
 
     //----- Encoder -----
     private TorqueCounter leftFrontDriveCounter;
@@ -64,6 +65,7 @@ public class SensorInput {
 
         //----- Misc -----
         catapultLimitSwitch = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_PORT);
+        catapultLimitSwitchB = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_B_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_B_PORT);
         //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
         startEncoders();
 
@@ -209,6 +211,10 @@ public class SensorInput {
 
     public boolean getCatapultLimitSwitch() {
         return !catapultLimitSwitch.get();
+    }
+    
+    public boolean getCatapultLimitSwitchB() {
+        return !catapultLimitSwitchB.get();
     }
 
     public double getPSI() {

@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.TexasTorque.TexasTorque2014.autonomous.AutonomousManager;
+import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.*;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
@@ -24,6 +26,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     RobotOutput robotOutput;
     Drivebase drivebase;
     Manipulator manipulator;
+    AutonomousManager autonManager;
 
     Timer robotTime;
 
@@ -45,6 +48,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
         sensorInput = SensorInput.getInstance();
         drivebase = Drivebase.getInstance();
         manipulator = Manipulator.getInstance();
+        autonManager = new AutonomousManager();
 
         driverInput.pullJoystickTypes();
 
@@ -57,6 +61,10 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
+        autonManager.setAutoMode(Constants.TEST_AUTO);
+        autonManager.loadAutonomous();
+        
+        
         sensorInput.resetEncoders();
         loadParameters();
     }
@@ -89,6 +97,16 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void autonomousPeriodic() {
         watchdog.feed();
+        
+        robotOutput.updateState();
+        driverInput.updateState();
+        sensorInput.updateState();
+        
+        autonManager.runAutonomous();
+        
+        robotOutput.pullFromState();
+        drivebase.pushToDashboard();
+        SensorInput.getState().pushToDashboard();
     }
 
     public void autonomousContinuous() {

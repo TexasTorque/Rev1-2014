@@ -8,6 +8,7 @@ public class SensorInputState {
 
     //----- Digital -----
     private boolean catapultLimitSwitch;
+    private boolean catapultLimitSwitchB;
 
     //----- Encoder -----
     private double leftFrontDriveEncoder;
@@ -75,6 +76,7 @@ public class SensorInputState {
 
         //----- Misc -----
         catapultLimitSwitch = input.getCatapultLimitSwitch();
+        catapultLimitSwitchB = input.getCatapultLimitSwitchB();
         pressureSensor = input.getPSI();
     }
 
@@ -137,9 +139,17 @@ public class SensorInputState {
     public double getForwardDrivePosition() {
         return (getLeftFrontDriveEncoder() + getRightFrontDriveEncoder() + getLeftRearDriveEncoder() + getRightRearDriveEncoder()) / 4;
     }
+    
+    public double getLeftDrivePosition() {
+        return (getLeftFrontDriveEncoder() + getLeftRearDriveEncoder())/2;
+    }
+    
+    public double getRightDrivePosition() {
+        return (getRightFrontDriveEncoder() + getRightRearDriveEncoder()) / 2;
+    }
 
     public boolean getCatapultLimitSwitch() {
-        return catapultLimitSwitch;
+        return catapultLimitSwitch || catapultLimitSwitchB;
     }
 
     public double getPSI() {
