@@ -141,11 +141,11 @@ public class SensorInputState {
     }
     
     public double getLeftDrivePosition() {
-        return (getLeftFrontDriveEncoder() + getLeftRearDriveEncoder())/2;
+        return (getLeftFrontDriveEncoder() + getLeftRearDriveEncoder());
     }
     
     public double getRightDrivePosition() {
-        return (getRightFrontDriveEncoder() + getRightRearDriveEncoder()) / 2;
+        return (getRightFrontDriveEncoder() + getRightRearDriveEncoder());
     }
 
     public boolean getCatapultLimitSwitch() {
@@ -200,7 +200,7 @@ public class SensorInputState {
         SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
-        SmartDashboard.putBoolean("CatapultLimit", catapultLimitSwitch);
+        SmartDashboard.putBoolean("CatapultLimit", catapultLimitSwitch || catapultLimitSwitchB);
         SmartDashboard.putBoolean("Logging",true);
 
     }

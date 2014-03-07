@@ -11,6 +11,7 @@ public class Catapult extends TorqueSubsystem {
 
     private static Catapult instance;
 
+    private Intake intake;
     private double catapultMotorSpeed;
     private double desiredPullbackPosition;
     private boolean standoffPosition;
@@ -30,14 +31,13 @@ public class Catapult extends TorqueSubsystem {
     public static double pidSetpoint;
     public static double tolerance;
 
-
     public static Catapult getInstance() {
         return (instance == null) ? instance = new Catapult() : instance;
     }
 
     public Catapult() {
         super();
-
+        intake = Intake.getInstance();
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
         desiredPullbackPosition = Catapult.standardPosition;
     }
@@ -45,18 +45,16 @@ public class Catapult extends TorqueSubsystem {
     public void run() {
         SmartDashboard.putBoolean("ChooChooOverride", driverInput.ChooChooOverride());
         SmartDashboard.putBoolean("ChooChooFirstCycle", firstCycle);
-        
+
         if (!firstCycle) {
             isReady = false;
             if (sensorInput.getCatapultLimitSwitch() == false) {
                 firstContact = true;
-                if(driverInput.ChooChooReset() && sensorInput.getCatapultEncoder() < 250 || driverInput.getAutonBool("reset", false))
-                {
+                if (driverInput.ChooChooReset() && sensorInput.getCatapultEncoder() < 250 || driverInput.getAutonBool("reset", false)) {
                     goal = pidSetpoint;
                     firstHitSetpoint = false;
                     intakeDownOverride = false;
-                }
-                else if (driverInput.ChooChooOverride() && sensorInput.getCatapultEncoder() >= 250 || driverInput.getAutonBool("shootFire", false)) {
+                } else if ((driverInput.ChooChooOverride() && sensorInput.getCatapultEncoder() >= 250 || driverInput.getAutonBool("shoot", false)) && intake.isDone()) {
                     goal = pidSetpoint + pidSetpoint;
                     intakeDownOverride = true;
                     firstHitSetpoint = false;
@@ -69,12 +67,13 @@ public class Catapult extends TorqueSubsystem {
                     firstContact = false;
                     fired = true;
                     goal = 0.0;
+                    System.err.println("FirstContact Stop");
                 } else {
                     if (Timer.getFPGATimestamp() - contactTime > stallTime && (driverInput.ChooChooReset() || driverInput.getAutonBool("reset", false))) {
                         goal = pidSetpoint;
                         firstHitSetpoint = false;
+                        intakeDownOverride = false;
                     } else {
-                        goal = 0.0;
                     }
                 }
             }
@@ -83,44 +82,39 @@ public class Catapult extends TorqueSubsystem {
 
             catapultMotorSpeed = (currentValue < goal) ? 1.0 : 0.0;
             SmartDashboard.putBoolean("CatapultRunning", (currentValue < goal));
-            
-            if(currentValue >= goal)
-            {
+
+            if (currentValue >= goal) {
                 firstHitSetpoint = true;
             }
-            
-            if(catapultMotorSpeed <= 0 || (Math.abs(currentValue - goal) < tolerance) && firstHitSetpoint)
-            {
+
+            if (catapultMotorSpeed <= 0 || (Math.abs(currentValue - goal) < tolerance) && firstHitSetpoint) {
                 catapultMotorSpeed = 0.0;
             }
-            
-            if((Math.abs(currentValue - pidSetpoint) < tolerance) && firstHitSetpoint)
-            {
+
+            if ((Math.abs(currentValue - pidSetpoint) < tolerance) && firstHitSetpoint) {
                 isReady = true;
             }
-            
+
             if (Timer.getFPGATimestamp() - contactTime < stallTime) {
                 catapultMotorSpeed = 0.0;
             }
-            
+
             SmartDashboard.putNumber("CatapultSetpoint", goal);
             SmartDashboard.putNumber("CatapultActual", currentValue);
             SmartDashboard.putNumber("CatapultMotorSpeed", catapultMotorSpeed);
         } else {
-            if(driverInput.ChooChooOverride() || driverInput.ChooChooReset() || driverInput.getAutonBool("shoot", false))
-            {
+            if (driverInput.ChooChooOverride() || driverInput.ChooChooReset() || driverInput.getAutonBool("shoot", false)) {
                 firstCycle = false;
             }
         }
     }
 
-    public void setPosition(double desired) {
-        if (desired != desiredPullbackPosition) {
-            desiredPullbackPosition = desired;
-            goal = desired;
-        }
-    }
-    
+    //public void setPosition(double desired) {
+    //    if (desired != desiredPullbackPosition) {
+    //        desiredPullbackPosition = desired;
+    //        goal = desired;
+    //    }
+    //}
     public boolean getIntakeDownOverride() {
         return intakeDownOverride;
     }
@@ -134,15 +128,15 @@ public class Catapult extends TorqueSubsystem {
             standoffPosition = highShot;
         }
     }
-    
+
     public void resetFired() {
         fired = false;
     }
-    
+
     public boolean isFired() {
         return fired;
     }
-    
+
     public boolean catapultReady() {
         return isReady;
     }
@@ -158,7 +152,7 @@ public class Catapult extends TorqueSubsystem {
         stallTime = params.getAsDouble("C_StallTime", 1.0);
         pidSetpoint = params.getAsDouble("C_ResetSetpoint", 0.0);
         tolerance = params.getAsDouble("C_Tollerance", 10.0);
-        
+
     }
 
     public String logData() { //no logging

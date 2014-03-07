@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Hashtable;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
+import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
 
@@ -17,11 +18,12 @@ public class AutonomousDriveStraight extends AutonomousCommand {
     private double timeout;
     
     public AutonomousDriveStraight(double distance, double maxSpeed, double timeout) {
-        target = distance;
+        target = distance * Constants.CLICKS_PER_METER;
         leftDrive = new TorquePID();
         rightDrive = new TorquePID();
         
         leftDrive.setSetpoint(target);
+        rightDrive.setSetpoint(target);
         
         double p = params.getAsDouble("A_DriveForwardP", 0.0);
         double i = params.getAsDouble("A_DriveForwardI", 0.0);
@@ -54,20 +56,17 @@ public class AutonomousDriveStraight extends AutonomousCommand {
         double left = leftDrive.calculate(sensorInput.getLeftDrivePosition());
         double right = rightDrive.calculate(sensorInput.getRightDrivePosition());
         
-        //double turning = turnDrive.calculate(0.0);
-        //SmartDashboard.putNumber("Power", power);
         if(sensorInput.getLeftDrivePosition() >= target) {
             left = 0.0;
         }
         if(sensorInput.getRightDrivePosition()>= target) {
             right = 0.0;
         }
-        if(sensorInput.getLeftDrivePosition() >= target && sensorInput.getRightDrivePosition()>= target) {
+        if((sensorInput.getLeftDrivePosition() >= target || leftDrive.isDone()) && (sensorInput.getRightDrivePosition()>= target || rightDrive.isDone())) {
             isDone = true;
         }
         autonOutput.put("leftSpeed", new Double(-left));
         autonOutput.put("rightSpeed", new Double(-right));
-        //autonOutput.put("rotation", new Double(turning));
         
         driverInput.updateAutonData(autonOutput);
         
@@ -77,5 +76,4 @@ public class AutonomousDriveStraight extends AutonomousCommand {
         }
         return isDone;
     }
-    
 }

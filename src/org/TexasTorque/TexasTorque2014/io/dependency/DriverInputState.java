@@ -35,9 +35,8 @@ public class DriverInputState {
 
     public void updateAutonData(Hashtable table) {
         inOverrideState = false;
-        driveBaseMode.set(false);
-        
         autonomousData = table;
+        autonomousData.put("driveMode", new Boolean(Constants.TRACTION_MODE));
     }
     
     public synchronized boolean isAuton() {

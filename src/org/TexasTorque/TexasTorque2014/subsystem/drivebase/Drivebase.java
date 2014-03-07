@@ -35,7 +35,7 @@ public class Drivebase extends TorqueSubsystem {
     public void run() {
         SmartDashboard.putBoolean("IsAuton", driverInput.isAuton());
         if (driverInput.isAuton()) {
-            //mixChannels(driverInput.getAutonDouble("yAxis", 0.0), driverInput.getAutonDouble("xAxis", 0.0), driverInput.getAutonDouble("rotation", 0.0));
+            setDriveMode(driverInput.getAutonBool("driveMode", Constants.TRACTION_MODE));
             setDriveSpeeds(driverInput.getAutonDouble("leftSpeed", Constants.MOTOR_STOPPED), driverInput.getAutonDouble("rightSpeed", Constants.MOTOR_STOPPED), Constants.MOTOR_STOPPED);
         } else {
             setDriveMode(driverInput.getDriveMode());
@@ -45,6 +45,8 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void setToRobot() {
+        SmartDashboard.putNumber("leftSpeed", leftFrontDriveSpeed);
+        SmartDashboard.putNumber("rightSpeed", rightFrontDriveSpeed);
         robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed, strafeDriveSpeed);
         robotOutput.setDriveBaseMode(driveMode);
     }
@@ -90,10 +92,6 @@ public class Drivebase extends TorqueSubsystem {
             rightSpeed = rightSpeed / max;
         }
 
-        SmartDashboard.putNumber("LeftDriveSpeed", leftSpeed);
-        SmartDashboard.putNumber("RightDriveSpeed", rightSpeed);
-        SmartDashboard.putNumber("StrafeDriveSpeed", strafeSpeed);
-
         setDriveSpeeds(leftSpeed, rightSpeed, strafeSpeed);
     }
 
@@ -122,10 +120,6 @@ public class Drivebase extends TorqueSubsystem {
             rightSpeed = rightSpeed / max;
             strafeSpeed = strafeSpeed / max;
         }
-
-        SmartDashboard.putNumber("LeftDriveSpeed", leftSpeed);
-        SmartDashboard.putNumber("RightDriveSpeed", rightSpeed);
-        SmartDashboard.putNumber("StrafeDriveSpeed", strafeSpeed);
 
         setDriveSpeeds(leftSpeed, rightSpeed, strafeSpeed);
     }

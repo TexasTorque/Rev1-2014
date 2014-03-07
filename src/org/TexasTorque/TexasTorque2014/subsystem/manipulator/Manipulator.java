@@ -80,21 +80,18 @@ public class Manipulator extends TorqueSubsystem {
     }
     
     public void frontIntake() {
-        SmartDashboard.putNumber("IntakeState", 1.0);
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
         intake.setFrontAngle(Intake.frontDownAngle);
         intake.setRearAngle(Intake.inAngle);
     }
     
     public void rearIntake() {
-        SmartDashboard.putNumber("IntakeState", 2.0);
         intake.setRearIntakeSpeed(Intake.intakeSpeed);
         intake.setRearAngle(Intake.rearDownAngle);
         intake.setFrontAngle(Intake.inAngle);
     }
     
     public void frontOuttake() {
-        SmartDashboard.putNumber("IntakeState", 3.0);
         intake.setFrontIntakeSpeed(Intake.outtakeSpeed);
         intake.setFrontAngle(Intake.frontIntakeAngle);
         intake.setRearIntakeSpeed(Intake.intakeSpeed);
@@ -102,7 +99,6 @@ public class Manipulator extends TorqueSubsystem {
     }
     
     public void rearOuttake() {
-        SmartDashboard.putNumber("IntakeState", 4.0);
         intake.setRearIntakeSpeed(Intake.outtakeSpeed);
         intake.setRearAngle(Intake.rearUpAngle);
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
@@ -134,20 +130,14 @@ public class Manipulator extends TorqueSubsystem {
     public void shoot() {
         intake.setFrontAngle(Intake.frontShootAngle);
         intake.setRearAngle(Intake.rearShootAngle);
-        catapult.setStandoffs(Constants.FAR_SHOT);
     }
     
     public void shootHigh() {
         intake.setFrontAngle(Intake.frontShootAngle);
         intake.setRearAngle(Intake.rearShootAngle);
-        catapult.setStandoffs(Constants.HIGH_SHOT);
     }
     
     public void resetShooter() {
-    }
-    
-    public void setShooterStandoffs(boolean highshot) {
-        catapult.setStandoffs(highshot);
     }
     
     public String getKeyNames() {

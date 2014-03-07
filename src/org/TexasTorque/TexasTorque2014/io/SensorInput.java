@@ -64,8 +64,8 @@ public class SensorInput {
         rearIntakeTiltPotentiometer.setRange(Constants.REAR_INTAKE_POTENTIOMETER_LOW, Constants.REAR_INTAKE_POTENTIOMETER_HIGH);
 
         //----- Misc -----
-        catapultLimitSwitch = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_PORT);
-        catapultLimitSwitchB = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_B_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_B_PORT);
+        catapultLimitSwitch = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_B_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_B_PORT);
+        catapultLimitSwitchB = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_PORT);
         //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
         startEncoders();
 
