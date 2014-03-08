@@ -162,19 +162,6 @@ public class Manipulator extends TorqueSubsystem {
         return data;
     }
     
-    public boolean isResetting()
-    {
-        return catapult.isResetting();
-    }
-    
-    public boolean isFired() {
-        return catapult.isFired();
-    }
-    
-    public void resetFired() {
-        catapult.resetFired();
-    }
-    
     public boolean intakesDone() {
         return intake.isDone();
     }

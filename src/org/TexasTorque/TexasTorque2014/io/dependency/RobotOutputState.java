@@ -23,7 +23,7 @@ public class RobotOutputState {
     
     //----- Catapult -----
     private double catapultMotorSpeed;
-    private boolean catapultMode;
+    private boolean winchSolinoid;
 
     public RobotOutputState() {
         
@@ -49,7 +49,7 @@ public class RobotOutputState {
         
         //----- Catapult -----
         catapultMotorSpeed = output.getCatapultMotorSpeed();
-        catapultMode = output.getCatapultMode();
+        winchSolinoid = output.getWinchSolinoid();
     }
 
     public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -126,19 +126,16 @@ public class RobotOutputState {
     {
         catapultMotorSpeed = speed;
     }
-    
+    public void setWinchSolinoid(boolean state)
+    {
+        winchSolinoid = state;
+    }
+    public boolean getWinchSolinoid()
+    {
+        return winchSolinoid;
+    }
     public double getCatapultMotorSpeed()
     {
         return catapultMotorSpeed;
-    }
-    
-    public void setCatapultMode(boolean mode)
-    {
-        catapultMode = mode;
-    }
-    
-    public boolean getCatapultMode()
-    {
-        return catapultMode;
     }
 }

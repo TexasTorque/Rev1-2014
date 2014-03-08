@@ -20,8 +20,8 @@ public class RobotOutput {
     private Solenoid middleDriveBaseSwitcher;
     private Solenoid rearDriveBaseSwitcher;
     private boolean driveBaseMode;
-    private Solenoid catapultStandoffs;
-    private boolean catapultMode;
+    private Solenoid winchQuickRelease;
+    private boolean winchSolinoid;
 
     //----- Drive Motors -----
     private Motor leftFrontDriveMotor;
@@ -57,8 +57,8 @@ public class RobotOutput {
         middleDriveBaseSwitcher = new Solenoid(Ports.MIDDLE_DRIVEBASE_SWITCHER);
         rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
         driveBaseMode = Constants.OMNI_MODE;
-        catapultStandoffs = new Solenoid(Ports.CATAPULT_STANDOFFS);
-        catapultMode = Constants.FAR_SHOT;
+        winchQuickRelease = new Solenoid(Ports.CATAPULT_STANDOFFS);
+        winchSolinoid = false;
 
         //----- Drive Motors -----
         leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_FRONT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
@@ -109,7 +109,7 @@ public class RobotOutput {
         setDriveMotors(state.getLeftFrontMotorSpeed(), state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed(), state.getStrafeMotorSpeed());
         setDriveBaseMode(state.getDriveBaseMode());
         setCatapultMotor(state.getCatapultMotorSpeed());
-        setCatapultMode(state.getCatapultMode());
+        setWinchSolinoid(state.getWinchSolinoid());
         setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
     }
 
@@ -208,14 +208,15 @@ public class RobotOutput {
         return catapultMotorSpeed;
     }
     
-    public void setCatapultMode(boolean mode)
+    public boolean getWinchSolinoid()
     {
-        catapultStandoffs.set(mode);
-        catapultMode = mode;
+        return winchSolinoid;
     }
     
-    public boolean getCatapultMode()
+    public void setWinchSolinoid(boolean mode)
     {
-        return catapultMode;
+        winchQuickRelease.set(mode);
+        winchSolinoid = mode;
     }
+    
 }

@@ -20,6 +20,7 @@ public class Catapult extends TorqueSubsystem {
     private boolean isReady;
     private double slowSpeed;
     private double fireTime;
+    private boolean winchSolinoid;
 
     public static double pidSetpoint;
     public static double tolerance;
@@ -43,22 +44,24 @@ public class Catapult extends TorqueSubsystem {
         if (!firstCycle) {
             if (fired) {
                 isReady = false;
-                if(Timer.getFPGATimestamp() > fireTime + timeout)
-                {
+                if (Timer.getFPGATimestamp() > fireTime + timeout) {
                     fired = false;
                     SensorInput.getInstance().resetCatapultEncoder();
+                    winchSolinoid = false;
+
                 }
-                
+
             } else {
 
-                if (sensorInput.getCatapultLimitSwitch()) {
+                if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) && intake.isDone()) {
+                    catapultMotorSpeed = Constants.MOTOR_STOPPED;
+                    fired = true;
+                    fireTime = Timer.getFPGATimestamp();
+                    winchSolinoid = true;
+                } else if (sensorInput.getCatapultLimitSwitch()) {
                     isReady = true;
-                    catapultMotorSpeed = 0.0;
-                    if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) && intake.isDone()) {
-                        fired = true;
-                        fireTime = Timer.getFPGATimestamp();
-                        //fire Solinoid
-                    }
+                    catapultMotorSpeed = Constants.MOTOR_STOPPED;
+
                 } else if (currentValue < pidSetpoint) {
                     isReady = false;
                     catapultMotorSpeed = pullBackPID.calculate(currentValue);
@@ -68,8 +71,9 @@ public class Catapult extends TorqueSubsystem {
                 }
             }
         } else {
-
+            //First Cycle Clears
             catapultMotorSpeed = 0.0;
+            winchSolinoid = false;
             if (driverInput.ChooChooOverride() || driverInput.ChooChooReset() || driverInput.getAutonBool("shoot", false)) {
                 firstCycle = false;
             }
@@ -77,6 +81,7 @@ public class Catapult extends TorqueSubsystem {
         SmartDashboard.putNumber("CatapultSetpoint", pidSetpoint);
         SmartDashboard.putNumber("CatapultActual", currentValue);
         SmartDashboard.putNumber("CatapultMotorSpeed", catapultMotorSpeed);
+        SmartDashboard.putBoolean("WinchSolinoid", winchSolinoid);
     }
 
     //public void setPosition(double desired) {
@@ -103,6 +108,7 @@ public class Catapult extends TorqueSubsystem {
 
     public void setToRobot() {
         robotOutput.setCatapultMotor(catapultMotorSpeed);
+        robotOutput.setWinchSolinoid(winchSolinoid);
     }
 
     public void loadParameters() {
