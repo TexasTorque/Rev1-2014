@@ -35,7 +35,7 @@ public class RobotOutput {
     private double rightFrontMotorSpeed;
     private double rightRearMotorSpeed;
     private double strafeMotorSpeed;
-    
+
     //----- Intake -----
     private Motor frontIntakeMotor;
     private Motor rearIntakeMotor;
@@ -45,9 +45,10 @@ public class RobotOutput {
     private double rearIntakeMotorSpeed;
     private double frontIntakeTiltMotorSpeed;
     private double rearIntakeTiltMotorSpeed;
-    
+
     //----- Catapult -----
     private Motor catapultMotor;
+    private Motor catapultMotorB;
     private double catapultMotorSpeed;
 
     public RobotOutput() {
@@ -72,21 +73,21 @@ public class RobotOutput {
         leftFrontMotorSpeed = Constants.MOTOR_STOPPED;
         leftRearMotorSpeed = Constants.MOTOR_STOPPED;
         strafeMotorSpeed = Constants.MOTOR_STOPPED;
-        
+
         //----- Intake -----
-        
         frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_SIDECAR, Ports.FRONT_INTAKE_MOTOR_PORT), true, true);
         rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_SIDECAR, Ports.REAR_INTAKE_MOTOR_PORT), true, true);
         frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_SIDECAR, Ports.FRONT_INTAKE_TILT_MOTOR_PORT), false, true);
         rearIntakeTiltMotor = new Motor(new Victor(Ports.REAR_INTAKE_TILT_SIDECAR, Ports.REAR_INTAKE_TILT_MOTOR_PORT), false, true);
-        
+
         frontIntakeMotorSpeed = Constants.MOTOR_STOPPED;
         rearIntakeMotorSpeed = Constants.MOTOR_STOPPED;
         frontIntakeTiltMotorSpeed = Constants.MOTOR_STOPPED;
         rearIntakeTiltMotorSpeed = Constants.MOTOR_STOPPED;
-        
+
         //----- Catapult -----
         catapultMotor = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_MOTOR_PORT), false, true);
+        catapultMotorB = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_B_MOTOR_PORT), false, true);
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Misc Misc -----
@@ -162,9 +163,8 @@ public class RobotOutput {
     public boolean getDriveBaseMode() {
         return driveBaseMode;
     }
-    
-    public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt)
-    {
+
+    public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt) {
         SmartDashboard.putNumber("FrontTilt", frontTilt);
         SmartDashboard.putNumber("RearTilt", rearTilt);
         frontIntakeMotor.Set(frontRoller);
@@ -176,47 +176,40 @@ public class RobotOutput {
         frontIntakeTiltMotorSpeed = frontTilt;
         rearIntakeTiltMotorSpeed = rearTilt;
     }
-    
-    public double getFrontIntakeMotorSpeed()
-    {
+
+    public double getFrontIntakeMotorSpeed() {
         return frontIntakeMotorSpeed;
     }
-    
-    public double getRearIntakeMotorSpeed()
-    {
+
+    public double getRearIntakeMotorSpeed() {
         return rearIntakeMotorSpeed;
     }
-    
-    public double getFrontIntakeTiltMotorSpeed()
-    {
+
+    public double getFrontIntakeTiltMotorSpeed() {
         return frontIntakeTiltMotorSpeed;
     }
-    
-    public double getRearIntakeTiltMotorSpeed()
-    {
+
+    public double getRearIntakeTiltMotorSpeed() {
         return rearIntakeTiltMotorSpeed;
     }
-    
-    public void setCatapultMotor(double speed)
-    {
+
+    public void setCatapultMotor(double speed) {
+        catapultMotorB.Set(speed);
         catapultMotor.Set(speed);
         catapultMotorSpeed = speed;
     }
-    
-    public double getCatapultMotorSpeed()
-    {
+
+    public double getCatapultMotorSpeed() {
         return catapultMotorSpeed;
     }
-    
-    public boolean getWinchSolinoid()
-    {
+
+    public boolean getWinchSolinoid() {
         return winchSolinoid;
     }
-    
-    public void setWinchSolinoid(boolean mode)
-    {
+
+    public void setWinchSolinoid(boolean mode) {
         winchQuickRelease.set(mode);
         winchSolinoid = mode;
     }
-    
+
 }

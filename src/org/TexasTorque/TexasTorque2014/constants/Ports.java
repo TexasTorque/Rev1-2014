@@ -28,6 +28,7 @@ public class Ports {
             
             public final static int CATAPULT_SIDECAR = 1;
             public final static int CATAPULT_MOTOR_PORT = 2;
+            public final static int CATAPULT_B_MOTOR_PORT = 0;
             
         //----- Sidecar 2 -----
             public final static int LEFT_FRONT_DRIVE_SIDECAR = 2;
