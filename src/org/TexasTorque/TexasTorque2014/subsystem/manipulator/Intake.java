@@ -32,6 +32,7 @@ public class Intake extends TorqueSubsystem {
     public static double frontIntakeAngle;
     public static double frontCatchAngle;
     public static double rearCatchAngle;
+    public static double frontOuttakeAngle;
     
     public static Intake getInstance()
     {
@@ -131,7 +132,8 @@ public class Intake extends TorqueSubsystem {
         inAngle = params.getAsDouble("I_InAngle", 110);
         frontShootAngle = params.getAsDouble("I_FrontShootAngle", frontDownAngle);
         rearShootAngle = params.getAsDouble("I_RearShootAngle", rearDownAngle);
-        frontIntakeAngle = params.getAsDouble("I_FrontIntakeAngle", 90);
+        frontIntakeAngle = params.getAsDouble("I_FrontIntakeAngle", 110);
+        frontOuttakeAngle = params.getAsDouble("I_FrontOuttakeAngle", 90);
         frontCatchAngle = params.getAsDouble("I_FrontCatchAngle", frontDownAngle);
         rearCatchAngle = params.getAsDouble("I_RearCatchAngle", rearDownAngle);
         

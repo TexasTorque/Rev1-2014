@@ -159,6 +159,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
         params.load();
         drivebase.loadParameters();
         manipulator.loadParameters();
+        sensorInput.loadParameters();
         SensorInput.getState().loadParamaters();
     }
 }

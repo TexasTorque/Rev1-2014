@@ -23,6 +23,7 @@ public class Catapult extends TorqueSubsystem {
     private boolean fired;
     private boolean isReady;
     private double goal;
+    private boolean resetting;
 
     public static double standardPosition;
     public static double shootPosition;
@@ -55,6 +56,7 @@ public class Catapult extends TorqueSubsystem {
                     firstHitSetpoint = false;
                     intakeDownOverride = false;
                 } else if ((driverInput.ChooChooOverride() && sensorInput.getCatapultEncoder() >= 250 || driverInput.getAutonBool("shoot", false)) && intake.isDone()) {
+                    resetting = false;
                     goal = pidSetpoint + pidSetpoint;
                     intakeDownOverride = true;
                     firstHitSetpoint = false;
@@ -62,6 +64,7 @@ public class Catapult extends TorqueSubsystem {
                 }
             } else {
                 if (firstContact) {
+                    resetting = false;
                     contactTime = Timer.getFPGATimestamp();
                     SensorInput.getInstance().resetCatapultEncoder();
                     firstContact = false;
@@ -92,6 +95,7 @@ public class Catapult extends TorqueSubsystem {
             }
 
             if ((Math.abs(currentValue - pidSetpoint) < tolerance) && firstHitSetpoint) {
+                resetting = false;
                 isReady = true;
             }
 
@@ -105,6 +109,7 @@ public class Catapult extends TorqueSubsystem {
         } else {
             if (driverInput.ChooChooOverride() || driverInput.ChooChooReset() || driverInput.getAutonBool("shoot", false)) {
                 firstCycle = false;
+                catapultMotorSpeed = 0.0;
             }
         }
     }
@@ -132,6 +137,11 @@ public class Catapult extends TorqueSubsystem {
     public void resetFired() {
         fired = false;
     }
+    
+    public boolean isResetting()
+    {
+        return resetting;
+    }
 
     public boolean isFired() {
         return fired;
@@ -139,6 +149,10 @@ public class Catapult extends TorqueSubsystem {
 
     public boolean catapultReady() {
         return isReady;
+    }
+    
+    public boolean catapultReadyForIntake() {
+        return (sensorInput.getCatapultEncoder() > 300);
     }
 
     public void setToRobot() {

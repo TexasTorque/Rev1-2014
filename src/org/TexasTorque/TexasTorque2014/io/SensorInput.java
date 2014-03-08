@@ -10,12 +10,14 @@ import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
 import org.TexasTorque.TorqueLib.component.TorqueCounter;
 import org.TexasTorque.TorqueLib.component.TorqueEncoder;
 import org.TexasTorque.TorqueLib.component.TorquePotentiometer;
+import org.TexasTorque.TorqueLib.util.Parameters;
 
 public class SensorInput {
 
     private static SensorInput instance;
     private static SensorInputState state;
     private Watchdog watchdog;
+    private Parameters params;
 
     //----- Limit Switch -----
     private DigitalInput catapultLimitSwitch;
@@ -40,6 +42,7 @@ public class SensorInput {
     public SensorInput() {
 
         watchdog = Watchdog.getInstance();
+        params = Parameters.getTeleopInstance();
 
         //----- Encoders/Counters -----
         leftFrontDriveCounter = new TorqueCounter(Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_PORT);
@@ -62,10 +65,11 @@ public class SensorInput {
         rearIntakeTiltPotentiometer = new TorquePotentiometer(Ports.REAR_INTAKE_TILT_POT_PORT);
         frontIntakeTiltPotentiometer.setRange(Constants.FRONT_INTAKE_POTENTIOMETER_LOW, Constants.FRONT_INTAKE_POTENTIOMETER_HIGH);
         rearIntakeTiltPotentiometer.setRange(Constants.REAR_INTAKE_POTENTIOMETER_LOW, Constants.REAR_INTAKE_POTENTIOMETER_HIGH);
-
+        
         //----- Misc -----
         catapultLimitSwitch = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_B_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_B_PORT);
         catapultLimitSwitchB = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_PORT);
+        
         //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
         startEncoders();
 
@@ -238,5 +242,18 @@ public class SensorInput {
             angle -= 360;
         }
         return angle;
+    }
+    
+    public void loadParameters() {
+        
+        double frontIntakePotentiometerLow = params.getAsDouble("P_FrontIntakeVoltageLow", 4.5);
+        double frontIntakePotentiometerHigh = params.getAsDouble("P_FrontIntakeVoltageHigh", 0.5);
+        double rearIntakePotentiometerLow = params.getAsDouble("P_RearIntakeVoltageLow", 4.5);
+        double rearIntakePotentiometerHigh = params.getAsDouble("P_RearIntakeVoltageHigh", 0.5);
+                                
+        
+        frontIntakeTiltPotentiometer.setRange(frontIntakePotentiometerLow, frontIntakePotentiometerHigh);
+        rearIntakeTiltPotentiometer.setRange(rearIntakePotentiometerLow, rearIntakePotentiometerHigh);
+
     }
 }

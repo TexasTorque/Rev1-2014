@@ -21,14 +21,15 @@ public class AutonomousWait extends AutonomousCommand {
     public boolean run() {
         if(firstCycle)
         {
-            System.err.print("Wait Start : ");
+            System.err.print("Wait Start: ");
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
         if (waitTime < (Timer.getFPGATimestamp() - startTime)) {
             System.err.println("Done");
+            return true;
         }
-        return (waitTime < (Timer.getFPGATimestamp() - startTime));
+        return false;
     }
     
 }

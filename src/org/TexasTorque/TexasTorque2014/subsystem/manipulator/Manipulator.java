@@ -40,6 +40,9 @@ public class Manipulator extends TorqueSubsystem {
             } else if (driverInput.rearOuttaking() || driverInput.getAutonBool("rearOut", false)) {
                 intaking = true;
                 rearOuttake();
+            } else if (driverInput.getAutonBool("frontIntakeDown", false)) {
+                intaking = true;
+                frontIntakeDown();
             }
             
             if (driverInput.catching() || driverInput.getAutonBool("catch", false)) {
@@ -85,6 +88,13 @@ public class Manipulator extends TorqueSubsystem {
         intake.setRearAngle(Intake.inAngle);
     }
     
+    public void frontIntakeDown() {
+        intake.setFrontAngle(Intake.frontDownAngle);
+        intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
+        intake.setRearAngle(Intake.inAngle);
+        intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
+    }
+    
     public void rearIntake() {
         intake.setRearIntakeSpeed(Intake.intakeSpeed);
         intake.setRearAngle(Intake.rearDownAngle);
@@ -93,16 +103,16 @@ public class Manipulator extends TorqueSubsystem {
     
     public void frontOuttake() {
         intake.setFrontIntakeSpeed(Intake.outtakeSpeed);
-        intake.setFrontAngle(Intake.frontIntakeAngle);
+        intake.setFrontAngle(Intake.frontOuttakeAngle);
         intake.setRearIntakeSpeed(Intake.intakeSpeed);
         intake.setRearAngle(Intake.inAngle);
     }
     
     public void rearOuttake() {
         intake.setRearIntakeSpeed(Intake.outtakeSpeed);
-        intake.setRearAngle(Intake.rearUpAngle);
+        intake.setRearAngle(Intake.rearDownAngle);
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
-        intake.setFrontAngle(Intake.frontUpAngle);
+        intake.setFrontAngle(Intake.frontIntakeAngle);
     }
     
     public void resetFrontIntake() {
@@ -152,6 +162,11 @@ public class Manipulator extends TorqueSubsystem {
         return data;
     }
     
+    public boolean isResetting()
+    {
+        return catapult.isResetting();
+    }
+    
     public boolean isFired() {
         return catapult.isFired();
     }
@@ -166,6 +181,10 @@ public class Manipulator extends TorqueSubsystem {
     
     public boolean catapultReady() {
         return catapult.catapultReady();
+    }
+    
+    public boolean catapultReadyForIntake() {
+        return catapult.catapultReadyForIntake();
     }
     
     public void loadParameters() {

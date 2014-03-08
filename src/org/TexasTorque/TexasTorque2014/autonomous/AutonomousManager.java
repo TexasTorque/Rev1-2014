@@ -1,12 +1,14 @@
 package org.TexasTorque.TexasTorque2014.autonomous;
 
-import edu.wpi.first.wpilibj.Timer;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFireMoveIntakes;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapult;
+import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapultDone;
+import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapultIntakeDown;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraight;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousDone;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousWait;
 import org.TexasTorque.TexasTorque2014.autonomous.intake.AutonomousFrontIntake;
+import org.TexasTorque.TexasTorque2014.autonomous.intake.AutonomousFrontIntakeDown;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
@@ -99,19 +101,27 @@ public class AutonomousManager {
     }
     
     public void testAuto() {
-        System.err.println("Loading Test Auto");
-        autoBuilder.addCommand(new AutonomousWait(1.0));
+        System.err.println("Loading Test (TwoBall) Auto");
+        //autoBuilder.addCommand(new AutonomousWait(1.0));
         //autoBuilder.addCommand(new AutonomousDriveStraight(1.0, 1.0, 3.0));
-        autoBuilder.addCommand(new AutonomousFrontIntake(3.0));
-        autoBuilder.addCommand(new AutonomousWait(1.0));
+        //autoBuilder.addCommand(new AutonomousFrontIntake(3.0));
+        
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(10.0));
+        double resetTimeout = params.getAsDouble("C_StallTime", 1.0);
+        autoBuilder.addCommand(new AutonomousResetCatapultIntakeDown(resetTimeout+.35));
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(5.0));
+        autoBuilder.addCommand(new AutonomousFrontIntake(0.8));
+        autoBuilder.addCommand(new AutonomousWait(0.8));
+        autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(5.0));
     }
     
     public void oneBallAuto()
     {
         System.err.println("Loading One Ball Auto");
         autoBuilder.addCommand(new AutonomousWait(1.0));
-        autoBuilder.addCommand(new AutonomousFireMoveIntakes());
-        autoBuilder.addCommand(new AutonomousResetCatapult());
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(8.0));
+        autoBuilder.addCommand(new AutonomousResetCatapult(1.5));
         autoBuilder.addCommand(new AutonomousDriveStraight(.5, 1.0, 3.0));
         autoBuilder.addCommand(new AutonomousWait(1.0));
     }
