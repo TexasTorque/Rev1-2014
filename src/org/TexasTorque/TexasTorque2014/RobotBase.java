@@ -55,13 +55,15 @@ public class RobotBase extends IterativeRobot implements Runnable {
         robotTime = new Timer();
 
         numCycles = 0.0;
+        SmartDashboard.putNumber("AutonomousMode", Constants.DO_NOTHING_AUTO);
 
         continuousThread = new Thread(this);
         continuousThread.start();
     }
 
     public void autonomousInit() {
-        autonManager.setAutoMode(Constants.TEST_AUTO);
+        int autonMode = (int)SmartDashboard.getNumber("AutonomousMode", Constants.DO_NOTHING_AUTO);
+        autonManager.setAutoMode(autonMode);
         autonManager.loadAutonomous();
         
         

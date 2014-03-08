@@ -195,13 +195,19 @@ public class Manipulator extends TorqueSubsystem {
     private void calcOverrides() {
         if (driverInput.ChooChooOverride()) {
             catapult.setMotorSpeed(Catapult.overrideSpeed);
+        } else {
+            catapult.setMotorSpeed(Constants.MOTOR_STOPPED);
         }
         
         if (Math.abs(driverInput.frontIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND) {
             intake.frontIntakeOverride(driverInput.frontIntakeOverride());
+        } else {
+            intake.frontIntakeOverride(Constants.MOTOR_STOPPED);
         }
         if (Math.abs(driverInput.rearIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND) {
             intake.rearIntakeOverride(driverInput.rearIntakeOverride());
+        } else {
+            intake.rearIntakeOverride(Constants.MOTOR_STOPPED);
         }
     }
     
