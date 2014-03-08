@@ -19,7 +19,7 @@ public class AutonomousFireMoveIntakes extends AutonomousCommand {
     
     public void reset() {
         this.firstCycle = true;
-        manipulator.resetFired();
+        //manipulator.resetFired();
     }
 
     public boolean run() {
@@ -44,10 +44,10 @@ public class AutonomousFireMoveIntakes extends AutonomousCommand {
             return true;
         }
         
-        if(manipulator.isFired())
-        {
-            return true;
-        }
+        //if(manipulator.isFired())
+        //{
+        //    return true;
+        //}
         return false;
     }
     

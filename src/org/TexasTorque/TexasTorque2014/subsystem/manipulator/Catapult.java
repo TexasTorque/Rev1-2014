@@ -53,7 +53,7 @@ public class Catapult extends TorqueSubsystem {
 
             } else {
 
-                if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) && intake.isDone()) {
+                if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) /*&& intake.isDone()*/) {
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;
                     fired = true;
                     fireTime = Timer.getFPGATimestamp();
@@ -84,12 +84,6 @@ public class Catapult extends TorqueSubsystem {
         SmartDashboard.putBoolean("WinchSolinoid", winchSolinoid);
     }
 
-    //public void setPosition(double desired) {
-    //    if (desired != desiredPullbackPosition) {
-    //        desiredPullbackPosition = desired;
-    //        goal = desired;
-    //    }
-    //}
     public boolean getIntakeDownOverride() {
         return intakeDownOverride;
     }

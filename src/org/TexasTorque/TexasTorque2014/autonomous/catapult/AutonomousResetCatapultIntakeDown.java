@@ -20,7 +20,7 @@ public class AutonomousResetCatapultIntakeDown extends AutonomousCommand {
     
     public void reset() {
         this.firstCycle = true;
-        manipulator.resetFired();
+        //manipulator.resetFired();
     }
 
     public boolean run() {
@@ -44,8 +44,8 @@ public class AutonomousResetCatapultIntakeDown extends AutonomousCommand {
             System.err.println("Reset Timeout");
             return true;
         }
-        
-        return manipulator.isResetting();
+        return false;
+        //return manipulator.isResetting();
     }
     
 }

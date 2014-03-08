@@ -16,7 +16,7 @@ public class AutonomousResetCatapultDone extends AutonomousCommand {
     
     public void reset() {
         this.firstCycle = true;
-        manipulator.resetFired();
+        //manipulator.resetFired();
     }
 
     public boolean run() {
@@ -37,8 +37,8 @@ public class AutonomousResetCatapultDone extends AutonomousCommand {
             System.err.println("Fire Reset Timeout");
             return true;
         }
-        
-        return manipulator.catapultReady();
+        return false;
+        //return manipulator.catapultReady();
     }
     
 }
