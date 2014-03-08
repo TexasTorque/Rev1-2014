@@ -121,22 +121,22 @@ public class DriverInputState {
     }
 
     public synchronized boolean frontIntaking() {
-        return operatorControllerState.getTopLeftBumper();
+        return operatorControllerState.getTopRightBumper();
         //return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
     }
 
     public synchronized boolean frontOuttaking() {
-        return operatorControllerState.getBottomLeftBumper();
+        return operatorControllerState.getBottomRightBumper();
         //return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
     }
 
     public synchronized boolean rearIntaking() {
-        return operatorControllerState.getTopRightBumper();
+        return operatorControllerState.getTopLeftBumper();
         //return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
     }
 
     public synchronized boolean rearOuttaking() {
-        return operatorControllerState.getBottomRightBumper();
+        return operatorControllerState.getBottomLeftBumper();
         //return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
     }
 
