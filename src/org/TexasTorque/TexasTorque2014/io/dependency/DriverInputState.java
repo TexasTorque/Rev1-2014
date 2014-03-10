@@ -104,8 +104,11 @@ public class DriverInputState {
     }
 
 //---------- Manipulator ----------  
+    public synchronized boolean WinchStop() {
+        return operatorControllerState.getLeftActionButton();
+    }
     public synchronized boolean ChooChooOverride() {
-        return operatorControllerState.getRightStickClick() && (operatorControllerState.getRightActionButton() || operatorControllerState.getLeftActionButton());
+        return operatorControllerState.getRightStickClick() && (operatorControllerState.getRightActionButton());
     }
     
     public synchronized boolean ChooChooReset() {
@@ -146,10 +149,6 @@ public class DriverInputState {
 
     public synchronized boolean shoot() {
         return operatorControllerState.getRightActionButton();
-    }
-
-    public synchronized boolean shootHigh() {
-        return operatorControllerState.getLeftActionButton();
     }
 
     public synchronized boolean getShooterStandoffs() {

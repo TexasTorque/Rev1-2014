@@ -28,7 +28,8 @@ public class Ports {
             
             public final static int CATAPULT_SIDECAR = 1;
             public final static int CATAPULT_MOTOR_PORT = 2;
-            public final static int CATAPULT_B_MOTOR_PORT = 0;
+            public final static int CATAPULT_B_SIDECAR = 2;
+            public final static int CATAPULT_B_MOTOR_PORT = 2;
             
         //----- Sidecar 2 -----
             public final static int LEFT_FRONT_DRIVE_SIDECAR = 2;
@@ -64,11 +65,11 @@ public class Ports {
             public final static int RIGHT_REAR_DRIVE_ENCODER_SIDECAR = 1;
             public final static int RIGHT_STRAFE_DRIVE_COUNTER_SIDECAR = 1;
             public final static int LEFT_STRAFE_DRIVE_COUNTER_SIDECAR = 2;
-            public final static int CATAPULT_ENCODER_A_PORT = 4;
-            public final static int CATAPULT_ENCODER_B_PORT = 5;
-            public final static int CATAPULT_ENCODER_SIDECAR = 1;
+            public final static int CATAPULT_ENCODER_A_PORT = 12;
+            public final static int CATAPULT_ENCODER_B_PORT = 13;
+            public final static int CATAPULT_ENCODER_SIDECAR = 2;
             public final static int CATAPULT_LIMIT_SWITCH_SIDECAR = 1;
-            public final static int CATAPULT_LIMIT_SWITCH_PORT = 6;
+            public final static int CATAPULT_LIMIT_SWITCH_PORT = 5;
             public final static int CATAPULT_LIMIT_SWITCH_B_SIDECAR = 2;
             public final static int CATAPULT_LIMIT_SWITCH_B_PORT = 14;
             public final static int PRESSURE_SWITCH_PORT = 0;

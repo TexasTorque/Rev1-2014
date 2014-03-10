@@ -1,43 +1,40 @@
-package org.TexasTorque.TexasTorque2014.autonomous.catapult;
+package org.TexasTorque.TexasTorque2014.autonomous.intake;
 
 import edu.wpi.first.wpilibj.Timer;
 import java.util.Hashtable;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
 
-public class AutonomousResetCatapultDone extends AutonomousCommand {
-    private double timeout;
-    private double startTime;
-    private boolean firstCycle;
+public class AutonomousRearIntakeDown extends AutonomousCommand {
     
-    public AutonomousResetCatapultDone(double timeout) {
+    private boolean firstCycle;
+    private double startTime;
+    private double timeout;
+    
+    public AutonomousRearIntakeDown(double timeout)
+    {
         this.timeout = timeout;
         this.firstCycle = true;
     }
     
     public void reset() {
         this.firstCycle = true;
-        //manipulator.resetFired();
     }
 
     public boolean run() {
-        if(firstCycle)
-        {
+        if(firstCycle) {
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
-        
         Hashtable autonOutputs = new Hashtable();
+        
+        autonOutputs.put("rearIntakeDown", Boolean.TRUE);
         
         driverInput.updateAutonData(autonOutputs);
         
         drivebase.run();
         manipulator.run();
         
-        if(Timer.getFPGATimestamp() > startTime + timeout) {
-            System.err.println("Fire Reset Timeout");
-            return true;
-        }
-        return manipulator.catapultReady();
+        return (Timer.getFPGATimestamp() - startTime > timeout) || manipulator.catapultReady();
     }
     
 }

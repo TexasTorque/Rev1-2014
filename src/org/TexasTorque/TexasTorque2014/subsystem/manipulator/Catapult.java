@@ -52,8 +52,7 @@ public class Catapult extends TorqueSubsystem {
                 }
 
             } else {
-
-                if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) /*&& intake.isDone()*/) {
+                if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) && intake.isDone()) {
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;
                     fired = true;
                     fireTime = Timer.getFPGATimestamp();
@@ -78,6 +77,10 @@ public class Catapult extends TorqueSubsystem {
                 firstCycle = false;
             }
         }
+        if(driverInput.WinchStop())
+        {
+            catapultMotorSpeed = 0.0;
+        }
         SmartDashboard.putNumber("CatapultSetpoint", pidSetpoint);
         SmartDashboard.putNumber("CatapultActual", currentValue);
         SmartDashboard.putNumber("CatapultMotorSpeed", catapultMotorSpeed);
@@ -95,9 +98,17 @@ public class Catapult extends TorqueSubsystem {
     public boolean catapultReady() {
         return isReady;
     }
+    
+    public boolean isFired() {
+        return fired;
+    }
 
     public boolean catapultReadyForIntake() {
-        return (sensorInput.getCatapultEncoder() > 300);
+        return (sensorInput.getCatapultEncoder() > pidSetpoint * 2 / 3);
+    }
+    
+    public boolean catapultReadyForRearIntake() {
+        return (sensorInput.getCatapultEncoder() > pidSetpoint * 5 / 6);
     }
 
     public void setToRobot() {
@@ -119,6 +130,7 @@ public class Catapult extends TorqueSubsystem {
 
         pullBackPID.setPIDGains(p, i, d);
         pullBackPID.setEpsilon(epsilon);
+        pullBackPID.setSetpoint(pidSetpoint);
 
     }
 

@@ -44,11 +44,7 @@ public class AutonomousFireMoveIntakes extends AutonomousCommand {
             return true;
         }
         
-        //if(manipulator.isFired())
-        //{
-        //    return true;
-        //}
-        return false;
+        return manipulator.isFired();
     }
     
 }

@@ -87,7 +87,7 @@ public class RobotOutput {
 
         //----- Catapult -----
         catapultMotor = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_MOTOR_PORT), false, true);
-        catapultMotorB = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_B_MOTOR_PORT), false, true);
+        catapultMotorB = new Motor(new Victor(Ports.CATAPULT_B_SIDECAR, Ports.CATAPULT_B_MOTOR_PORT), false, true);
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Misc Misc -----
