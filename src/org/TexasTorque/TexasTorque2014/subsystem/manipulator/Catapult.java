@@ -52,7 +52,7 @@ public class Catapult extends TorqueSubsystem {
                 }
 
             } else {
-                if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) && intake.isDone()) {
+                if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) && intake.shootIsDone()) {
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;
                     fired = true;
                     fireTime = Timer.getFPGATimestamp();

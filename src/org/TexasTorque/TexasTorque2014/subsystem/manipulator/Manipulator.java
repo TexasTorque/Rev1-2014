@@ -147,7 +147,11 @@ public class Manipulator extends TorqueSubsystem {
     
     public void shoot() {
         intake.setFrontAngle(Intake.frontShootAngle);
-        intake.setRearAngle(Intake.rearShootAngle);
+        
+        if(driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false))
+        {
+            intake.setRearAngle(Intake.rearShootAngle);
+        }
     }
     
     public void shootHigh() {

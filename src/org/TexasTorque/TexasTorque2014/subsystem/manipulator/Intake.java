@@ -82,6 +82,18 @@ public class Intake extends TorqueSubsystem {
         return frontTiltPID.isDone() && rearTiltPID.isDone();
     }
     
+    public boolean shootIsDone() {
+        return (frontTiltPID.isDone() && frontTiltPID.getSetpoint() == Intake.frontShootAngle && rearTiltPID.isDone() && rearTiltPID.getSetpoint() == Intake.rearShootAngle);
+    }
+    
+    public boolean frontIsDone() {
+        return frontTiltPID.isDone();
+    }
+    
+    public boolean rearIsDone() {
+        return rearTiltPID.isDone();
+    }
+    
     public void setFrontAngle(double angle)
     {
         if (angle != frontTiltPID.getSetpoint())
