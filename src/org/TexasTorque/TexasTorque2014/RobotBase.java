@@ -62,16 +62,17 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
-        int autonMode = (int)SmartDashboard.getNumber("AutonomousMode", Constants.DO_NOTHING_AUTO);
+        int autonMode = (int) SmartDashboard.getNumber("AutonomousMode", Constants.DO_NOTHING_AUTO);
         autonManager.setAutoMode(autonMode);
         autonManager.loadAutonomous();
-        
-        
+
         sensorInput.resetEncoders();
         loadParameters();
     }
 
     public void disabledInit() {
+        robotOutput.setLightsState(Constants.LIGHTS_DISABLED);
+
         loadParameters();
     }
 
@@ -99,16 +100,18 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void autonomousPeriodic() {
         watchdog.feed();
-        
+
         robotOutput.updateState();
         driverInput.updateState();
         sensorInput.updateState();
-        
+
         autonManager.runAutonomous();
-        
+
         robotOutput.pullFromState();
         drivebase.pushToDashboard();
         SensorInput.getState().pushToDashboard();
+
+        robotOutput.runLights();
     }
 
     public void autonomousContinuous() {
@@ -125,39 +128,39 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopPeriodic() {
         watchdog.feed();
-        
+
         robotOutput.updateState();
         driverInput.updateState();
         sensorInput.updateState();
-       
+
         drivebase.run();
         manipulator.run();
-        
-        
+
         drivebase.pushToDashboard();
         robotOutput.pullFromState();
         SensorInput.getState().pushToDashboard();
-        
+
+        robotOutput.runLights();
     }
 
     public void teleopContinuous() {
         sensorInput.calcEncoders();
-        
+
     }
 
     public void disabledPeriodic() {
         driverInput.updateState();
         sensorInput.updateState();
         sensorInput.getState().pushToDashboard();
+        robotOutput.runLights();
         watchdog.feed();
     }
 
     public void disabledContinuous() {
         sensorInput.calcEncoders();
     }
-    
-    public void loadParameters()
-    {
+
+    public void loadParameters() {
         params.load();
         drivebase.loadParameters();
         manipulator.loadParameters();

@@ -14,23 +14,25 @@ public class RobotOutputState {
     private double rightFrontMotorSpeed;
     private double rightRearMotorSpeed;
     private double strafeMotorSpeed;
-    
+
     //----- Intake -----
     private double frontIntakeMotorSpeed;
     private double rearIntakeMotorSpeed;
     private double frontIntakeTiltMotorSpeed;
     private double rearIntakeTiltMotorSpeed;
-    
+
     //----- Catapult -----
     private double catapultMotorSpeed;
     private boolean winchSolinoid;
 
+    //lights
+    private int lightState;
+
     public RobotOutputState() {
-        
+
     }
-    
-    public void updateState(RobotOutput output)
-    {
+
+    public void updateState(RobotOutput output) {
         //----- Pneumatics -----
         compressorEnabled = output.getCompressorEnabled();
         driveBaseMode = output.getDriveBaseMode();
@@ -40,16 +42,19 @@ public class RobotOutputState {
         leftRearMotorSpeed = output.getLeftRearMotorSpeed();
         rightFrontMotorSpeed = output.getRightFrontMotorSpeed();
         rightRearMotorSpeed = output.getRightRearMotorSpeed();
-        
+
         //----- Intake -----
         frontIntakeMotorSpeed = output.getFrontIntakeMotorSpeed();
         rearIntakeMotorSpeed = output.getRearIntakeMotorSpeed();
         frontIntakeTiltMotorSpeed = output.getFrontIntakeTiltMotorSpeed();
         rearIntakeTiltMotorSpeed = output.getRearIntakeTiltMotorSpeed();
-        
+
         //----- Catapult -----
         catapultMotorSpeed = output.getCatapultMotorSpeed();
         winchSolinoid = output.getWinchSolinoid();
+
+        //----- Lights -----
+        lightState = output.getLightsState();
     }
 
     public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -75,67 +80,67 @@ public class RobotOutputState {
     public double getRightRearMotorSpeed() {
         return rightRearMotorSpeed;
     }
-    
-    public double getStrafeMotorSpeed()
-    {
+
+    public double getStrafeMotorSpeed() {
         return strafeMotorSpeed;
     }
 
     public boolean getCompressorEnabled() {
         return compressorEnabled;
     }
-    
+
     public void setDriveBaseMode(boolean mode) {
         driveBaseMode = mode;
     }
-    
-    public boolean getDriveBaseMode()
-    {
+
+    public boolean getDriveBaseMode() {
         return driveBaseMode;
     }
-    
-    public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt)
-    {
+
+    public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt) {
         frontIntakeMotorSpeed = frontRoller;
         rearIntakeMotorSpeed = rearRoller;
         frontIntakeTiltMotorSpeed = frontTilt;
         rearIntakeTiltMotorSpeed = rearTilt;
     }
-    
-    public double getFrontIntakeMotorSpeed()
-    {
+
+    public double getFrontIntakeMotorSpeed() {
         return frontIntakeMotorSpeed;
     }
-    
-    public double getRearIntakeMotorSpeed()
-    {
+
+    public double getRearIntakeMotorSpeed() {
         return rearIntakeMotorSpeed;
     }
-    
-    public double getFrontIntakeTiltMotorSpeed()
-    {
+
+    public double getFrontIntakeTiltMotorSpeed() {
         return frontIntakeTiltMotorSpeed;
     }
-    
-    public double getRearIntakeTiltMotorSpeed()
-    {
+
+    public double getRearIntakeTiltMotorSpeed() {
         return rearIntakeTiltMotorSpeed;
     }
-    
-    public void setCatapultMotor(double speed)
-    {
+
+    public void setCatapultMotor(double speed) {
         catapultMotorSpeed = speed;
     }
-    public void setWinchSolinoid(boolean state)
-    {
+
+    public void setWinchSolinoid(boolean state) {
         winchSolinoid = state;
     }
-    public boolean getWinchSolinoid()
-    {
+
+    public boolean getWinchSolinoid() {
         return winchSolinoid;
     }
-    public double getCatapultMotorSpeed()
-    {
+
+    public double getCatapultMotorSpeed() {
         return catapultMotorSpeed;
+    }
+
+    public void setLightsState(int state) {
+        lightState = state;
+    }
+
+    public int getLightsState() {
+        return lightState;
     }
 }

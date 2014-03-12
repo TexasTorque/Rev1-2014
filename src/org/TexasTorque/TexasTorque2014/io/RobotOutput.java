@@ -1,12 +1,15 @@
 package org.TexasTorque.TexasTorque2014.io;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.util.Vector;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
+import org.TexasTorque.TorqueLib.component.AdaFruitLights;
 import org.TexasTorque.TorqueLib.component.Motor;
 
 public class RobotOutput {
@@ -51,6 +54,11 @@ public class RobotOutput {
     private Motor catapultMotorB;
     private double catapultMotorSpeed;
 
+    //lights
+    private AdaFruitLights lights;
+    private Vector lightsVector;
+    private int lightState;
+
     public RobotOutput() {
         //----- Pneumatics -----
         //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
@@ -89,6 +97,15 @@ public class RobotOutput {
         catapultMotor = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_MOTOR_PORT), false, true);
         catapultMotorB = new Motor(new Victor(Ports.CATAPULT_B_SIDECAR, Ports.CATAPULT_B_MOTOR_PORT), false, true);
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
+
+        //lights
+        lightsVector = new Vector();
+        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_A_PORT));
+        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_B_PORT));
+        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_C_PORT));
+        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_D_PORT));
+        lights = new AdaFruitLights(lightsVector);
+        lightState = Constants.LIGHTS_DISABLED;
 
         //----- Misc Misc -----
         //compressor.start();
@@ -212,4 +229,17 @@ public class RobotOutput {
         winchSolinoid = mode;
     }
 
+    public void setLightsState(int state) {
+        lightState = state;
+        lights.setDesiredState(state);
+    }
+
+    public int getLightsState() {
+        return lightState;
+    }
+
+    public void runLights()
+    {
+        lights.run();
+    }
 }

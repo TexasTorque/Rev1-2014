@@ -52,4 +52,12 @@ public class Constants
     public final static double REAR_INTAKE_POTENTIOMETER_LOW = 4.52;
     public final static double REAR_INTAKE_POTENTIOMETER_HIGH = 2.12;
     
+    // ----- lights -----
+    public final static int LIGHTS_DISABLED = 0;
+    public final static int LIGHTS_BLUE = 4;
+    public final static int LIGHTS_RED = 3;
+    public final static int LIGHTS_BLUE_GREEN = 2;
+    public final static int LIGHTS_RED_GREEN = 1;
+    public final static int LIGHTS_BLUE_YELLOW = 6;
+    public final static int LIGHTS_RED_YELLOW = 5;
 }

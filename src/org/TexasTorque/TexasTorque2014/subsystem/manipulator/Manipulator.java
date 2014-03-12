@@ -76,6 +76,27 @@ public class Manipulator extends TorqueSubsystem {
             setToRobot();
         }
         
+        double currentAlliance = dashboardManager.getDS().getAlliance().value;
+        
+        if (catapultReady())
+        {
+            if (currentAlliance == Constants.RED_ALLIANCE)
+            {
+                robotOutput.setLightsState(Constants.LIGHTS_RED);
+            } else if (currentAlliance == Constants.BLUE_ALLIANCE)
+            {
+                robotOutput.setLightsState(Constants.LIGHTS_BLUE);
+            }
+        } else {
+            if (currentAlliance == Constants.RED_ALLIANCE)
+            {
+                robotOutput.setLightsState(Constants.LIGHTS_RED_GREEN);
+            } else if (currentAlliance == Constants.BLUE_ALLIANCE)
+            {
+                robotOutput.setLightsState(Constants.LIGHTS_BLUE_GREEN);
+            }
+        }
+        
     }
     
     public void setToRobot() {
