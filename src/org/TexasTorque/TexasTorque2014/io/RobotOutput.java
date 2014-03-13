@@ -111,8 +111,8 @@ public class RobotOutput {
         lightState = Constants.LIGHTS_DISABLED;
 
         //----- Misc Misc -----
-        //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
-        //compressor.start();
+        compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
+        compressor.start();
     }
 
     public synchronized static RobotOutput getInstance() {
@@ -172,8 +172,8 @@ public class RobotOutput {
     }
 
     public boolean getCompressorEnabled() {
-        return false;
-        //return compressor.enabled();
+        //return false;
+        return compressor.enabled();
     }
 
     public void setDriveBaseMode(boolean mode) {
