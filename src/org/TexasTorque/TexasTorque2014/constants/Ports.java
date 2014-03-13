@@ -78,7 +78,7 @@ public class Ports {
     public final static int CATAPULT_ENCODER_B_PORT = 13;
     
     public final static int CATAPULT_LIMIT_SWITCH_SIDECAR = 1;
-    public final static int CATAPULT_LIMIT_SWITCH_PORT = 5;
+    public final static int CATAPULT_LIMIT_SWITCH_PORT = 14;
     public final static int CATAPULT_LIMIT_SWITCH_B_SIDECAR = 2;
     public final static int CATAPULT_LIMIT_SWITCH_B_PORT = 14;
     
