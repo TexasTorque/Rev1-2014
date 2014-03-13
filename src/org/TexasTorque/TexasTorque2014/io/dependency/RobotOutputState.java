@@ -7,6 +7,7 @@ public class RobotOutputState {
     //----- Pneumatics -----
     private boolean compressorEnabled;
     private boolean driveBaseMode;
+    private boolean catapultAngle;
 
     //----- Drive Motors -----
     private double leftFrontMotorSpeed;
@@ -36,6 +37,7 @@ public class RobotOutputState {
         //----- Pneumatics -----
         compressorEnabled = output.getCompressorEnabled();
         driveBaseMode = output.getDriveBaseMode();
+        catapultAngle = output.getCatapultStopAngle();
 
         //----- Drive Motors -----
         leftFrontMotorSpeed = output.getLeftFrontMotorSpeed();
@@ -130,6 +132,14 @@ public class RobotOutputState {
 
     public boolean getWinchSolinoid() {
         return winchSolinoid;
+    }
+
+    public void setCatapultAngle(boolean state) {
+        catapultAngle = state;
+    }
+
+    public boolean getCatapultAngle() {
+        return catapultAngle;
     }
 
     public double getCatapultMotorSpeed() {

@@ -22,6 +22,8 @@ public class RobotOutput {
     private Solenoid frontDriveBaseSwitcher;
     private Solenoid middleDriveBaseSwitcher;
     private Solenoid rearDriveBaseSwitcher;
+    private Solenoid catapultStopAngle;
+    private boolean catapultAngle;
     private boolean driveBaseMode;
     private Solenoid winchQuickRelease;
     private boolean winchSolinoid;
@@ -64,6 +66,8 @@ public class RobotOutput {
         frontDriveBaseSwitcher = new Solenoid(Ports.FRONT_DRIVEBASE_SWITCHER);
         middleDriveBaseSwitcher = new Solenoid(Ports.MIDDLE_DRIVEBASE_SWITCHER);
         rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
+        catapultStopAngle = new Solenoid(Ports.CATAPULT_ANGLE);
+        catapultAngle = false;
         driveBaseMode = Constants.OMNI_MODE;
         winchQuickRelease = new Solenoid(Ports.CATAPULT_RELEASE);
         winchSolinoid = false;
@@ -130,6 +134,7 @@ public class RobotOutput {
         setWinchSolinoid(state.getWinchSolinoid());
         setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
         setLightsState(state.getLightsState());
+        setCatapultStopAngle(state.getCatapultAngle());
     }
 
     public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -228,6 +233,15 @@ public class RobotOutput {
     public void setWinchSolinoid(boolean mode) {
         winchQuickRelease.set(mode);
         winchSolinoid = mode;
+    }
+    
+    public boolean getCatapultStopAngle() {
+        return catapultAngle;
+    }
+    
+    public void setCatapultStopAngle(boolean mode) {
+        catapultStopAngle.set(mode);
+        catapultAngle = mode;
     }
 
     public void setLightsState(int state) {

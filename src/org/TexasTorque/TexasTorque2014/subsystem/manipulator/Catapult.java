@@ -6,6 +6,7 @@ import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
+import org.TexasTorque.TorqueLib.util.TorqueToggle;
 
 public class Catapult extends TorqueSubsystem {
 
@@ -21,6 +22,8 @@ public class Catapult extends TorqueSubsystem {
     private double slowSpeed;
     private double fireTime;
     private boolean winchSolinoid;
+    private boolean catapultStopAngle;
+    private TorqueToggle stopAngleToggle;
 
     public static double pidSetpoint;
     public static double tolerance;
@@ -36,6 +39,7 @@ public class Catapult extends TorqueSubsystem {
         intake = Intake.getInstance();
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
         pullBackPID = new TorquePID();
+        stopAngleToggle = new TorqueToggle();
     }
 
     public void run() {
@@ -69,6 +73,13 @@ public class Catapult extends TorqueSubsystem {
                     catapultMotorSpeed = slowSpeed;
                 }
             }
+            
+            if (driverInput.isAuton()) {
+                catapultStopAngle = driverInput.getAutonBool("CatapultAngle", false);
+            } else {
+                catapultStopAngle = driverInput.getCatapultStopAngle();
+            }
+
         } else {
             //First Cycle Clears
             catapultMotorSpeed = 0.0;
@@ -77,8 +88,7 @@ public class Catapult extends TorqueSubsystem {
                 firstCycle = false;
             }
         }
-        if(driverInput.WinchStop())
-        {
+        if (driverInput.WinchStop()) {
             catapultMotorSpeed = 0.0;
         }
         SmartDashboard.putNumber("CatapultSetpoint", pidSetpoint);
@@ -98,7 +108,7 @@ public class Catapult extends TorqueSubsystem {
     public boolean catapultReady() {
         return isReady;
     }
-    
+
     public boolean isFired() {
         return fired;
     }
@@ -106,7 +116,7 @@ public class Catapult extends TorqueSubsystem {
     public boolean catapultReadyForIntake() {
         return (sensorInput.getCatapultEncoder() > pidSetpoint * 2 / 3);
     }
-    
+
     public boolean catapultReadyForRearIntake() {
         return (sensorInput.getCatapultEncoder() > pidSetpoint * 5 / 6);
     }
@@ -114,6 +124,7 @@ public class Catapult extends TorqueSubsystem {
     public void setToRobot() {
         robotOutput.setCatapultMotor(catapultMotorSpeed);
         robotOutput.setWinchSolinoid(winchSolinoid);
+        robotOutput.setCatapultAngle(catapultStopAngle);
     }
 
     public void loadParameters() {

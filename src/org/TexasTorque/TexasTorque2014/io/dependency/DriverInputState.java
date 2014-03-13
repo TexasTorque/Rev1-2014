@@ -13,6 +13,7 @@ public class DriverInputState {
     private double autonDelay;
     private int autonMode;
     private boolean inOverrideState;
+    private boolean catapultStopAngle;
 
     private Hashtable autonomousData = new Hashtable();
 
@@ -37,8 +38,12 @@ public class DriverInputState {
         inOverrideState = false;
         autonomousData = table;
         autonomousData.put("driveMode", new Boolean(Constants.OMNI_MODE));
+
+        if (!autonomousData.containsKey("CatapultAngle")) {
+            autonomousData.put("CatapultAngle", Boolean.FALSE);
+        }
     }
-    
+
     public synchronized boolean isAuton() {
         return !autonomousData.isEmpty();
     }
@@ -56,7 +61,7 @@ public class DriverInputState {
         }
         return def;
     }
-    
+
     public synchronized void setAutonomousDelay(double autonDelay) {
         this.autonDelay = autonDelay;
     }
@@ -107,12 +112,25 @@ public class DriverInputState {
     public synchronized boolean WinchStop() {
         return operatorControllerState.getLeftActionButton();
     }
+
     public synchronized boolean ChooChooOverride() {
-        return operatorControllerState.getRightStickClick() && (operatorControllerState.getRightActionButton());
+        return (operatorControllerState.getRightStickClick() || operatorControllerState.getLeftStickClick()) && (operatorControllerState.getRightActionButton());
+    }
+
+    public synchronized boolean ChooChooReset() {
+        return (operatorControllerState.getRightStickClick() || operatorControllerState.getLeftStickClick()) && operatorControllerState.getTopActionButton();
     }
     
-    public synchronized boolean ChooChooReset() {
-        return operatorControllerState.getRightStickClick() && operatorControllerState.getTopActionButton();
+    public synchronized boolean getCatapultStopAngle()
+    {
+        if(operatorControllerState.getLeftStickClick())
+        {
+            catapultStopAngle = false;
+        } else if (operatorControllerState.getRightStickClick())
+        {
+            catapultStopAngle = true;
+        }
+        return catapultStopAngle;
     }
 
     public synchronized double frontIntakeOverride() {
