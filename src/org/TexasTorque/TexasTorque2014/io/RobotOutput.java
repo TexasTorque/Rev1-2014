@@ -129,6 +129,7 @@ public class RobotOutput {
         setCatapultMotor(state.getCatapultMotorSpeed());
         setWinchSolinoid(state.getWinchSolinoid());
         setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
+        setLightsState(state.getLightsState());
     }
 
     public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
