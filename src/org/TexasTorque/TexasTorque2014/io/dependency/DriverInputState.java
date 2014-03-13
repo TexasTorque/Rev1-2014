@@ -37,7 +37,10 @@ public class DriverInputState {
     public void updateAutonData(Hashtable table) {
         inOverrideState = false;
         autonomousData = table;
-        autonomousData.put("driveMode", new Boolean(Constants.OMNI_MODE));
+        
+        if (!autonomousData.containsKey("driveMode")) {
+            autonomousData.put("driveMode", new Boolean(Constants.OMNI_MODE));
+        }
 
         if (!autonomousData.containsKey("CatapultAngle")) {
             autonomousData.put("CatapultAngle", Boolean.FALSE);
@@ -120,14 +123,11 @@ public class DriverInputState {
     public synchronized boolean ChooChooReset() {
         return (operatorControllerState.getRightStickClick() || operatorControllerState.getLeftStickClick()) && operatorControllerState.getTopActionButton();
     }
-    
-    public synchronized boolean getCatapultStopAngle()
-    {
-        if(operatorControllerState.getLeftStickClick())
-        {
+
+    public synchronized boolean getCatapultStopAngle() {
+        if (operatorControllerState.getLeftStickClick()) {
             catapultStopAngle = false;
-        } else if (operatorControllerState.getRightStickClick())
-        {
+        } else if (operatorControllerState.getRightStickClick()) {
             catapultStopAngle = true;
         }
         return catapultStopAngle;
