@@ -61,12 +61,11 @@ public class RobotOutput {
 
     public RobotOutput() {
         //----- Pneumatics -----
-        //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
         frontDriveBaseSwitcher = new Solenoid(Ports.FRONT_DRIVEBASE_SWITCHER);
         middleDriveBaseSwitcher = new Solenoid(Ports.MIDDLE_DRIVEBASE_SWITCHER);
         rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
         driveBaseMode = Constants.OMNI_MODE;
-        winchQuickRelease = new Solenoid(Ports.CATAPULT_STANDOFFS);
+        winchQuickRelease = new Solenoid(Ports.CATAPULT_RELEASE);
         winchSolinoid = false;
 
         //----- Drive Motors -----
@@ -108,6 +107,7 @@ public class RobotOutput {
         lightState = Constants.LIGHTS_DISABLED;
 
         //----- Misc Misc -----
+        //compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
         //compressor.start();
     }
 

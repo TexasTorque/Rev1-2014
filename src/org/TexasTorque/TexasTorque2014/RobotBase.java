@@ -72,6 +72,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void disabledInit() {
         robotOutput.setLightsState(Constants.LIGHTS_DISABLED);
+        robotOutput.runLights();
 
         loadParameters();
     }
