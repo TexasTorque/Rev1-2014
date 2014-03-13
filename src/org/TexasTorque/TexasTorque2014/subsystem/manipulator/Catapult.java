@@ -1,6 +1,7 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
@@ -25,7 +26,8 @@ public class Catapult extends TorqueSubsystem {
     private boolean catapultStopAngle;
     private TorqueToggle stopAngleToggle;
 
-    public static double pidSetpoint;
+    public static double fullPidSetpoint;
+    public static double shortPidSetpoint;
     public static double tolerance;
     public static double timeout;
     public static double overrideSpeed;
@@ -61,14 +63,15 @@ public class Catapult extends TorqueSubsystem {
                     fired = true;
                     fireTime = Timer.getFPGATimestamp();
                     winchSolinoid = true;
+                    pullBackPID.setSetpoint((catapultStopAngle) ? shortPidSetpoint : fullPidSetpoint);
                 } else if (sensorInput.getCatapultLimitSwitch()) {
                     isReady = true;
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;
 
-                } else if (currentValue < pidSetpoint) {
+                } else if (currentValue < pullBackPID.getSetpoint()) {
                     isReady = false;
                     catapultMotorSpeed = pullBackPID.calculate(currentValue);
-                } else if (currentValue >= pidSetpoint) {
+                } else if (currentValue >= pullBackPID.getSetpoint()) {
                     isReady = false;
                     catapultMotorSpeed = slowSpeed;
                 }
@@ -91,7 +94,7 @@ public class Catapult extends TorqueSubsystem {
         if (driverInput.WinchStop()) {
             catapultMotorSpeed = 0.0;
         }
-        SmartDashboard.putNumber("CatapultSetpoint", pidSetpoint);
+        SmartDashboard.putNumber("CatapultSetpoint", pullBackPID.getSetpoint());
         SmartDashboard.putNumber("CatapultActual", currentValue);
         SmartDashboard.putNumber("CatapultMotorSpeed", catapultMotorSpeed);
         SmartDashboard.putBoolean("WinchSolinoid", winchSolinoid);
@@ -114,11 +117,11 @@ public class Catapult extends TorqueSubsystem {
     }
 
     public boolean catapultReadyForIntake() {
-        return (sensorInput.getCatapultEncoder() > pidSetpoint * 2 / 3);
+        return (sensorInput.getCatapultEncoder() > pullBackPID.getSetpoint() * 2 / 3);
     }
 
     public boolean catapultReadyForRearIntake() {
-        return (sensorInput.getCatapultEncoder() > pidSetpoint * 5 / 6);
+        return (sensorInput.getCatapultEncoder() > pullBackPID.getSetpoint() * 5 / 6);
     }
 
     public void setToRobot() {
@@ -130,7 +133,8 @@ public class Catapult extends TorqueSubsystem {
     public void loadParameters() {
         firstCycle = true;
         timeout = params.getAsDouble("C_Timeout", 1.0);
-        pidSetpoint = params.getAsDouble("C_ResetSetpoint", 0.0);
+        fullPidSetpoint = params.getAsDouble("C_FullResetSetpoint", 0.0);
+        shortPidSetpoint = params.getAsDouble("C_ShortResetSetpoint", 0.0);
         slowSpeed = params.getAsDouble("C_SlowSpeed", 0.0);
         overrideSpeed = params.getAsDouble("C_OverrideSpeed", 0.0);
 
@@ -141,8 +145,7 @@ public class Catapult extends TorqueSubsystem {
 
         pullBackPID.setPIDGains(p, i, d);
         pullBackPID.setEpsilon(epsilon);
-        pullBackPID.setSetpoint(pidSetpoint);
-
+        pullBackPID.setSetpoint(shortPidSetpoint);
     }
 
     public String logData() { //no logging
