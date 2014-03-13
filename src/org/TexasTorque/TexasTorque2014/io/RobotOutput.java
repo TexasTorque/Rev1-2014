@@ -103,10 +103,10 @@ public class RobotOutput {
 
         //lights
         lightsVector = new Vector();
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_A_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_B_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_C_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.SIDECAR_TWO, Ports.LIGHTS_D_PORT));
+        lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_A_PORT));
+        lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_B_PORT));
+        lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_C_PORT));
+        lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_D_PORT));
         lights = new AdaFruitLights(lightsVector);
         lightState = Constants.LIGHTS_DISABLED;
 
