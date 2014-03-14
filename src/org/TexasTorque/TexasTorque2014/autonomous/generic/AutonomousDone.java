@@ -1,6 +1,7 @@
 
 package org.TexasTorque.TexasTorque2014.autonomous.generic;
 
+import java.util.Hashtable;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
 
 public class AutonomousDone extends AutonomousCommand {
@@ -20,6 +21,7 @@ public class AutonomousDone extends AutonomousCommand {
             System.err.println("AutonDone");
             firstCycle = false;
         }
+        driverInput.updateAutonData(new Hashtable());
         return false;
     }
     

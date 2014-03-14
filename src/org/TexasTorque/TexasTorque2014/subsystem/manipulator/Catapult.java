@@ -107,6 +107,14 @@ public class Catapult extends TorqueSubsystem {
     public void setMotorSpeed(double speed) {
         catapultMotorSpeed = speed;
     }
+    
+    public void releaseOverride(boolean state) {
+        winchSolinoid = state;
+    }
+    
+    public void shortShotOverride(boolean state) {
+        catapultStopAngle = state;
+    }
 
     public boolean catapultReady() {
         return isReady;

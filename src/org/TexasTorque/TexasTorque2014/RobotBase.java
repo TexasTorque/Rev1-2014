@@ -6,9 +6,11 @@ import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousManager;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
+import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.*;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
+import org.TexasTorque.TorqueLib.component.TorquePotentiometer;
 import org.TexasTorque.TorqueLib.util.DashboardManager;
 import org.TexasTorque.TorqueLib.util.Parameters;
 import org.TexasTorque.TorqueLib.util.TorqueLogging;
@@ -152,7 +154,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     public void disabledPeriodic() {
         driverInput.updateState();
         sensorInput.updateState();
-        sensorInput.getState().pushToDashboard();
+        SensorInput.getState().pushToDashboard();
+        DriverInput.getState().pushToDashboard();
         robotOutput.runLights();
         watchdog.feed();
     }

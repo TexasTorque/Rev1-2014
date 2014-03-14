@@ -6,6 +6,7 @@ public class TorquePotentiometer
 {
     private AnalogChannel pot;
     
+    private double prevVoltage;
     private double maxVoltage;
     private double minVoltage;
     
@@ -27,12 +28,23 @@ public class TorquePotentiometer
     
     public double get()
     {
-        return 1 - limitValue((pot.getVoltage() - minVoltage) / (maxVoltage - minVoltage));
+        return 1 - limitValue((getRaw() - minVoltage) / (maxVoltage - minVoltage));
     }
     
     public double getRaw()
     {
-        return pot.getVoltage();
+        double temp = pot.getVoltage();
+        if(Math.abs(temp - prevVoltage) > 4)
+        {
+            if(prevVoltage > 4) {
+                temp = prevVoltage + temp;
+            } else if (prevVoltage < 1)
+            {
+                temp = temp - 5;
+            }
+        }
+        prevVoltage = temp;
+        return temp;
     }
     
     private double limitValue(double value)

@@ -33,6 +33,7 @@ public class Intake extends TorqueSubsystem {
     public static double frontCatchAngle;
     public static double rearCatchAngle;
     public static double frontOuttakeAngle;
+    public static double slowSpeed;
     
     public static Intake getInstance()
     {
@@ -120,6 +121,15 @@ public class Intake extends TorqueSubsystem {
         rearTiltSpeed = tiltSpeed;
     }
     
+    public void frontIntakeOverrideRoll(double speed)
+    {
+        frontIntakeSpeed = speed;
+    }
+    public void rearIntakeOverrideRoll(double speed)
+    {
+        rearIntakeSpeed = speed;
+    }
+    
     public void setFrontIntakeSpeed(double speed)
     {
         frontIntakeSpeed = speed;
@@ -148,6 +158,7 @@ public class Intake extends TorqueSubsystem {
         frontOuttakeAngle = params.getAsDouble("I_FrontOuttakeAngle", 90);
         frontCatchAngle = params.getAsDouble("I_FrontCatchAngle", frontDownAngle);
         rearCatchAngle = params.getAsDouble("I_RearCatchAngle", rearDownAngle);
+        slowSpeed = params.getAsDouble("I_SlowSpeed", 0.3);
         
         double frontP = params.getAsDouble("I_FrontIntakeP", 0.0);
         double frontI = params.getAsDouble("I_FrontIntakeI", 0.0);

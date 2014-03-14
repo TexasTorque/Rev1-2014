@@ -37,14 +37,11 @@ public class DriverInputState {
     public void updateAutonData(Hashtable table) {
         inOverrideState = false;
         autonomousData = table;
-        
-        if (!autonomousData.containsKey("driveMode")) {
-            autonomousData.put("driveMode", new Boolean(Constants.OMNI_MODE));
-        }
 
-        if (!autonomousData.containsKey("CatapultAngle")) {
-            autonomousData.put("CatapultAngle", Boolean.FALSE);
-        }
+        autonomousData.put("driveMode", new Boolean(Constants.TRACTION_MODE));
+
+        autonomousData.put("CatapultAngle", Boolean.FALSE);
+
     }
 
     public synchronized boolean isAuton() {
@@ -117,18 +114,18 @@ public class DriverInputState {
     }
 
     public synchronized boolean ChooChooOverride() {
-        return (operatorControllerState.getRightStickClick() || operatorControllerState.getLeftStickClick()) && (operatorControllerState.getRightActionButton());
+        return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD()) && (operatorControllerState.getRightActionButton());
     }
 
     public synchronized boolean ChooChooReset() {
-        return (operatorControllerState.getRightStickClick() || operatorControllerState.getLeftStickClick()) && operatorControllerState.getTopActionButton();
+        return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD()) && operatorControllerState.getTopActionButton();
     }
 
     public synchronized boolean getCatapultStopAngle() {
-        if (operatorControllerState.getLeftStickClick()) {
-            catapultStopAngle = false;
-        } else if (operatorControllerState.getRightStickClick()) {
+        if (operatorControllerState.getLeftDPAD()) {
             catapultStopAngle = true;
+        } else if (operatorControllerState.getRightDPAD()) {
+            catapultStopAngle = false;
         }
         return catapultStopAngle;
     }
@@ -186,6 +183,31 @@ public class DriverInputState {
         }
 
         return inOverrideState;
+    }
+    
+    public synchronized boolean frontIntakeRollOverride() {
+        return frontIntaking();
+    }
+    public synchronized boolean frontOuttakeRollOverride() {
+        return frontOuttaking();
+    }
+    public synchronized boolean rearIntakeRollOverride() {
+        return rearIntaking();
+    }
+    public synchronized boolean rearOuttakeRollOverride() {
+        return rearOuttaking();
+    }
+    public synchronized boolean releaseOverride() {
+        return operatorControllerState.getBottomActionButton();
+    }
+    public synchronized boolean shortShotOverride() {
+        return operatorControllerState.getLeftDPAD();
+    }
+
+    public synchronized void pushToDashboard() {
+        SmartDashboard.putBoolean("LeftDPAD", operatorControllerState.getLeftDPAD());
+        SmartDashboard.putBoolean("RightDPAD", operatorControllerState.getRightDPAD());
+
     }
 
 }

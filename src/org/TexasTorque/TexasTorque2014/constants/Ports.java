@@ -74,13 +74,13 @@ public class Ports {
     public final static int LEFT_STRAFE_DRIVE_COUNTER_PORT = 5;
     
     public final static int CATAPULT_ENCODER_SIDECAR = 2;
-    public final static int CATAPULT_ENCODER_A_PORT = 12;
-    public final static int CATAPULT_ENCODER_B_PORT = 13;
+    public final static int CATAPULT_ENCODER_A_PORT = 13;
+    public final static int CATAPULT_ENCODER_B_PORT = 14;
     
     public final static int CATAPULT_LIMIT_SWITCH_SIDECAR = 1;
     public final static int CATAPULT_LIMIT_SWITCH_PORT = 14;
     public final static int CATAPULT_LIMIT_SWITCH_B_SIDECAR = 2;
-    public final static int CATAPULT_LIMIT_SWITCH_B_PORT = 14;
+    public final static int CATAPULT_LIMIT_SWITCH_B_PORT = 9;
     
     public final static int PRESSURE_SWITCH_PORT = 1;
     public final static int PRESSURE_SWITCH_SIDECAR = 1;
@@ -89,7 +89,7 @@ public class Ports {
     //public final static int GYRO_PORT = 0;
     //public final static int ANALOG_PRESSURE_PORT = 0;
     
-    public final static int FRONT_INTAKE_TILT_POT_PORT = 1;
+    public final static int FRONT_INTAKE_TILT_POT_PORT = 7;
     public final static int REAR_INTAKE_TILT_POT_PORT = 1;
 
     //----- Relays -----
@@ -99,8 +99,8 @@ public class Ports {
 
     //----- Lights -----
     public final static int LIGHTS_SIDECAR = 2;
-    public final static int LIGHTS_A_PORT = 14;
-    public final static int LIGHTS_B_PORT = 13;
-    public final static int LIGHTS_C_PORT = 12;
+    public final static int LIGHTS_A_PORT = 7;
+    public final static int LIGHTS_B_PORT = 8;
+    public final static int LIGHTS_C_PORT = 10;
     public final static int LIGHTS_D_PORT = 11;
 }

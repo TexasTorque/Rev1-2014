@@ -1,6 +1,7 @@
 package org.TexasTorque.TexasTorque2014.autonomous.generic;
 
 import edu.wpi.first.wpilibj.Timer;
+import java.util.Hashtable;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
 
 public class AutonomousWait extends AutonomousCommand {
@@ -29,6 +30,7 @@ public class AutonomousWait extends AutonomousCommand {
             System.err.println("Done");
             return true;
         }
+        driverInput.updateAutonData(new Hashtable());
         return false;
     }
     
