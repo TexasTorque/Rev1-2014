@@ -134,11 +134,11 @@ public class DriverInputState {
     }
     
     public synchronized double frontIntakeOverride() {
-        return operatorControllerState.getLeftYAxis();
+        return operatorControllerState.getRightYAxis();
     }
 
     public synchronized double rearIntakeOverride() {
-        return operatorControllerState.getRightYAxis();
+        return operatorControllerState.getLeftYAxis();
     }
 
     public synchronized boolean frontIntaking() {
