@@ -11,6 +11,7 @@ public class Manipulator extends TorqueSubsystem {
 
     private Intake intake;
     private Catapult catapult;
+    private double intakeOverrideConst;
 
     public static Manipulator getInstance() {
         return (instance == null) ? instance = new Manipulator() : instance;
@@ -134,7 +135,7 @@ public class Manipulator extends TorqueSubsystem {
 
     public void rearOuttake() {
         intake.setRearIntakeSpeed(Intake.outtakeSpeed);
-        intake.setRearAngle(Intake.rearDownAngle);
+        intake.setRearAngle(Intake.rearOuttakeAngle);
         intake.setFrontIntakeSpeed(Intake.intakeSpeed);
         intake.setFrontAngle(Intake.frontIntakeAngle);
     }
@@ -208,6 +209,7 @@ public class Manipulator extends TorqueSubsystem {
     public void loadParameters() {
         intake.loadParameters();
         catapult.loadParameters();
+        intakeOverrideConst = params.getAsDouble("I_OverrideConst", 0.8);
     }
 
     private void calcOverrides() {
@@ -218,12 +220,12 @@ public class Manipulator extends TorqueSubsystem {
         }
 
         if (Math.abs(driverInput.frontIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND) {
-            intake.frontIntakeOverride(driverInput.frontIntakeOverride());
+            intake.frontIntakeOverride(driverInput.frontIntakeOverride() * intakeOverrideConst);
         } else {
             intake.frontIntakeOverride(Constants.MOTOR_STOPPED);
         }
         if (Math.abs(driverInput.rearIntakeOverride()) > Constants.OVERRIDE_AXIS_DEADBAND) {
-            intake.rearIntakeOverride(driverInput.rearIntakeOverride());
+            intake.rearIntakeOverride(driverInput.rearIntakeOverride() * intakeOverrideConst);
         } else {
             intake.rearIntakeOverride(Constants.MOTOR_STOPPED);
         }

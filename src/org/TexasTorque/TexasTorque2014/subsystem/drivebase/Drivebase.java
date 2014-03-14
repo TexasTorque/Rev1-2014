@@ -64,7 +64,7 @@ public class Drivebase extends TorqueSubsystem {
         xAxis = TorqueUtil.applyDeadband(xAxis, Constants.X_AXIS_DEADBAND);
         rotation = TorqueUtil.applyDeadband(rotation, Constants.ROTATION_DEADBAND);
 
-        if (driveMode) {// == Constants.OMNI_MODE;
+        if (driveMode== Constants.OMNI_MODE) {// == Constants.OMNI_MODE;
             HDrive(yAxis, xAxis, rotation);
         } else {
             tractionDrive(yAxis, rotation);

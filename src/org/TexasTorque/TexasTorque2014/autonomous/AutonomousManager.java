@@ -157,7 +157,7 @@ public class AutonomousManager {
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(3.0));
         autoBuilder.addCommand(new AutonomousRearIntakeDown(5.0));
         autoBuilder.addCommand(new AutonomousRearIntake(0.8));
-        autoBuilder.addCommand(new AutonomousWait(0.8));
+        autoBuilder.addCommand(new AutonomousWait(1.8));
         autoBuilder.addCommand(new AutonomousResetCatapultDone(3.0));
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(3.0));
         double timeout = params.getAsDouble("A_DriveTimeout", 2.0);
@@ -188,8 +188,9 @@ public class AutonomousManager {
         autoBuilder.addCommand(new AutonomousRearIntake(0.8));
         autoBuilder.addCommand(new AutonomousWait(0.8));
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(5.0));
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(0.3));
         double timeout = params.getAsDouble("A_DriveTimeout", 2.0);
-        autoBuilder.addCommand(new AutonomousDriveStraightDead(1.0, timeout));
+        autoBuilder.addCommand(new AutonomousDriveStraightDeadControlled(1.0, timeout));
         
     }
 

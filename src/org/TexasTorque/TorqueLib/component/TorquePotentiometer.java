@@ -6,6 +6,7 @@ public class TorquePotentiometer
 {
     private AnalogChannel pot;
     
+    private boolean firstCycle;
     private double prevVoltage;
     private double maxVoltage;
     private double minVoltage;
@@ -13,11 +14,13 @@ public class TorquePotentiometer
     public TorquePotentiometer(int port)
     {
         pot = new AnalogChannel(port);
+        firstCycle = true;
     }
     
     public TorquePotentiometer(int sidecar, int port)
     {
         pot = new AnalogChannel(sidecar, port);
+        firstCycle = true;
     }
     
     public void setRange(double max, double min)
@@ -34,7 +37,7 @@ public class TorquePotentiometer
     public double getRaw()
     {
         double temp = pot.getVoltage();
-        if(Math.abs(temp - prevVoltage) > 4)
+        if(!firstCycle && Math.abs(temp - prevVoltage) > 4)
         {
             if(prevVoltage > 4) {
                 temp = prevVoltage + temp;
@@ -42,6 +45,8 @@ public class TorquePotentiometer
             {
                 temp = temp - 5;
             }
+        } else {
+            firstCycle = false;
         }
         prevVoltage = temp;
         return temp;

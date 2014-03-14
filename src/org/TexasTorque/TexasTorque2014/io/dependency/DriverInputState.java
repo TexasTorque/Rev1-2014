@@ -21,6 +21,7 @@ public class DriverInputState {
 
     public DriverInputState() {
         driveBaseMode = new TorqueToggle();
+        inOverrideState = false;
     }
 
     public void updateState(DriverInput input) {
@@ -28,7 +29,6 @@ public class DriverInputState {
         operatorControllerState = new GenericControllerState(input.getOperatorController());
         autonDelay = input.getAutonomousDelay();
         autonMode = input.getAutonomousMode();
-        inOverrideState = false;
         driveBaseMode.calc(driveControllerState.getLeftStickClick());
 
         autonomousData.clear();
