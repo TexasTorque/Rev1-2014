@@ -144,7 +144,7 @@ public class Catapult extends TorqueSubsystem {
         fullPidSetpoint = params.getAsDouble("C_FullResetSetpoint", 0.0);
         shortPidSetpoint = params.getAsDouble("C_ShortResetSetpoint", 0.0);
         slowSpeed = params.getAsDouble("C_SlowSpeed", 0.0);
-        overrideSpeed = params.getAsDouble("C_OverrideSpeed", 0.0);
+        overrideSpeed = params.getAsDouble("C_OverrideSpeed", 0.75);
 
         double p = params.getAsDouble("C_PullBackP", 0.0);
         double i = params.getAsDouble("C_PullBackI", 0.0);

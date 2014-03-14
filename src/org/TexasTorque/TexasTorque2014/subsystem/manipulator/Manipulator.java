@@ -211,7 +211,7 @@ public class Manipulator extends TorqueSubsystem {
     }
 
     private void calcOverrides() {
-        if (!sensorInput.getCatapultLimitSwitch() && (driverInput.ChooChooOverride() || driverInput.ChooChooReset())) {
+        if (!sensorInput.getCatapultLimitSwitch() && driverInput.winchOverride()) {
             catapult.setMotorSpeed(Catapult.overrideSpeed);
         } else {
             catapult.setMotorSpeed(Constants.MOTOR_STOPPED);
