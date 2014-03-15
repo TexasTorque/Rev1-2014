@@ -44,6 +44,9 @@ public class Drivebase extends TorqueSubsystem {
             mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
             
         }
+        if(SmartDashboard.getBoolean("firstControllerIsLogitech", false)) {
+            strafeMode = driveMode;
+        }
         setToRobot();
     }
 
