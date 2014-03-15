@@ -7,6 +7,7 @@ public class RobotOutputState {
     //----- Pneumatics -----
     private boolean compressorEnabled;
     private boolean driveBaseMode;
+    private boolean strafeMode;
     private boolean catapultAngle;
 
     //----- Drive Motors -----
@@ -91,8 +92,13 @@ public class RobotOutputState {
         return compressorEnabled;
     }
 
-    public void setDriveBaseMode(boolean mode) {
+    public void setDriveBaseMode(boolean mode, boolean sMode) {
         driveBaseMode = mode;
+        strafeMode = sMode;
+    }
+    
+    public boolean getStrafeMode() {
+        return strafeMode;
     }
 
     public boolean getDriveBaseMode() {

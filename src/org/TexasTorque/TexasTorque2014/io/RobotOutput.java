@@ -25,6 +25,7 @@ public class RobotOutput {
     private Solenoid catapultStopAngle;
     private boolean catapultAngle;
     private boolean driveBaseMode;
+    private boolean strafeMode;
     private Solenoid winchQuickRelease;
     private boolean winchSolinoid;
 
@@ -129,7 +130,7 @@ public class RobotOutput {
 
     public synchronized void pullFromState() {
         setDriveMotors(state.getLeftFrontMotorSpeed(), state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed(), state.getStrafeMotorSpeed());
-        setDriveBaseMode(state.getDriveBaseMode());
+        setDriveBaseMode(state.getDriveBaseMode(), state.getStrafeMode());
         setCatapultMotor(state.getCatapultMotorSpeed());
         setWinchSolinoid(state.getWinchSolinoid());
         setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
@@ -176,11 +177,12 @@ public class RobotOutput {
         return compressor.enabled();
     }
 
-    public void setDriveBaseMode(boolean mode) {
+    public void setDriveBaseMode(boolean mode, boolean strafeMode) {
         frontDriveBaseSwitcher.set(mode);
-        middleDriveBaseSwitcher.set(mode);
+        middleDriveBaseSwitcher.set(strafeMode);
         rearDriveBaseSwitcher.set(mode);
         driveBaseMode = mode;
+        this.strafeMode = strafeMode;
     }
 
     public boolean getDriveBaseMode() {

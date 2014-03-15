@@ -39,7 +39,7 @@ public class TorquePotentiometer
         double temp = pot.getVoltage();
         if(!firstCycle && Math.abs(temp - prevVoltage) > 4)
         {
-            if(prevVoltage > 4) {
+            if(prevVoltage > 4.8) {
                 temp = prevVoltage + temp;
             } else if (prevVoltage < 1)
             {

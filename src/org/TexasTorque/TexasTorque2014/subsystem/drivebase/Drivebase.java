@@ -15,6 +15,7 @@ public class Drivebase extends TorqueSubsystem {
     private double strafeDriveSpeed;
 
     private boolean driveMode;
+    private boolean strafeMode;
 
     public static Drivebase getInstance() {
         return (instance == null) ? instance = new Drivebase() : instance;
@@ -34,12 +35,14 @@ public class Drivebase extends TorqueSubsystem {
 
     public void run() {
         if (driverInput.isAuton()) {
+            strafeMode = Constants.TRACTION_MODE;
             //setDriveMode(driverInput.getAutonBool("driveMode", Constants.TRACTION_MODE));
             setDriveMode(Constants.TRACTION_MODE);
             setDriveSpeeds(driverInput.getAutonDouble("leftSpeed", Constants.MOTOR_STOPPED), driverInput.getAutonDouble("rightSpeed", Constants.MOTOR_STOPPED), Constants.MOTOR_STOPPED);
         } else {
             setDriveMode(driverInput.getDriveMode());
             mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
+            
         }
         setToRobot();
     }
@@ -48,7 +51,7 @@ public class Drivebase extends TorqueSubsystem {
         SmartDashboard.putNumber("leftSpeed", leftFrontDriveSpeed);
         SmartDashboard.putNumber("rightSpeed", rightFrontDriveSpeed);
         robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed, strafeDriveSpeed);
-        robotOutput.setDriveBaseMode(driveMode);
+        robotOutput.setDriveBaseMode(driveMode, strafeMode);
     }
 
     public void setDriveSpeeds(double leftSpeed, double rightSpeed, double strafeSpeed) {
@@ -63,8 +66,11 @@ public class Drivebase extends TorqueSubsystem {
         yAxis = TorqueUtil.applyDeadband(yAxis, Constants.Y_AXIS_DEADBAND);
         xAxis = TorqueUtil.applyDeadband(xAxis, Constants.X_AXIS_DEADBAND);
         rotation = TorqueUtil.applyDeadband(rotation, Constants.ROTATION_DEADBAND);
-
-        if (driveMode== Constants.OMNI_MODE) {// == Constants.OMNI_MODE;
+        if(SmartDashboard.getBoolean("firstControllerIsLogitech", false))
+        {
+            xAxis = driverInput.strafeOverride() * 0.5;
+        }
+        if (driveMode== Constants.OMNI_MODE) {
             HDrive(yAxis, xAxis, rotation);
         } else {
             tractionDrive(yAxis, rotation);
@@ -75,7 +81,7 @@ public class Drivebase extends TorqueSubsystem {
         double leftSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
         double strafeSpeed = 0;
-
+        strafeMode = (strafeSpeed != 0);
         SmartDashboard.putNumber("YAX", yAxis);
         SmartDashboard.putNumber("RTA", rotation);
 
@@ -99,7 +105,7 @@ public class Drivebase extends TorqueSubsystem {
         double leftSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
         double strafeSpeed = xAxis * Constants.STRAFE_COEFFICIENT;
-
+        strafeMode = (strafeSpeed != 0);
         SmartDashboard.putNumber("YAX", yAxis);
         SmartDashboard.putNumber("XAX", xAxis);
         SmartDashboard.putNumber("RTA", rotation);

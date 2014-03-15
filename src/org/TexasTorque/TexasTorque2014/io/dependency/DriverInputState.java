@@ -98,6 +98,14 @@ public class DriverInputState {
     public synchronized double getRotation() {
         return driveControllerState.getRightXAxis();
     }
+    
+    public synchronized double strafeOverride() {
+        if(Math.abs(operatorControllerState.getLeftXAxis()) > 0.25)
+        {
+            return operatorControllerState.getLeftXAxis();
+        }
+        return Constants.MOTOR_STOPPED;
+    }
 
     public synchronized boolean hasInput() {
         return (Math.abs(getXAxis()) > Constants.X_AXIS_DEADBAND || Math.abs(getYAxis()) > Constants.Y_AXIS_DEADBAND || Math.abs(getRotation()) > Constants.ROTATION_DEADBAND);
