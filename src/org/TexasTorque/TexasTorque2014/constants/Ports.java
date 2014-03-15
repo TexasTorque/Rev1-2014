@@ -27,7 +27,7 @@ public class Ports {
     public final static int FRONT_INTAKE_MOTOR_PORT = 4;
 
     public final static int CATAPULT_SIDECAR = 2;
-    public final static int CATAPULT_MOTOR_PORT = 2;
+    public final static int CATAPULT_MOTOR_PORT = 3;
     public final static int CATAPULT_B_SIDECAR = 1;
     public final static int CATAPULT_B_MOTOR_PORT = 9;
 
