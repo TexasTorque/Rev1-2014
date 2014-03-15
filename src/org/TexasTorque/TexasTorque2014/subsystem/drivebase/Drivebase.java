@@ -84,7 +84,7 @@ public class Drivebase extends TorqueSubsystem {
         double leftSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
         double strafeSpeed = 0;
-        strafeMode = (strafeSpeed != 0);
+        strafeMode = Constants.TRACTION_MODE;
         SmartDashboard.putNumber("YAX", yAxis);
         SmartDashboard.putNumber("RTA", rotation);
 
@@ -108,7 +108,7 @@ public class Drivebase extends TorqueSubsystem {
         double leftSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
         double strafeSpeed = xAxis * Constants.STRAFE_COEFFICIENT;
-        strafeMode = (strafeSpeed != 0);
+        strafeMode = (strafeSpeed == 0) ? Constants.TRACTION_MODE: Constants.OMNI_MODE;
         SmartDashboard.putNumber("YAX", yAxis);
         SmartDashboard.putNumber("XAX", xAxis);
         SmartDashboard.putNumber("RTA", rotation);
