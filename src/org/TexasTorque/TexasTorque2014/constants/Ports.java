@@ -47,11 +47,11 @@ public class Ports {
     public final static int REAR_INTAKE_MOTOR_PORT = 4;
 
     //----- Solenoids -----
-    public final static int FRONT_DRIVEBASE_SWITCHER = 1;
-    public final static int MIDDLE_DRIVEBASE_SWITCHER = 2;
-    public final static int REAR_DRIVEBASE_SWITCHER = 3;
-    public final static int CATAPULT_RELEASE = 4;
-    public final static int CATAPULT_ANGLE = 5;
+    public final static int FRONT_DRIVEBASE_SWITCHER = 6;
+    public final static int MIDDLE_DRIVEBASE_SWITCHER = 5;
+    public final static int REAR_DRIVEBASE_SWITCHER = 4;
+    public final static int CATAPULT_RELEASE = 2;
+    public final static int CATAPULT_ANGLE = 1;
             
     //----- Digital Inputs -----
     //----- Sidecar 1 -----
@@ -78,7 +78,7 @@ public class Ports {
     public final static int CATAPULT_ENCODER_B_PORT = 14;
     
     public final static int CATAPULT_LIMIT_SWITCH_SIDECAR = 1;
-    public final static int CATAPULT_LIMIT_SWITCH_PORT = 14;
+    public final static int CATAPULT_LIMIT_SWITCH_PORT = 2;
     public final static int CATAPULT_LIMIT_SWITCH_B_SIDECAR = 2;
     public final static int CATAPULT_LIMIT_SWITCH_B_PORT = 9;
     
@@ -89,7 +89,7 @@ public class Ports {
     //public final static int GYRO_PORT = 0;
     //public final static int ANALOG_PRESSURE_PORT = 0;
     
-    public final static int FRONT_INTAKE_TILT_POT_PORT = 8;
+    public final static int FRONT_INTAKE_TILT_POT_PORT = 6;
     public final static int REAR_INTAKE_TILT_POT_PORT = 7;
 
     //----- Relays -----
