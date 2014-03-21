@@ -40,8 +40,8 @@ public class TorquePotentiometer
         if(!firstCycle && Math.abs(temp - prevVoltage) > 4)
         {
             if(prevVoltage > 4.8) {
-                temp = prevVoltage + temp;
-            } else if (prevVoltage < 1)
+                temp = 5 + temp;
+            } else if (prevVoltage < 0.2)
             {
                 temp = temp - 5;
             }
