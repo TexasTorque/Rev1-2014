@@ -20,6 +20,8 @@ public class Constants
     public final static double ROTATION_COEFFICIENT = 1;
     public final static boolean TRACTION_MODE = true;
     public final static boolean OMNI_MODE = false;
+    public final static boolean STRAFE_ON = true;
+    public final static boolean STRAFE_OFF = false;
     public final static double CLICKS_PER_METER = 1719.484526;
     public final static double METERS_PER_CLICK = 0.00058157;
     
