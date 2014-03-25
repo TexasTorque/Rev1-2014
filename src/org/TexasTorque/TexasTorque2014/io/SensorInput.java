@@ -97,6 +97,8 @@ public class SensorInput {
         rightStrafeCounter.start();
         leftStrafeCounter.start();
         catapultEncoder.start();
+        frontIntakeTiltPotentiometer.reset();
+        rearIntakeTiltPotentiometer.reset();
     }
 
     public void resetEncoders() {
@@ -107,6 +109,8 @@ public class SensorInput {
         rightStrafeCounter.reset();
         leftStrafeCounter.reset();
         catapultEncoder.reset();
+        frontIntakeTiltPotentiometer.reset();
+        rearIntakeTiltPotentiometer.reset();
     }
     
     public void resetCatapultEncoder()
@@ -131,6 +135,8 @@ public class SensorInput {
         rightStrafeCounter.calc();
         leftStrafeCounter.calc();
         catapultEncoder.calc();
+        frontIntakeTiltPotentiometer.run();
+        rearIntakeTiltPotentiometer.run();
     }
 
     public void resetGyro() {

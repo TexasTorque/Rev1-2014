@@ -34,10 +34,13 @@ public class TorquePotentiometer
         return 1 - limitValue((getRaw() - minVoltage) / (maxVoltage - minVoltage));
     }
     
-    public double getRaw()
-    {
+    public void reset() {
+        firstCycle = true;
+    }
+    
+    public void run() {
         double temp = pot.getVoltage();
-        if(!firstCycle && Math.abs(temp - prevVoltage) > 4)
+        if(!firstCycle && Math.abs(temp - prevVoltage) > 4.8)
         {
             if(prevVoltage > 4.8) {
                 temp = 5 + temp;
@@ -47,9 +50,18 @@ public class TorquePotentiometer
             }
         } else {
             firstCycle = false;
+            prevVoltage = temp;
         }
         prevVoltage = temp;
-        return temp;
+    }
+    
+    public double getRaw()
+    {
+        if(prevVoltage == 0.0)
+        {
+            prevVoltage = pot.getVoltage();
+        }
+        return prevVoltage;
     }
     
     private double limitValue(double value)

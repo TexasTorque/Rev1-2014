@@ -96,7 +96,11 @@ public class DriverInputState {
     }
 
     public synchronized double getRotation() {
-        return driveControllerState.getRightXAxis();
+        double axis = driveControllerState.getRightXAxis();
+        // ^ (5/2) fit
+        axis = Math.sqrt(Math.abs(axis * axis * axis * axis * axis)) * ((axis > 0) ? 1 : -1);
+        
+        return axis;
     }
     
     public synchronized double strafeOverride() {
