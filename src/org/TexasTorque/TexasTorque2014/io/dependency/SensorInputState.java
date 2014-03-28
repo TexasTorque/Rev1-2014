@@ -202,7 +202,6 @@ public class SensorInputState {
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
         SmartDashboard.putBoolean("CatapultLimit", catapultLimitSwitch || catapultLimitSwitchB);
         SmartDashboard.putBoolean("Logging",true);
-
     }
 
     public void loadParamaters() {

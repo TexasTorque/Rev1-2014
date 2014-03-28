@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Watchdog;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
@@ -86,6 +87,8 @@ public class SensorInput {
 
     public synchronized void updateState() {
         state.updateState(this);
+        SmartDashboard.putNumber("FrontIntakeRaw", frontIntakeTiltPotentiometer.getRawNoRollover());
+        SmartDashboard.putNumber("RearIntakeRaw", rearIntakeTiltPotentiometer.getRawNoRollover());
     }
 
     private void startEncoders() {

@@ -50,10 +50,12 @@ public class TorquePotentiometer {
     }
 
     public double getRaw() {
-        if (prevVoltage == 0.0) {
-            prevVoltage = pot.getVoltage();
-        }
-        return prevVoltage;
+//        if (prevVoltage == 0.0) {
+//            prevVoltage = pot.getVoltage();
+//        }
+//        return prevVoltage;
+        
+        return pot.getVoltage();
     }
 
     private double limitValue(double value) {
@@ -62,6 +64,11 @@ public class TorquePotentiometer {
         } else {
             return value;
         }
+    }
+    
+    public double getRawNoRollover()
+    {
+        return pot.getVoltage();
     }
 
 }
