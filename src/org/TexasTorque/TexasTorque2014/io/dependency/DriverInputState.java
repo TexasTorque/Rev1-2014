@@ -141,9 +141,6 @@ public class DriverInputState {
         }
         return catapultStopAngle;
     }
-    public synchronized boolean winchOverride() {
-        return operatorControllerState.getRightActionButton();
-    }
     
     public synchronized double frontIntakeOverride() {
         return operatorControllerState.getRightYAxis();
@@ -213,10 +210,14 @@ public class DriverInputState {
         return rearOuttaking();
     }
     public synchronized boolean releaseOverride() {
-        return operatorControllerState.getRightActionButton();
+        return operatorControllerState.getLeftDPAD();
     }
     public synchronized boolean shortShotOverride() {
         return operatorControllerState.getLeftDPAD();
+    }
+    
+    public synchronized boolean winchOverride() {
+        return operatorControllerState.getRightActionButton();
     }
 
     public synchronized void pushToDashboard() {
