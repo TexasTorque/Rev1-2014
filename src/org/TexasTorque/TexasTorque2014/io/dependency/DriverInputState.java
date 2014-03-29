@@ -99,13 +99,12 @@ public class DriverInputState {
         double axis = driveControllerState.getRightXAxis();
         // ^ (5/2) fit
         axis = Math.sqrt(Math.abs(axis * axis * axis * axis * axis)) * ((axis > 0) ? 1 : -1);
-        
+
         return axis;
     }
-    
+
     public synchronized double strafeOverride() {
-        if(Math.abs(operatorControllerState.getLeftXAxis()) > 0.25)
-        {
+        if (Math.abs(operatorControllerState.getLeftXAxis()) > 0.25) {
             return operatorControllerState.getLeftXAxis();
         }
         return Constants.MOTOR_STOPPED;
@@ -141,7 +140,7 @@ public class DriverInputState {
         }
         return catapultStopAngle;
     }
-    
+
     public synchronized double frontIntakeOverride() {
         return operatorControllerState.getRightYAxis();
     }
@@ -196,26 +195,31 @@ public class DriverInputState {
 
         return inOverrideState;
     }
-    
+
     public synchronized boolean frontIntakeRollOverride() {
         return frontIntaking();
     }
+
     public synchronized boolean frontOuttakeRollOverride() {
         return frontOuttaking();
     }
+
     public synchronized boolean rearIntakeRollOverride() {
         return rearIntaking();
     }
+
     public synchronized boolean rearOuttakeRollOverride() {
         return rearOuttaking();
     }
+
     public synchronized boolean releaseOverride() {
-        return operatorControllerState.getLeftDPAD();
+        return operatorControllerState.getRightDPAD();
     }
+
     public synchronized boolean shortShotOverride() {
         return operatorControllerState.getLeftDPAD();
     }
-    
+
     public synchronized boolean winchOverride() {
         return operatorControllerState.getRightActionButton();
     }
