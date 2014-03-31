@@ -25,12 +25,12 @@ public class SensorInput {
     private DigitalInput catapultLimitSwitchB;
 
     //----- Encoder -----
-    private TorqueCounter leftFrontDriveCounter;
-    private TorqueCounter rightFrontDriveCounter;
+    private TorqueEncoder leftFrontDriveCounter;
+    private TorqueEncoder rightFrontDriveCounter;
     private TorqueCounter leftRearDriveCounter;
     private TorqueCounter rightRearDriveCounter;
-    private TorqueCounter rightStrafeCounter;
-    private TorqueCounter leftStrafeCounter;
+    //private TorqueCounter rightStrafeCounter;
+    //private TorqueCounter leftStrafeCounter;
     private TorqueEncoder catapultEncoder;
 
     //----- Analog -----

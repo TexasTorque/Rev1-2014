@@ -56,10 +56,12 @@ public class Ports {
     //----- Digital Inputs -----
     //----- Sidecar 1 -----
     public final static int LEFT_FRONT_DRIVE_ENCODER_SIDECAR = 2;
-    public final static int LEFT_FRONT_DRIVE_ENCODER_PORT = 3;
+    public final static int LEFT_FRONT_DRIVE_ENCODER_A_PORT = 3;
+    public final static int LEFT_FRONT_DRIVE_ENCODER_B_PORT = 2;
     
     public final static int RIGHT_FRONT_DRIVE_ENCODER_SIDECAR = 1;
-    public final static int RIGHT_FRONT_DRIVE_ENCODER_PORT = 8;
+    public final static int RIGHT_FRONT_DRIVE_ENCODER_A_PORT = 2;
+    public final static int RIGHT_FRONT_DRIVE_ENCODER_B_PORT = 3;
     
     public final static int LEFT_REAR_DRIVE_ENCODER_SIDECAR = 2;
     public final static int LEFT_REAR_DRIVE_ENCODER_PORT = 6;
@@ -67,11 +69,11 @@ public class Ports {
     public final static int RIGHT_REAR_DRIVE_ENCODER_SIDECAR = 1;
     public final static int RIGHT_REAR_DRIVE_ENCODER_PORT = 5;
     
-    public final static int RIGHT_STRAFE_DRIVE_COUNTER_SIDECAR = 1;
-    public final static int RIGHT_STRAFE_DRIVE_COUNTER_PORT = 6;
+    ///public final static int RIGHT_STRAFE_DRIVE_COUNTER_SIDECAR = 1;
+    //public final static int RIGHT_STRAFE_DRIVE_COUNTER_PORT = 6;
     
-    public final static int LEFT_STRAFE_DRIVE_COUNTER_SIDECAR = 2;
-    public final static int LEFT_STRAFE_DRIVE_COUNTER_PORT = 5;
+    //public final static int LEFT_STRAFE_DRIVE_COUNTER_SIDECAR = 2;
+    //public final static int LEFT_STRAFE_DRIVE_COUNTER_PORT = 5;
     
     public final static int CATAPULT_ENCODER_SIDECAR = 2;
     public final static int CATAPULT_ENCODER_A_PORT = 13;
