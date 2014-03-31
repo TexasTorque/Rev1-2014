@@ -23,8 +23,6 @@ public class SensorInputState {
     private double rightRearDriveEncoderVelocity;
     private double leftRearDriveEncoderAcceleration;
     private double rightRearDriveEncoderAcceleration;
-    private double rightStrafeRate;
-    private double leftStrafeRate;
     private double catapultEncoder;
 
     //----- Analog -----
@@ -61,8 +59,6 @@ public class SensorInputState {
         rightRearDriveEncoderVelocity = input.getRightRearDriveEncoderRate();
         leftRearDriveEncoderAcceleration = input.getLeftRearDriveEncoderAcceleration();
         rightRearDriveEncoderAcceleration = input.getRightRearDriveEncoderAcceleration();
-        rightStrafeRate = input.getRightStrafeCounterRate();
-        leftStrafeRate = input.getLeftStrafeCounterRate();
         catapultEncoder = input.getCatapultEncoder();
 
         //----- Potentiometers -----
@@ -102,14 +98,6 @@ public class SensorInputState {
 
     public double getRightFrontDriveEncoderAcceleration() {
         return rightFrontDriveEncoderAcceleration;
-    }
-
-    public double getRightStrafeDriveEncoderRate() {
-        return rightStrafeRate;
-    }
-
-    public double getLeftStrafeDriveEncoderRate() {
-        return leftStrafeRate;
     }
 
     public double getLeftRearDriveEncoder() {
@@ -195,8 +183,6 @@ public class SensorInputState {
         SmartDashboard.putNumber("FrontRightRate", getRightFrontDriveEncoderRate());
         SmartDashboard.putNumber("RearLeftRate", getLeftRearDriveEncoderRate());
         SmartDashboard.putNumber("RearRightRate", getRightRearDriveEncoderRate());
-        SmartDashboard.putNumber("RightStrafeRate", getRightStrafeDriveEncoderRate());
-        SmartDashboard.putNumber("LeftStrafeRate", getLeftStrafeDriveEncoderRate());
         SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);

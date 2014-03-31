@@ -34,13 +34,10 @@ public class RobotOutput {
     private Motor leftRearDriveMotor;
     private Motor rightFrontDriveMotor;
     private Motor rightRearDriveMotor;
-    private Motor leftStrafeMotor;
-    private Motor rightStrafeMotor;
     private double leftFrontMotorSpeed;
     private double leftRearMotorSpeed;
     private double rightFrontMotorSpeed;
     private double rightRearMotorSpeed;
-    private double strafeMotorSpeed;
 
     //----- Intake -----
     private Motor frontIntakeMotor;
@@ -78,13 +75,10 @@ public class RobotOutput {
         leftRearDriveMotor = new Motor(new Victor(Ports.LEFT_REAR_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
         rightFrontDriveMotor = new Motor(new Victor(Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
         rightRearDriveMotor = new Motor(new Victor(Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
-        leftStrafeMotor = new Motor(new Victor(Ports.LEFT_STRAFE_DRIVE_SIDECAR, Ports.LEFT_STRAFE_DRIVE_MOTOR_PORT), false, true);
-        rightStrafeMotor = new Motor(new Victor(Ports.RIGHT_STRAFE_DRIVE_SIDECAR, Ports.RIGHT_STRAFE_DRIVE_MOTOR_PORT), false, true);
         rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
         rightRearMotorSpeed = Constants.MOTOR_STOPPED;
         leftFrontMotorSpeed = Constants.MOTOR_STOPPED;
         leftRearMotorSpeed = Constants.MOTOR_STOPPED;
-        strafeMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Intake -----
         frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_SIDECAR, Ports.FRONT_INTAKE_MOTOR_PORT), true, true);
@@ -143,13 +137,10 @@ public class RobotOutput {
         leftRearDriveMotor.Set(leftRearSpeed);
         rightFrontDriveMotor.Set(rightFrontSpeed);
         rightRearDriveMotor.Set(rightRearSpeed);
-        leftStrafeMotor.Set(strafeSpeed);
-        rightStrafeMotor.Set(strafeSpeed);
         leftFrontMotorSpeed = leftFrontSpeed;
         rightFrontMotorSpeed = rightFrontSpeed;
         leftRearMotorSpeed = leftRearSpeed;
         rightRearMotorSpeed = rightRearSpeed;
-        strafeMotorSpeed = strafeSpeed;
     }
 
     public double getLeftFrontMotorSpeed() {
@@ -166,10 +157,6 @@ public class RobotOutput {
 
     public double getRightRearMotorSpeed() {
         return rightRearMotorSpeed;
-    }
-
-    public double getStrafeMotorSpeed() {
-        return strafeMotorSpeed;
     }
 
     public boolean getCompressorEnabled() {
