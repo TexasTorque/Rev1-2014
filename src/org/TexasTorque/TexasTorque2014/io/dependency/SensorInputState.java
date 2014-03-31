@@ -129,11 +129,11 @@ public class SensorInputState {
     }
     
     public double getLeftDrivePosition() {
-        return (getLeftFrontDriveEncoder() + getLeftRearDriveEncoder());
+        return (getLeftFrontDriveEncoder());
     }
     
     public double getRightDrivePosition() {
-        return (getRightFrontDriveEncoder() + getRightRearDriveEncoder());
+        return (getRightFrontDriveEncoder());
     }
 
     public boolean getCatapultLimitSwitch() {
