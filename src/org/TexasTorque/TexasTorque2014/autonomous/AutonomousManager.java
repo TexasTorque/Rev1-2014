@@ -67,7 +67,7 @@ public class AutonomousManager {
                 doNothingAuto();
                 break;
             case Constants.JUST_DRIVE_AUTO:
-                justDriveAuto();
+                driveDistanceAuto();
                 break;
             case Constants.ONE_BALL_AUTO:
                 oneBallAuto();
@@ -86,6 +86,12 @@ public class AutonomousManager {
                 break;
             case Constants.DEAD_DRIVE_AUTO:
                 deadDriveAuto();
+                break;
+            case Constants.DRIVE_ONE_BALL_AUTO:
+                driveOneBallAuto();
+                break;
+            case Constants.DRIVE_DISTANCE_TWO_BALL_AUTO:
+                driveDistanceTwoBallAuto();
                 break;
             default:
                 doNothingAuto();
