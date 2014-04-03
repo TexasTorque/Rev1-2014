@@ -28,13 +28,19 @@ public class AutonomousDriveStraightFrontIntake extends AutonomousCommand {
         double p = params.getAsDouble("A_DriveForwardP", 0.0);
         double i = params.getAsDouble("A_DriveForwardI", 0.0);
         double d = params.getAsDouble("A_DriveForwardD", 0.0);
+        double e = params.getAsDouble("A_DriveForwardE", 0.0);
         leftDrive.setPIDGains(p, i, d);
         rightDrive.setPIDGains(p, i, d);
-        double doneRange = params.getAsDouble("A_DriveForwardDoneRange", 10.0);
+        leftDrive.setEpsilon(e);
+        rightDrive.setEpsilon(e);
+        double doneRange = params.getAsDouble("A_DriveForwardDoneRange", 8.0);
         leftDrive.setDoneRange(doneRange);
         rightDrive.setDoneRange(doneRange);
+        leftDrive.setMinDoneCycles((int)params.getAsDouble("A_DoneCycles", 50));
+        rightDrive.setMinDoneCycles((int)params.getAsDouble("A_DoneCycles", 50));
         isDone= false;
         this.timeout = timeout;
+        SensorInput.getInstance().resetDriveEncoders();
         reset();
     }
     
@@ -46,7 +52,7 @@ public class AutonomousDriveStraightFrontIntake extends AutonomousCommand {
 
     public boolean run() {
         if(firstCycle) {
-            System.err.println("Driving");
+            System.err.println("Driving - Straight");
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
@@ -56,13 +62,7 @@ public class AutonomousDriveStraightFrontIntake extends AutonomousCommand {
         double left = leftDrive.calculate(sensorInput.getLeftDrivePosition());
         double right = rightDrive.calculate(sensorInput.getRightDrivePosition());
         
-        if(sensorInput.getLeftDrivePosition() >= target) {
-            left = 0.0;
-        }
-        if(sensorInput.getRightDrivePosition()>= target) {
-            right = 0.0;
-        }
-        isDone = (leftDrive.isDone() && rightDrive.isDone());
+        isDone = leftDrive.isDone() && rightDrive.isDone();
         
         autonOutput.put("leftSpeed", new Double(-left));
         autonOutput.put("rightSpeed", new Double(-right));

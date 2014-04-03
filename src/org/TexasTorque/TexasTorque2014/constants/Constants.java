@@ -22,8 +22,8 @@ public class Constants
     public final static boolean OMNI_MODE = false;
     public final static boolean STRAFE_ON = true;
     public final static boolean STRAFE_OFF = false;
-    public final static double CLICKS_PER_METER = 1719.484526;
-    public final static double METERS_PER_CLICK = 0.00058157;
+    public final static double CLICKS_PER_METER = 783.242830177;
+    public final static double METERS_PER_CLICK = 0.00127674325;
     
     //----- Manipulator -----
     public final static boolean HIGH_SHOT = true;

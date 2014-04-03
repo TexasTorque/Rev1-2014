@@ -237,7 +237,7 @@ public class AutonomousManager {
         double distance = params.getAsDouble("A_DriveDistance", 0.0);
         autoBuilder.addCommand(new AutonomousDriveStraightFrontIntake(distance, 1.0, timeout));
         double postDriveWait = params.getAsDouble("A_PostDriveWait", 1.0);
-        autoBuilder.addCommand(new AutonomousWait(postDriveWait));
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postDriveWait));
         double fireWait = params.getAsDouble("A_FireWait", 8.0);
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
         double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);

@@ -38,7 +38,7 @@ public class DriverInputState {
         inOverrideState = false;
         autonomousData = table;
 
-        autonomousData.put("driveMode", new Boolean(Constants.TRACTION_MODE));
+        autonomousData.put("driveMode", new Boolean(Constants.OMNI_MODE));
 
         autonomousData.put("CatapultAngle", Boolean.FALSE);
 

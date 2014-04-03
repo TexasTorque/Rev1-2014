@@ -124,9 +124,9 @@ public class SensorInputState {
         return rightRearDriveEncoderAcceleration;
     }
     
-    public double getForwardDrivePosition() {
-        return (getLeftFrontDriveEncoder() + getRightFrontDriveEncoder() + getLeftRearDriveEncoder() + getRightRearDriveEncoder()) / 4;
-    }
+    //public double getForwardDrivePosition() {
+    //    return (getLeftFrontDriveEncoder() + getRightFrontDriveEncoder() + getLeftRearDriveEncoder() + getRightRearDriveEncoder()) / 4;
+    //}
     
     public double getLeftDrivePosition() {
         return (getLeftFrontDriveEncoder());
@@ -182,7 +182,7 @@ public class SensorInputState {
         SmartDashboard.putNumber("LeftRate", getLeftFrontDriveEncoderRate());
         SmartDashboard.putNumber("RightRate", getRightFrontDriveEncoderRate());
         SmartDashboard.putNumber("LeftPosition", getLeftDrivePosition());
-        SmartDashboard.putNumber("RightPostiion", getRightDrivePosition());
+        SmartDashboard.putNumber("RightPosition", getRightDrivePosition());
         //SmartDashboard.putNumber("RearLeftRate", getLeftRearDriveEncoderRate());
         //SmartDashboard.putNumber("RearRightRate", getRightRearDriveEncoderRate());
         SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
