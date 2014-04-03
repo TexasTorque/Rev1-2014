@@ -62,9 +62,9 @@ public class AutonomousDriveStraight extends AutonomousCommand {
         if(sensorInput.getRightDrivePosition()>= target) {
             right = 0.0;
         }
-        if((sensorInput.getLeftDrivePosition() >= target || leftDrive.isDone()) && (sensorInput.getRightDrivePosition()>= target || rightDrive.isDone())) {
-            isDone = true;
-        }
+        
+        isDone = leftDrive.isDone() && rightDrive.isDone();
+        
         autonOutput.put("leftSpeed", new Double(-left));
         autonOutput.put("rightSpeed", new Double(-right));
         
