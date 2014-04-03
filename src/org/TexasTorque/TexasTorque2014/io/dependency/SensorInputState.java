@@ -179,15 +179,17 @@ public class SensorInputState {
     }
 
     public void pushToDashboard() {
-        SmartDashboard.putNumber("FrontLeftRate", getLeftFrontDriveEncoderRate());
-        SmartDashboard.putNumber("FrontRightRate", getRightFrontDriveEncoderRate());
-        SmartDashboard.putNumber("RearLeftRate", getLeftRearDriveEncoderRate());
-        SmartDashboard.putNumber("RearRightRate", getRightRearDriveEncoderRate());
+        SmartDashboard.putNumber("LeftRate", getLeftFrontDriveEncoderRate());
+        SmartDashboard.putNumber("RightRate", getRightFrontDriveEncoderRate());
+        SmartDashboard.putNumber("LeftPosition", getLeftDrivePosition());
+        SmartDashboard.putNumber("RightPostiion", getRightDrivePosition());
+        //SmartDashboard.putNumber("RearLeftRate", getLeftRearDriveEncoderRate());
+        //SmartDashboard.putNumber("RearRightRate", getRightRearDriveEncoderRate());
         SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
         SmartDashboard.putBoolean("CatapultLimit", catapultLimitSwitch || catapultLimitSwitchB);
-        SmartDashboard.putBoolean("Logging",true);
+        //SmartDashboard.putBoolean("Logging",true);
     }
 
     public void loadParamaters() {

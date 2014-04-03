@@ -213,7 +213,7 @@ public class DriverInputState {
         return rearOuttaking();
     }
     public synchronized boolean releaseOverride() {
-        return operatorControllerState.getBottomActionButton();
+        return operatorControllerState.getRightDPAD();
     }
     public synchronized boolean shortShotOverride() {
         return operatorControllerState.getLeftDPAD();

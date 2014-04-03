@@ -57,11 +57,11 @@ public class Ports {
     //----- Sidecar 1 -----
     public final static int LEFT_FRONT_DRIVE_ENCODER_SIDECAR = 2;
     public final static int LEFT_FRONT_DRIVE_ENCODER_A_PORT = 3;
-    public final static int LEFT_FRONT_DRIVE_ENCODER_B_PORT = 2;
+    public final static int LEFT_FRONT_DRIVE_ENCODER_B_PORT = 4;
     
     public final static int RIGHT_FRONT_DRIVE_ENCODER_SIDECAR = 1;
-    public final static int RIGHT_FRONT_DRIVE_ENCODER_A_PORT = 2;
-    public final static int RIGHT_FRONT_DRIVE_ENCODER_B_PORT = 3;
+    public final static int RIGHT_FRONT_DRIVE_ENCODER_A_PORT = 13;
+    public final static int RIGHT_FRONT_DRIVE_ENCODER_B_PORT = 14;
     
     public final static int LEFT_REAR_DRIVE_ENCODER_SIDECAR = 2;
     public final static int LEFT_REAR_DRIVE_ENCODER_PORT = 6;
