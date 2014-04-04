@@ -38,7 +38,7 @@ public class DriverInputState {
         inOverrideState = false;
         autonomousData = table;
 
-        autonomousData.put("driveMode", new Boolean(Constants.TRACTION_MODE));
+        autonomousData.put("driveMode", new Boolean(Constants.OMNI_MODE));
 
         autonomousData.put("CatapultAngle", Boolean.FALSE);
 
@@ -96,7 +96,11 @@ public class DriverInputState {
     }
 
     public synchronized double getRotation() {
-        return driveControllerState.getRightXAxis();
+        double axis = driveControllerState.getRightXAxis();
+        // ^ (5/2) fit
+        axis = Math.sqrt(Math.abs(axis * axis * axis * axis * axis)) * ((axis > 0) ? 1 : -1);
+        
+        return axis;
     }
     
     public synchronized double strafeOverride() {
@@ -112,8 +116,8 @@ public class DriverInputState {
     }
 
     public synchronized boolean getDriveMode() {
-        //SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
-        return (!driveControllerState.getTopLeftBumper());
+        SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
+        return (driveControllerState.getTopLeftBumper());
     }
 
 //---------- Manipulator ----------  
@@ -209,7 +213,7 @@ public class DriverInputState {
         return rearOuttaking();
     }
     public synchronized boolean releaseOverride() {
-        return operatorControllerState.getBottomActionButton();
+        return operatorControllerState.getRightDPAD();
     }
     public synchronized boolean shortShotOverride() {
         return operatorControllerState.getLeftDPAD();

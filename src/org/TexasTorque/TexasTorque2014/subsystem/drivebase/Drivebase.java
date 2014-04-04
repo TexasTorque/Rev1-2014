@@ -44,9 +44,9 @@ public class Drivebase extends TorqueSubsystem {
             mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
             
         }
-        if(SmartDashboard.getBoolean("firstControllerIsLogitech", false)) {
-            strafeMode = driveMode;
-        }
+//        if(SmartDashboard.getBoolean("firstControllerIsLogitech", false)) {
+//            strafeMode = driveMode;
+//        }
         setToRobot();
     }
 
@@ -69,13 +69,15 @@ public class Drivebase extends TorqueSubsystem {
         yAxis = TorqueUtil.applyDeadband(yAxis, Constants.Y_AXIS_DEADBAND);
         xAxis = TorqueUtil.applyDeadband(xAxis, Constants.X_AXIS_DEADBAND);
         rotation = TorqueUtil.applyDeadband(rotation, Constants.ROTATION_DEADBAND);
-        if(SmartDashboard.getBoolean("firstControllerIsLogitech", false))
-        {
-            xAxis = driverInput.strafeOverride() * 0.5;
-        }
+        //if(SmartDashboard.getBoolean("firstControllerIsLogitech", false))
+        //{
+            //xAxis = driverInput.getXAxis() * 1.0;
+        //}
         if (driveMode== Constants.OMNI_MODE) {
+            SmartDashboard.putBoolean("OmniMode",  true);
             HDrive(yAxis, xAxis, rotation);
         } else {
+            SmartDashboard.putBoolean("OmniMode",  false);
             tractionDrive(yAxis, rotation);
         }
     }
@@ -108,7 +110,13 @@ public class Drivebase extends TorqueSubsystem {
         double leftSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
         double strafeSpeed = xAxis * Constants.STRAFE_COEFFICIENT;
-        strafeMode = (strafeSpeed == 0) ? Constants.TRACTION_MODE: Constants.OMNI_MODE;
+        strafeMode = (strafeSpeed == 0) ? Constants.STRAFE_OFF: Constants.STRAFE_ON;
+        
+        // bradley this is set up wrong because of 
+        //strafeMode = !strafeMode;
+        
+        //strafeMode = Constants.OMNI_MODE;
+                
         SmartDashboard.putNumber("YAX", yAxis);
         SmartDashboard.putNumber("XAX", xAxis);
         SmartDashboard.putNumber("RTA", rotation);

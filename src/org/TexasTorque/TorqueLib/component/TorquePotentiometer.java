@@ -2,66 +2,73 @@ package org.TexasTorque.TorqueLib.component;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
 
-public class TorquePotentiometer
-{
+public class TorquePotentiometer {
+
     private AnalogChannel pot;
-    
+
     private boolean firstCycle;
     private double prevVoltage;
     private double maxVoltage;
     private double minVoltage;
-    
-    public TorquePotentiometer(int port)
-    {
+
+    public TorquePotentiometer(int port) {
         pot = new AnalogChannel(port);
         firstCycle = true;
     }
-    
-    public TorquePotentiometer(int sidecar, int port)
-    {
+
+    public TorquePotentiometer(int sidecar, int port) {
         pot = new AnalogChannel(sidecar, port);
         firstCycle = true;
     }
-    
-    public void setRange(double max, double min)
-    {
+
+    public void setRange(double max, double min) {
         maxVoltage = max;
         minVoltage = min;
     }
-    
-    public double get()
-    {
+
+    public double get() {
         return 1 - limitValue((getRaw() - minVoltage) / (maxVoltage - minVoltage));
     }
-    
-    public double getRaw()
-    {
+
+    public void reset() {
+        firstCycle = true;
+    }
+
+    public void run() {
         double temp = pot.getVoltage();
-        if(!firstCycle && Math.abs(temp - prevVoltage) > 4)
-        {
-            if(prevVoltage > 4.8) {
+        if (!firstCycle && Math.abs(temp - prevVoltage) > 4.8) {
+            if (prevVoltage > 4.8) {
                 temp = 5 + temp;
-            } else if (prevVoltage < 0.2)
-            {
+            } else if (prevVoltage < 0.2) {
                 temp = temp - 5;
             }
         } else {
             firstCycle = false;
+            prevVoltage = temp;
         }
         prevVoltage = temp;
-        return temp;
     }
-    
-    private double limitValue(double value)
-    {
-        if(value > 1.0)
-        {
+
+    public double getRaw() {
+//        if (prevVoltage == 0.0) {
+//            prevVoltage = pot.getVoltage();
+//        }
+//        return prevVoltage;
+        
+        return pot.getVoltage();
+    }
+
+    private double limitValue(double value) {
+        if (value > 1.0) {
             return 1.0;
-        }
-        else
-        {
+        } else {
             return value;
         }
     }
     
+    public double getRawNoRollover()
+    {
+        return pot.getVoltage();
+    }
+
 }

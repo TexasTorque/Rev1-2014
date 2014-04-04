@@ -7,6 +7,7 @@ import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveFrontInta
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraight;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightDead;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightDeadControlled;
+import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightFrontIntake;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousDone;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousWait;
 import org.TexasTorque.TexasTorque2014.autonomous.intake.AutonomousFrontIntake;
@@ -66,7 +67,7 @@ public class AutonomousManager {
                 doNothingAuto();
                 break;
             case Constants.JUST_DRIVE_AUTO:
-                justDriveAuto();
+                driveDistanceAuto();
                 break;
             case Constants.ONE_BALL_AUTO:
                 oneBallAuto();
@@ -85,6 +86,12 @@ public class AutonomousManager {
                 break;
             case Constants.DEAD_DRIVE_AUTO:
                 deadDriveAuto();
+                break;
+            case Constants.DRIVE_ONE_BALL_AUTO:
+                driveOneBallAuto();
+                break;
+            case Constants.DRIVE_DISTANCE_TWO_BALL_AUTO:
+                driveDistanceTwoBallAuto();
                 break;
             default:
                 doNothingAuto();
@@ -201,6 +208,48 @@ public class AutonomousManager {
         System.err.println("Loading Just Drive Auto");
         double timeout = params.getAsDouble("A_DriveTimeout", 2.0);
         autoBuilder.addCommand(new AutonomousDriveStraightDead(1.0, timeout));
+    }
+    
+    public void driveDistanceAuto() {
+        System.err.println("Loading Drive Distance Auto");
+        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
+        double distance = params.getAsDouble("A_DriveDistance", 0.0);
+        autoBuilder.addCommand(new AutonomousDriveStraight(distance, 1.0, timeout));
+    }
+    
+    public void driveOneBallAuto() {
+        System.err.println("Loading Drive One Ball Auto");
+        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
+        double distance = params.getAsDouble("A_DriveDistance", 0.0);
+        autoBuilder.addCommand(new AutonomousDriveStraight(distance, 1.0, timeout));
+        double postDriveWait = params.getAsDouble("A_PostDriveWait", 1.0);
+        autoBuilder.addCommand(new AutonomousWait(postDriveWait));
+        double fireWait = params.getAsDouble("A_FireWait", 8.0);
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
+        double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
+        
+    }
+    
+    public void driveDistanceTwoBallAuto() {
+        System.err.println("Loading Drive Two Ball Auto");
+        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
+        double distance = params.getAsDouble("A_DriveDistance", 0.0);
+        autoBuilder.addCommand(new AutonomousDriveStraightFrontIntake(distance, 1.0, timeout));
+        double postDriveWait = params.getAsDouble("A_PostDriveWait", 1.0);
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postDriveWait));
+        double fireWait = params.getAsDouble("A_FireWait", 8.0);
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
+        double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(5.0));
+        double intakeTime = params.getAsDouble("A_IntakeTime", 1.0);
+        autoBuilder.addCommand(new AutonomousFrontIntake(intakeTime));
+        double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 1.0);
+        autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
+        autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
     }
     
     public void deadDriveAuto() {

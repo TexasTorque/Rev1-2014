@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Watchdog;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
@@ -24,12 +25,12 @@ public class SensorInput {
     private DigitalInput catapultLimitSwitchB;
 
     //----- Encoder -----
-    private TorqueCounter leftFrontDriveCounter;
-    private TorqueCounter rightFrontDriveCounter;
+    private TorqueEncoder leftFrontDriveEncoder;
+    private TorqueEncoder rightFrontDriveEncoder;
     private TorqueCounter leftRearDriveCounter;
     private TorqueCounter rightRearDriveCounter;
-    private TorqueCounter rightStrafeCounter;
-    private TorqueCounter leftStrafeCounter;
+    //private TorqueCounter rightStrafeCounter;
+    //private TorqueCounter leftStrafeCounter;
     private TorqueEncoder catapultEncoder;
 
     //----- Analog -----
@@ -45,12 +46,10 @@ public class SensorInput {
         params = Parameters.getTeleopInstance();
 
         //----- Encoders/Counters -----
-        leftFrontDriveCounter = new TorqueCounter(Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_PORT);
+        leftFrontDriveEncoder = new TorqueEncoder(Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_A_PORT, Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_B_PORT, true);
         leftRearDriveCounter = new TorqueCounter(Ports.LEFT_REAR_DRIVE_ENCODER_SIDECAR, Ports.LEFT_REAR_DRIVE_ENCODER_PORT);
-        rightFrontDriveCounter = new TorqueCounter(Ports.RIGHT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_PORT);
+        rightFrontDriveEncoder = new TorqueEncoder(Ports.RIGHT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_B_PORT,false);
         rightRearDriveCounter = new TorqueCounter(Ports.RIGHT_REAR_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_PORT);
-        leftStrafeCounter = new TorqueCounter(Ports.LEFT_STRAFE_DRIVE_COUNTER_SIDECAR, Ports.LEFT_STRAFE_DRIVE_COUNTER_PORT);
-        rightStrafeCounter = new TorqueCounter(Ports.RIGHT_STRAFE_DRIVE_COUNTER_SIDECAR, Ports.RIGHT_STRAFE_DRIVE_COUNTER_PORT);
 
         catapultEncoder = new TorqueEncoder(Ports.CATAPULT_ENCODER_SIDECAR, Ports.CATAPULT_ENCODER_A_PORT, Ports.CATAPULT_ENCODER_SIDECAR, Ports.CATAPULT_ENCODER_B_PORT, false);
 
@@ -86,27 +85,29 @@ public class SensorInput {
 
     public synchronized void updateState() {
         state.updateState(this);
+        SmartDashboard.putNumber("FrontIntakeRaw", frontIntakeTiltPotentiometer.getRawNoRollover());
+        SmartDashboard.putNumber("RearIntakeRaw", rearIntakeTiltPotentiometer.getRawNoRollover());
     }
 
     private void startEncoders() {
         // 1 foot = ??? clicks
-        leftFrontDriveCounter.start();
-        rightFrontDriveCounter.start();
+        leftFrontDriveEncoder.start();
+        rightFrontDriveEncoder.start();
         leftRearDriveCounter.start();
         rightRearDriveCounter.start();
-        rightStrafeCounter.start();
-        leftStrafeCounter.start();
         catapultEncoder.start();
+        frontIntakeTiltPotentiometer.reset();
+        rearIntakeTiltPotentiometer.reset();
     }
 
     public void resetEncoders() {
-        leftFrontDriveCounter.reset();
-        rightFrontDriveCounter.reset();
+        leftFrontDriveEncoder.reset();
+        rightFrontDriveEncoder.reset();
         leftRearDriveCounter.reset();
         rightRearDriveCounter.reset();
-        rightStrafeCounter.reset();
-        leftStrafeCounter.reset();
         catapultEncoder.reset();
+        frontIntakeTiltPotentiometer.reset();
+        rearIntakeTiltPotentiometer.reset();
     }
     
     public void resetCatapultEncoder()
@@ -115,22 +116,20 @@ public class SensorInput {
     }
     
     public void resetDriveEncoders() {
-        leftFrontDriveCounter.reset();
-        rightFrontDriveCounter.reset();
+        leftFrontDriveEncoder.reset();
+        rightFrontDriveEncoder.reset();
         leftRearDriveCounter.reset();
         rightRearDriveCounter.reset();
-        rightStrafeCounter.reset();
-        leftStrafeCounter.reset();
     }
 
     public void calcEncoders() {
-        leftFrontDriveCounter.calc();
-        rightFrontDriveCounter.calc();
+        leftFrontDriveEncoder.calc();
+        rightFrontDriveEncoder.calc();
         leftRearDriveCounter.calc();
         rightRearDriveCounter.calc();
-        rightStrafeCounter.calc();
-        leftStrafeCounter.calc();
         catapultEncoder.calc();
+        frontIntakeTiltPotentiometer.run();
+        rearIntakeTiltPotentiometer.run();
     }
 
     public void resetGyro() {
@@ -139,27 +138,27 @@ public class SensorInput {
     }
 
     public double getLeftFrontDriveEncoder() {
-        return (leftFrontDriveCounter.get());
+        return (leftFrontDriveEncoder.get());
     }
 
     public double getRightFrontDriveEncoder() {
-        return (rightFrontDriveCounter.get());
+        return (rightFrontDriveEncoder.get());
     }
 
     public double getLeftFrontDriveEncoderRate() {
-        return (leftFrontDriveCounter.getRate());
+        return (leftFrontDriveEncoder.getRate());
     }
 
     public double getRightFrontDriveEncoderRate() {
-        return (rightFrontDriveCounter.getRate());
+        return (rightFrontDriveEncoder.getRate());
     }
 
     public double getLeftFrontDriveEncoderAcceleration() {
-        return (leftFrontDriveCounter.getRate());
+        return (leftFrontDriveEncoder.getRate());
     }
 
     public double getRightFrontDriveEncoderAcceleration() {
-        return (rightFrontDriveCounter.getRate());
+        return (rightFrontDriveEncoder.getRate());
     }
 
     public double getLeftRearDriveEncoder() {
@@ -200,14 +199,6 @@ public class SensorInput {
 
     public double getFrontIntakeTiltVoltage() {
         return frontIntakeTiltPotentiometer.getRaw();
-    }
-
-    public double getRightStrafeCounterRate() {
-        return rightStrafeCounter.getRate();
-    }
-
-    public double getLeftStrafeCounterRate() {
-        return leftStrafeCounter.getRate();
     }
 
     public double getCatapultEncoder() {
