@@ -116,7 +116,7 @@ public class DriverInputState {
     }
 
     public synchronized boolean getDriveMode() {
-        SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
+        //SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
         return (driveControllerState.getTopLeftBumper());
     }
 

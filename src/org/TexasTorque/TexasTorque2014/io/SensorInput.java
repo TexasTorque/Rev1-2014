@@ -46,7 +46,7 @@ public class SensorInput {
         params = Parameters.getTeleopInstance();
 
         //----- Encoders/Counters -----
-        leftFrontDriveEncoder = new TorqueEncoder(Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_A_PORT, Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_B_PORT, true);
+        leftFrontDriveEncoder = new TorqueEncoder(Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_A_PORT, Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_B_PORT, false);
         leftRearDriveCounter = new TorqueCounter(Ports.LEFT_REAR_DRIVE_ENCODER_SIDECAR, Ports.LEFT_REAR_DRIVE_ENCODER_PORT);
         rightFrontDriveEncoder = new TorqueEncoder(Ports.RIGHT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_B_PORT,false);
         rightRearDriveCounter = new TorqueCounter(Ports.RIGHT_REAR_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_PORT);

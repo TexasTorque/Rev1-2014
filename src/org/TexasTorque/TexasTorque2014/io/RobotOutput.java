@@ -20,7 +20,7 @@ public class RobotOutput {
     //----- Pneumatics -----
     private Compressor compressor;
     private Solenoid frontDriveBaseSwitcher;
-    private Solenoid middleDriveBaseSwitcher;
+    //private Solenoid middleDriveBaseSwitcher;
     private Solenoid rearDriveBaseSwitcher;
     private Solenoid catapultStopAngle;
     private boolean catapultAngle;
@@ -55,14 +55,14 @@ public class RobotOutput {
     private double catapultMotorSpeed;
 
     //lights
-    private AdaFruitLights lights;
-    private Vector lightsVector;
+    //private AdaFruitLights lights;
+    //private Vector lightsVector;
     private int lightState;
 
     public RobotOutput() {
         //----- Pneumatics -----
         frontDriveBaseSwitcher = new Solenoid(Ports.FRONT_DRIVEBASE_SWITCHER);
-        middleDriveBaseSwitcher = new Solenoid(Ports.MIDDLE_DRIVEBASE_SWITCHER);
+        //middleDriveBaseSwitcher = new Solenoid(Ports.MIDDLE_DRIVEBASE_SWITCHER);
         rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
         catapultStopAngle = new Solenoid(Ports.CATAPULT_ANGLE);
         catapultAngle = false;
@@ -73,7 +73,7 @@ public class RobotOutput {
         //----- Drive Motors -----
         leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_FRONT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
         leftRearDriveMotor = new Motor(new Victor(Ports.LEFT_REAR_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
-        rightFrontDriveMotor = new Motor(new Victor(Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), false, true);
+        rightFrontDriveMotor = new Motor(new Victor(Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
         rightRearDriveMotor = new Motor(new Victor(Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
         rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
         rightRearMotorSpeed = Constants.MOTOR_STOPPED;
@@ -83,8 +83,8 @@ public class RobotOutput {
         //----- Intake -----
         frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_SIDECAR, Ports.FRONT_INTAKE_MOTOR_PORT), true, true);
         rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_SIDECAR, Ports.REAR_INTAKE_MOTOR_PORT), true, true);
-        frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_SIDECAR, Ports.FRONT_INTAKE_TILT_MOTOR_PORT), true, true);
-        rearIntakeTiltMotor = new Motor(new Victor(Ports.REAR_INTAKE_TILT_SIDECAR, Ports.REAR_INTAKE_TILT_MOTOR_PORT), true, true);
+        frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_SIDECAR, Ports.FRONT_INTAKE_TILT_MOTOR_PORT), false, true);
+        rearIntakeTiltMotor = new Motor(new Victor(Ports.REAR_INTAKE_TILT_SIDECAR, Ports.REAR_INTAKE_TILT_MOTOR_PORT), false, true);
 
         frontIntakeMotorSpeed = Constants.MOTOR_STOPPED;
         rearIntakeMotorSpeed = Constants.MOTOR_STOPPED;
@@ -97,12 +97,12 @@ public class RobotOutput {
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
 
         //lights
-        lightsVector = new Vector();
-        lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_A_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_B_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_C_PORT));
-        lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_D_PORT));
-        lights = new AdaFruitLights(lightsVector);
+        //lightsVector = new Vector();
+        //lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_A_PORT));
+        //lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_B_PORT));
+        //lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_C_PORT));
+        //lightsVector.addElement(new DigitalOutput(Ports.LIGHTS_SIDECAR, Ports.LIGHTS_D_PORT));
+        //lights = new AdaFruitLights(lightsVector);
         lightState = Constants.LIGHTS_DISABLED;
 
         //----- Misc Misc -----
@@ -166,7 +166,7 @@ public class RobotOutput {
 
     public void setDriveBaseMode(boolean mode, boolean strafeMode) {
         frontDriveBaseSwitcher.set(mode);
-        middleDriveBaseSwitcher.set(strafeMode);
+        //middleDriveBaseSwitcher.set(strafeMode);
         rearDriveBaseSwitcher.set(mode);
         driveBaseMode = mode;
         this.strafeMode = strafeMode;
@@ -235,7 +235,7 @@ public class RobotOutput {
 
     public void setLightsState(int state) {
         lightState = state;
-        lights.setDesiredState(state);
+        //lights.setDesiredState(state);
     }
 
     public int getLightsState() {
@@ -244,6 +244,6 @@ public class RobotOutput {
 
     public void runLights()
     {
-        lights.run();
+        //lights.run();
     }
 }
