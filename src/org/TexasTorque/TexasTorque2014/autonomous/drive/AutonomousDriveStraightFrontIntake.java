@@ -8,7 +8,7 @@ import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
 
-public class AutonomousDriveStraight extends AutonomousCommand {
+public class AutonomousDriveStraightFrontIntake extends AutonomousCommand {
     private double target;
     private TorquePID leftDrive;
     private TorquePID rightDrive;
@@ -17,7 +17,7 @@ public class AutonomousDriveStraight extends AutonomousCommand {
     private double startTime;
     private double timeout;
     
-    public AutonomousDriveStraight(double distance, double maxSpeed, double timeout) {
+    public AutonomousDriveStraightFrontIntake(double distance, double maxSpeed, double timeout) {
         target = distance * Constants.CLICKS_PER_METER;
         leftDrive = new TorquePID();
         rightDrive = new TorquePID();
@@ -66,6 +66,7 @@ public class AutonomousDriveStraight extends AutonomousCommand {
         
         autonOutput.put("leftSpeed", new Double(-left));
         autonOutput.put("rightSpeed", new Double(-right));
+        autonOutput.put("frontIntakeDown", Boolean.TRUE);
         
         driverInput.updateAutonData(autonOutput);
         

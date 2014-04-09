@@ -23,8 +23,6 @@ public class SensorInputState {
     private double rightRearDriveEncoderVelocity;
     private double leftRearDriveEncoderAcceleration;
     private double rightRearDriveEncoderAcceleration;
-    private double rightStrafeRate;
-    private double leftStrafeRate;
     private double catapultEncoder;
 
     //----- Analog -----
@@ -61,8 +59,6 @@ public class SensorInputState {
         rightRearDriveEncoderVelocity = input.getRightRearDriveEncoderRate();
         leftRearDriveEncoderAcceleration = input.getLeftRearDriveEncoderAcceleration();
         rightRearDriveEncoderAcceleration = input.getRightRearDriveEncoderAcceleration();
-        rightStrafeRate = input.getRightStrafeCounterRate();
-        leftStrafeRate = input.getLeftStrafeCounterRate();
         catapultEncoder = input.getCatapultEncoder();
 
         //----- Potentiometers -----
@@ -104,14 +100,6 @@ public class SensorInputState {
         return rightFrontDriveEncoderAcceleration;
     }
 
-    public double getRightStrafeDriveEncoderRate() {
-        return rightStrafeRate;
-    }
-
-    public double getLeftStrafeDriveEncoderRate() {
-        return leftStrafeRate;
-    }
-
     public double getLeftRearDriveEncoder() {
         return leftRearDriveEncoder;
     }
@@ -136,16 +124,16 @@ public class SensorInputState {
         return rightRearDriveEncoderAcceleration;
     }
     
-    public double getForwardDrivePosition() {
-        return (getLeftFrontDriveEncoder() + getRightFrontDriveEncoder() + getLeftRearDriveEncoder() + getRightRearDriveEncoder()) / 4;
-    }
+    //public double getForwardDrivePosition() {
+    //    return (getLeftFrontDriveEncoder() + getRightFrontDriveEncoder() + getLeftRearDriveEncoder() + getRightRearDriveEncoder()) / 4;
+    //}
     
     public double getLeftDrivePosition() {
-        return (getLeftFrontDriveEncoder() + getLeftRearDriveEncoder());
+        return (getLeftFrontDriveEncoder());
     }
     
     public double getRightDrivePosition() {
-        return (getRightFrontDriveEncoder() + getRightRearDriveEncoder());
+        return (getRightFrontDriveEncoder());
     }
 
     public boolean getCatapultLimitSwitch() {
@@ -191,17 +179,17 @@ public class SensorInputState {
     }
 
     public void pushToDashboard() {
-        SmartDashboard.putNumber("FrontLeftRate", getLeftFrontDriveEncoderRate());
-        SmartDashboard.putNumber("FrontRightRate", getRightFrontDriveEncoderRate());
-        SmartDashboard.putNumber("RearLeftRate", getLeftRearDriveEncoderRate());
-        SmartDashboard.putNumber("RearRightRate", getRightRearDriveEncoderRate());
-        SmartDashboard.putNumber("RightStrafeRate", getRightStrafeDriveEncoderRate());
-        SmartDashboard.putNumber("LeftStrafeRate", getLeftStrafeDriveEncoderRate());
+        SmartDashboard.putNumber("LeftRate", getLeftFrontDriveEncoderRate());
+        SmartDashboard.putNumber("RightRate", getRightFrontDriveEncoderRate());
+        SmartDashboard.putNumber("LeftPosition", getLeftDrivePosition());
+        SmartDashboard.putNumber("RightPosition", getRightDrivePosition());
+        //SmartDashboard.putNumber("RearLeftRate", getLeftRearDriveEncoderRate());
+        //SmartDashboard.putNumber("RearRightRate", getRightRearDriveEncoderRate());
         SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
         SmartDashboard.putBoolean("CatapultLimit", catapultLimitSwitch || catapultLimitSwitchB);
-        SmartDashboard.putBoolean("Logging",true);
+        //SmartDashboard.putBoolean("Logging",true);
     }
 
     public void loadParamaters() {

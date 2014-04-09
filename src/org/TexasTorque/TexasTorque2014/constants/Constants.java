@@ -22,8 +22,8 @@ public class Constants
     public final static boolean OMNI_MODE = false;
     public final static boolean STRAFE_ON = true;
     public final static boolean STRAFE_OFF = false;
-    public final static double CLICKS_PER_METER = 1719.484526;
-    public final static double METERS_PER_CLICK = 0.00058157;
+    public final static double CLICKS_PER_METER = 783.242830177;
+    public final static double METERS_PER_CLICK = 0.00127674325;
     
     //----- Manipulator -----
     public final static boolean HIGH_SHOT = true;
@@ -38,6 +38,8 @@ public class Constants
     public final static int JUST_DRIVE_AUTO = 4;
     public final static int DEAD_DRIVE_AUTO = 5;
     public final static int DRIVE_TWO_BALL_AUTO = 2;
+    public final static int DRIVE_DISTANCE_TWO_BALL_AUTO = 8;
+    public final static int DRIVE_ONE_BALL_AUTO = 7;
     public final static int TEST_AUTO = 100;
     
     //----- Gyro -----
