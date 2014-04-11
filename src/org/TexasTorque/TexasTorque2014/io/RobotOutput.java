@@ -24,7 +24,8 @@ public class RobotOutput {
     private Solenoid rearDriveBaseSwitcher;
     private Solenoid catapultStopAngle;
     private boolean catapultAngle;
-    private boolean driveBaseMode;
+    private boolean frontDriveBaseMode;
+    private boolean rearDriveBaseMode;
     private boolean strafeMode;
     private Solenoid winchQuickRelease;
     private boolean winchSolinoid;
@@ -66,7 +67,8 @@ public class RobotOutput {
         rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
         catapultStopAngle = new Solenoid(Ports.CATAPULT_ANGLE);
         catapultAngle = false;
-        driveBaseMode = Constants.OMNI_MODE;
+        frontDriveBaseMode = Constants.OMNI_MODE;
+        rearDriveBaseMode = Constants.OMNI_MODE;
         winchQuickRelease = new Solenoid(Ports.CATAPULT_RELEASE);
         winchSolinoid = false;
 
@@ -124,7 +126,7 @@ public class RobotOutput {
 
     public synchronized void pullFromState() {
         setDriveMotors(state.getLeftFrontMotorSpeed(), state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed(), state.getStrafeMotorSpeed());
-        setDriveBaseMode(state.getDriveBaseMode(), state.getStrafeMode());
+        setDriveBaseMode(state.getFrontDriveBaseMode(), state.getStrafeMode(), state.getRearDriveBaseMode());
         setCatapultMotor(state.getCatapultMotorSpeed());
         setWinchSolinoid(state.getWinchSolinoid());
         setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
@@ -164,16 +166,20 @@ public class RobotOutput {
         return compressor.enabled();
     }
 
-    public void setDriveBaseMode(boolean mode, boolean strafeMode) {
-        frontDriveBaseSwitcher.set(mode);
+    public void setDriveBaseMode(boolean front, boolean strafeMode, boolean rear) {
+        frontDriveBaseSwitcher.set(front);
         //middleDriveBaseSwitcher.set(strafeMode);
-        rearDriveBaseSwitcher.set(mode);
-        driveBaseMode = mode;
+        rearDriveBaseSwitcher.set(rear);
+        frontDriveBaseMode = front;
+        rearDriveBaseMode = rear;
         this.strafeMode = strafeMode;
     }
 
-    public boolean getDriveBaseMode() {
-        return driveBaseMode;
+    public boolean getFrontDriveBaseMode() {
+        return frontDriveBaseMode;
+    }
+    public boolean getRearDriveBaseMode() {
+        return rearDriveBaseMode;
     }
 
     public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt) {

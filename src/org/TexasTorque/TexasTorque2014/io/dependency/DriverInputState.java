@@ -118,6 +118,14 @@ public class DriverInputState {
         //SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
         return (driveControllerState.getTopLeftBumper());
     }
+    
+    public synchronized boolean getRearDriveMode() {
+        return driveControllerState.getBottomLeftBumper();
+    }
+    
+    public synchronized boolean getFrontDriveMode() {
+        return driveControllerState.getBottomRightBumper();
+    }
 
 //---------- Manipulator ----------  
     public synchronized boolean WinchStop() {

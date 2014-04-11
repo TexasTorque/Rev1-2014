@@ -14,7 +14,8 @@ public class Drivebase extends TorqueSubsystem {
     private double rightRearDriveSpeed;
     private double strafeDriveSpeed;
 
-    private boolean driveMode;
+    private boolean frontDriveMode;
+    private boolean rearDriveMode;
     private boolean strafeMode;
 
     public static Drivebase getInstance() {
@@ -30,17 +31,18 @@ public class Drivebase extends TorqueSubsystem {
         rightRearDriveSpeed = Constants.MOTOR_STOPPED;
         strafeDriveSpeed = Constants.MOTOR_STOPPED;
 
-        driveMode = Constants.OMNI_MODE;
+        frontDriveMode = Constants.OMNI_MODE;
+        rearDriveMode = Constants.OMNI_MODE;
     }
 
     public void run() {
         if (driverInput.isAuton()) {
             strafeMode = Constants.TRACTION_MODE;
             //setDriveMode(driverInput.getAutonBool("driveMode", Constants.TRACTION_MODE));
-            setDriveMode(Constants.TRACTION_MODE);
+            setDriveMode(Constants.TRACTION_MODE, Constants.TRACTION_MODE);
             setDriveSpeeds(driverInput.getAutonDouble("leftSpeed", Constants.MOTOR_STOPPED), driverInput.getAutonDouble("rightSpeed", Constants.MOTOR_STOPPED), Constants.MOTOR_STOPPED);
         } else {
-            setDriveMode(driverInput.getDriveMode());
+            setDriveMode(((driverInput.getDriveMode()==Constants.TRACTION_MODE) || (driverInput.getFrontDriveMode()==Constants.TRACTION_MODE)) ? Constants.TRACTION_MODE : Constants.OMNI_MODE, ((driverInput.getDriveMode()==Constants.TRACTION_MODE) || (driverInput.getRearDriveMode()==Constants.TRACTION_MODE)) ? Constants.TRACTION_MODE : Constants.OMNI_MODE);
             mixChannels(driverInput.getYAxis(), driverInput.getXAxis(), driverInput.getRotation());
             
         }
@@ -54,7 +56,7 @@ public class Drivebase extends TorqueSubsystem {
         SmartDashboard.putNumber("leftSpeed", leftFrontDriveSpeed);
         SmartDashboard.putNumber("rightSpeed", rightFrontDriveSpeed);
         robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed, strafeDriveSpeed);
-        robotOutput.setDriveBaseMode(driveMode, strafeMode);
+        robotOutput.setDriveBaseMode(frontDriveMode, strafeMode, rearDriveMode);
     }
 
     public void setDriveSpeeds(double leftSpeed, double rightSpeed, double strafeSpeed) {
@@ -73,7 +75,7 @@ public class Drivebase extends TorqueSubsystem {
         //{
             //xAxis = driverInput.getXAxis() * 1.0;
         //}
-        if (driveMode== Constants.OMNI_MODE) {
+        if (frontDriveMode== Constants.OMNI_MODE) {
             SmartDashboard.putBoolean("OmniMode",  true);
             HDrive(yAxis, xAxis, rotation);
         } else {
@@ -141,9 +143,12 @@ public class Drivebase extends TorqueSubsystem {
         setDriveSpeeds(leftSpeed, rightSpeed, strafeSpeed);
     }
 
-    private void setDriveMode(boolean omniMode) {
-        if (omniMode != driveMode) {
-            driveMode = omniMode;
+    private void setDriveMode(boolean front, boolean rear) {
+        if (front != frontDriveMode) {
+            frontDriveMode = front;
+        }
+        if (rear != rearDriveMode) {
+            rearDriveMode = rear;
         }
     }
 
@@ -160,7 +165,7 @@ public class Drivebase extends TorqueSubsystem {
 //        SmartDashboard.putNumber("RightFrontDriveSpeed", rightFrontDriveSpeed);
 //        SmartDashboard.putNumber("LeftRearDriveSpeed", leftRearDriveSpeed);
 //        SmartDashboard.putNumber("RightRearDriveSpeed", rightRearDriveSpeed);
-        SmartDashboard.putBoolean("Drive", driveMode);
+        SmartDashboard.putBoolean("Drive", frontDriveMode);
     }
 
     public String logData() {
