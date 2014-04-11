@@ -53,7 +53,7 @@ public class AutonomousTurnCheesy extends AutonomousCommand {
         if (firstCycle) {
             System.err.println("Turning");
 
-            if (CheesyVisionServer.getInstance().getLeftStatus()) {
+            if (CheesyVisionServer.getInstance().getLeftCount() > CheesyVisionServer.getInstance().getRightCount()) {
                 System.err.println("LeftGoalHot");
                 leftDrive.setSetpoint(target);
                 rightDrive.setSetpoint(-target);
