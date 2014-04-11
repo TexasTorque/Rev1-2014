@@ -6,11 +6,10 @@ import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousManager;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
-import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.*;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
-import org.TexasTorque.TorqueLib.component.TorquePotentiometer;
+import org.TexasTorque.TorqueLib.component.CheesyVisionServer;
 import org.TexasTorque.TorqueLib.util.DashboardManager;
 import org.TexasTorque.TorqueLib.util.Parameters;
 import org.TexasTorque.TorqueLib.util.TorqueLogging;
@@ -29,6 +28,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     Drivebase drivebase;
     Manipulator manipulator;
     AutonomousManager autonManager;
+    CheesyVisionServer server;
+    public final int listenPort = 1180;
 
     Timer robotTime;
 
@@ -50,6 +51,9 @@ public class RobotBase extends IterativeRobot implements Runnable {
         sensorInput = SensorInput.getInstance();
         drivebase = Drivebase.getInstance();
         manipulator = Manipulator.getInstance();
+        server = CheesyVisionServer.getInstance();
+        server.setPort(listenPort);
+        server.start();
         autonManager = new AutonomousManager();
 
         driverInput.pullJoystickTypes();
@@ -64,6 +68,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
+        server.reset();
+        server.startSamplingCounts();
         int autonMode = (int) SmartDashboard.getNumber("AutonomousMode", Constants.DO_NOTHING_AUTO);
         autonManager.setAutoMode(autonMode);
         autonManager.loadAutonomous();
@@ -75,7 +81,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     public void disabledInit() {
         robotOutput.setLightsState(Constants.LIGHTS_DISABLED);
         robotOutput.runLights();
-
+        server.stopSamplingCounts();
         loadParameters();
     }
 
