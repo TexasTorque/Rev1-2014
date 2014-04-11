@@ -40,6 +40,7 @@ public class Constants
     public final static int DRIVE_TWO_BALL_AUTO = 2;
     public final static int DRIVE_DISTANCE_TWO_BALL_AUTO = 8;
     public final static int DRIVE_ONE_BALL_AUTO = 7;
+    public final static int CHEESY_TWO_BALL_AUTO = 9;
     public final static int TEST_AUTO = 100;
     
     //----- Gyro -----
