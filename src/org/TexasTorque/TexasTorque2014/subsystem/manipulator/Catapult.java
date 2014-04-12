@@ -58,7 +58,7 @@ public class Catapult extends TorqueSubsystem {
                 }
 
             } else {
-                if ((driverInput.ChooChooOverride() || driverInput.getAutonBool("shoot", false)) && intake.shootIsDone()) {
+                if ((driverInput.shoot() || driverInput.getAutonBool("shoot", false)) && intake.shootIsDone()) {
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;
                     fired = true;
                     fireTime = Timer.getFPGATimestamp();
@@ -87,7 +87,7 @@ public class Catapult extends TorqueSubsystem {
             //First Cycle Clears
             catapultMotorSpeed = 0.0;
             winchSolinoid = false;
-            if (driverInput.ChooChooOverride() || driverInput.ChooChooReset() || driverInput.getAutonBool("shoot", false)) {
+            if (driverInput.shoot() || driverInput.catapultReset() || driverInput.getAutonBool("shoot", false)) {
                 firstCycle = false;
             }
         }

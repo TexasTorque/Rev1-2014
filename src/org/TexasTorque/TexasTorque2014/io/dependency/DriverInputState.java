@@ -34,7 +34,11 @@ public class DriverInputState {
         driveBaseMode.calc(driveControllerState.getLeftStickClick());
 
         autonomousData.clear();
+        
         hoopToggle.calc(operatorControllerState.getLeftStickClick());
+        if (shoot() || frontOuttaking() || rearOuttaking() || frontIntaking() || rearIntaking()) {
+            hoopToggle.set(false);
+        }
     }
 
     public void updateAutonData(Hashtable table) {
@@ -121,11 +125,11 @@ public class DriverInputState {
         //SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
         return (driveControllerState.getTopLeftBumper());
     }
-    
+
     public synchronized boolean getRearDriveMode() {
         return driveControllerState.getBottomLeftBumper();
     }
-    
+
     public synchronized boolean getFrontDriveMode() {
         return driveControllerState.getBottomRightBumper();
     }
@@ -135,11 +139,11 @@ public class DriverInputState {
         return operatorControllerState.getLeftActionButton();
     }
 
-    public synchronized boolean ChooChooOverride() {
+    public synchronized boolean shoot() {
         return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD()) && (operatorControllerState.getRightActionButton());
     }
 
-    public synchronized boolean ChooChooReset() {
+    public synchronized boolean catapultReset() {
         return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD()) && operatorControllerState.getTopActionButton();
     }
 
@@ -184,7 +188,7 @@ public class DriverInputState {
         return operatorControllerState.getBottomActionButton();
     }
 
-    public synchronized boolean shoot() {
+    public synchronized boolean readyToShoot() {
         return operatorControllerState.getRightActionButton();
     }
 
@@ -194,11 +198,6 @@ public class DriverInputState {
 
     public synchronized boolean restoreToDefault() {
         return operatorControllerState.getBottomLeftBumper();
-    }
-    
-    public synchronized boolean getHoopPosition()
-    {
-        return hoopToggle.get();
     }
 
 //---------- Overrides ----------
@@ -214,6 +213,14 @@ public class DriverInputState {
 
     public synchronized boolean frontIntakeRollOverride() {
         return frontIntaking();
+    }
+
+    public synchronized boolean getHoopPosition() {
+        return hoopToggle.get();
+    }
+
+    public synchronized boolean hoopIn() {
+        return operatorControllerState.getLeftStickClick();
     }
 
     public synchronized boolean frontOuttakeRollOverride() {
