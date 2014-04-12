@@ -36,7 +36,7 @@ public class DriverInputState {
         autonomousData.clear();
         
         hoopToggle.calc(operatorControllerState.getLeftStickClick());
-        if (shoot() || frontOuttaking() || rearOuttaking() || frontIntaking() || rearIntaking()) {
+        if ((shoot() || frontOuttaking() || rearOuttaking() || frontIntaking() || rearIntaking()) && !inOverrideState) {
             hoopToggle.set(false);
         }
     }
