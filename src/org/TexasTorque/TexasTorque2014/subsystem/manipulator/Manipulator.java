@@ -98,6 +98,7 @@ public class Manipulator extends TorqueSubsystem {
     public void setToRobot() {
         intake.setToRobot();
         catapult.setToRobot();
+        robotOutput.setHoop(driverInput.getHoopPosition());
     }
 
     public void frontIntake() {

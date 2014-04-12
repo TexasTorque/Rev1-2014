@@ -29,6 +29,8 @@ public class RobotOutput {
     private boolean strafeMode;
     private Solenoid winchQuickRelease;
     private boolean winchSolinoid;
+    private Solenoid hoop;
+    private boolean backHoop;
 
     //----- Drive Motors -----
     private Motor leftFrontDriveMotor;
@@ -71,6 +73,8 @@ public class RobotOutput {
         rearDriveBaseMode = Constants.OMNI_MODE;
         winchQuickRelease = new Solenoid(Ports.CATAPULT_RELEASE);
         winchSolinoid = false;
+        hoop = new Solenoid(Ports.HOOP);
+        backHoop = Constants.HOOP_UP;
 
         //----- Drive Motors -----
         leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_FRONT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
@@ -132,6 +136,7 @@ public class RobotOutput {
         setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
         setLightsState(state.getLightsState());
         setCatapultStopAngle(state.getCatapultAngle());
+        setHoop(state.getHoop());
     }
 
     public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
@@ -251,5 +256,16 @@ public class RobotOutput {
     public void runLights()
     {
         //lights.run();
+    }
+    
+    public void setHoop(boolean position)
+    {
+        hoop.set(position);
+        backHoop = position;
+    }
+    
+    public boolean getHoop()
+    {
+        return backHoop;
     }
 }

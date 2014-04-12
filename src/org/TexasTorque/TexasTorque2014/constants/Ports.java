@@ -52,12 +52,13 @@ public class Ports {
     public final static int REAR_DRIVEBASE_SWITCHER = 3;
     public final static int CATAPULT_RELEASE = 4;
     public final static int CATAPULT_ANGLE = 5;
+    public final static int HOOP = 6;
             
     //----- Digital Inputs -----
     //----- Sidecar 1 -----
     public final static int LEFT_FRONT_DRIVE_ENCODER_SIDECAR = 2;
-    public final static int LEFT_FRONT_DRIVE_ENCODER_A_PORT = 3;
-    public final static int LEFT_FRONT_DRIVE_ENCODER_B_PORT = 4;
+    public final static int LEFT_FRONT_DRIVE_ENCODER_A_PORT = 13;
+    public final static int LEFT_FRONT_DRIVE_ENCODER_B_PORT = 14;
     
     public final static int RIGHT_FRONT_DRIVE_ENCODER_SIDECAR = 1;
     public final static int RIGHT_FRONT_DRIVE_ENCODER_A_PORT = 13;

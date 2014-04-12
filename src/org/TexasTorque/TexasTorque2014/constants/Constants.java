@@ -29,6 +29,8 @@ public class Constants
     public final static boolean HIGH_SHOT = true;
     public final static boolean FAR_SHOT = false;
     public final static double CHOO_CHOO_CLICKS_PER_REV = 617.6471;
+    public final static boolean HOOP_IN = true;
+    public final static boolean HOOP_UP = false;
     
     //----- Autonomous -----
     public final static int DO_NOTHING_AUTO = 0;

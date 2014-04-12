@@ -10,6 +10,7 @@ public class RobotOutputState {
     private boolean rearDriveBaseMode;
     private boolean strafeMode;
     private boolean catapultAngle;
+    private boolean backHoop;
 
     //----- Drive Motors -----
     private double leftFrontMotorSpeed;
@@ -41,6 +42,7 @@ public class RobotOutputState {
         frontDriveBaseMode = output.getFrontDriveBaseMode();
         rearDriveBaseMode = output.getRearDriveBaseMode();
         catapultAngle = output.getCatapultStopAngle();
+        backHoop = output.getHoop();
 
         //----- Drive Motors -----
         leftFrontMotorSpeed = output.getLeftFrontMotorSpeed();
@@ -164,5 +166,15 @@ public class RobotOutputState {
 
     public int getLightsState() {
         return lightState;
+    }
+    
+    public void setHoop(boolean position)
+    {
+        backHoop = position;
+    }
+    
+    public boolean getHoop()
+    {
+        return backHoop;
     }
 }
