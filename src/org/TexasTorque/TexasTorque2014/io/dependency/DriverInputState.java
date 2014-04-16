@@ -14,7 +14,6 @@ public class DriverInputState {
     private int autonMode;
     private boolean inOverrideState;
     private boolean catapultStopAngle;
-    private TorqueToggle hoopToggle;
 
     private Hashtable autonomousData = new Hashtable();
 
@@ -23,7 +22,6 @@ public class DriverInputState {
     public DriverInputState() {
         driveBaseMode = new TorqueToggle();
         inOverrideState = false;
-        hoopToggle = new TorqueToggle();
     }
 
     public void updateState(DriverInput input) {
@@ -35,10 +33,6 @@ public class DriverInputState {
 
         autonomousData.clear();
         
-        hoopToggle.calc(operatorControllerState.getLeftStickClick());
-        if ((shoot() || frontOuttaking() || rearOuttaking() || frontIntaking() || rearIntaking()) && !inOverrideState) {
-            hoopToggle.set(false);
-        }
     }
 
     public void updateAutonData(Hashtable table) {
@@ -215,11 +209,7 @@ public class DriverInputState {
         return frontIntaking();
     }
 
-    public synchronized boolean getHoopPosition() {
-        return hoopToggle.get();
-    }
-
-    public synchronized boolean hoopIn() {
+    public synchronized boolean getHoopToggle() {
         return operatorControllerState.getLeftStickClick();
     }
 

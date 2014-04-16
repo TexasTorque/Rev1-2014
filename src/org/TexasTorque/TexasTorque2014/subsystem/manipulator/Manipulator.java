@@ -65,6 +65,8 @@ public class Manipulator extends TorqueSubsystem {
                 intake.setRearAngle(Intake.rearShootAngle);
             }
             
+            intake.toggleHoop(driverInput.getHoopToggle() || driverInput.getAutonBool("hoopToggle", false));
+            
             SmartDashboard.putBoolean("Intakeing", intaking);
 
             intake.run();
@@ -165,7 +167,6 @@ public class Manipulator extends TorqueSubsystem {
     public void resetIntakes() {
         resetFrontIntake();
         resetRearIntake();
-        intake.setHoop(driverInput.getHoopPosition());
     }
 
     public void shoot() {
@@ -253,7 +254,7 @@ public class Manipulator extends TorqueSubsystem {
             intake.rearIntakeOverrideRoll(Constants.MOTOR_STOPPED);
         }
         
-        intake.setHoop(driverInput.getHoopPosition());
+        intake.toggleHoop(driverInput.getHoopToggle());
 
         catapult.releaseOverride(driverInput.releaseOverride());
         catapult.shortShotOverride(driverInput.shortShotOverride());

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
+import org.TexasTorque.TorqueLib.util.TorqueToggle;
 
 public class Intake extends TorqueSubsystem {
 
@@ -21,6 +22,7 @@ public class Intake extends TorqueSubsystem {
     private boolean hoopPosition;
     private boolean firstUp;
     private double hoopUpTime;
+    //private TorqueToggle hoopToggle;
 
     private TorquePID frontTiltPID;
     private TorquePID rearTiltPID;
@@ -61,7 +63,10 @@ public class Intake extends TorqueSubsystem {
         desiredFrontTiltAngle = 90.0;
         desiredRearTiltAngle = 90.0;
 
-        hoopPosition = Constants.HOOP_UP;
+        //hoopToggle = new TorqueToggle();
+        //hoopToggle.set(false);
+        
+        setHoop(Constants.HOOP_UP);
     }
 
     public void run() {
@@ -83,6 +88,8 @@ public class Intake extends TorqueSubsystem {
         }
         SmartDashboard.putNumber("FrontTiltSpeed", frontTiltSpeed);
         SmartDashboard.putNumber("RearTiltSpeed", rearTiltSpeed);
+        
+        //hoopPosition = hoopToggle.get();
     }
 
     public boolean isDone() {
@@ -141,6 +148,7 @@ public class Intake extends TorqueSubsystem {
 
     public void setHoop(boolean position) {
         hoopPosition = position;
+        //hoopToggle.set(position);
         if (position == Constants.HOOP_IN)
         {
             firstUp = true;
@@ -148,6 +156,14 @@ public class Intake extends TorqueSubsystem {
         if (position == Constants.HOOP_UP && firstUp) {
             hoopUpTime = Timer.getFPGATimestamp();
             firstUp = false;
+        }
+    }
+    
+    public void toggleHoop(boolean toggle)
+    {
+        if (toggle)
+        {
+            setHoop(!hoopPosition);
         }
     }
 
