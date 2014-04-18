@@ -120,14 +120,6 @@ public class DriverInputState {
         return (driveControllerState.getTopLeftBumper());
     }
 
-    public synchronized boolean getRearDriveMode() {
-        return driveControllerState.getBottomLeftBumper();
-    }
-
-    public synchronized boolean getFrontDriveMode() {
-        return driveControllerState.getBottomRightBumper();
-    }
-
 //---------- Manipulator ----------  
     public synchronized boolean WinchStop() {
         return operatorControllerState.getLeftActionButton();

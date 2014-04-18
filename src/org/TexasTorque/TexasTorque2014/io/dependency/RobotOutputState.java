@@ -6,8 +6,7 @@ public class RobotOutputState {
 
     //----- Pneumatics -----
     private boolean compressorEnabled;
-    private boolean frontDriveBaseMode;
-    private boolean rearDriveBaseMode;
+    private boolean driveBaseMode;
     private boolean strafeMode;
     private boolean catapultAngle;
     private boolean backHoop;
@@ -39,8 +38,7 @@ public class RobotOutputState {
     public void updateState(RobotOutput output) {
         //----- Pneumatics -----
         compressorEnabled = output.getCompressorEnabled();
-        frontDriveBaseMode = output.getFrontDriveBaseMode();
-        rearDriveBaseMode = output.getRearDriveBaseMode();
+        driveBaseMode = output.getDriveBaseMode();
         catapultAngle = output.getCatapultStopAngle();
         backHoop = output.getHoop();
 
@@ -96,21 +94,17 @@ public class RobotOutputState {
         return compressorEnabled;
     }
 
-    public void setDriveBaseMode(boolean frontMode, boolean sMode, boolean rearMode) {
-        frontDriveBaseMode = frontMode;
+    public void setDriveBaseMode(boolean mode, boolean sMode) {
+        driveBaseMode = mode;
         strafeMode = sMode;
-        rearDriveBaseMode = rearMode;
     }
     
     public boolean getStrafeMode() {
         return strafeMode;
     }
 
-    public boolean getFrontDriveBaseMode() {
-        return frontDriveBaseMode;
-    }
-    public boolean getRearDriveBaseMode() {
-        return rearDriveBaseMode;
+    public boolean getDriveBaseMode() {
+        return driveBaseMode;
     }
 
     public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt) {
