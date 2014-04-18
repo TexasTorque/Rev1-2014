@@ -13,14 +13,14 @@ import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
  *
  * @author Gijs
  */
-public class AutonomousToggleHoop extends AutonomousCommand {
+public class AutonomousHoopIn extends AutonomousCommand {
 
     public void reset() {
     }
 
     public boolean run() {
         Hashtable autonOutputs = new Hashtable();
-        autonOutputs.put("hoopToggle", Boolean.TRUE);
+        autonOutputs.put("hoopIn", Boolean.TRUE);
         
         driverInput.updateAutonData(autonOutputs);
         

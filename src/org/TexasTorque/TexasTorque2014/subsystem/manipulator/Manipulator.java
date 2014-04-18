@@ -65,7 +65,8 @@ public class Manipulator extends TorqueSubsystem {
                 intake.setRearAngle(Intake.rearShootAngle);
             }
             
-            intake.toggleHoop(driverInput.getHoopToggle() || driverInput.getAutonBool("hoopToggle", false));
+            intake.toggleHoop(driverInput.getHoopToggle());
+            intake.setHoop(driverInput.getAutonBool("hoopIn", false));
             
             SmartDashboard.putBoolean("Intakeing", intaking);
 
