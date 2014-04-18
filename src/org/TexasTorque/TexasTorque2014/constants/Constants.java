@@ -44,6 +44,7 @@ public class Constants
     public final static int DRIVE_ONE_BALL_AUTO = 7;
     public final static int CHEESY_TWO_BALL_AUTO = 9;
     public final static int TEST_AUTO = 100;
+    public final static int ONE_HOT_AUTO = 10;
     
     //----- Gyro -----
     public static double GYRO_SENSITIVITY = 0.014;

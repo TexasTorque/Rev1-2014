@@ -47,6 +47,7 @@ public class AutonomousTurnCheesy extends AutonomousCommand {
         firstCycle = true;
         isDone = false;
         SensorInput.getInstance().resetDriveEncoders();
+        CheesyVisionServer.getInstance().reset();
     }
 
     public boolean run() {

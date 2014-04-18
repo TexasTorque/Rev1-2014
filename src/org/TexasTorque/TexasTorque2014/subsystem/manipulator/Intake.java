@@ -22,7 +22,7 @@ public class Intake extends TorqueSubsystem {
     private boolean hoopPosition;
     private boolean firstUp;
     private double hoopUpTime;
-    //private TorqueToggle hoopToggle;
+    private TorqueToggle hoopToggle;
 
     private TorquePID frontTiltPID;
     private TorquePID rearTiltPID;
@@ -63,10 +63,8 @@ public class Intake extends TorqueSubsystem {
         desiredFrontTiltAngle = 90.0;
         desiredRearTiltAngle = 90.0;
 
-        //hoopToggle = new TorqueToggle();
-        //hoopToggle.set(false);
-        
-        setHoop(Constants.HOOP_UP);
+        hoopToggle = new TorqueToggle();
+        hoopToggle.set(false);
     }
 
     public void run() {
@@ -148,7 +146,7 @@ public class Intake extends TorqueSubsystem {
 
     public void setHoop(boolean position) {
         hoopPosition = position;
-        //hoopToggle.set(position);
+        hoopToggle.set(position);
         if (position == Constants.HOOP_IN)
         {
             firstUp = true;
@@ -161,10 +159,8 @@ public class Intake extends TorqueSubsystem {
     
     public void toggleHoop(boolean toggle)
     {
-        if (toggle)
-        {
-            setHoop(!hoopPosition);
-        }
+        hoopToggle.calc(toggle);
+        hoopPosition = hoopToggle.get();
     }
 
     public void setToRobot() {
