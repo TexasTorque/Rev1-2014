@@ -3,7 +3,6 @@ package org.TexasTorque.TexasTorque2014.constants;
 public class Constants
 {
     //----- Controller -----
-    public final static double X_AXIS_DEADBAND = 0.22;
     public final static double Y_AXIS_DEADBAND = 0.16;
     public final static double ROTATION_DEADBAND = 0.18;
     public final static double OVERRIDE_AXIS_DEADBAND = 0.35;
@@ -15,13 +14,10 @@ public class Constants
     
     //----- Drivebase -----
     public final static double DEFAULT_HIGH_SENSITIVITY = 0.7;
-    public final static double STRAFE_COEFFICIENT = 1;
     public final static double FORWARD_REVERSE_COEFFICIENT = 1;
     public final static double ROTATION_COEFFICIENT = 1;
     public final static boolean TRACTION_MODE = true;
     public final static boolean OMNI_MODE = false;
-    public final static boolean STRAFE_ON = true;
-    public final static boolean STRAFE_OFF = false;
     public final static double CLICKS_PER_METER = 783.242830177;
     public final static double METERS_PER_CLICK = 0.00127674325;
     

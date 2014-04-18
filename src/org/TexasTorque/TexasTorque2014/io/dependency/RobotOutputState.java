@@ -7,7 +7,6 @@ public class RobotOutputState {
     //----- Pneumatics -----
     private boolean compressorEnabled;
     private boolean driveBaseMode;
-    private boolean strafeMode;
     private boolean catapultAngle;
     private boolean backHoop;
 
@@ -16,7 +15,6 @@ public class RobotOutputState {
     private double leftRearMotorSpeed;
     private double rightFrontMotorSpeed;
     private double rightRearMotorSpeed;
-    private double strafeMotorSpeed;
 
     //----- Intake -----
     private double frontIntakeMotorSpeed;
@@ -62,12 +60,11 @@ public class RobotOutputState {
         lightState = output.getLightsState();
     }
 
-    public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
+    public synchronized void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed) {
         leftFrontMotorSpeed = leftFrontSpeed;
         leftRearMotorSpeed = leftRearSpeed;
         rightFrontMotorSpeed = rightFrontSpeed;
         rightRearMotorSpeed = rightRearSpeed;
-        strafeMotorSpeed = strafeSpeed;
     }
 
     public double getLeftFrontMotorSpeed() {
@@ -86,23 +83,14 @@ public class RobotOutputState {
         return rightRearMotorSpeed;
     }
 
-    public double getStrafeMotorSpeed() {
-        return strafeMotorSpeed;
-    }
-
     public boolean getCompressorEnabled() {
         return compressorEnabled;
     }
 
-    public void setDriveBaseMode(boolean mode, boolean sMode) {
+    public void setDriveBaseMode(boolean mode) {
         driveBaseMode = mode;
-        strafeMode = sMode;
     }
     
-    public boolean getStrafeMode() {
-        return strafeMode;
-    }
-
     public boolean getDriveBaseMode() {
         return driveBaseMode;
     }

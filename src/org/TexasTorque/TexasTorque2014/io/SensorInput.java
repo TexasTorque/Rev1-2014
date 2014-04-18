@@ -29,8 +29,6 @@ public class SensorInput {
     private TorqueEncoder rightFrontDriveEncoder;
     private TorqueCounter leftRearDriveCounter;
     private TorqueCounter rightRearDriveCounter;
-    //private TorqueCounter rightStrafeCounter;
-    //private TorqueCounter leftStrafeCounter;
     private TorqueEncoder catapultEncoder;
 
     //----- Analog -----

@@ -32,7 +32,6 @@ public class DriverInputState {
         driveBaseMode.calc(driveControllerState.getLeftStickClick());
 
         autonomousData.clear();
-        
     }
 
     public void updateAutonData(Hashtable table) {
@@ -40,9 +39,7 @@ public class DriverInputState {
         autonomousData = table;
 
         autonomousData.put("driveMode", new Boolean(Constants.OMNI_MODE));
-
         autonomousData.put("CatapultAngle", Boolean.FALSE);
-
     }
 
     public synchronized boolean isAuton() {
@@ -88,10 +85,6 @@ public class DriverInputState {
     }
 
 //---------- Drivebase ----------
-    public synchronized double getXAxis() {
-        return driveControllerState.getLeftXAxis();
-    }
-
     public synchronized double getYAxis() {
         return driveControllerState.getLeftYAxis();
     }
@@ -104,15 +97,8 @@ public class DriverInputState {
         return axis;
     }
 
-    public synchronized double strafeOverride() {
-        if (Math.abs(operatorControllerState.getLeftXAxis()) > 0.25) {
-            return operatorControllerState.getLeftXAxis();
-        }
-        return Constants.MOTOR_STOPPED;
-    }
-
     public synchronized boolean hasInput() {
-        return (Math.abs(getXAxis()) > Constants.X_AXIS_DEADBAND || Math.abs(getYAxis()) > Constants.Y_AXIS_DEADBAND || Math.abs(getRotation()) > Constants.ROTATION_DEADBAND);
+        return (Math.abs(getYAxis()) > Constants.Y_AXIS_DEADBAND || Math.abs(getRotation()) > Constants.ROTATION_DEADBAND);
     }
 
     public synchronized boolean getDriveMode() {
@@ -232,7 +218,5 @@ public class DriverInputState {
     public synchronized void pushToDashboard() {
         SmartDashboard.putBoolean("LeftDPAD", operatorControllerState.getLeftDPAD());
         SmartDashboard.putBoolean("RightDPAD", operatorControllerState.getRightDPAD());
-
     }
-
 }

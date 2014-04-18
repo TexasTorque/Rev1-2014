@@ -20,12 +20,10 @@ public class RobotOutput {
     //----- Pneumatics -----
     private Compressor compressor;
     private Solenoid frontDriveBaseSwitcher;
-    //private Solenoid middleDriveBaseSwitcher;
     private Solenoid rearDriveBaseSwitcher;
     private Solenoid catapultStopAngle;
     private boolean catapultAngle;
     private boolean driveBaseMode;
-    private boolean strafeMode;
     private Solenoid winchQuickRelease;
     private boolean winchSolinoid;
     private Solenoid hoop;
@@ -64,7 +62,6 @@ public class RobotOutput {
     public RobotOutput() {
         //----- Pneumatics -----
         frontDriveBaseSwitcher = new Solenoid(Ports.FRONT_DRIVEBASE_SWITCHER);
-        //middleDriveBaseSwitcher = new Solenoid(Ports.MIDDLE_DRIVEBASE_SWITCHER);
         rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
         catapultStopAngle = new Solenoid(Ports.CATAPULT_ANGLE);
         catapultAngle = false;
@@ -127,8 +124,8 @@ public class RobotOutput {
     }
 
     public synchronized void pullFromState() {
-        setDriveMotors(state.getLeftFrontMotorSpeed(), state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed(), state.getStrafeMotorSpeed());
-        setDriveBaseMode(state.getDriveBaseMode(), state.getStrafeMode());
+        setDriveMotors(state.getLeftFrontMotorSpeed(), state.getLeftRearMotorSpeed(), state.getRightFrontMotorSpeed(), state.getRightRearMotorSpeed());
+        setDriveBaseMode(state.getDriveBaseMode());
         setCatapultMotor(state.getCatapultMotorSpeed());
         setWinchSolinoid(state.getWinchSolinoid());
         setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
@@ -137,7 +134,7 @@ public class RobotOutput {
         setHoop(state.getHoop());
     }
 
-    public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed, double strafeSpeed) {
+    public void setDriveMotors(double leftFrontSpeed, double leftRearSpeed, double rightFrontSpeed, double rightRearSpeed) {
         leftFrontDriveMotor.Set(leftFrontSpeed);
         leftRearDriveMotor.Set(leftRearSpeed);
         rightFrontDriveMotor.Set(rightFrontSpeed);
@@ -169,12 +166,10 @@ public class RobotOutput {
         return compressor.enabled();
     }
 
-    public void setDriveBaseMode(boolean mode, boolean strafeMode) {
+    public void setDriveBaseMode(boolean mode) {
         frontDriveBaseSwitcher.set(mode);
-        //middleDriveBaseSwitcher.set(strafeMode);
         rearDriveBaseSwitcher.set(mode);
         driveBaseMode = mode;
-        this.strafeMode = strafeMode;
     }
 
     public boolean getDriveBaseMode() {
