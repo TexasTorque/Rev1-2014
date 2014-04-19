@@ -70,8 +70,6 @@ public class Manipulator extends TorqueSubsystem {
                 intake.setHoop(Constants.HOOP_IN);
             }
             
-            SmartDashboard.putBoolean("Intakeing", intaking);
-
             intake.run();
             catapult.run();
 

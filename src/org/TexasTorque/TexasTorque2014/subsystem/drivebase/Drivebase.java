@@ -43,8 +43,6 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void setToRobot() {
-        SmartDashboard.putNumber("leftSpeed", leftFrontDriveSpeed);
-        SmartDashboard.putNumber("rightSpeed", rightFrontDriveSpeed);
         robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed);
     }
 
@@ -59,10 +57,10 @@ public class Drivebase extends TorqueSubsystem {
         yAxis = TorqueUtil.applyDeadband(yAxis, Constants.Y_AXIS_DEADBAND);
         rotation = TorqueUtil.applyDeadband(rotation, Constants.ROTATION_DEADBAND);
 
-        if (driveMode== Constants.OMNI_MODE) {
-            SmartDashboard.putBoolean("OmniMode",  true);
+        if (driveMode == Constants.OMNI_MODE) {
+            SmartDashboard.putBoolean("OmniMode", true);
         } else {
-            SmartDashboard.putBoolean("OmniMode",  false);
+            SmartDashboard.putBoolean("OmniMode", false);
             tractionDrive(yAxis, rotation);
         }
     }
@@ -70,8 +68,6 @@ public class Drivebase extends TorqueSubsystem {
     private void tractionDrive(double yAxis, double rotation) {
         double leftSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
-        SmartDashboard.putNumber("YAX", yAxis);
-        SmartDashboard.putNumber("RTA", rotation);
 
         double max = 1;
         if (Math.abs(leftSpeed) > max) {
@@ -93,9 +89,6 @@ public class Drivebase extends TorqueSubsystem {
         double leftSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
         
-        SmartDashboard.putNumber("YAX", yAxis);
-        SmartDashboard.putNumber("RTA", rotation);
-
         double max = 1;
         if (Math.abs(leftSpeed) > max) {
             max = Math.abs(leftSpeed);

@@ -177,8 +177,6 @@ public class RobotOutput {
     }
 
     public void setIntakeMotors(double frontRoller, double rearRoller, double frontTilt, double rearTilt) {
-        SmartDashboard.putNumber("FrontTilt", frontTilt);
-        SmartDashboard.putNumber("RearTilt", rearTilt);
         frontIntakeMotor.Set(frontRoller);
         rearIntakeMotor.Set(rearRoller);
         frontIntakeTiltMotor.Set(frontTilt);

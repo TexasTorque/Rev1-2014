@@ -170,7 +170,6 @@ public class SensorInputState {
     }
 
     public double getRearIntakeTiltAngle() {
-        SmartDashboard.putNumber("rearPot", getRearIntakeTiltPotentiometer());
         return getRearIntakeTiltPotentiometer() * (maxRearIntakeAngle - minRearIntakeAngle) + minRearIntakeAngle;
     }
 
@@ -179,17 +178,14 @@ public class SensorInputState {
     }
 
     public void pushToDashboard() {
-        SmartDashboard.putNumber("LeftRate", getLeftFrontDriveEncoderRate());
-        SmartDashboard.putNumber("RightRate", getRightFrontDriveEncoderRate());
-        SmartDashboard.putNumber("LeftPosition", getLeftDrivePosition());
-        SmartDashboard.putNumber("RightPosition", getRightDrivePosition());
-        //SmartDashboard.putNumber("RearLeftRate", getLeftRearDriveEncoderRate());
-        //SmartDashboard.putNumber("RearRightRate", getRightRearDriveEncoderRate());
+        SmartDashboard.putNumber("LeftDriveRate", getLeftFrontDriveEncoderRate());
+        SmartDashboard.putNumber("RightDriveRate", getRightFrontDriveEncoderRate());
+        SmartDashboard.putNumber("LeftDrivePosition", getLeftDrivePosition());
+        SmartDashboard.putNumber("RightDrivePosition", getRightDrivePosition());
         SmartDashboard.putNumber("FrontIntakeVoltage", frontIntakeTiltVoltage);
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
-        SmartDashboard.putBoolean("CatapultLimit", catapultLimitSwitch || catapultLimitSwitchB);
-        //SmartDashboard.putBoolean("Logging",true);
+        SmartDashboard.putBoolean("CatapultLimitSwitch", catapultLimitSwitch || catapultLimitSwitchB);
     }
 
     public void loadParamaters() {

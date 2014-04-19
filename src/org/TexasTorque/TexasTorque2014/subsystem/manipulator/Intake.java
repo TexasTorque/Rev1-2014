@@ -71,11 +71,6 @@ public class Intake extends TorqueSubsystem {
         double currentFrontAngle = sensorInput.getFrontIntakeTiltAngle();
         double currentRearAngle = sensorInput.getRearIntakeTiltAngle();
 
-        SmartDashboard.putNumber("currentFront", currentFrontAngle);
-        SmartDashboard.putNumber("currentRear", currentRearAngle);
-        SmartDashboard.putNumber("desiredFront", frontTiltPID.getSetpoint());
-        SmartDashboard.putNumber("desiredRear", rearTiltPID.getSetpoint());
-
         frontTiltSpeed = frontTiltPID.calculate(currentFrontAngle);
         if (frontTiltPID.getSetpoint() == frontDownAngle && Math.abs(frontDownAngle - currentFrontAngle) < tiltDownTollerance) {
             frontTiltSpeed = Constants.MOTOR_STOPPED;
@@ -84,10 +79,6 @@ public class Intake extends TorqueSubsystem {
         if (rearTiltPID.getSetpoint() == rearDownAngle && Math.abs(rearDownAngle - currentRearAngle) < tiltDownTollerance) {
             rearTiltSpeed = Constants.MOTOR_STOPPED;
         }
-        SmartDashboard.putNumber("FrontTiltSpeed", frontTiltSpeed);
-        SmartDashboard.putNumber("RearTiltSpeed", rearTiltSpeed);
-        
-        //hoopPosition = hoopToggle.get();
     }
 
     public boolean isDone() {
@@ -217,6 +208,15 @@ public class Intake extends TorqueSubsystem {
         intakeSpeed = params.getAsDouble("I_IntakeSpeed", 1.0);
         outtakeSpeed = params.getAsDouble("I_OuttakeSpeed", -1.0);
         tiltDownTollerance = params.getAsDouble("I_TiltDownTollerance", 2.0);
+    }
+    
+    public void pushToDashboard()
+    {
+        SmartDashboard.putNumber("FrontIntakeAngle", sensorInput.getFrontIntakeTiltAngle());
+        SmartDashboard.putNumber("RearIntakeAngle", sensorInput.getRearIntakeTiltAngle());
+        SmartDashboard.putNumber("FrontIntakeRoller", frontIntakeSpeed);
+        SmartDashboard.putNumber("RearIntakeRoller", rearIntakeSpeed);
+        SmartDashboard.putBoolean("Hoop", hoopPosition);
     }
 
     public String logData() { //Have not implemented logging

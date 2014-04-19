@@ -51,8 +51,6 @@ public class AutonomousDriveFrontIntake extends AutonomousCommand {
             firstCycle = false;
         }
         Hashtable autonOutput = new Hashtable();
-        SmartDashboard.putNumber("Left Drive", sensorInput.getLeftDrivePosition());
-        SmartDashboard.putNumber("Right Drive", sensorInput.getRightDrivePosition());
         double left = leftDrive.calculate(sensorInput.getLeftDrivePosition());
         double right = rightDrive.calculate(sensorInput.getRightDrivePosition());
         

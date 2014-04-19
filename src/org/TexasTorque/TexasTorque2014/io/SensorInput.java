@@ -83,8 +83,6 @@ public class SensorInput {
 
     public synchronized void updateState() {
         state.updateState(this);
-        SmartDashboard.putNumber("FrontIntakeRaw", frontIntakeTiltPotentiometer.getRawNoRollover());
-        SmartDashboard.putNumber("RearIntakeRaw", rearIntakeTiltPotentiometer.getRawNoRollover());
     }
 
     private void startEncoders() {

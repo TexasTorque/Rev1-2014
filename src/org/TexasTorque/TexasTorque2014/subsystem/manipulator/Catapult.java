@@ -95,7 +95,6 @@ public class Catapult extends TorqueSubsystem {
             catapultMotorSpeed = 0.0;
         }
         SmartDashboard.putNumber("CatapultSetpoint", pullBackPID.getSetpoint());
-        SmartDashboard.putNumber("CatapultActual", currentValue);
         SmartDashboard.putNumber("CatapultMotorSpeed", catapultMotorSpeed);
         SmartDashboard.putBoolean("WinchSolinoid", winchSolinoid);
     }

@@ -102,7 +102,6 @@ public class DriverInputState {
     }
 
     public synchronized boolean getDriveMode() {
-        //SmartDashboard.putBoolean("DriveMode", !driveControllerState.getBottomRightBumper());
         return (driveControllerState.getTopLeftBumper());
     }
 
@@ -216,7 +215,5 @@ public class DriverInputState {
     }
 
     public synchronized void pushToDashboard() {
-        SmartDashboard.putBoolean("LeftDPAD", operatorControllerState.getLeftDPAD());
-        SmartDashboard.putBoolean("RightDPAD", operatorControllerState.getRightDPAD());
     }
 }
