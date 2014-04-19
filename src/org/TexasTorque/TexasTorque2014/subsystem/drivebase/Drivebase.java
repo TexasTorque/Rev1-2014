@@ -58,6 +58,7 @@ public class Drivebase extends TorqueSubsystem {
         rotation = TorqueUtil.applyDeadband(rotation, Constants.ROTATION_DEADBAND);
 
         if (driveMode == Constants.OMNI_MODE) {
+            HDrive(yAxis, rotation);
             SmartDashboard.putBoolean("OmniMode", true);
         } else {
             SmartDashboard.putBoolean("OmniMode", false);
