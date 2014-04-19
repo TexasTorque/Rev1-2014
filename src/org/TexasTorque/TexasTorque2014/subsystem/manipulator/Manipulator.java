@@ -1,9 +1,7 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
-import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 
 public class Manipulator extends TorqueSubsystem {
 
@@ -259,6 +257,12 @@ public class Manipulator extends TorqueSubsystem {
 
         catapult.releaseOverride(driverInput.releaseOverride());
         catapult.shortShotOverride(driverInput.shortShotOverride());
+    }
+    
+    public void pushToDashboard()
+    {
+        intake.pushToDashboard();
+        catapult.pushToDashboard();
     }
 
     public void restoreDefaultPositions() {

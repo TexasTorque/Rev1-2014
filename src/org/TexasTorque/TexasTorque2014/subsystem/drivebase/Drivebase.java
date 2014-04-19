@@ -44,6 +44,7 @@ public class Drivebase extends TorqueSubsystem {
 
     public void setToRobot() {
         robotOutput.setDriveMotors(leftFrontDriveSpeed, leftRearDriveSpeed, rightFrontDriveSpeed, rightRearDriveSpeed);
+        robotOutput.setDriveBaseMode(driveMode);
     }
 
     public void setDriveSpeeds(double leftSpeed, double rightSpeed) {
@@ -59,9 +60,8 @@ public class Drivebase extends TorqueSubsystem {
 
         if (driveMode == Constants.OMNI_MODE) {
             HDrive(yAxis, rotation);
-            SmartDashboard.putBoolean("OmniMode", true);
+            
         } else {
-            SmartDashboard.putBoolean("OmniMode", false);
             tractionDrive(yAxis, rotation);
         }
     }
@@ -121,6 +121,7 @@ public class Drivebase extends TorqueSubsystem {
     }
 
     public void pushToDashboard() {
+        SmartDashboard.putBoolean("OmniMode", driveMode == Constants.OMNI_MODE);
     }
 
     public String logData() {

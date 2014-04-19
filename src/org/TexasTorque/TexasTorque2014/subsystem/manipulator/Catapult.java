@@ -94,9 +94,6 @@ public class Catapult extends TorqueSubsystem {
         if (driverInput.WinchStop()) {
             catapultMotorSpeed = 0.0;
         }
-        SmartDashboard.putNumber("CatapultSetpoint", pullBackPID.getSetpoint());
-        SmartDashboard.putNumber("CatapultMotorSpeed", catapultMotorSpeed);
-        SmartDashboard.putBoolean("WinchSolinoid", winchSolinoid);
     }
 
     public boolean getIntakeDownOverride() {
@@ -153,6 +150,13 @@ public class Catapult extends TorqueSubsystem {
         pullBackPID.setPIDGains(p, i, d);
         pullBackPID.setEpsilon(epsilon);
         pullBackPID.setSetpoint(shortPidSetpoint);
+    }
+    
+    public void pushToDashboard()
+    {
+        SmartDashboard.putNumber("CatapultSetpoint", pullBackPID.getSetpoint());
+        SmartDashboard.putNumber("CatapultMotorSpeed", catapultMotorSpeed);
+        SmartDashboard.putBoolean("WinchSolinoid", winchSolinoid);
     }
 
     public String logData() { //no logging

@@ -79,6 +79,8 @@ public class Intake extends TorqueSubsystem {
         if (rearTiltPID.getSetpoint() == rearDownAngle && Math.abs(rearDownAngle - currentRearAngle) < tiltDownTollerance) {
             rearTiltSpeed = Constants.MOTOR_STOPPED;
         }
+        
+        pushToDashboard();
     }
 
     public boolean isDone() {

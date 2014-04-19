@@ -117,7 +117,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
         autonManager.runAutonomous();
 
         robotOutput.pullFromState();
-        drivebase.pushToDashboard();
 
         robotOutput.runLights();
         
@@ -146,7 +145,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
         drivebase.run();
         manipulator.run();
 
-        drivebase.pushToDashboard();
         robotOutput.pullFromState();
 
         robotOutput.runLights();
@@ -156,14 +154,11 @@ public class RobotBase extends IterativeRobot implements Runnable {
 
     public void teleopContinuous() {
         sensorInput.calcEncoders();
-
     }
 
     public void disabledPeriodic() {
         driverInput.updateState();
         sensorInput.updateState();
-        SensorInput.getState().pushToDashboard();
-        DriverInput.getState().pushToDashboard();
         robotOutput.runLights();
         pushToDashboard();
         watchdog.feed();
@@ -185,6 +180,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     {
         SmartDashboard.putBoolean("LeftHot", server.getLeftStatus());
         SmartDashboard.putBoolean("RightHot", server.getRightStatus());
+        drivebase.pushToDashboard();
+        manipulator.pushToDashboard();
         SensorInput.getState().pushToDashboard();
     }
 }
