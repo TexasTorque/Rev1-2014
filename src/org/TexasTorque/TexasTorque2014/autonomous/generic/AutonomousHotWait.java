@@ -19,15 +19,17 @@ public class AutonomousHotWait extends AutonomousCommand {
     }
     
     public void reset() {
-        cheese.reset();
         firstCycle = true;
+        cheese.reset();
     }
 
     public boolean run() {
-        if (cheese.getLeftCount() > cheese.getRightCount())
+        if (cheese.getLeftCount() > 0 && cheese.getRightCount() > 0)
         {
+            System.err.println("Wait 3");
             waitTime = 3.0;
         } else {
+            System.err.println("Wait 0.5");
             waitTime = 0.5;
         }
         
