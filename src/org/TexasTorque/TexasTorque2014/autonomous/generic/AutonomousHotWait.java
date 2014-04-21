@@ -24,7 +24,7 @@ public class AutonomousHotWait extends AutonomousCommand {
     }
 
     public boolean run() {
-        if (cheese.getLeftCount() > 0 && cheese.getRightCount() > 0)
+        if (cheese.getLeftStatus() || cheese.getRightStatus())
         {
             System.err.println("Wait 3");
             waitTime = 3.0;
