@@ -1,11 +1,15 @@
 package org.TexasTorque.TexasTorque2014.io;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.util.Vector;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
+import org.TexasTorque.TorqueLib.component.AdaFruitLights;
 import org.TexasTorque.TorqueLib.component.Motor;
 
 public class RobotOutput {
@@ -17,6 +21,8 @@ public class RobotOutput {
     private Compressor compressor;
     private Solenoid frontDriveBaseSwitcher;
     private Solenoid rearDriveBaseSwitcher;
+    private Solenoid catapultStopAngle;
+    private boolean catapultAngle;
     private boolean driveBaseMode;
     private Solenoid winchQuickRelease;
     private boolean winchSolinoid;
@@ -57,6 +63,8 @@ public class RobotOutput {
         //----- Pneumatics -----
         frontDriveBaseSwitcher = new Solenoid(Ports.FRONT_DRIVEBASE_SWITCHER);
         rearDriveBaseSwitcher = new Solenoid(Ports.REAR_DRIVEBASE_SWITCHER);
+        catapultStopAngle = new Solenoid(Ports.CATAPULT_ANGLE);
+        catapultAngle = false;
         driveBaseMode = Constants.OMNI_MODE;
         winchQuickRelease = new Solenoid(Ports.CATAPULT_RELEASE);
         winchSolinoid = false;
@@ -122,6 +130,7 @@ public class RobotOutput {
         setWinchSolinoid(state.getWinchSolinoid());
         setIntakeMotors(state.getFrontIntakeMotorSpeed(), state.getRearIntakeMotorSpeed(), state.getFrontIntakeTiltMotorSpeed(), state.getRearIntakeTiltMotorSpeed());
         setLightsState(state.getLightsState());
+        setCatapultStopAngle(state.getCatapultAngle());
         setHoop(state.getHoop());
     }
 
@@ -213,6 +222,15 @@ public class RobotOutput {
         winchSolinoid = mode;
     }
     
+    public boolean getCatapultStopAngle() {
+        return catapultAngle;
+    }
+    
+    public void setCatapultStopAngle(boolean mode) {
+        catapultStopAngle.set(mode);
+        catapultAngle = mode;
+    }
+
     public void setLightsState(int state) {
         lightState = state;
         //lights.setDesiredState(state);

@@ -23,8 +23,11 @@ public class Catapult extends TorqueSubsystem {
     private double slowSpeed;
     private double fireTime;
     private boolean winchSolinoid;
+    private boolean catapultStopAngle;
+    private TorqueToggle stopAngleToggle;
 
-    public static double PIDSetpoint;
+    public static double fullPidSetpoint;
+    public static double shortPidSetpoint;
     public static double tolerance;
     public static double timeout;
     public static double overrideSpeed;
@@ -38,6 +41,7 @@ public class Catapult extends TorqueSubsystem {
         intake = Intake.getInstance();
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
         pullBackPID = new TorquePID();
+        stopAngleToggle = new TorqueToggle();
     }
 
     public void run() {
@@ -59,10 +63,11 @@ public class Catapult extends TorqueSubsystem {
                     fired = true;
                     fireTime = Timer.getFPGATimestamp();
                     winchSolinoid = true;
-                    pullBackPID.setSetpoint(PIDSetpoint);
+                    pullBackPID.setSetpoint((catapultStopAngle) ? shortPidSetpoint : fullPidSetpoint);
                 } else if (sensorInput.getCatapultLimitSwitch()) {
                     isReady = true;
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;
+
                 } else if (currentValue < pullBackPID.getSetpoint()) {
                     isReady = false;
                     catapultMotorSpeed = pullBackPID.calculate(currentValue);
@@ -72,6 +77,12 @@ public class Catapult extends TorqueSubsystem {
                 }
             }
             
+            if (driverInput.isAuton()) {
+                catapultStopAngle = driverInput.getAutonBool("CatapultAngle", false);
+            } else {
+                catapultStopAngle = driverInput.getCatapultStopAngle();
+            }
+
         } else {
             //First Cycle Clears
             catapultMotorSpeed = 0.0;
@@ -97,6 +108,10 @@ public class Catapult extends TorqueSubsystem {
         winchSolinoid = state;
     }
     
+    public void shortShotOverride(boolean state) {
+        catapultStopAngle = state;
+    }
+
     public boolean catapultReady() {
         return isReady;
     }
@@ -116,12 +131,14 @@ public class Catapult extends TorqueSubsystem {
     public void setToRobot() {
         robotOutput.setCatapultMotor(catapultMotorSpeed);
         robotOutput.setWinchSolinoid(winchSolinoid);
+        robotOutput.setCatapultAngle(catapultStopAngle);
     }
 
     public void loadParameters() {
         firstCycle = true;
         timeout = params.getAsDouble("C_Timeout", 1.0);
-        PIDSetpoint = params.getAsDouble("C_FullResetSetpoint", 0.0);
+        fullPidSetpoint = params.getAsDouble("C_FullResetSetpoint", 0.0);
+        shortPidSetpoint = params.getAsDouble("C_ShortResetSetpoint", 0.0);
         slowSpeed = params.getAsDouble("C_SlowSpeed", 0.0);
         overrideSpeed = params.getAsDouble("C_OverrideSpeed", 0.75);
 
@@ -132,6 +149,7 @@ public class Catapult extends TorqueSubsystem {
 
         pullBackPID.setPIDGains(p, i, d);
         pullBackPID.setEpsilon(epsilon);
+        pullBackPID.setSetpoint(shortPidSetpoint);
     }
     
     public void pushToDashboard()

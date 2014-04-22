@@ -118,6 +118,15 @@ public class DriverInputState {
         return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD()) && operatorControllerState.getTopActionButton();
     }
 
+    public synchronized boolean getCatapultStopAngle() {
+        if (operatorControllerState.getLeftDPAD()) {
+            catapultStopAngle = true;
+        } else if (operatorControllerState.getRightDPAD()) {
+            catapultStopAngle = false;
+        }
+        return catapultStopAngle;
+    }
+
     public synchronized double frontIntakeOverride() {
         return operatorControllerState.getRightYAxis();
     }

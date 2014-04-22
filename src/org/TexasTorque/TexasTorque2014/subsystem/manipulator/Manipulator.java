@@ -256,6 +256,7 @@ public class Manipulator extends TorqueSubsystem {
         intake.toggleHoop(driverInput.getHoopToggle());
 
         catapult.releaseOverride(driverInput.releaseOverride());
+        catapult.shortShotOverride(driverInput.shortShotOverride());
     }
     
     public void pushToDashboard()
