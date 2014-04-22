@@ -122,6 +122,8 @@ public class Drivebase extends TorqueSubsystem {
 
     public void pushToDashboard() {
         SmartDashboard.putBoolean("OmniMode", driveMode == Constants.OMNI_MODE);
+        SmartDashboard.putNumber("LeftSpeed", leftRearDriveSpeed);
+        SmartDashboard.putNumber("RightSpeed", rightRearDriveSpeed);
     }
 
     public String logData() {

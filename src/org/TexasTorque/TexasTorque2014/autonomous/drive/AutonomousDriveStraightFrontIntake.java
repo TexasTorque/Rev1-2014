@@ -61,6 +61,10 @@ public class AutonomousDriveStraightFrontIntake extends AutonomousCommand {
         double right = rightDrive.calculate(sensorInput.getRightDrivePosition());
         
         isDone = leftDrive.isDone() && rightDrive.isDone();
+        if(isDone)
+        {
+            System.err.println("Finished");
+        }
         
         autonOutput.put("leftSpeed", new Double(-left));
         autonOutput.put("rightSpeed", new Double(-right));
@@ -70,6 +74,7 @@ public class AutonomousDriveStraightFrontIntake extends AutonomousCommand {
         
         if(Timer.getFPGATimestamp() - startTime > timeout)
         {
+            System.err.println("Drive Timeout");
             return true;
         }
         return isDone;

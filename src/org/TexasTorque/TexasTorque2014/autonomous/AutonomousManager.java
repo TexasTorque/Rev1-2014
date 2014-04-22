@@ -256,7 +256,7 @@ public class AutonomousManager {
         double postDriveWait = params.getAsDouble("A_PostDriveWait", 1.0);
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(postDriveWait));
         double fireWait = params.getAsDouble("A_FireWait", 8.0);
-        //autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
         double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(5.0));
@@ -265,7 +265,7 @@ public class AutonomousManager {
         double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 1.0);
         autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
         autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
-        //autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
     }
 

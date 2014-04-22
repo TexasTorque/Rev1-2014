@@ -40,39 +40,49 @@ public class AutonomousTurnCheesy extends AutonomousCommand {
         isDone = false;
         this.timeout = timeout;
         SensorInput.getInstance().resetDriveEncoders();
-        reset();
+        this.reset();
     }
 
     public void reset() {
         firstCycle = true;
         isDone = false;
         SensorInput.getInstance().resetDriveEncoders();
-        CheesyVisionServer.getInstance().reset();
+        //CheesyVisionServer.getInstance().reset();
     }
 
     public boolean run() {
         if (firstCycle) {
             System.err.println("Turning");
+            System.err.println("L: "+CheesyVisionServer.getInstance().getLeftCount()+ " R: "+CheesyVisionServer.getInstance().getRightCount());
+            System.err.println("L: "+CheesyVisionServer.getInstance().getLeftStatus()+ " R: "+CheesyVisionServer.getInstance().getRightStatus());
 
-            if (CheesyVisionServer.getInstance().getLeftStatus()) {
+            if (CheesyVisionServer.getInstance().getLeftCount() > CheesyVisionServer.getInstance().getRightCount()) {
                 System.err.println("LeftGoalHot");
-                leftDrive.setSetpoint(-target);
-                rightDrive.setSetpoint(target);
-            } else {
-                System.err.println("RightGoalHot");
                 leftDrive.setSetpoint(target);
                 rightDrive.setSetpoint(-target);
+            } else {
+                System.err.println("RightGoalHot");
+                leftDrive.setSetpoint(-target);
+                rightDrive.setSetpoint(target);
             }
 
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
         Hashtable autonOutput = new Hashtable();
+        SmartDashboard.putNumber("LeftDriveSetpoint", leftDrive.getSetpoint());
+        SmartDashboard.putNumber("RightDriveSetpoint", rightDrive.getSetpoint());
+        
         double left = leftDrive.calculate(sensorInput.getLeftDrivePosition());
         double right = rightDrive.calculate(sensorInput.getRightDrivePosition());
-
+        leftDrive.isDone();
+        rightDrive.isDone();
         isDone = leftDrive.isDone() && rightDrive.isDone();
-
+        if(isDone)
+        {
+        System.err.println("TurnDoneFinished");
+        }
+        
         autonOutput.put("leftSpeed", new Double(-left));
         autonOutput.put("rightSpeed", new Double(-right));
         autonOutput.put("frontIntakeDown", Boolean.TRUE);
@@ -80,6 +90,7 @@ public class AutonomousTurnCheesy extends AutonomousCommand {
         driverInput.updateAutonData(autonOutput);
 
         if (Timer.getFPGATimestamp() - startTime > timeout) {
+            System.err.print("Turn Timeout");
             return true;
         }
         return isDone;
