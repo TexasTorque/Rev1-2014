@@ -203,11 +203,11 @@ public class DriverInputState {
     }
 
     public synchronized boolean releaseOverride() {
-        return operatorControllerState.getRightDPAD();
+        return operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD();
     }
 
     public synchronized boolean shortShotOverride() {
-        return operatorControllerState.getLeftDPAD();
+        return operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD();
     }
 
     public synchronized boolean winchOverride() {
