@@ -288,6 +288,7 @@ public class AutonomousManager {
         double intakeTime = params.getAsDouble("A_IntakeTime", 1.0);
         autoBuilder.addCommand(new AutonomousFrontIntake(intakeTime));
         double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 1.0);
+        autoBuilder.addCommand(new AutonomousHoopIn());
         autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
         autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
