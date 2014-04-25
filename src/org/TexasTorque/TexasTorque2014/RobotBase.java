@@ -51,7 +51,9 @@ public class RobotBase extends IterativeRobot implements Runnable {
         sensorInput = SensorInput.getInstance();
         drivebase = Drivebase.getInstance();
         manipulator = Manipulator.getInstance();
-
+        server = CheesyVisionServer.getInstance();
+        server.setPort(listenPort);
+        server.start();
         autonManager = new AutonomousManager();
 
         driverInput.pullJoystickTypes();
@@ -66,12 +68,8 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousInit() {
-        server = CheesyVisionServer.getInstance();
-        server.setPort(listenPort);
-        server.start();
         server.reset();
         server.startSamplingCounts();
-
         int autonMode = (int) SmartDashboard.getNumber("AutonomousMode", Constants.DO_NOTHING_AUTO);
         autonManager.setAutoMode(autonMode);
         autonManager.loadAutonomous();
@@ -83,10 +81,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     public void disabledInit() {
         robotOutput.setLightsState(Constants.LIGHTS_DISABLED);
         robotOutput.runLights();
-        if (server != null) {
-            server.stopSamplingCounts();
-            server.stop();
-        }
+        server.stopSamplingCounts();
         loadParameters();
     }
 
@@ -124,7 +119,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
         robotOutput.pullFromState();
 
         robotOutput.runLights();
-
+        
         pushToDashboard();
     }
 
@@ -133,10 +128,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void teleopInit() {
-        if (server != null) {
-            server.stopSamplingCounts();
-            server.stop();
-        }
+        server.stopSamplingCounts();
         loadParameters();
         driverInput.pullJoystickTypes();
         sensorInput.resetEncoders();
@@ -157,7 +149,7 @@ public class RobotBase extends IterativeRobot implements Runnable {
         robotOutput.pullFromState();
 
         robotOutput.runLights();
-
+        
         pushToDashboard();
     }
 
@@ -184,10 +176,11 @@ public class RobotBase extends IterativeRobot implements Runnable {
         sensorInput.loadParameters();
         SensorInput.getState().loadParamaters();
     }
-
-    public void pushToDashboard() {
-        //SmartDashboard.putBoolean("LeftHot", server.getLeftStatus());
-        //SmartDashboard.putBoolean("RightHot", server.getRightStatus());
+    
+    public void pushToDashboard()
+    {
+        SmartDashboard.putBoolean("LeftHot", server.getLeftStatus());
+        SmartDashboard.putBoolean("RightHot", server.getRightStatus());
         drivebase.pushToDashboard();
         manipulator.pushToDashboard();
         SensorInput.getState().pushToDashboard();
