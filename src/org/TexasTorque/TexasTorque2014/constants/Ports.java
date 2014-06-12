@@ -44,10 +44,8 @@ public class Ports {
 
     //----- Solenoids -----
     public final static int FRONT_DRIVEBASE_SWITCHER = 1;
-    public final static int MIDDLE_DRIVEBASE_SWITCHER = 2;
     public final static int REAR_DRIVEBASE_SWITCHER = 3;
     public final static int CATAPULT_RELEASE = 4;
-    public final static int CATAPULT_ANGLE = 5;
     public final static int HOOP = 6;
             
     //----- Digital Inputs -----

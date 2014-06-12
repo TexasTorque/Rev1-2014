@@ -1,13 +1,11 @@
 package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
-import org.TexasTorque.TorqueLib.util.TorqueToggle;
 
 public class Catapult extends TorqueSubsystem {
 
@@ -23,11 +21,8 @@ public class Catapult extends TorqueSubsystem {
     private double slowSpeed;
     private double fireTime;
     private boolean winchSolinoid;
-    private boolean catapultStopAngle;
-    private TorqueToggle stopAngleToggle;
 
-    public static double fullPidSetpoint;
-    public static double shortPidSetpoint;
+    public static double PIDSetpoint;
     public static double tolerance;
     public static double timeout;
     public static double overrideSpeed;
@@ -41,7 +36,6 @@ public class Catapult extends TorqueSubsystem {
         intake = Intake.getInstance();
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
         pullBackPID = new TorquePID();
-        stopAngleToggle = new TorqueToggle();
     }
 
     public void run() {
@@ -63,7 +57,7 @@ public class Catapult extends TorqueSubsystem {
                     fired = true;
                     fireTime = Timer.getFPGATimestamp();
                     winchSolinoid = true;
-                    pullBackPID.setSetpoint((catapultStopAngle) ? shortPidSetpoint : fullPidSetpoint);
+                    pullBackPID.setSetpoint(PIDSetpoint);
                 } else if (sensorInput.getCatapultLimitSwitch()) {
                     isReady = true;
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;
@@ -75,12 +69,6 @@ public class Catapult extends TorqueSubsystem {
                     isReady = false;
                     catapultMotorSpeed = slowSpeed;
                 }
-            }
-            
-            if (driverInput.isAuton()) {
-                catapultStopAngle = driverInput.getAutonBool("CatapultAngle", false);
-            } else {
-                catapultStopAngle = driverInput.getCatapultStopAngle();
             }
 
         } else {
@@ -108,10 +96,6 @@ public class Catapult extends TorqueSubsystem {
         winchSolinoid = state;
     }
     
-    public void shortShotOverride(boolean state) {
-        catapultStopAngle = state;
-    }
-
     public boolean catapultReady() {
         return isReady;
     }
@@ -131,14 +115,12 @@ public class Catapult extends TorqueSubsystem {
     public void setToRobot() {
         robotOutput.setCatapultMotor(catapultMotorSpeed);
         robotOutput.setWinchSolinoid(winchSolinoid);
-        robotOutput.setCatapultAngle(catapultStopAngle);
     }
 
     public void loadParameters() {
         firstCycle = true;
         timeout = params.getAsDouble("C_Timeout", 1.0);
-        fullPidSetpoint = params.getAsDouble("C_FullResetSetpoint", 0.0);
-        shortPidSetpoint = params.getAsDouble("C_ShortResetSetpoint", 0.0);
+        PIDSetpoint = params.getAsDouble("C_FullResetSetpoint", 0.0);
         slowSpeed = params.getAsDouble("C_SlowSpeed", 0.0);
         overrideSpeed = params.getAsDouble("C_OverrideSpeed", 0.75);
 
@@ -149,7 +131,7 @@ public class Catapult extends TorqueSubsystem {
 
         pullBackPID.setPIDGains(p, i, d);
         pullBackPID.setEpsilon(epsilon);
-        pullBackPID.setSetpoint(shortPidSetpoint);
+        pullBackPID.setSetpoint(PIDSetpoint);
     }
     
     public void pushToDashboard()
