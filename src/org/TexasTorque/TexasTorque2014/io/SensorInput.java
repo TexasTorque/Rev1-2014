@@ -93,6 +93,7 @@ public class SensorInput {
         catapultEncoder.start();
         frontIntakeTiltPotentiometer.reset();
         rearIntakeTiltPotentiometer.reset();
+        gyro.reset();
     }
 
     public void resetEncoders() {
@@ -103,6 +104,7 @@ public class SensorInput {
         catapultEncoder.reset();
         frontIntakeTiltPotentiometer.reset();
         rearIntakeTiltPotentiometer.reset();
+        gyro.reset();
     }
     
     public void resetCatapultEncoder()
@@ -213,7 +215,7 @@ public class SensorInput {
     }
 
     public double getGyroAngle() {
-        return 0.0;//limitGyroAngle(-gyro.getAngle() * 2);
+        return limitGyroAngle(-gyro.getAngle() * 2);
     }
 
     public double limitGyroAngle(double angle) {

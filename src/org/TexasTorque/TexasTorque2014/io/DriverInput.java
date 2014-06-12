@@ -21,7 +21,7 @@ public class DriverInput {
         params = Parameters.getTeleopInstance();
         driveController = new GenericController(Ports.DRIVE_CONTROLLER_PORT, false);
         operatorController = new GenericController(Ports.OPERATOR_CONTROLLER_PORT, false);
-
+        
         inOverrideState = false;
     }
 
