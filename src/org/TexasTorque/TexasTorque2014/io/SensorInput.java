@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Watchdog;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
@@ -52,10 +51,10 @@ public class SensorInput {
         catapultEncoder = new TorqueEncoder(Ports.CATAPULT_ENCODER_SIDECAR, Ports.CATAPULT_ENCODER_A_PORT, Ports.CATAPULT_ENCODER_SIDECAR, Ports.CATAPULT_ENCODER_B_PORT, false);
 
         //----- Gyro -----
-        //gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
-        //gyro = new Gyro(gyroChannel);
-        //gyro.reset();
-        //gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
+        gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
+        gyro = new Gyro(gyroChannel);
+        gyro.reset();
+        gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
         
         //----- Potentiometers -----
         

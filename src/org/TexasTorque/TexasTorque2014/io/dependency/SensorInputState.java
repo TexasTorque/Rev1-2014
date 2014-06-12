@@ -186,6 +186,7 @@ public class SensorInputState {
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
         SmartDashboard.putBoolean("CatapultLimitSwitch", catapultLimitSwitch || catapultLimitSwitchB);
+        SmartDashboard.putNumber("GyroAngle", gyroAngle);
     }
 
     public void loadParamaters() {
