@@ -21,6 +21,9 @@ public class DriverInput {
         params = Parameters.getTeleopInstance();
         driveController = new GenericController(Ports.DRIVE_CONTROLLER_PORT, false);
         operatorController = new GenericController(Ports.OPERATOR_CONTROLLER_PORT, false);
+        
+        SmartDashboard.putBoolean("firstControllerIsLogitech", false);
+        SmartDashboard.putBoolean("secondControllerIsLogitech", false);
 
         inOverrideState = false;
     }
