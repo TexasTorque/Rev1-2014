@@ -102,7 +102,7 @@ public class DriverInputState {
     }
 
     public synchronized boolean getDriveMode() {
-        return (driveControllerState.getTopLeftBumper());
+        return (driveControllerState.getTopLeftBumper() || driveControllerState.getTopRightBumper());
     }
 
 //---------- Manipulator ----------  

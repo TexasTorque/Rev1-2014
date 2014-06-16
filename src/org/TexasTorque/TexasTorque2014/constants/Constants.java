@@ -3,8 +3,8 @@ package org.TexasTorque.TexasTorque2014.constants;
 public class Constants
 {
     //----- Controller -----
-    public final static double Y_AXIS_DEADBAND = 0.16;
-    public final static double ROTATION_DEADBAND = 0.18;
+    public final static double Y_AXIS_DEADBAND = 0.08;
+    public final static double ROTATION_DEADBAND = 0.8;
     public final static double OVERRIDE_AXIS_DEADBAND = 0.35;
     
     public static final boolean CONTROLLER_IS_XBOX = false;
