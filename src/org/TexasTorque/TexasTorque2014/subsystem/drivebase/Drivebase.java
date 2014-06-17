@@ -32,8 +32,9 @@ public class Drivebase extends TorqueSubsystem {
 
     public void run() {
         if (driverInput.isAuton()) {
-            //setDriveMode(driverInput.getAutonBool("driveMode", Constants.TRACTION_MODE));
-            setDriveMode(Constants.TRACTION_MODE);
+            setDriveMode(driverInput.getAutonBool("driveMode", true));
+            System.err.println(driverInput.getAutonBool("driveMode", true));
+            //setDriveMode(Constants.TRACTION_MODE);
             setDriveSpeeds(driverInput.getAutonDouble("leftSpeed", Constants.MOTOR_STOPPED), driverInput.getAutonDouble("rightSpeed", Constants.MOTOR_STOPPED));
         } else {
             setDriveMode(driverInput.getDriveMode());
@@ -60,7 +61,7 @@ public class Drivebase extends TorqueSubsystem {
 
         if (driveMode == Constants.OMNI_MODE) {
             HDrive(yAxis, rotation);
-            
+
         } else {
             tractionDrive(yAxis, rotation);
         }
@@ -89,7 +90,7 @@ public class Drivebase extends TorqueSubsystem {
     private void HDrive(double yAxis, double rotation) {
         double leftSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT - rotation * Constants.ROTATION_COEFFICIENT;
         double rightSpeed = yAxis * Constants.FORWARD_REVERSE_COEFFICIENT + rotation * Constants.ROTATION_COEFFICIENT;
-        
+
         double max = 1;
         if (Math.abs(leftSpeed) > max) {
             max = Math.abs(leftSpeed);
@@ -106,10 +107,8 @@ public class Drivebase extends TorqueSubsystem {
         setDriveSpeeds(leftSpeed, rightSpeed);
     }
 
-    private void setDriveMode(boolean omniMode) {
-        if (omniMode != driveMode) {
-            driveMode = omniMode;
-        }
+    private void setDriveMode(boolean mode) {
+        driveMode = mode;
     }
 
     public String getKeyNames() {

@@ -7,7 +7,7 @@ import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
 import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
 
-public class AutonomousDriveStraightGyro extends AutonomousCommand
+public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
 {
     private double targetDistance;
     
@@ -23,7 +23,7 @@ public class AutonomousDriveStraightGyro extends AutonomousCommand
     private boolean isDone;
     private double startTime;
     
-    public AutonomousDriveStraightGyro(double distance, double speed, double timeout)
+    public AutonomousDriveStraightFrontIntakeGyro(double distance, double speed, double timeout)
     {
         super();
         
@@ -94,6 +94,7 @@ public class AutonomousDriveStraightGyro extends AutonomousCommand
 
         autonOutput.put("leftSpeed", new Double(-leftSpeed));
         autonOutput.put("rightSpeed", new Double(-rightSpeed));
+        autonOutput.put("frontIntakeDown", Boolean.TRUE);
         
         driverInput.updateAutonData(autonOutput);
         

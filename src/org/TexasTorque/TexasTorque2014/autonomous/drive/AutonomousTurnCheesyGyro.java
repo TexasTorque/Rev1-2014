@@ -17,8 +17,8 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
     private double startTime;
     private double timeout;
 
-    public AutonomousTurnCheesyGyro(double distance, double maxSpeed, double timeout) {
-        target = distance * Constants.CLICKS_PER_METER;
+    public AutonomousTurnCheesyGyro(double degrees, double maxSpeed, double timeout) {
+        target = degrees;
         gyroPID = new TorquePID();
 
         double p = params.getAsDouble("A_GyroTurnP", 0.0);
@@ -30,6 +30,7 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
         gyroPID.setPIDGains(p, i, d);
         gyroPID.setEpsilon(e);
         gyroPID.setDoneRange(doneRange);
+        gyroPID.setMinDoneCycles(1);
         
         isDone = false;
         this.timeout = timeout;
@@ -64,21 +65,22 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
         }
         Hashtable autonOutput = new Hashtable();
         
+        double left  =  gyroPID.calculate(sensorInput.getGyroAngle());
+        double right = -gyroPID.calculate(sensorInput.getGyroAngle());
+        
+        autonOutput.put("leftSpeed", new Double(left));
+        autonOutput.put("rightSpeed", new Double(right));
+        autonOutput.put("frontIntakeDown", Boolean.TRUE);
+        autonOutput.put("driveMode", new Boolean(Constants.OMNI_MODE));
+
+        driverInput.updateAutonData(autonOutput);
+
         isDone = gyroPID.isDone();
         if(isDone)
         {
             System.err.println("TurnDoneFinished");
         }
         
-        double left = -gyroPID.calculate(sensorInput.getGyroAngle());
-        double right = gyroPID.calculate(sensorInput.getGyroAngle());
-        
-        autonOutput.put("leftSpeed", new Double(left));
-        autonOutput.put("rightSpeed", new Double(right));
-        autonOutput.put("frontIntakeDown", Boolean.TRUE);
-
-        driverInput.updateAutonData(autonOutput);
-
         if (Timer.getFPGATimestamp() - startTime > timeout) {
             System.err.print("Turn Timeout");
             return true;

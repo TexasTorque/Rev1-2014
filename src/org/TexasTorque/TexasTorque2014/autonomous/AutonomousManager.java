@@ -2,13 +2,13 @@ package org.TexasTorque.TexasTorque2014.autonomous;
 
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFireMoveIntakes;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapultDone;
-import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapultIntakeDown;
-import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveFrontIntake;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraight;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightDead;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightDeadControlled;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightFrontIntake;
+import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightFrontIntakeGyro;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousTurnCheesy;
+import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousTurnCheesyGyro;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousDone;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousHotWait;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousWait;
@@ -136,20 +136,14 @@ public class AutonomousManager {
     }
 
     public void testAuto() {
-//        System.err.println("Loading Test (TwoBall Drive) Auto");
-//
-//        autoBuilder.addCommand(new AutonomousFireMoveIntakes(10.0));
-//        double resetTimeout = params.getAsDouble("C_StallTime", 1.0);
-//        autoBuilder.addCommand(new AutonomousResetCatapultIntakeDown(resetTimeout + .35));
-//        autoBuilder.addCommand(new AutonomousFrontIntakeDown(5.0));
-//        double driveDistance = params.getAsDouble("A_DriveDistance", 2.0);
-//        autoBuilder.addCommand(new AutonomousDriveFrontIntake(driveDistance, 1.0, 3.0));
-//        autoBuilder.addCommand(new AutonomousWait(0.5));
-//        autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
-//        autoBuilder.addCommand(new AutonomousFireMoveIntakes(5.0));
-        autoBuilder.addCommand(new AutonomousHoopIn());
-        autoBuilder.addCommand(new AutonomousWait(1.0));
-        autoBuilder.addCommand(new AutonomousHoopIn());
+        double degrees = params.getAsDouble("A_CheesyDegrees", 0);
+        double turnTimeout = params.getAsDouble("A_TurnTimeout", 2.0);
+        //autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
+        
+        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
+        double distance = params.getAsDouble("A_CheesyDriveDistance", 0.0);
+        autoBuilder.addCommand(new AutonomousDriveStraightFrontIntakeGyro(distance, 1.0, timeout));
+        autoBuilder.addCommand(new AutonomousWait(5));
     }
 
     public void oneBallAuto() {

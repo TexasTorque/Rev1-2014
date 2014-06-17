@@ -1,6 +1,5 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Hashtable;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.DriverInput;
@@ -38,7 +37,6 @@ public class DriverInputState {
         inOverrideState = false;
         autonomousData = table;
 
-        autonomousData.put("driveMode", new Boolean(Constants.OMNI_MODE));
         autonomousData.put("CatapultAngle", Boolean.FALSE);
     }
 
