@@ -65,6 +65,7 @@ public class Manipulator extends TorqueSubsystem {
             
             if (driverInput.getHoopToggle() || driverInput.getAutonBool("hoopIn", false))
             {
+                System.err.println("hoop");
                 intake.setHoop(Constants.HOOP_IN);
             }
             

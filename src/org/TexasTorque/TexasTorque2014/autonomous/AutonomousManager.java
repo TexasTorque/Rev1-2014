@@ -136,14 +136,14 @@ public class AutonomousManager {
     }
 
     public void testAuto() {
-        double degrees = params.getAsDouble("A_CheesyDegrees", 0);
+        double degrees = params.getAsDouble("A_CheesyDegrees", 0.0);
         double turnTimeout = params.getAsDouble("A_TurnTimeout", 2.0);
-        //autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
+        autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
         
-        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
-        double distance = params.getAsDouble("A_CheesyDriveDistance", 0.0);
-        autoBuilder.addCommand(new AutonomousDriveStraightFrontIntakeGyro(distance, 1.0, timeout));
-        autoBuilder.addCommand(new AutonomousWait(5));
+//        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
+//        double distance = params.getAsDouble("A_CheesyDriveDistance", 0.0);
+//        autoBuilder.addCommand(new AutonomousDriveStraightFrontIntakeGyro(distance, 1.0, timeout));
+//        autoBuilder.addCommand(new AutonomousWait(5));
     }
 
     public void oneBallAuto() {
@@ -242,6 +242,7 @@ public class AutonomousManager {
         double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
 
+        autoBuilder.addCommand(new AutonomousHoopIn());
     }
 
     public void driveDistanceTwoBallAuto() {
@@ -264,6 +265,7 @@ public class AutonomousManager {
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(5.0));
         double intakeTime = params.getAsDouble("A_IntakeTime", 1.0);
         autoBuilder.addCommand(new AutonomousFrontIntake(intakeTime));
+        autoBuilder.addCommand(new AutonomousHoopIn());
         double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 1.0);
         autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
         
@@ -284,6 +286,8 @@ public class AutonomousManager {
         double degrees = params.getAsDouble("A_CheesyDegrees", 0.0);
         double turnTimeout = params.getAsDouble("A_TurnTimeout", 2.0);
         autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
+        
+        autoBuilder.addCommand(new AutonomousWait(0.5));
         
         double fireWait = params.getAsDouble("A_FireWait", 8.0);
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
