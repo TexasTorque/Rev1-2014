@@ -136,6 +136,8 @@ public class AutonomousManager {
     }
 
     public void testAuto() {
+        autoBuilder.addCommand(new AutonomousWait(5.0));
+        
         double degrees = params.getAsDouble("A_CheesyDegrees", 0.0);
         double turnTimeout = params.getAsDouble("A_TurnTimeout", 2.0);
         autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
@@ -287,7 +289,7 @@ public class AutonomousManager {
         double turnTimeout = params.getAsDouble("A_TurnTimeout", 2.0);
         autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
         
-        autoBuilder.addCommand(new AutonomousWait(0.5));
+        autoBuilder.addCommand(new AutonomousWait(0.1));
         
         double fireWait = params.getAsDouble("A_FireWait", 8.0);
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));

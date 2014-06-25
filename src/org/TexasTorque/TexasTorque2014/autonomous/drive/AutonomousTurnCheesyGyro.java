@@ -26,11 +26,13 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
         double d = params.getAsDouble("A_GyroTurnD", 0.0);
         double e = params.getAsDouble("A_GyroTurnE", 0.0);
         double doneRange = params.getAsDouble("A_GyroTurnDoneRange", 8.0);
+        double maxOut = params.getAsDouble("A_CheesyTurnMaxOuput", 1.0);
         
         gyroPID.setPIDGains(p, i, d);
         gyroPID.setEpsilon(e);
         gyroPID.setDoneRange(doneRange);
         gyroPID.setMinDoneCycles(1);
+        gyroPID.setMaxOutput(maxOut);
         
         isDone = false;
         this.timeout = timeout;
@@ -54,10 +56,10 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
 
             if (CheesyVisionServer.getInstance().getLeftCount() > CheesyVisionServer.getInstance().getRightCount()) {
                 System.err.println("LeftGoalHot");
-                gyroPID.setSetpoint(target);
+                gyroPID.setSetpoint(-target);
             } else {
                 System.err.println("RightGoalHot");
-                gyroPID.setSetpoint(-target);
+                gyroPID.setSetpoint(target);
             }
 
             startTime = Timer.getFPGATimestamp();

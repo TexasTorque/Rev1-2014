@@ -32,7 +32,6 @@ public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
         
         gyroPID.setSetpoint(0);
         
-        encoderPID.setMaxOutput(speed);
         encoderPID.setMinDoneCycles(10);
         gyroPID.setMinDoneCycles(10);
         
@@ -43,6 +42,9 @@ public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
         double d = params.getAsDouble("A_DriveForwardD", 0.0);
         double e = params.getAsDouble("A_DriveForwardE", 0.0);
         double r = params.getAsDouble("A_DriveForwardDoneRange", 0.0);
+        double maxOut = params.getAsDouble("A_DriveForwardMaxOutput", 1.0);
+        
+        encoderPID.setMaxOutput(maxOut);
         
         encoderPID.setPIDGains(p, i, d);
         encoderPID.setEpsilon(e);
