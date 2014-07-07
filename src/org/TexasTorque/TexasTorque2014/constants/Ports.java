@@ -16,7 +16,7 @@ public class Ports {
     public final static int RIGHT_REAR_DRIVE_SIDECAR = 1;
 
     public final static int RIGHT_FRONT_DRIVE_MOTOR_PORT = 10;
-    public final static int RIGHT_REAR_DRIVE_MOTOR_PORT = 1;
+    public final static int RIGHT_REAR_DRIVE_MOTOR_PORT = 3;
 
     public final static int FRONT_INTAKE_TILT_SIDECAR = 1;
     public final static int FRONT_INTAKE_TILT_MOTOR_PORT = 2;
