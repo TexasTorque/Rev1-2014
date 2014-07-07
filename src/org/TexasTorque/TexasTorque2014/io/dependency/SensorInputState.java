@@ -9,6 +9,8 @@ public class SensorInputState {
     //----- Digital -----
     private boolean catapultLimitSwitch;
     private boolean catapultLimitSwitchB;
+    private boolean frontIntakeButton;
+    private boolean rearIntakeButton;
 
     //----- Encoder -----
     private double leftFrontDriveEncoder;
@@ -73,6 +75,8 @@ public class SensorInputState {
         //----- Misc -----
         catapultLimitSwitch = input.getCatapultLimitSwitch();
         catapultLimitSwitchB = input.getCatapultLimitSwitchB();
+        frontIntakeButton = input.getFrontIntakeButton();
+        rearIntakeButton = input.getRearIntakeButton();
         pressureSensor = input.getPSI();
     }
 
@@ -172,6 +176,16 @@ public class SensorInputState {
     public double getRearIntakeTiltAngle() {
         return getRearIntakeTiltPotentiometer() * (maxRearIntakeAngle - minRearIntakeAngle) + minRearIntakeAngle;
     }
+    
+    public boolean getFrontIntakeButton()
+    {
+        return frontIntakeButton;
+    }
+    
+    public boolean getRearIntakeButton()
+    {
+        return rearIntakeButton;
+    }
 
     public double getCatapultEncoder() {
         return catapultEncoder;
@@ -186,6 +200,8 @@ public class SensorInputState {
         SmartDashboard.putNumber("RearIntakeVoltage", rearIntakeTiltVoltage);
         SmartDashboard.putNumber("CatapultEncoder", catapultEncoder);
         SmartDashboard.putBoolean("CatapultLimitSwitch", catapultLimitSwitch || catapultLimitSwitchB);
+        SmartDashboard.putBoolean("FrontIntakeButton", frontIntakeButton);
+        SmartDashboard.putBoolean("RearIntakeButton", rearIntakeButton);
         SmartDashboard.putNumber("GyroAngle", gyroAngle);
     }
 

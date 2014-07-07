@@ -22,6 +22,8 @@ public class SensorInput {
     //----- Limit Switch -----
     private DigitalInput catapultLimitSwitch;
     private DigitalInput catapultLimitSwitchB;
+    private DigitalInput frontIntakeButton;
+    private DigitalInput rearIntakeButton;
 
     //----- Encoder -----
     private TorqueEncoder leftFrontDriveEncoder;
@@ -63,9 +65,11 @@ public class SensorInput {
         frontIntakeTiltPotentiometer.setRange(Constants.FRONT_INTAKE_POTENTIOMETER_LOW, Constants.FRONT_INTAKE_POTENTIOMETER_HIGH);
         rearIntakeTiltPotentiometer.setRange(Constants.REAR_INTAKE_POTENTIOMETER_LOW, Constants.REAR_INTAKE_POTENTIOMETER_HIGH);
         
-        //----- Misc -----
+        //----- Buttons -----
         catapultLimitSwitch = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_B_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_B_PORT);
         catapultLimitSwitchB = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_PORT);
+        frontIntakeButton = new DigitalInput(Ports.INTAKE_BUTTON_SIDECAR, Ports.FRONT_INTAKE_BUTTON);
+        rearIntakeButton = new DigitalInput(Ports.INTAKE_BUTTON_SIDECAR, Ports.REAR_INTAKE_BUTTON);
         
         //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
         startEncoders();
@@ -208,6 +212,16 @@ public class SensorInput {
     
     public boolean getCatapultLimitSwitchB() {
         return !catapultLimitSwitchB.get();
+    }
+    
+    public boolean getFrontIntakeButton()
+    {
+        return !frontIntakeButton.get();
+    }
+    
+    public boolean getRearIntakeButton()
+    {
+        return !rearIntakeButton.get();
     }
 
     public double getPSI() {

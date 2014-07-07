@@ -49,7 +49,6 @@ public class Ports {
     public final static int HOOP = 6;
             
     //----- Digital Inputs -----
-    //----- Sidecar 1 -----
     public final static int LEFT_FRONT_DRIVE_ENCODER_SIDECAR = 2;
     public final static int LEFT_FRONT_DRIVE_ENCODER_A_PORT = 4;
     public final static int LEFT_FRONT_DRIVE_ENCODER_B_PORT = 5;
@@ -75,6 +74,10 @@ public class Ports {
     
     public final static int PRESSURE_SWITCH_PORT = 1;
     public final static int PRESSURE_SWITCH_SIDECAR = 1;
+    
+    public final static int INTAKE_BUTTON_SIDECAR = 1;
+    public final static int FRONT_INTAKE_BUTTON = 12;
+    public final static int REAR_INTAKE_BUTTON = 13;
 
     //----- Analog Inputs -----
     public final static int GYRO_PORT = 1;
