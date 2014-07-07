@@ -76,8 +76,8 @@ public class Ports {
     public final static int PRESSURE_SWITCH_SIDECAR = 1;
     
     public final static int INTAKE_BUTTON_SIDECAR = 1;
-    public final static int FRONT_INTAKE_BUTTON = 12;
-    public final static int REAR_INTAKE_BUTTON = 13;
+    public final static int FRONT_INTAKE_BUTTON = 13;
+    public final static int REAR_INTAKE_BUTTON = 12;
 
     //----- Analog Inputs -----
     public final static int GYRO_PORT = 1;
