@@ -58,6 +58,7 @@ public class Catapult extends TorqueSubsystem {
                     fireTime = Timer.getFPGATimestamp();
                     winchSolinoid = true;
                     pullBackPID.setSetpoint(PIDSetpoint);
+                    intake.setHasBall(false);
                 } else if (sensorInput.getCatapultLimitSwitch()) {
                     isReady = true;
                     catapultMotorSpeed = Constants.MOTOR_STOPPED;

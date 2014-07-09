@@ -175,8 +175,13 @@ public class DriverInputState {
         return frontIntaking();
     }
 
-    public synchronized boolean getHoopToggle() {
+    public synchronized boolean getHoopIn() {
         return operatorControllerState.getLeftStickClick();
+    }
+    
+    public synchronized boolean getHoopUp()
+    {
+        return operatorControllerState.getRightStickClick();
     }
 
     public synchronized boolean frontOuttakeRollOverride() {

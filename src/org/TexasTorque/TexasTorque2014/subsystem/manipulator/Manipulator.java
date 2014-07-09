@@ -24,49 +24,31 @@ public class Manipulator extends TorqueSubsystem {
 
     public void run() {
         if (!driverInput.overrideState()) {
-            boolean intaking = false;
             //----- Normal Ops -----
 
-            if (driverInput.frontIntaking() || driverInput.getAutonBool("frontIn", false)) {
-                intaking = true;
-                frontIntake();
-            } else if (driverInput.frontOuttaking() || driverInput.getAutonBool("frontOut", false)) {
-                intaking = true;
-                frontOuttake();
-            } else if (driverInput.rearIntaking() || driverInput.getAutonBool("rearIn", false)) {
-                intaking = true;
-                rearIntake();
-            } else if (driverInput.rearOuttaking() || driverInput.getAutonBool("rearOut", false)) {
-                intaking = true;
-                rearOuttake();
-            } else if (driverInput.getAutonBool("frontIntakeDown", false)) {
-                intaking = true;
+            
+            if (driverInput.getAutonBool("frontIntakeDown", false)) {
+                intake.setIntakesActive(true);
                 frontIntakeDown();
             } else if (driverInput.getAutonBool("rearIntakeDown", false)) {
-                intaking = true;
+                intake.setIntakesActive(true);
                 rearIntakeDown();
             }
-
+            
             if (driverInput.catching() || driverInput.getAutonBool("catch", false)) {
                 catchBall();
+                intake.setIntakesActive(true);
             } else if (driverInput.readyToShoot() || driverInput.getAutonBool("shoot", false)) {
                 shoot();
+                intake.setIntakesActive(true);
             } else if (driverInput.restoreToDefault() || driverInput.getAutonBool("restore", false)) {
                 restoreDefaultPositions();
-            } else if (intaking) {
             } else {
-                resetIntakes();
                 resetShooter();
             }
             if (catapult.getIntakeDownOverride()) {
                 intake.setFrontAngle(Intake.frontShootAngle);
                 intake.setRearAngle(Intake.rearShootAngle);
-            }
-            
-            if (driverInput.getHoopToggle() || driverInput.getAutonBool("hoopIn", false))
-            {
-                System.err.println("hoop");
-                intake.setHoop(Constants.HOOP_IN);
             }
             
             intake.run();
@@ -102,71 +84,12 @@ public class Manipulator extends TorqueSubsystem {
         catapult.setToRobot();
     }
 
-    public void frontIntake() {
-        intake.setFrontIntakeSpeed(Intake.intakeSpeed);
-        intake.setFrontAngle(Intake.frontDownAngle);
-        intake.setRearAngle(Intake.inAngle);
-        intake.setHoop(Constants.HOOP_UP);
-    }
-
-    public void frontIntakeDown() {
-        intake.setFrontAngle(Intake.frontDownAngle);
-        intake.setFrontIntakeSpeed(Intake.slowSpeed);
-        intake.setRearAngle(Intake.rearUpAngle);
-        intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
-    }
-
-    public void rearIntakeDown() {
-        intake.setFrontAngle(Intake.frontUpAngle);
-        intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
-        intake.setRearAngle(Intake.rearDownAngle);
-        intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
-    }
-
-    public void rearIntake() {
-        intake.setRearIntakeSpeed(Intake.intakeSpeed);
-        intake.setRearAngle(Intake.rearDownAngle);
-        intake.setFrontAngle(Intake.inAngle);
-        intake.setHoop(Constants.HOOP_UP);
-    }
-
-    public void frontOuttake() {
-        intake.setFrontIntakeSpeed(Intake.outtakeSpeed);
-        intake.setFrontAngle(Intake.frontOuttakeAngle);
-        intake.setRearIntakeSpeed(Intake.intakeSpeed);
-        intake.setRearAngle(Intake.inAngle);
-        intake.setHoop(Constants.HOOP_UP);
-    }
-
-    public void rearOuttake() {
-        intake.setRearIntakeSpeed(Intake.outtakeSpeed);
-        intake.setRearAngle(Intake.rearOuttakeAngle);
-        intake.setFrontIntakeSpeed(Intake.intakeSpeed);
-        intake.setFrontAngle(Intake.frontIntakeAngle);
-        intake.setHoop(Constants.HOOP_UP);
-    }
-
-    public void resetFrontIntake() {
-        intake.setFrontAngle(Intake.frontUpAngle);
-        intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
-    }
-
-    public void resetRearIntake() {
-        intake.setRearAngle(Intake.rearUpAngle);
-        intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
-    }
-
     public void catchBall() {
         intake.setFrontAngle(Intake.frontCatchAngle);
         intake.setRearAngle(Intake.rearCatchAngle);
         intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
         intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
         intake.setHoop(Constants.HOOP_UP);
-    }
-
-    public void resetIntakes() {
-        resetFrontIntake();
-        resetRearIntake();
     }
 
     public void shoot() {
@@ -213,6 +136,20 @@ public class Manipulator extends TorqueSubsystem {
     public boolean catapultReadyForIntake() {
         return catapult.catapultReadyForIntake();
     }
+    
+    public void frontIntakeDown() {
+        intake.setFrontAngle(Intake.frontDownAngle);
+        intake.setFrontIntakeSpeed(Intake.slowSpeed);
+        intake.setRearAngle(Intake.rearUpAngle);
+        intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
+    }
+
+    public void rearIntakeDown() {
+        intake.setFrontAngle(Intake.frontUpAngle);
+        intake.setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
+        intake.setRearAngle(Intake.rearDownAngle);
+        intake.setRearIntakeSpeed(Constants.MOTOR_STOPPED);
+    }
 
     public void loadParameters() {
         intake.loadParameters();
@@ -254,7 +191,7 @@ public class Manipulator extends TorqueSubsystem {
             intake.rearIntakeOverrideRoll(Constants.MOTOR_STOPPED);
         }
         
-        intake.toggleHoop(driverInput.getHoopToggle());
+        intake.toggleHoop(driverInput.getHoopIn());
 
         catapult.releaseOverride(driverInput.releaseOverride());
     }

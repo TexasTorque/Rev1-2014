@@ -19,6 +19,13 @@ public class Intake extends TorqueSubsystem {
     private double desiredFrontTiltAngle;
     private double desiredRearTiltAngle;
 
+    private boolean intaking;
+    private boolean outtaking;
+    private boolean intakeActive;
+    private boolean hasBall;
+    private boolean frontButtonWasPushed;
+    private boolean rearButtonWasPushed;
+
     private boolean hoopPosition;
     private boolean firstUp;
     private double hoopUpTime;
@@ -65,9 +72,62 @@ public class Intake extends TorqueSubsystem {
 
         hoopToggle = new TorqueToggle();
         hoopToggle.set(false);
+
+        frontButtonWasPushed = false;
+        rearButtonWasPushed = false;
+        intaking = false;
+        outtaking = false;
+        intakeActive = false;
     }
 
     public void run() {
+        if (!driverInput.overrideState()) {
+            
+            if (intaking && ((frontButtonWasPushed && sensorInput.getFrontIntakeButton() == false)
+                    || (rearButtonWasPushed && sensorInput.getRearIntakeButton() == false))) {
+                hasBall = true;
+            }
+
+            if (outtaking && ((frontButtonWasPushed && sensorInput.getFrontIntakeButton() == false)
+                    || (rearButtonWasPushed && sensorInput.getRearIntakeButton() == false))) {
+                hasBall = false;
+            }
+            
+            intaking = false;
+            outtaking = false;
+
+            if ((driverInput.frontIntaking() || driverInput.getAutonBool("frontIn", false)) && !hasBall) {
+                frontIntake();
+                intaking = true;
+            } else if ((driverInput.frontOuttaking() || driverInput.getAutonBool("frontOut", false)) && !hasBall) {
+                frontOuttake();
+                intaking = true;
+            } else if ((driverInput.rearIntaking() || driverInput.getAutonBool("rearIn", false)) && hasBall) {
+                rearIntake();
+                outtaking = true;
+            } else if ((driverInput.rearOuttaking() || driverInput.getAutonBool("rearOut", false)) && hasBall) {
+                rearOuttake();
+                outtaking = true;
+            }
+            
+            if (driverInput.getHoopIn() || driverInput.getAutonBool("hoopIn", false) || (hasBall && isDone()) ) {
+                setHoop(Constants.HOOP_IN);
+            }
+
+            if (driverInput.getHoopUp() || !hasBall) {
+                setHoop(Constants.HOOP_UP);
+            }
+            
+            if ( !(intaking || outtaking || intakeActive) )
+            {
+                resetFrontIntake();
+                resetRearIntake();
+            }
+
+            frontButtonWasPushed = sensorInput.getFrontIntakeButton();
+            rearButtonWasPushed = sensorInput.getRearIntakeButton();
+        }
+
         double currentFrontAngle = sensorInput.getFrontIntakeTiltAngle();
         double currentRearAngle = sensorInput.getRearIntakeTiltAngle();
 
@@ -79,7 +139,7 @@ public class Intake extends TorqueSubsystem {
         if (rearTiltPID.getSetpoint() == rearDownAngle && Math.abs(rearDownAngle - currentRearAngle) < tiltDownTollerance) {
             rearTiltSpeed = Constants.MOTOR_STOPPED;
         }
-        
+
         pushToDashboard();
     }
 
@@ -136,24 +196,77 @@ public class Intake extends TorqueSubsystem {
     public void setRearIntakeSpeed(double speed) {
         rearIntakeSpeed = speed;
     }
+    
+    public void frontIntake() {
+        setFrontIntakeSpeed(Intake.intakeSpeed);
+        setFrontAngle(Intake.frontDownAngle);
+        setRearAngle(Intake.inAngle);
+        setHoop(Constants.HOOP_UP);
+    }
+    
+    public void rearIntake() {
+        setRearIntakeSpeed(Intake.intakeSpeed);
+        setRearAngle(Intake.rearDownAngle);
+        setFrontAngle(Intake.inAngle);
+        setHoop(Constants.HOOP_UP);
+    }
+
+    public void frontOuttake() {
+        setFrontIntakeSpeed(Intake.outtakeSpeed);
+        setFrontAngle(Intake.frontOuttakeAngle);
+        setRearIntakeSpeed(Intake.intakeSpeed);
+        setRearAngle(Intake.inAngle);
+        setHoop(Constants.HOOP_UP);
+    }
+
+    public void rearOuttake() {
+        setRearIntakeSpeed(Intake.outtakeSpeed);
+        setRearAngle(Intake.rearOuttakeAngle);
+        setFrontIntakeSpeed(Intake.intakeSpeed);
+        setFrontAngle(Intake.frontIntakeAngle);
+        setHoop(Constants.HOOP_UP);
+    }
+    
+    public void resetFrontIntake() {
+        setFrontAngle(Intake.frontUpAngle);
+        setFrontIntakeSpeed(Constants.MOTOR_STOPPED);
+    }
+
+    public void resetRearIntake() {
+        setRearAngle(Intake.rearUpAngle);
+        setRearIntakeSpeed(Constants.MOTOR_STOPPED);
+    }
 
     public void setHoop(boolean position) {
         hoopPosition = position;
         hoopToggle.set(position);
-        if (position == Constants.HOOP_IN)
-        {
+        if (position == Constants.HOOP_IN) {
             firstUp = true;
+            if (!hasBall) {
+                hasBall = true;
+            }
         }
         if (position == Constants.HOOP_UP && firstUp) {
             hoopUpTime = Timer.getFPGATimestamp();
             firstUp = false;
+            if (hasBall) {
+                hasBall = false;
+            }
         }
     }
-    
-    public void toggleHoop(boolean toggle)
-    {
+
+    public void toggleHoop(boolean toggle) {
         hoopToggle.calc(toggle);
         hoopPosition = hoopToggle.get();
+    }
+
+    public void setHasBall(boolean has) {
+        hasBall = has;
+    }
+    
+    public void setIntakesActive(boolean active)
+    {
+        intakeActive = active;
     }
 
     public void setToRobot() {
@@ -211,9 +324,8 @@ public class Intake extends TorqueSubsystem {
         outtakeSpeed = params.getAsDouble("I_OuttakeSpeed", -1.0);
         tiltDownTollerance = params.getAsDouble("I_TiltDownTollerance", 2.0);
     }
-    
-    public void pushToDashboard()
-    {
+
+    public void pushToDashboard() {
         SmartDashboard.putNumber("FrontIntakeAngle", sensorInput.getFrontIntakeTiltAngle());
         SmartDashboard.putNumber("RearIntakeAngle", sensorInput.getRearIntakeTiltAngle());
         SmartDashboard.putNumber("FrontIntakeRoller", frontIntakeSpeed);
