@@ -264,6 +264,16 @@ public class Intake extends TorqueSubsystem {
         hasBall = has;
     }
     
+    public boolean hasBall()
+    {
+        return hasBall;
+    }
+    
+    public boolean getIntakesUp()
+    {
+        return frontTiltPID.getPreviousValue() == frontUpAngle && rearTiltPID.getSetpoint() == rearUpAngle;
+    }
+    
     public void setIntakesActive(boolean active)
     {
         intakeActive = active;

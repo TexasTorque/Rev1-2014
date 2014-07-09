@@ -34,6 +34,11 @@ public class AutonomousRearIntake extends AutonomousCommand {
         drivebase.run();
         manipulator.run();
         
+        if (manipulator.hasBall() && manipulator.intakesDone() && manipulator.getIntakesUp())
+        {
+            return true;
+        }
+        
         return (Timer.getFPGATimestamp() - startTime > timeout);
     }
     

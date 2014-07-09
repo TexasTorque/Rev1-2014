@@ -25,7 +25,6 @@ public class Manipulator extends TorqueSubsystem {
     public void run() {
         if (!driverInput.overrideState()) {
             //----- Normal Ops -----
-
             
             if (driverInput.getAutonBool("frontIntakeDown", false)) {
                 intake.setIntakesActive(true);
@@ -123,6 +122,16 @@ public class Manipulator extends TorqueSubsystem {
 
     public boolean intakesDone() {
         return intake.isDone();
+    }
+    
+    public boolean hasBall()
+    {
+        return intake.hasBall();
+    }
+    
+    public boolean getIntakesUp()
+    {
+        return intake.getIntakesUp();
     }
 
     public boolean isFired() {
