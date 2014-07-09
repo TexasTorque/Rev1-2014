@@ -24,6 +24,7 @@ public class Manipulator extends TorqueSubsystem {
 
     public void run() {
         if (!driverInput.overrideState()) {
+            intake.setIntakesActive(false);
             //----- Normal Ops -----
             
             if (driverInput.getAutonBool("frontIntakeDown", false)) {

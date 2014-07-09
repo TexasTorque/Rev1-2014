@@ -78,18 +78,19 @@ public class Intake extends TorqueSubsystem {
         intaking = false;
         outtaking = false;
         intakeActive = false;
+        hasBall = false;
     }
 
     public void run() {
         if (!driverInput.overrideState()) {
             
-            if (intaking && ((frontButtonWasPushed && sensorInput.getFrontIntakeButton() == false)
-                    || (rearButtonWasPushed && sensorInput.getRearIntakeButton() == false))) {
+            if (intaking && ( (frontButtonWasPushed && sensorInput.getFrontIntakeButton() == false) ||
+                              (rearButtonWasPushed  && sensorInput.getRearIntakeButton() == false) )) {
                 hasBall = true;
             }
 
-            if (outtaking && ((frontButtonWasPushed && sensorInput.getFrontIntakeButton() == false)
-                    || (rearButtonWasPushed && sensorInput.getRearIntakeButton() == false))) {
+            if (outtaking && ( (frontButtonWasPushed && sensorInput.getFrontIntakeButton() == false) ||
+                               (rearButtonWasPushed  && sensorInput.getRearIntakeButton() == false) )) {
                 hasBall = false;
             }
             
@@ -99,10 +100,10 @@ public class Intake extends TorqueSubsystem {
             if ((driverInput.frontIntaking() || driverInput.getAutonBool("frontIn", false)) && !hasBall) {
                 frontIntake();
                 intaking = true;
-            } else if ((driverInput.frontOuttaking() || driverInput.getAutonBool("frontOut", false)) && !hasBall) {
+            } else if ((driverInput.frontOuttaking() || driverInput.getAutonBool("frontOut", false)) && hasBall) {
                 frontOuttake();
                 intaking = true;
-            } else if ((driverInput.rearIntaking() || driverInput.getAutonBool("rearIn", false)) && hasBall) {
+            } else if ((driverInput.rearIntaking() || driverInput.getAutonBool("rearIn", false)) && !hasBall) {
                 rearIntake();
                 outtaking = true;
             } else if ((driverInput.rearOuttaking() || driverInput.getAutonBool("rearOut", false)) && hasBall) {
@@ -110,7 +111,7 @@ public class Intake extends TorqueSubsystem {
                 outtaking = true;
             }
             
-            if (driverInput.getHoopIn() || driverInput.getAutonBool("hoopIn", false) || (hasBall && isDone()) ) {
+            if (driverInput.getHoopIn() || driverInput.getAutonBool("hoopIn", false) || (hasBall && isDone() && getIntakesUp()) ) {
                 setHoop(Constants.HOOP_IN);
             }
 
