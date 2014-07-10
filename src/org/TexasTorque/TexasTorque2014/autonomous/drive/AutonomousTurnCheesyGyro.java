@@ -30,19 +30,19 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
         double e = params.getAsDouble("A_GyroTurnE", 0.0);
         double doneRange = params.getAsDouble("A_GyroTurnDoneRange", 8.0);
         double maxOut = params.getAsDouble("A_CheesyTurnMaxOuput", 1.0);
-        
+
         gyroPID.setPIDGains(p, i, d);
         gyroPID.setEpsilon(e);
         gyroPID.setDoneRange(doneRange);
         gyroPID.setMinDoneCycles(1);
         gyroPID.setMaxOutput(maxOut);
-        
+
         postTurnWait = params.getAsDouble("A_CheesyTurnWait", 0.25);
         firstDone = true;
-        
+
         isDone = false;
         this.timeout = timeout;
-        
+
         this.reset();
     }
 
@@ -57,8 +57,8 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
     public boolean run() {
         if (firstCycle) {
             System.err.println("Turning");
-            System.err.println("L: "+CheesyVisionServer.getInstance().getLeftCount()+ " R: "+CheesyVisionServer.getInstance().getRightCount());
-            System.err.println("L: "+CheesyVisionServer.getInstance().getLeftStatus()+ " R: "+CheesyVisionServer.getInstance().getRightStatus());
+            System.err.println("L: " + CheesyVisionServer.getInstance().getLeftCount() + " R: " + CheesyVisionServer.getInstance().getRightCount());
+            System.err.println("L: " + CheesyVisionServer.getInstance().getLeftStatus() + " R: " + CheesyVisionServer.getInstance().getRightStatus());
 
             if (CheesyVisionServer.getInstance().getLeftCount() > CheesyVisionServer.getInstance().getRightCount()) {
                 System.err.println("LeftGoalHot");
@@ -72,29 +72,35 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
             firstCycle = false;
         }
         Hashtable autonOutput = new Hashtable();
-        
-        double left  =  gyroPID.calculate(sensorInput.getGyroAngle());
+
+        double left = gyroPID.calculate(sensorInput.getGyroAngle());
         double right = -gyroPID.calculate(sensorInput.getGyroAngle());
-        
+
         autonOutput.put("leftSpeed", new Double(left));
         autonOutput.put("rightSpeed", new Double(right));
         autonOutput.put("frontIntakeDown", Boolean.TRUE);
-        autonOutput.put("driveMode", new Boolean(Constants.OMNI_MODE));
+
+        if (!isDone) {
+            autonOutput.put("driveMode", new Boolean(Constants.OMNI_MODE));
+        }
 
         driverInput.updateAutonData(autonOutput);
 
-        isDone = gyroPID.isDone();
-        if(isDone && firstDone)
-        {
-            System.err.println("TurnDoneFinished");
-            doneTime = Timer.getFPGATimestamp();
-            firstDone = false;
+        if (firstDone) {
+            isDone = gyroPID.isDone();
+
+            if (isDone) {
+                System.err.println("TurnDone");
+                doneTime = Timer.getFPGATimestamp();
+                firstDone = false;
+            }
         }
-        
+
         if (Timer.getFPGATimestamp() - startTime > timeout) {
             System.err.print("Turn Timeout");
             return true;
         }
+
         return Timer.getFPGATimestamp() - doneTime > postTurnWait;
     }
 }

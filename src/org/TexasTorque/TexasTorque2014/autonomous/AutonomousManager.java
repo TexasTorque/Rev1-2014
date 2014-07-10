@@ -5,7 +5,6 @@ import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapu
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraight;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightDead;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightDeadControlled;
-import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightFrontIntake;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightFrontIntakeGyro;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightGyro;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousTurnCheesyGyro;

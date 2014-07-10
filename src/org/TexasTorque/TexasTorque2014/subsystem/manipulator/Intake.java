@@ -111,11 +111,23 @@ public class Intake extends TorqueSubsystem {
                 outtaking = true;
             }
             
-            if (driverInput.getHoopIn() || driverInput.getAutonBool("hoopIn", false) || (hasBall && isDone() && getIntakesUp()) ) {
+            if (driverInput.getHoopIn() || driverInput.getAutonBool("hoopIn", false)) {
+                hasBall = true;
                 setHoop(Constants.HOOP_IN);
             }
 
-            if (driverInput.getHoopUp() || !hasBall) {
+            if (driverInput.getHoopUp()) {
+                hasBall = false;
+                setHoop(Constants.HOOP_UP);
+            }
+            
+            if (hasBall && isDone() && getIntakesUp())
+            {
+                setHoop(Constants.HOOP_IN);
+            }
+            
+            if (!hasBall)
+            {
                 setHoop(Constants.HOOP_UP);
             }
             
@@ -243,16 +255,10 @@ public class Intake extends TorqueSubsystem {
         hoopToggle.set(position);
         if (position == Constants.HOOP_IN) {
             firstUp = true;
-            if (!hasBall) {
-                hasBall = true;
-            }
         }
         if (position == Constants.HOOP_UP && firstUp) {
             hoopUpTime = Timer.getFPGATimestamp();
             firstUp = false;
-            if (hasBall) {
-                hasBall = false;
-            }
         }
     }
 
