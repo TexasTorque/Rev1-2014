@@ -16,6 +16,9 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
     private boolean firstCycle;
     private double startTime;
     private double timeout;
+    private double doneTime;
+    private boolean firstDone;
+    private double postTurnWait;
 
     public AutonomousTurnCheesyGyro(double degrees, double maxSpeed, double timeout) {
         target = degrees;
@@ -33,6 +36,9 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
         gyroPID.setDoneRange(doneRange);
         gyroPID.setMinDoneCycles(1);
         gyroPID.setMaxOutput(maxOut);
+        
+        postTurnWait = params.getAsDouble("A_CheesyTurnWait", 0.25);
+        firstDone = true;
         
         isDone = false;
         this.timeout = timeout;
@@ -78,15 +84,17 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
         driverInput.updateAutonData(autonOutput);
 
         isDone = gyroPID.isDone();
-        if(isDone)
+        if(isDone && firstDone)
         {
             System.err.println("TurnDoneFinished");
+            doneTime = Timer.getFPGATimestamp();
+            firstDone = false;
         }
         
         if (Timer.getFPGATimestamp() - startTime > timeout) {
             System.err.print("Turn Timeout");
             return true;
         }
-        return isDone;
+        return Timer.getFPGATimestamp() - doneTime > postTurnWait;
     }
 }

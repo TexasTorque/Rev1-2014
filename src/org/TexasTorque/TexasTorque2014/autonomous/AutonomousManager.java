@@ -289,8 +289,6 @@ public class AutonomousManager {
         double turnTimeout = params.getAsDouble("A_TurnTimeout", 2.0);
         autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
         
-        autoBuilder.addCommand(new AutonomousWait(0.1));
-        
         double fireWait = params.getAsDouble("A_FireWait", 8.0);
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
         double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
