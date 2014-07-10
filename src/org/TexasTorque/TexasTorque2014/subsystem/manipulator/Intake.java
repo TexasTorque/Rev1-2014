@@ -94,6 +94,9 @@ public class Intake extends TorqueSubsystem {
                 hasBall = false;
             }
             
+            frontButtonWasPushed = sensorInput.getFrontIntakeButton();
+            rearButtonWasPushed = sensorInput.getRearIntakeButton();
+            
             intaking = false;
             outtaking = false;
 
@@ -102,10 +105,10 @@ public class Intake extends TorqueSubsystem {
                 intaking = true;
             } else if ((driverInput.frontOuttaking() || driverInput.getAutonBool("frontOut", false)) && hasBall) {
                 frontOuttake();
-                intaking = true;
+                outtaking = true;
             } else if ((driverInput.rearIntaking() || driverInput.getAutonBool("rearIn", false)) && !hasBall) {
                 rearIntake();
-                outtaking = true;
+                intaking = true;
             } else if ((driverInput.rearOuttaking() || driverInput.getAutonBool("rearOut", false)) && hasBall) {
                 rearOuttake();
                 outtaking = true;
@@ -136,9 +139,6 @@ public class Intake extends TorqueSubsystem {
                 resetFrontIntake();
                 resetRearIntake();
             }
-
-            frontButtonWasPushed = sensorInput.getFrontIntakeButton();
-            rearButtonWasPushed = sensorInput.getRearIntakeButton();
         }
 
         double currentFrontAngle = sensorInput.getFrontIntakeTiltAngle();
@@ -278,7 +278,7 @@ public class Intake extends TorqueSubsystem {
     
     public boolean getIntakesUp()
     {
-        return frontTiltPID.getPreviousValue() == frontUpAngle && rearTiltPID.getSetpoint() == rearUpAngle;
+        return frontTiltPID.getSetpoint() == frontUpAngle && rearTiltPID.getSetpoint() == rearUpAngle;
     }
     
     public void setIntakesActive(boolean active)

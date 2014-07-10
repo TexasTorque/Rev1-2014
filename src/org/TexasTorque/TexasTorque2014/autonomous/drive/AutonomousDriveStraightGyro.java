@@ -1,6 +1,7 @@
 package org.TexasTorque.TexasTorque2014.autonomous.drive;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Hashtable;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
@@ -36,7 +37,7 @@ public class AutonomousDriveStraightGyro extends AutonomousCommand
         encoderPID.setMinDoneCycles(10);
         gyroPID.setMinDoneCycles(10);
         
-        targetDistance = distance * Constants.CLICKS_PER_METER;
+        targetDistance = distance * Constants.CLICKS_PER_FOOT;
         
         double p = params.getAsDouble("A_DriveForwardP", 0.05);
         double i = params.getAsDouble("A_DriveForwardI", 0.0);

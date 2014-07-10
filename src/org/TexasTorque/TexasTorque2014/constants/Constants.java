@@ -18,8 +18,8 @@ public class Constants
     public final static double ROTATION_COEFFICIENT = 1;
     public final static boolean TRACTION_MODE = true;
     public final static boolean OMNI_MODE = false;
-    public final static double CLICKS_PER_METER = 783.242830177;
-    public final static double METERS_PER_CLICK = 0.00127674325;
+    public final static double CLICKS_PER_FOOT = 514.1928931;
+    public final static double FEET_PER_CLICK = 0.0019447955;
     
     //----- Manipulator -----
     public final static boolean HOOP_IN = true;

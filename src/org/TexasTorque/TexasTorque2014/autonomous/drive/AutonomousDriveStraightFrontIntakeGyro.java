@@ -35,7 +35,7 @@ public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
         encoderPID.setMinDoneCycles(10);
         gyroPID.setMinDoneCycles(10);
         
-        targetDistance = distance * Constants.CLICKS_PER_METER;
+        targetDistance = distance * Constants.CLICKS_PER_FOOT;
         
         double p = params.getAsDouble("A_DriveForwardP", 0.05);
         double i = params.getAsDouble("A_DriveForwardI", 0.0);

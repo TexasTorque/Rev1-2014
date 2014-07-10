@@ -135,16 +135,8 @@ public class AutonomousManager {
     }
 
     public void testAuto() {
-        autoBuilder.addCommand(new AutonomousWait(5.0));
-        
-        double degrees = params.getAsDouble("A_CheesyDegrees", 0.0);
-        double turnTimeout = params.getAsDouble("A_TurnTimeout", 2.0);
-        autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
-        
-//        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
-//        double distance = params.getAsDouble("A_CheesyDriveDistance", 0.0);
-//        autoBuilder.addCommand(new AutonomousDriveStraightFrontIntakeGyro(distance, 1.0, timeout));
-//        autoBuilder.addCommand(new AutonomousWait(5));
+        autoBuilder.addCommand(new AutonomousWait(2.0));
+        autoBuilder.addCommand(new AutonomousDriveStraightGyro(1.0, 1.0, 10.0));
     }
 
     public void oneBallAuto() {

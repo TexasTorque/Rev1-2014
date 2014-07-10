@@ -20,7 +20,7 @@ public class AutonomousTurnCheesy extends AutonomousCommand {
     private double timeout;
 
     public AutonomousTurnCheesy(double distance, double maxSpeed, double timeout) {
-        target = distance * Constants.CLICKS_PER_METER;
+        target = distance * Constants.CLICKS_PER_FOOT;
         leftDrive = new TorquePID();
         rightDrive = new TorquePID();
 
