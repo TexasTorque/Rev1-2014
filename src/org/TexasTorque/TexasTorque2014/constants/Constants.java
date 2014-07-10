@@ -4,7 +4,7 @@ public class Constants
 {
     //----- Controller -----
     public final static double Y_AXIS_DEADBAND = 0.08;
-    public final static double ROTATION_DEADBAND = 0.8;
+    public final static double ROTATION_DEADBAND = 0.08;
     public final static double OVERRIDE_AXIS_DEADBAND = 0.35;
     
     public static final boolean CONTROLLER_IS_XBOX = false;
@@ -22,9 +22,6 @@ public class Constants
     public final static double METERS_PER_CLICK = 0.00127674325;
     
     //----- Manipulator -----
-    public final static boolean HIGH_SHOT = true;
-    public final static boolean FAR_SHOT = false;
-    public final static double CHOO_CHOO_CLICKS_PER_REV = 617.6471;
     public final static boolean HOOP_IN = true;
     public final static boolean HOOP_UP = false;
     
