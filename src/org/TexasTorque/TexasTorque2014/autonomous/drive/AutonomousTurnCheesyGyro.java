@@ -101,6 +101,10 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
             return true;
         }
 
-        return Timer.getFPGATimestamp() - doneTime > postTurnWait;
+        if (isDone) {
+            return Timer.getFPGATimestamp() - doneTime > postTurnWait;
+        }
+        
+        return false;
     }
 }

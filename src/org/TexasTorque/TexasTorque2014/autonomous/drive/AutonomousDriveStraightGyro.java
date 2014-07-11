@@ -11,10 +11,6 @@ public class AutonomousDriveStraightGyro extends AutonomousCommand
 {
     private double targetDistance;
     
-    private double distanceSetpoint;
-    private double angleSetpoint;
-    private boolean zeroLock;
-    
     private TorquePID encoderPID;
     private TorquePID gyroPID;
     

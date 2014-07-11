@@ -16,7 +16,6 @@ public class AutonomousResetCatapultDone extends AutonomousCommand {
     
     public void reset() {
         this.firstCycle = true;
-        //manipulator.resetFired();
     }
 
     public boolean run() {
