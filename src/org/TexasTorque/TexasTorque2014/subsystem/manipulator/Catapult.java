@@ -142,7 +142,7 @@ public class Catapult extends TorqueSubsystem {
         SmartDashboard.putBoolean("WinchSolinoid", winchSolinoid);
     }
 
-    public String logData() { //no logging
+    public String logData() {
         return "";
     }
 

@@ -33,7 +33,6 @@ public class Drivebase extends TorqueSubsystem {
     public void run() {
         if (driverInput.isAuton()) {
             setDriveMode(driverInput.getAutonBool("driveMode", true));
-            //setDriveMode(Constants.TRACTION_MODE);
             setDriveSpeeds(driverInput.getAutonDouble("leftSpeed", Constants.MOTOR_STOPPED), driverInput.getAutonDouble("rightSpeed", Constants.MOTOR_STOPPED));
         } else {
             setDriveMode(driverInput.getDriveMode());

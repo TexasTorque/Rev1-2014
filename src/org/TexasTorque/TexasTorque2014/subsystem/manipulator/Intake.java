@@ -350,7 +350,7 @@ public class Intake extends TorqueSubsystem {
         SmartDashboard.putBoolean("Hoop", hoopPosition);
     }
 
-    public String logData() { //Have not implemented logging
+    public String logData() {
         return "";
     }
 
