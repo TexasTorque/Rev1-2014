@@ -118,7 +118,8 @@ public class AutonomousManager {
 
     public void testAuto() {
         autoBuilder.addCommand(new AutonomousWait(2.0));
-        autoBuilder.addCommand(new AutonomousDriveStraightGyro(1.0, 1.0, 10.0));
+        double distance = params.getAsDouble("A_TestDistance", 0.0);
+        autoBuilder.addCommand(new AutonomousDriveStraightGyro(distance, 1.0, 5.0));
     }
     
     public void justDriveAuto() {
