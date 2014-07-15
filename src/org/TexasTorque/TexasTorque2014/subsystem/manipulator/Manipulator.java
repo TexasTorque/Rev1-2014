@@ -94,10 +94,10 @@ public class Manipulator extends TorqueSubsystem {
 
     public void shoot() {
         intake.setFrontAngle(Intake.frontShootAngle);
-        intake.setRearAngle(Intake.rearShootAngle);
 
         if (driverInput.shoot() || driverInput.getAutonBool("shoot", false)) {
             intake.setHoop(Constants.HOOP_UP);
+            intake.setRearAngle(Intake.rearShootAngle);
         }
     }
 
