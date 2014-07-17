@@ -100,7 +100,7 @@ public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
         
         driverInput.updateAutonData(autonOutput);
         
-        isDone = encoderPID.isDone() && gyroPID.isDone();
+        isDone = encoderPID.isDone();
         
         if(Timer.getFPGATimestamp() > startTime + timeout)
         {
