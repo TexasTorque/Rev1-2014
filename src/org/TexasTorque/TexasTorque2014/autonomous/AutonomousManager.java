@@ -84,10 +84,13 @@ public class AutonomousManager {
                 hotOneBall();
                 break;
             case Constants.ONE_BALL_FIVE_ELASTICS:
+                driveOneBallAutoFive();
                 break;
             case Constants.ONE_HOT_FIVE_ELASTICS:
+                hotOneBallFive();
                 break;
             case Constants.TWO_BALL_FIVE_ELASTICS:
+                driveTwoBallAutoFive();
                 break;
             default:
                 doNothingAuto();
