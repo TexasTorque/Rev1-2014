@@ -85,13 +85,10 @@ public class AutonomousManager {
                 break;
 <<<<<<< HEAD
             case Constants.ONE_BALL_FIVE_ELASTICS:
-                driveOneBallAutoFive();
                 break;
             case Constants.ONE_HOT_FIVE_ELASTICS:
-                hotOneBallFive();
                 break;
             case Constants.TWO_BALL_FIVE_ELASTICS:
-                driveTwoBallAutoFive();
                 break;
 =======
 >>>>>>> parent of 85d7aff... Five elastics shit
