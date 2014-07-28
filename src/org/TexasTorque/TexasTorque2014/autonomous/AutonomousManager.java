@@ -133,6 +133,8 @@ public class AutonomousManager {
         System.err.println("Loading Hot One Ball Auto");
 
         autoBuilder.addCommand(new AutonomousHoopIn());
+        
+        autoBuilder.addCommand(new AutonomousWait(0.5));
 
         double wait = params.getAsDouble("A_OneBallWait", 6.0);
         boolean left = SmartDashboard.getBoolean("Left", true);
@@ -150,6 +152,8 @@ public class AutonomousManager {
         System.err.println("Loading Hot Two Ball Auto");
 
         autoBuilder.addCommand(new AutonomousHoopIn());
+        
+        autoBuilder.addCommand(new AutonomousWait(0.5));
 
         double wait = params.getAsDouble("A_TwoBallWait", 6.0);
         boolean left = SmartDashboard.getBoolean("Left", true);
@@ -175,6 +179,8 @@ public class AutonomousManager {
         System.err.println("Loading Hot Three Ball Auto");
 
         autoBuilder.addCommand(new AutonomousHoopIn());
+        
+        autoBuilder.addCommand(new AutonomousWait(0.5));
 
         double wait = params.getAsDouble("A_ThreeBallWait", 2.0);
         boolean left = SmartDashboard.getBoolean("Left", true);
