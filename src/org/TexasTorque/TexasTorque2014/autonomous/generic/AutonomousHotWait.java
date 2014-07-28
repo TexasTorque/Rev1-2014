@@ -11,9 +11,16 @@ public class AutonomousHotWait extends AutonomousCommand {
     double startTime;
     double waitTime;
     CheesyVisionServer cheese;
+    
+    double longWait;
+    boolean leftSide;
 
-    public AutonomousHotWait() {
+    public AutonomousHotWait(double wait, boolean left) {
+        
         cheese = CheesyVisionServer.getInstance();
+        
+        longWait = wait;
+        leftSide = left;
 
         this.reset();
     }
@@ -28,12 +35,14 @@ public class AutonomousHotWait extends AutonomousCommand {
             System.err.print("Wait Start: ");
             startTime = Timer.getFPGATimestamp();
             System.err.println("L: "+cheese.getLeftCount() + " R: "+cheese.getRightCount());
-            if (cheese.getLeftCount() + cheese.getRightCount() > 15) {
-                System.err.println("Wait 3");
-                waitTime = 4.0;
+            if (leftSide && cheese.getLeftCount() > cheese.getRightCount())
+            {
+                waitTime = 0.0;
+            } else if (!leftSide && cheese.getRightCount() > cheese.getLeftCount())
+            {
+                waitTime = 0.0;
             } else {
-                System.err.println("Wait 0.5");
-                waitTime = 0.5;
+                waitTime = longWait;
             }
 
             firstCycle = false;

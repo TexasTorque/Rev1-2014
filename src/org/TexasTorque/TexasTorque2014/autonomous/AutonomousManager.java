@@ -1,18 +1,17 @@
 package org.TexasTorque.TexasTorque2014.autonomous;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFireMoveIntakes;
-import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapultDone;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraight;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightDead;
-import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightFrontIntakeGyro;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightGyro;
-import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousTurnCheesyGyro;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousDone;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousHotWait;
 import org.TexasTorque.TexasTorque2014.autonomous.generic.AutonomousWait;
 import org.TexasTorque.TexasTorque2014.autonomous.intake.AutonomousFrontIntake;
 import org.TexasTorque.TexasTorque2014.autonomous.intake.AutonomousFrontIntakeDown;
 import org.TexasTorque.TexasTorque2014.autonomous.intake.AutonomousHoopIn;
+import org.TexasTorque.TexasTorque2014.autonomous.intake.AutonomousRearIntake;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
@@ -71,17 +70,11 @@ public class AutonomousManager {
             case Constants.TEST_AUTO:
                 testAuto();
                 break;
-            case Constants.DRIVE_ONE_BALL_AUTO:
-                driveOneBallAuto();
+            case Constants.ONE_BALL_AUTO:
                 break;
-            case Constants.DRIVE_TWO_BALL_AUTO:
-                driveTwoBallAuto();
+            case Constants.TWO_BALL_AUTO:
                 break;
-            case Constants.CHEESY_TWO_BALL_AUTO:
-                cheesyTwoBall();
-                break;
-            case Constants.ONE_HOT_AUTO:
-                hotOneBall();
+            case Constants.THREE_BALL_AUTO:
                 break;
             default:
                 doNothingAuto();
@@ -121,7 +114,7 @@ public class AutonomousManager {
         double distance = params.getAsDouble("A_TestDistance", 0.0);
         autoBuilder.addCommand(new AutonomousDriveStraightGyro(distance, 1.0, 5.0));
     }
-    
+
     public void justDriveAuto() {
         System.err.println("Loading Just Drive Auto");
         double timeout = params.getAsDouble("A_DriveTimeout", 2.0);
@@ -135,100 +128,74 @@ public class AutonomousManager {
         autoBuilder.addCommand(new AutonomousDriveStraight(distance, 1.0, timeout));
     }
 
-    public void driveOneBallAuto() {
-        System.err.println("Loading Drive One Ball Auto");
-        
-        autoBuilder.addCommand(new AutonomousHoopIn());
-        
-        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
-        double distance = params.getAsDouble("A_DriveDistance", 0.0);
-        autoBuilder.addCommand(new AutonomousDriveStraightGyro(distance, 1.0, timeout));
-        double postDriveWait = params.getAsDouble("A_PostDriveWait", 1.0);
-        autoBuilder.addCommand(new AutonomousWait(postDriveWait));
-        
-        double fireWait = params.getAsDouble("A_FireWait", 8.0);
-        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
-        double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
-        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
-
-        autoBuilder.addCommand(new AutonomousHoopIn());
-    }
-
-    public void driveTwoBallAuto() {
-        System.err.println("Loading Drive Two Ball Auto");
-        
-        autoBuilder.addCommand(new AutonomousHoopIn());
-        
-        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
-        double distance = params.getAsDouble("A_DriveDistance", 0.0);
-        autoBuilder.addCommand(new AutonomousDriveStraightFrontIntakeGyro(distance, 1.0, timeout));
-        
-        double postDriveWait = params.getAsDouble("A_PostDriveWait", 1.0);
-        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postDriveWait));
-        
-        double fireWait = params.getAsDouble("A_FireWait", 8.0);
-        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
-        double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
-        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
-        
-        autoBuilder.addCommand(new AutonomousFrontIntakeDown(5.0));
-        double intakeTime = params.getAsDouble("A_IntakeTime", 1.0);
-        autoBuilder.addCommand(new AutonomousFrontIntake(intakeTime));
-        autoBuilder.addCommand(new AutonomousHoopIn());
-        double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 1.0);
-        autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
-        
-        autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
-        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
-        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
-    }
-
-    public void cheesyTwoBall() {
-        System.err.println("Loading Cheesy");
-        
-        autoBuilder.addCommand(new AutonomousHoopIn());
-        
-        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
-        double distance = params.getAsDouble("A_CheesyDriveDistance", 0.0);
-        autoBuilder.addCommand(new AutonomousDriveStraightFrontIntakeGyro(distance, 1.0, timeout));
-        
-        double degrees = params.getAsDouble("A_CheesyDegrees", 0.0);
-        double turnTimeout = params.getAsDouble("A_TurnTimeout", 2.0);
-        autoBuilder.addCommand(new AutonomousTurnCheesyGyro(degrees, 1.0, turnTimeout));
-        
-        double fireWait = params.getAsDouble("A_FireWait", 8.0);
-        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
-        double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
-        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
-        
-        autoBuilder.addCommand(new AutonomousFrontIntakeDown(5.0));
-        double intakeTime = params.getAsDouble("A_IntakeTime", 1.0);
-        autoBuilder.addCommand(new AutonomousFrontIntake(intakeTime));
-        double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 1.0);
-        
-        autoBuilder.addCommand(new AutonomousHoopIn());
-        
-        autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
-        autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
-        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireWait));
-        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
-    }
-    
-    public void hotOneBall()
-    {
+    public void oneBall() {
         System.err.println("Loading Hot One Ball Auto");
-        
+
         autoBuilder.addCommand(new AutonomousHoopIn());
-        
-        double timeout = params.getAsDouble("A_DriveDistanceTimeout", 1.0);
-        double distance = params.getAsDouble("A_DriveDistance", 0.0);
-        autoBuilder.addCommand(new AutonomousDriveStraightGyro(distance, 1.0, timeout));
-        
-        autoBuilder.addCommand(new AutonomousHotWait());
-        
+
+        double wait = params.getAsDouble("A_OneBallWait", 6.0);
+        boolean left = SmartDashboard.getBoolean("Left", true);
+        autoBuilder.addCommand(new AutonomousHotWait(wait, left));
+
         double fireTimeout = params.getAsDouble("A_FireWait", 8.0);
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
         double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
+
+        autoBuilder.addCommand(new AutonomousDriveStraightDead(1.0, 1.0));
+    }
+
+    public void twoBall() {
+        System.err.println("Loading Hot Two Ball Auto");
+
+        autoBuilder.addCommand(new AutonomousHoopIn());
+
+        double wait = params.getAsDouble("A_TwoBallWait", 6.0);
+        boolean left = SmartDashboard.getBoolean("Left", true);
+        autoBuilder.addCommand(new AutonomousHotWait(wait, left));
+
+        double fireTimeout = params.getAsDouble("A_FireWait", 8.0);
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
+        double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
+
+        autoBuilder.addCommand(new AutonomousFrontIntake(2.0));
+        double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 0.5);
+        autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
+        
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
+
+        autoBuilder.addCommand(new AutonomousDriveStraightDead(1.0, 1.0));
+    }
+
+    public void threeBall() {
+        System.err.println("Loading Hot Three Ball Auto");
+
+        autoBuilder.addCommand(new AutonomousHoopIn());
+
+        double wait = params.getAsDouble("A_ThreeBallWait", 2.0);
+        boolean left = SmartDashboard.getBoolean("Left", true);
+        autoBuilder.addCommand(new AutonomousHotWait(wait, left));
+
+        double fireTimeout = params.getAsDouble("A_FireWait", 8.0);
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
+        double postFireWait = params.getAsDouble("A_PostFireWait", 0.5);
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
+
+        autoBuilder.addCommand(new AutonomousFrontIntake(2.0));
+        double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 0.5);
+        autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
+        
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
+        
+        autoBuilder.addCommand(new AutonomousRearIntake(2.0));
+        autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
+        
+        autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
+        autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
+
+        autoBuilder.addCommand(new AutonomousDriveStraightDead(1.0, 1.0));
     }
 }

@@ -28,11 +28,10 @@ public class Constants
     //----- Autonomous -----
     public final static int DO_NOTHING_AUTO = 0;
     public final static int JUST_DRIVE_AUTO = 4;
-    public final static int DRIVE_TWO_BALL_AUTO = 8;
-    public final static int DRIVE_ONE_BALL_AUTO = 7;
-    public final static int CHEESY_TWO_BALL_AUTO = 2;
     public final static int TEST_AUTO = 100;
-    public final static int ONE_HOT_AUTO = 1;
+    public final static int ONE_BALL_AUTO = 1;
+    public final static int TWO_BALL_AUTO = 2;
+    public final static int THREE_BALL_AUTO = 3;
     
     //----- Gyro -----
     public static double GYRO_SENSITIVITY = 0.014;
