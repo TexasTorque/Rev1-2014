@@ -100,7 +100,7 @@ public class DriverInputState {
     }
 
     public synchronized boolean getDriveMode() {
-        return (driveControllerState.getTopLeftBumper() || driveControllerState.getTopRightBumper());
+        return (driveControllerState.getTopLeftBumper());
     }
 
 //---------- Manipulator ----------  
@@ -109,9 +109,8 @@ public class DriverInputState {
     }
 
     public synchronized boolean shoot() {
-        return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD()
-                || driveControllerState.getBottomLeftBumper() || driveControllerState.getBottomRightBumper())
-                && (operatorControllerState.getRightActionButton());
+        return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD() || driveControllerState.getBottomRightBumper())
+                && (operatorControllerState.getRightActionButton() || driveControllerState.getTopRightBumper());
     }
 
     public synchronized boolean catapultReset() {
@@ -147,7 +146,7 @@ public class DriverInputState {
     }
 
     public synchronized boolean readyToShoot() {
-        return operatorControllerState.getRightActionButton();
+        return operatorControllerState.getRightActionButton() || driveControllerState.getTopRightBumper();
     }
 
     public synchronized boolean getShooterStandoffs() {
