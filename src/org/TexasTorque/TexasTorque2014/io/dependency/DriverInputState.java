@@ -109,7 +109,9 @@ public class DriverInputState {
     }
 
     public synchronized boolean shoot() {
-        return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD()) && (operatorControllerState.getRightActionButton());
+        return (operatorControllerState.getRightDPAD() || operatorControllerState.getLeftDPAD()
+                || driveControllerState.getBottomLeftBumper() || driveControllerState.getBottomRightBumper())
+                && (operatorControllerState.getRightActionButton());
     }
 
     public synchronized boolean catapultReset() {
@@ -126,22 +128,18 @@ public class DriverInputState {
 
     public synchronized boolean frontIntaking() {
         return operatorControllerState.getTopRightBumper();
-        //return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
     }
 
     public synchronized boolean frontOuttaking() {
         return operatorControllerState.getBottomRightBumper();
-        //return (!operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
     }
 
     public synchronized boolean rearIntaking() {
         return operatorControllerState.getTopLeftBumper();
-        //return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopRightBumper());
     }
 
     public synchronized boolean rearOuttaking() {
         return operatorControllerState.getBottomLeftBumper();
-        //return (operatorControllerState.getTopActionButton() && operatorControllerState.getTopLeftBumper());
     }
 
     public synchronized boolean catching() {
