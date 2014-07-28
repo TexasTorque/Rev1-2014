@@ -16,6 +16,7 @@ import org.TexasTorque.TorqueLib.util.TorqueLogging;
 
 public class RobotBase extends IterativeRobot implements Runnable {
 
+    
     Thread continuousThread;
 
     Watchdog watchdog;
