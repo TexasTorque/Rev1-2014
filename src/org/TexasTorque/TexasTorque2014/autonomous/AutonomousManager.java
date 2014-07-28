@@ -2,6 +2,7 @@ package org.TexasTorque.TexasTorque2014.autonomous;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFireMoveIntakes;
+import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapultDone;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraight;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightDead;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraightGyro;
@@ -163,6 +164,7 @@ public class AutonomousManager {
         double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 0.5);
         autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
         
+        autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
 
@@ -187,12 +189,14 @@ public class AutonomousManager {
         double postIntakeWait = params.getAsDouble("A_PostIntakeWait", 0.5);
         autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
         
+        autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
         
         autoBuilder.addCommand(new AutonomousRearIntake(2.0));
         autoBuilder.addCommand(new AutonomousWait(postIntakeWait));
         
+        autoBuilder.addCommand(new AutonomousResetCatapultDone(5.0));
         autoBuilder.addCommand(new AutonomousFireMoveIntakes(fireTimeout));
         autoBuilder.addCommand(new AutonomousFrontIntakeDown(postFireWait));
 
