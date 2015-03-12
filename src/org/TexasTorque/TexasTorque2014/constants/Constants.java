@@ -44,10 +44,10 @@ public class Constants
     public final static int BLUE_ALLIANCE = 1;
     
     //----- Potentiometer -----
-    public final static double FRONT_INTAKE_POTENTIOMETER_LOW = 4.57;
-    public final static double FRONT_INTAKE_POTENTIOMETER_HIGH = 2.29;
-    public final static double REAR_INTAKE_POTENTIOMETER_LOW = 4.52;
-    public final static double REAR_INTAKE_POTENTIOMETER_HIGH = 2.12;
+    public final static double FRONT_INTAKE_POTENTIOMETER_LOW = 3.86;
+    public final static double FRONT_INTAKE_POTENTIOMETER_HIGH = 0.92;
+    public final static double REAR_INTAKE_POTENTIOMETER_LOW = 4.58;
+    public final static double REAR_INTAKE_POTENTIOMETER_HIGH = 1.51;
     
     // ----- lights -----
     public final static int LIGHTS_DISABLED = 0;
