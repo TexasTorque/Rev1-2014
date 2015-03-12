@@ -211,7 +211,8 @@ public class SensorInput {
     }
     
     public boolean getCatapultLimitSwitchB() {
-        return !catapultLimitSwitchB.get();
+        //return !catapultLimitSwitchB.get();
+        return false;
     }
     
     public boolean getFrontIntakeButton()
