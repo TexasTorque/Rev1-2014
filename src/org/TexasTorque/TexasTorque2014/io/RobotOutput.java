@@ -76,8 +76,8 @@ public class RobotOutput {
         //----- Intake -----
         frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_SIDECAR, Ports.FRONT_INTAKE_MOTOR_PORT), true, true);
         rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_SIDECAR, Ports.REAR_INTAKE_MOTOR_PORT), true, true);
-        frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_SIDECAR, Ports.FRONT_INTAKE_TILT_MOTOR_PORT), false, true);
-        rearIntakeTiltMotor = new Motor(new Victor(Ports.REAR_INTAKE_TILT_SIDECAR, Ports.REAR_INTAKE_TILT_MOTOR_PORT), false, true);
+        frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_SIDECAR, Ports.FRONT_INTAKE_TILT_MOTOR_PORT), true, true);
+        rearIntakeTiltMotor = new Motor(new Victor(Ports.REAR_INTAKE_TILT_SIDECAR, Ports.REAR_INTAKE_TILT_MOTOR_PORT), true, true);
 
         frontIntakeMotorSpeed = Constants.MOTOR_STOPPED;
         rearIntakeMotorSpeed = Constants.MOTOR_STOPPED;
