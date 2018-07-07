@@ -1,18 +1,16 @@
-package org.TexasTorque.TorqueLib.util;
+package org.TexasTorque.torquelib.util;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStationLCD;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardManager
 {
     private static DashboardManager instance;
     private DriverStation ds;
-    private DriverStationLCD dslcd;
     
     public DashboardManager()
     {
         ds = DriverStation.getInstance();
-        dslcd = DriverStationLCD.getInstance();
     }
     
     public synchronized static DashboardManager getInstance()
@@ -40,7 +38,7 @@ public class DashboardManager
         printToErr("" + output);
     }
     
-    public synchronized void printToLCD(int line, String output)
+    /*public synchronized void printToLCD(int line, String output)
     {
         switch(line)
         {
@@ -62,21 +60,12 @@ public class DashboardManager
             default:
                 break;
         }
-    }
+    }*/
     
-    public synchronized void updateLCD()
-    {
-        dslcd.updateLCD();
-    }
     
     public synchronized DriverStation getDS()
     {
         return ds;
-    }
-    
-    public synchronized DriverStationLCD getDSCLD()
-    {
-        return dslcd;
     }
     
 }

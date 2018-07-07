@@ -25,7 +25,7 @@ public class AutonomousResetCatapultDone extends AutonomousCommand {
             firstCycle = false;
         }
         
-        Hashtable autonOutputs = new Hashtable();
+        Hashtable<?, ?> autonOutputs = new Hashtable<Object, Object>();
         
         driverInput.updateAutonData(autonOutputs);
         

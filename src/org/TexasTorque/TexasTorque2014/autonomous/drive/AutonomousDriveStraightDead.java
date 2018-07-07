@@ -27,7 +27,7 @@ public class AutonomousDriveStraightDead extends AutonomousCommand {
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
-        Hashtable autonOutput = new Hashtable();
+        Hashtable<String, Double> autonOutput = new Hashtable<String, Double>();
         autonOutput.put("leftSpeed", new Double(-speed));
         autonOutput.put("rightSpeed", new Double(-speed));
         

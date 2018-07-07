@@ -1,11 +1,14 @@
-package org.TexasTorque.TorqueLib.util;
+package org.TexasTorque.torquelib.util;
 
-import com.sun.squawk.io.BufferedWriter;
-import com.sun.squawk.microedition.io.FileConnection;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+
 import javax.microedition.io.Connector;
+
+import javax.microedition.io.file.FileConnection;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TorqueLogging
 {

@@ -1,11 +1,13 @@
 package org.TexasTorque.TexasTorque2014.autonomous.drive;
 
-import edu.wpi.first.wpilibj.Timer;
 import java.util.Hashtable;
+
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
-import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
+import org.TexasTorque.torquelib.controlLoop.TorquePID;
+
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutonomousDriveStraightGyro extends AutonomousCommand
 {
@@ -64,7 +66,7 @@ public class AutonomousDriveStraightGyro extends AutonomousCommand
     public void reset()
     {
         SensorInput.getInstance().resetDriveEncoders();
-        SensorInput.getInstance().resetGyro();
+        SensorInput.getInstance().resetAnalogGyro();
         firstCycle = true;
         isDone= false;
     }
@@ -77,7 +79,7 @@ public class AutonomousDriveStraightGyro extends AutonomousCommand
             firstCycle = false;
         }
         
-        Hashtable autonOutput = new Hashtable();
+        Hashtable<String, Double> autonOutput = new Hashtable<String, Double>();
                 
         double averageDistance = (sensorInput.getLeftDrivePosition() + sensorInput.getRightDrivePosition()) / 2.0;
         double currentAngle = sensorInput.getGyroAngle();

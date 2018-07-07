@@ -1,11 +1,13 @@
 package org.TexasTorque.TexasTorque2014.autonomous.drive;
 
-import edu.wpi.first.wpilibj.Timer;
 import java.util.Hashtable;
+
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
-import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
+import org.TexasTorque.torquelib.controlLoop.TorquePID;
+
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutonomousDriveStraight extends AutonomousCommand {
     private double target;
@@ -55,7 +57,7 @@ public class AutonomousDriveStraight extends AutonomousCommand {
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
-        Hashtable autonOutput = new Hashtable();
+        Hashtable<String, Double> autonOutput = new Hashtable<String, Double>();
         double left = leftDrive.calculate(sensorInput.getLeftDrivePosition());
         double right = rightDrive.calculate(sensorInput.getRightDrivePosition());
         

@@ -1,6 +1,6 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
-import org.TexasTorque.TorqueLib.util.GenericController;
+import org.TexasTorque.torquelib.util.GenericController;
 
 public class GenericControllerState
 {

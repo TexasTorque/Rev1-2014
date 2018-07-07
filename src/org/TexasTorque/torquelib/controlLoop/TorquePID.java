@@ -1,4 +1,4 @@
-package org.TexasTorque.TorqueLib.controlLoop;
+package org.TexasTorque.torquelib.controlLoop;
 
 public class TorquePID
 {

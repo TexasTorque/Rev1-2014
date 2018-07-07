@@ -1,24 +1,24 @@
 package org.TexasTorque.TexasTorque2014.io;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.DriverInputState;
-import org.TexasTorque.TorqueLib.util.GenericController;
-import org.TexasTorque.TorqueLib.util.Parameters;
+import org.TexasTorque.torquelib.util.GenericController;
+import org.TexasTorque.torquelib.util.Parameters;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriverInput {
 
     private static DriverInput instance;
     private static DriverInputState state;
-    private Parameters params;
     public GenericController driveController;
     private GenericController operatorController;
 
     private boolean inOverrideState;
 
     public DriverInput() {
-        params = Parameters.getTeleopInstance();
+        Parameters.getTeleopInstance();
         driveController = new GenericController(Ports.DRIVE_CONTROLLER_PORT, false);
         operatorController = new GenericController(Ports.OPERATOR_CONTROLLER_PORT, false);
         

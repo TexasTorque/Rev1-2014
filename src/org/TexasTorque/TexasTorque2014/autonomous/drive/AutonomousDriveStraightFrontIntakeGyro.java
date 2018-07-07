@@ -1,19 +1,16 @@
 package org.TexasTorque.TexasTorque2014.autonomous.drive;
 
-import edu.wpi.first.wpilibj.Timer;
 import java.util.Hashtable;
+
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
-import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
+import org.TexasTorque.torquelib.controlLoop.TorquePID;
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
 {
     private double targetDistance;
-    
-    private double distanceSetpoint;
-    private double angleSetpoint;
-    private boolean zeroLock;
     
     private TorquePID encoderPID;
     private TorquePID gyroPID;
@@ -70,7 +67,7 @@ public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
     public void reset()
     {
         SensorInput.getInstance().resetDriveEncoders();
-        SensorInput.getInstance().resetGyro();
+        SensorInput.getInstance().resetAnalogGyro();
         firstCycle = true;
         isDone= false;
     }
@@ -83,7 +80,8 @@ public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
             firstCycle = false;
         }
         
-        Hashtable autonOutput = new Hashtable();
+        Hashtable<String, Double> autonOutput = new Hashtable<String, Double>();
+        Hashtable<String, Boolean> autonOutput2 = new Hashtable<String, Boolean>();
                 
         double averageDistance = (sensorInput.getLeftDrivePosition() + sensorInput.getRightDrivePosition()) / 2.0;
         double currentAngle = sensorInput.getGyroAngle();
@@ -96,7 +94,7 @@ public class AutonomousDriveStraightFrontIntakeGyro extends AutonomousCommand
 
         autonOutput.put("leftSpeed", new Double(-leftSpeed));
         autonOutput.put("rightSpeed", new Double(-rightSpeed));
-        autonOutput.put("frontIntakeDown", Boolean.TRUE);
+        autonOutput2.put("frontIntakeDown", Boolean.TRUE);
         
         driverInput.updateAutonData(autonOutput);
         

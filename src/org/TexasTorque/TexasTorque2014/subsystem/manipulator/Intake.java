@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
-import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
-import org.TexasTorque.TorqueLib.util.TorqueToggle;
+import org.TexasTorque.torquelib.controlLoop.TorquePID;
+import org.TexasTorque.torquelib.util.TorqueToggle;
 
 public class Intake extends TorqueSubsystem {
 

@@ -30,7 +30,7 @@ public class AutonomousWait extends AutonomousCommand {
             System.err.println("Done");
             return true;
         }
-        driverInput.updateAutonData(new Hashtable());
+        driverInput.updateAutonData(new Hashtable<Object, Object>());
         return false;
     }
     

@@ -9,7 +9,7 @@ public class AutonomousHoopIn extends AutonomousCommand {
     }
 
     public boolean run() {
-        Hashtable autonOutputs = new Hashtable();
+    	Hashtable<String, Boolean> autonOutputs = new Hashtable<String, Boolean>();
         autonOutputs.put("hoopIn", Boolean.TRUE);
         
         driverInput.updateAutonData(autonOutputs);

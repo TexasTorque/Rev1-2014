@@ -1,4 +1,4 @@
-package org.TexasTorque.TorqueLib.controlLoop;
+package org.TexasTorque.torquelib.controlLoop;
 
 import edu.wpi.first.wpilibj.util.BoundaryException;
 

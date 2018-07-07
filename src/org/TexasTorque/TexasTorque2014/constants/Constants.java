@@ -40,9 +40,9 @@ public class Constants
     public final static int CYCLES_PER_LOG = 10;
     public final static double MOTOR_STOPPED = 0.0;
     public final static double PRESSURE_THRESHOLD = 2.0;
-    public final static int RED_ALLIANCE = 0;
-    public final static int BLUE_ALLIANCE = 1;
-    
+    public static enum Alliances{
+    	Red, Blue;
+    }
     //----- Potentiometer -----
     public final static double FRONT_INTAKE_POTENTIOMETER_LOW = 3.86;
     public final static double FRONT_INTAKE_POTENTIOMETER_HIGH = 0.92;

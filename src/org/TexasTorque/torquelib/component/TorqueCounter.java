@@ -1,9 +1,10 @@
-package org.TexasTorque.TorqueLib.component;
+package org.TexasTorque.torquelib.component;
+
+import org.TexasTorque.torquelib.util.MovingAverageFilter;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.DigitalSource;
-import org.TexasTorque.TorqueLib.util.MovingAverageFilter;
 
 public class TorqueCounter
 {
@@ -11,9 +12,9 @@ public class TorqueCounter
     
     private MovingAverageFilter filter;
     
-    public TorqueCounter(int sidecar, int port)
+    public TorqueCounter(int sidecar)
     {
-        counter = new Counter(sidecar, port);
+        counter = new Counter(sidecar);
         
         filter = new MovingAverageFilter(1);
     }
@@ -42,7 +43,7 @@ public class TorqueCounter
     public void start()
     {
         filter.reset();
-        counter.start();
+        counter.reset();
     }
     
     public void reset()

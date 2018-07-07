@@ -1,4 +1,4 @@
-package org.TexasTorque.TorqueLib.component;
+package org.TexasTorque.torquelib.component;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Talon;

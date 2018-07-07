@@ -25,9 +25,10 @@ public class AutonomousFrontIntake extends AutonomousCommand {
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
-        Hashtable autonOutputs = new Hashtable();
+        Hashtable<String, Double> autonOutputs = new Hashtable<String, Double>();
+        Hashtable<String, Boolean> autonOutput = new Hashtable<String, Boolean>();
         
-        autonOutputs.put("frontIn", Boolean.TRUE);
+        autonOutput.put("frontIn", Boolean.TRUE);
         
         driverInput.updateAutonData(autonOutputs);
         

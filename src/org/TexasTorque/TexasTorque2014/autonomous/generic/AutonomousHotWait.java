@@ -1,9 +1,11 @@
 package org.TexasTorque.TexasTorque2014.autonomous.generic;
 
-import edu.wpi.first.wpilibj.Timer;
 import java.util.Hashtable;
+
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
-import org.TexasTorque.TorqueLib.component.CheesyVisionServer;
+import org.TexasTorque.torquelib.component.CheesyVisionServer;
+
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutonomousHotWait extends AutonomousCommand {
 
@@ -51,7 +53,7 @@ public class AutonomousHotWait extends AutonomousCommand {
             System.err.println("Done");
             return true;
         }
-        driverInput.updateAutonData(new Hashtable());
+        driverInput.updateAutonData(new Hashtable<Object, Object>());
         return false;
     }
 

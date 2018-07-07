@@ -1,23 +1,25 @@
-package org.TexasTorque.TorqueLib.component;
+package org.TexasTorque.torquelib.component;
 /**
  * @author Tom Bottiglieri
  * Team 254, The Cheesy Poofs
  */
 
-import edu.wpi.first.wpilibj.Timer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
+
 import javax.microedition.io.Connector;
 import javax.microedition.io.ServerSocketConnection;
 import javax.microedition.io.SocketConnection;
+
+import edu.wpi.first.wpilibj.Timer;
 
 public class CheesyVisionServer implements Runnable {
   
   private static CheesyVisionServer instance_;
   Thread serverThread = new Thread(this);
   private int listenPort_;
-  private Vector connections_;
+  private Vector<Object> connections_;
   private boolean counting_ = false;
   private int leftCount_ = 0, rightCount_ = 0, totalCount_ = 0;
   private boolean curLeftStatus_ = false, curRightStatus_ = false;
@@ -45,7 +47,7 @@ public class CheesyVisionServer implements Runnable {
 
   private CheesyVisionServer(int port) {
     listenPort_ = port;
-    connections_ = new Vector();
+    connections_ = new Vector<Object>();
   }
   
   public boolean hasClientConnection() {
@@ -110,15 +112,12 @@ public class CheesyVisionServer implements Runnable {
       try {
         InputStream is = connection.openInputStream();
 
-        int ch = 0;
         byte[] b = new byte[1024];
         double timeout = 10.0;
         double lastHeartbeat = Timer.getFPGATimestamp();
         CheesyVisionServer.this.lastHeartbeatTime_ = lastHeartbeat;
         while (Timer.getFPGATimestamp() < lastHeartbeat + timeout) {
-          boolean gotData = false;
           while (is.available() > 0) {
-            gotData = true;
             int read = is.read(b);
             for (int i = 0; i < read; ++i) {
               byte reading = b[i];

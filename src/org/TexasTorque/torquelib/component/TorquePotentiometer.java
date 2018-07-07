@@ -1,10 +1,10 @@
-package org.TexasTorque.TorqueLib.component;
+package org.TexasTorque.torquelib.component;
 
-import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 public class TorquePotentiometer {
 
-    private AnalogChannel pot;
+    private AnalogInput pot;
 
     private boolean firstCycle;
     private double prevVoltage;
@@ -12,12 +12,7 @@ public class TorquePotentiometer {
     private double minVoltage;
 
     public TorquePotentiometer(int port) {
-        pot = new AnalogChannel(port);
-        firstCycle = true;
-    }
-
-    public TorquePotentiometer(int sidecar, int port) {
-        pot = new AnalogChannel(sidecar, port);
+        pot = new AnalogInput(port);
         firstCycle = true;
     }
 

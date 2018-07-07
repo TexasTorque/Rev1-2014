@@ -1,6 +1,5 @@
 package org.TexasTorque.TexasTorque2014.autonomous;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousFireMoveIntakes;
 import org.TexasTorque.TexasTorque2014.autonomous.catapult.AutonomousResetCatapultDone;
 import org.TexasTorque.TexasTorque2014.autonomous.drive.AutonomousDriveStraight;
@@ -16,7 +15,9 @@ import org.TexasTorque.TexasTorque2014.autonomous.intake.AutonomousRearIntake;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
-import org.TexasTorque.TorqueLib.util.Parameters;
+import org.TexasTorque.torquelib.util.Parameters;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutonomousManager {
 
@@ -26,7 +27,6 @@ public class AutonomousManager {
     private Manipulator manipulator;
     private Parameters params;
     private int autoMode;
-    private double autoDelay;
     private int currentIndex;
     private boolean firstCycle;
     private boolean loaded;
@@ -41,7 +41,6 @@ public class AutonomousManager {
         params = Parameters.getTeleopInstance();
 
         autoMode = Constants.DO_NOTHING_AUTO;
-        autoDelay = 0.0;
         currentIndex = 0;
         firstCycle = true;
         loaded = false;
@@ -56,7 +55,6 @@ public class AutonomousManager {
     }
 
     public void addAutoDelay(double delay) {
-        autoDelay = delay;
     }
 
     public void loadAutonomous() {

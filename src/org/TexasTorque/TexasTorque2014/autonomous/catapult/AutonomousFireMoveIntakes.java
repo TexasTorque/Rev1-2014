@@ -28,9 +28,9 @@ public class AutonomousFireMoveIntakes extends AutonomousCommand {
             firstCycle = false;
         }
         
-        Hashtable autonOutputs = new Hashtable();
-        
-        autonOutputs.put("shoot", Boolean.TRUE);
+        Hashtable<String, Double> autonOutputs = new Hashtable<String, Double>();
+        Hashtable<String, Boolean> autonOutput = new Hashtable<String, Boolean>();
+        autonOutput.put("shoot", Boolean.TRUE);
         
         driverInput.updateAutonData(autonOutputs);
         

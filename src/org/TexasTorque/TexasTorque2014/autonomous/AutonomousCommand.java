@@ -8,7 +8,7 @@ import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
 import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
-import org.TexasTorque.TorqueLib.util.Parameters;
+import org.TexasTorque.torquelib.util.Parameters;
 
 public abstract class AutonomousCommand
 {

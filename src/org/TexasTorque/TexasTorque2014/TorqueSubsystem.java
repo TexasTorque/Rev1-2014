@@ -6,8 +6,8 @@ import org.TexasTorque.TexasTorque2014.io.SensorInput;
 import org.TexasTorque.TexasTorque2014.io.dependency.DriverInputState;
 import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
 import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
-import org.TexasTorque.TorqueLib.util.DashboardManager;
-import org.TexasTorque.TorqueLib.util.Parameters;
+import org.TexasTorque.torquelib.util.DashboardManager;
+import org.TexasTorque.torquelib.util.Parameters;
 
 public abstract class TorqueSubsystem
 {

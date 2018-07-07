@@ -1,12 +1,13 @@
 package org.TexasTorque.TexasTorque2014.io;
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.RobotOutputState;
-import org.TexasTorque.TorqueLib.component.Motor;
+import org.TexasTorque.torquelib.component.Motor;
+
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Victor;
 
 public class RobotOutput {
 
@@ -64,20 +65,20 @@ public class RobotOutput {
         backHoop = Constants.HOOP_UP;
 
         //----- Drive Motors -----
-        leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_FRONT_DRIVE_SIDECAR, Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
-        leftRearDriveMotor = new Motor(new Victor(Ports.LEFT_REAR_DRIVE_SIDECAR, Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
-        rightFrontDriveMotor = new Motor(new Victor(Ports.RIGHT_FRONT_DRIVE_SIDECAR, Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
-        rightRearDriveMotor = new Motor(new Victor(Ports.RIGHT_REAR_DRIVE_SIDECAR, Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
+        leftFrontDriveMotor = new Motor(new Victor(Ports.LEFT_FRONT_DRIVE_MOTOR_PORT), false, true);
+        leftRearDriveMotor = new Motor(new Victor(Ports.LEFT_REAR_DRIVE_MOTOR_PORT), false, true);
+        rightFrontDriveMotor = new Motor(new Victor(Ports.RIGHT_FRONT_DRIVE_MOTOR_PORT), true, true);
+        rightRearDriveMotor = new Motor(new Victor(Ports.RIGHT_REAR_DRIVE_MOTOR_PORT), true, true);
         rightFrontMotorSpeed = Constants.MOTOR_STOPPED;
         rightRearMotorSpeed = Constants.MOTOR_STOPPED;
         leftFrontMotorSpeed = Constants.MOTOR_STOPPED;
         leftRearMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Intake -----
-        frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_SIDECAR, Ports.FRONT_INTAKE_MOTOR_PORT), true, true);
-        rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_SIDECAR, Ports.REAR_INTAKE_MOTOR_PORT), true, true);
-        frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_SIDECAR, Ports.FRONT_INTAKE_TILT_MOTOR_PORT), true, true);
-        rearIntakeTiltMotor = new Motor(new Victor(Ports.REAR_INTAKE_TILT_SIDECAR, Ports.REAR_INTAKE_TILT_MOTOR_PORT), true, true);
+        frontIntakeMotor = new Motor(new Victor(Ports.FRONT_INTAKE_MOTOR_PORT), true, true);
+        rearIntakeMotor = new Motor(new Victor(Ports.REAR_INTAKE_MOTOR_PORT), true, true);
+        frontIntakeTiltMotor = new Motor(new Victor(Ports.FRONT_INTAKE_TILT_MOTOR_PORT), true, true);
+        rearIntakeTiltMotor = new Motor(new Victor(Ports.REAR_INTAKE_TILT_MOTOR_PORT), true, true);
 
         frontIntakeMotorSpeed = Constants.MOTOR_STOPPED;
         rearIntakeMotorSpeed = Constants.MOTOR_STOPPED;
@@ -85,8 +86,8 @@ public class RobotOutput {
         rearIntakeTiltMotorSpeed = Constants.MOTOR_STOPPED;
 
         //----- Catapult -----
-        catapultMotor = new Motor(new Victor(Ports.CATAPULT_SIDECAR, Ports.CATAPULT_MOTOR_PORT), false, true);
-        catapultMotorB = new Motor(new Victor(Ports.CATAPULT_B_SIDECAR, Ports.CATAPULT_B_MOTOR_PORT), false, true);
+        catapultMotor = new Motor(new Victor(Ports.CATAPULT_MOTOR_PORT), false, true);
+        catapultMotorB = new Motor(new Victor(Ports.CATAPULT_B_MOTOR_PORT), false, true);
         catapultMotorSpeed = Constants.MOTOR_STOPPED;
 
         //lights
@@ -99,7 +100,7 @@ public class RobotOutput {
         lightState = Constants.LIGHTS_DISABLED;
 
         //----- Misc Misc -----
-        compressor = new Compressor(Ports.COMPRESSOR_SIDECAR, Ports.PRESSURE_SWITCH_PORT, Ports.COMPRESSOR_SIDECAR, Ports.COMPRESSOR_RELAY_PORT);
+        compressor = new Compressor(Ports.COMPRESSOR_SIDECAR);
         compressor.start();
     }
 

@@ -3,6 +3,8 @@ package org.TexasTorque.TexasTorque2014.subsystem.manipulator;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 public class Manipulator extends TorqueSubsystem {
 
     private static Manipulator instance;
@@ -22,7 +24,8 @@ public class Manipulator extends TorqueSubsystem {
         catapult = Catapult.getInstance();
     }
 
-    public void run() {
+    @SuppressWarnings("unlikely-arg-type")
+	public void run() {
         if (!driverInput.overrideState()) {
             intake.setIntakesActive(false);
             //----- Normal Ops -----
@@ -61,18 +64,18 @@ public class Manipulator extends TorqueSubsystem {
             setToRobot();
         }
 
-        double currentAlliance = dashboardManager.getDS().getAlliance().value;
+        Alliance currentAlliance = dashboardManager.getDS().getAlliance();
 
         if (catapultReady()) {
-            if (currentAlliance == Constants.RED_ALLIANCE) {
+            if (currentAlliance.equals(Constants.Alliances.Red)) {
                 robotOutput.setLightsState(Constants.LIGHTS_RED);
-            } else if (currentAlliance == Constants.BLUE_ALLIANCE) {
+            } else if (currentAlliance.equals(Constants.Alliances.Blue)) {
                 robotOutput.setLightsState(Constants.LIGHTS_BLUE);
             }
         } else {
-            if (currentAlliance == Constants.RED_ALLIANCE) {
+            if (currentAlliance.equals(Constants.Alliances.Red)) {
                 robotOutput.setLightsState(Constants.LIGHTS_RED_GREEN);
-            } else if (currentAlliance == Constants.BLUE_ALLIANCE) {
+            } else if (currentAlliance.equals(Constants.Alliances.Blue)) {
                 robotOutput.setLightsState(Constants.LIGHTS_BLUE_GREEN);
             }
         }

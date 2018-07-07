@@ -1,12 +1,14 @@
 package org.TexasTorque.TexasTorque2014.autonomous.drive;
 
-import edu.wpi.first.wpilibj.Timer;
 import java.util.Hashtable;
+
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousCommand;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
-import org.TexasTorque.TorqueLib.component.CheesyVisionServer;
-import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
+import org.TexasTorque.torquelib.component.CheesyVisionServer;
+import org.TexasTorque.torquelib.controlLoop.TorquePID;
+
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutonomousTurnCheesyGyro extends AutonomousCommand {
 
@@ -50,7 +52,7 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
         firstCycle = true;
         isDone = false;
         SensorInput.getInstance().resetDriveEncoders();
-        SensorInput.getInstance().resetGyro();
+        SensorInput.getInstance().resetAnalogGyro();
         CheesyVisionServer.getInstance().reset();
     }
 
@@ -71,17 +73,18 @@ public class AutonomousTurnCheesyGyro extends AutonomousCommand {
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
-        Hashtable autonOutput = new Hashtable();
+        Hashtable<String, Double> autonOutput = new Hashtable<String, Double>();
+        Hashtable<String, Boolean> autonOutputs = new Hashtable<String, Boolean>();
 
         double left = gyroPID.calculate(sensorInput.getGyroAngle());
         double right = -gyroPID.calculate(sensorInput.getGyroAngle());
 
         autonOutput.put("leftSpeed", new Double(left));
         autonOutput.put("rightSpeed", new Double(right));
-        autonOutput.put("frontIntakeDown", Boolean.TRUE);
+        autonOutputs.put("frontIntakeDown", Boolean.TRUE);
 
         if (!isDone) {
-            autonOutput.put("driveMode", new Boolean(Constants.OMNI_MODE));
+            autonOutputs.put("driveMode", new Boolean(Constants.OMNI_MODE));
         }
 
         driverInput.updateAutonData(autonOutput);

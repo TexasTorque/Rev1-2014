@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.TorqueSubsystem;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
-import org.TexasTorque.TorqueLib.controlLoop.TorquePID;
+import org.TexasTorque.torquelib.controlLoop.TorquePID;
 
 public class Catapult extends TorqueSubsystem {
 

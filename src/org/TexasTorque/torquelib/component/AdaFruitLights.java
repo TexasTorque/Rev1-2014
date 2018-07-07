@@ -1,7 +1,6 @@
-package org.TexasTorque.TorqueLib.component;
+package org.TexasTorque.torquelib.component;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.Watchdog;
 import java.util.Vector;
 
 /*
@@ -12,18 +11,16 @@ import java.util.Vector;
 
 public class AdaFruitLights
 {
-    private Watchdog watchdog;
     
-    private Vector outputVector;
+    private Vector<Object> outputVector;
     private int currentState;
     private int desiredState;
     
     /*
      * Vector of the digital outputs in which to encode the state.
      */
-    public AdaFruitLights(Vector outputs)
+    public AdaFruitLights(Vector<Object> outputs)
     {
-        watchdog = Watchdog.getInstance();
         outputVector = outputs;
     }
     
@@ -45,7 +42,6 @@ public class AdaFruitLights
         byteString = "0000" + byteString;
         for (int index = 0; index < outputVector.size(); index++)
         {
-            watchdog.feed();
             int tempIndex = byteString.length() - 1 - index;
             char value = byteString.charAt(tempIndex);
             if (value == 48)

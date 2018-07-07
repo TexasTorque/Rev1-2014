@@ -1,9 +1,10 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
 import java.util.Hashtable;
+
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.io.DriverInput;
-import org.TexasTorque.TorqueLib.util.TorqueToggle;
+import org.TexasTorque.torquelib.util.TorqueToggle;
 
 public class DriverInputState {
 
@@ -12,9 +13,7 @@ public class DriverInputState {
     private double autonDelay;
     private int autonMode;
     private boolean inOverrideState;
-    private boolean catapultStopAngle;
-
-    private Hashtable autonomousData = new Hashtable();
+    private Hashtable<Object, Object> autonomousData = new Hashtable<Object, Object>();
 
     private TorqueToggle driveBaseMode;
 
@@ -33,9 +32,10 @@ public class DriverInputState {
         autonomousData.clear();
     }
 
-    public void updateAutonData(Hashtable table) {
+    @SuppressWarnings("unchecked")
+	public void updateAutonData(Hashtable<?, ?> autonOutputs) {
         inOverrideState = false;
-        autonomousData = table;
+        autonomousData = (Hashtable<Object, Object>) autonOutputs;
 
         autonomousData.put("CatapultAngle", Boolean.FALSE);
     }

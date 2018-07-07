@@ -1,4 +1,4 @@
-package org.TexasTorque.TorqueLib.util;
+package org.TexasTorque.torquelib.util;
 
 /**
  * Matrix implementation. All fields are doubles.

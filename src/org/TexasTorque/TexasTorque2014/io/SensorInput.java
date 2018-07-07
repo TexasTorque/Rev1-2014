@@ -1,27 +1,25 @@
 package org.TexasTorque.TexasTorque2014.io;
 
-import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.Watchdog;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
 import org.TexasTorque.TexasTorque2014.constants.Ports;
 import org.TexasTorque.TexasTorque2014.io.dependency.SensorInputState;
-import org.TexasTorque.TorqueLib.component.TorqueCounter;
-import org.TexasTorque.TorqueLib.component.TorqueEncoder;
-import org.TexasTorque.TorqueLib.component.TorquePotentiometer;
-import org.TexasTorque.TorqueLib.util.Parameters;
+import org.TexasTorque.torquelib.component.TorqueCounter;
+import org.TexasTorque.torquelib.component.TorqueEncoder;
+import org.TexasTorque.torquelib.component.TorquePotentiometer;
+import org.TexasTorque.torquelib.util.Parameters;
+
+import edu.wpi.first.wpilibj.AnalogInput; //Overrides AnalogChannel
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.DigitalInput; 
 
 public class SensorInput {
 
     private static SensorInput instance;
     private static SensorInputState state;
-    private Watchdog watchdog;
     private Parameters params;
 
     //----- Limit Switch -----
     private DigitalInput catapultLimitSwitch;
-    private DigitalInput catapultLimitSwitchB;
     private DigitalInput frontIntakeButton;
     private DigitalInput rearIntakeButton;
 
@@ -32,29 +30,25 @@ public class SensorInput {
     private TorqueCounter rightRearDriveCounter;
     private TorqueEncoder catapultEncoder;
 
-    //----- Analog -----
-    private AnalogChannel pressureSensor;
-    private AnalogChannel gyroChannel;
-    public Gyro gyro;
+    private AnalogInput gyroChannel;
+    public AnalogGyro gyro;
     private TorquePotentiometer frontIntakeTiltPotentiometer;
     private TorquePotentiometer rearIntakeTiltPotentiometer;
 
     public SensorInput() {
-
-        watchdog = Watchdog.getInstance();
         params = Parameters.getTeleopInstance();
 
         //----- Encoders/Counters -----
-        leftFrontDriveEncoder = new TorqueEncoder(Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_A_PORT, Ports.LEFT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.LEFT_FRONT_DRIVE_ENCODER_B_PORT, false);
-        leftRearDriveCounter = new TorqueCounter(Ports.LEFT_REAR_DRIVE_ENCODER_SIDECAR, Ports.LEFT_REAR_DRIVE_ENCODER_PORT);
-        rightFrontDriveEncoder = new TorqueEncoder(Ports.RIGHT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_FRONT_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_FRONT_DRIVE_ENCODER_B_PORT,false);
-        rightRearDriveCounter = new TorqueCounter(Ports.RIGHT_REAR_DRIVE_ENCODER_SIDECAR, Ports.RIGHT_REAR_DRIVE_ENCODER_PORT);
+        leftFrontDriveEncoder = new TorqueEncoder(Ports.LEFT_FRONT_DRIVE_ENCODER_A_PORT, Ports.LEFT_FRONT_DRIVE_ENCODER_B_PORT, false);
+        leftRearDriveCounter = new TorqueCounter(Ports.LEFT_REAR_DRIVE_ENCODER_SIDECAR);
+        rightFrontDriveEncoder = new TorqueEncoder(Ports.RIGHT_FRONT_DRIVE_ENCODER_A_PORT, Ports.RIGHT_FRONT_DRIVE_ENCODER_B_PORT,false);
+        rightRearDriveCounter = new TorqueCounter(Ports.RIGHT_REAR_DRIVE_ENCODER_SIDECAR);
 
-        catapultEncoder = new TorqueEncoder(Ports.CATAPULT_ENCODER_SIDECAR, Ports.CATAPULT_ENCODER_A_PORT, Ports.CATAPULT_ENCODER_SIDECAR, Ports.CATAPULT_ENCODER_B_PORT, false);
+        catapultEncoder = new TorqueEncoder(Ports.CATAPULT_ENCODER_A_PORT, Ports.CATAPULT_ENCODER_B_PORT, false);
 
-        //----- Gyro -----
-        gyroChannel = new AnalogChannel(Ports.GYRO_PORT);
-        gyro = new Gyro(gyroChannel);
+        //----- AnalogGyro -----
+        gyroChannel = new AnalogInput(Ports.GYRO_PORT);
+        gyro = new AnalogGyro(gyroChannel);
         gyro.reset();
         gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
         
@@ -66,12 +60,12 @@ public class SensorInput {
         rearIntakeTiltPotentiometer.setRange(Constants.REAR_INTAKE_POTENTIOMETER_LOW, Constants.REAR_INTAKE_POTENTIOMETER_HIGH);
         
         //----- Buttons -----
-        catapultLimitSwitch = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_B_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_B_PORT);
-        catapultLimitSwitchB = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_SIDECAR, Ports.CATAPULT_LIMIT_SWITCH_PORT);
-        frontIntakeButton = new DigitalInput(Ports.INTAKE_BUTTON_SIDECAR, Ports.FRONT_INTAKE_BUTTON);
-        rearIntakeButton = new DigitalInput(Ports.INTAKE_BUTTON_SIDECAR, Ports.REAR_INTAKE_BUTTON);
+        catapultLimitSwitch = new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_B_PORT);
+        new DigitalInput(Ports.CATAPULT_LIMIT_SWITCH_PORT);
+        frontIntakeButton = new DigitalInput(Ports.FRONT_INTAKE_BUTTON);
+        rearIntakeButton = new DigitalInput(Ports.REAR_INTAKE_BUTTON);
         
-        //pressureSensor = new AnalogChannel(Ports.ANALOG_PRESSURE_PORT);
+        //pressureSensor = new AnalogInput(Ports.ANALOG_PRESSURE_PORT);
         startEncoders();
 
     }
@@ -90,11 +84,8 @@ public class SensorInput {
 
     private void startEncoders() {
         // 1 foot = ??? clicks
-        leftFrontDriveEncoder.start();
-        rightFrontDriveEncoder.start();
         leftRearDriveCounter.start();
         rightRearDriveCounter.start();
-        catapultEncoder.start();
         frontIntakeTiltPotentiometer.reset();
         rearIntakeTiltPotentiometer.reset();
         gyro.reset();
@@ -133,7 +124,7 @@ public class SensorInput {
         rearIntakeTiltPotentiometer.run();
     }
 
-    public void resetGyro() {
+    public void resetAnalogGyro() {
         gyro.reset();
         gyro.setSensitivity(Constants.GYRO_SENSITIVITY);
     }
@@ -229,17 +220,15 @@ public class SensorInput {
         return 0.0;//pressureSensor.getVoltage();
     }
 
-    public double getGyroAngle() {
-        return limitGyroAngle(-gyro.getAngle() * 2);
+    public double getAnalogGyroAngle() {
+        return limitAnalogGyroAngle(-gyro.getAngle() * 2);
     }
 
-    public double limitGyroAngle(double angle) {
+    public double limitAnalogGyroAngle(double angle) {
         while (angle >= 360.0) {
-            watchdog.feed();
             angle -= 360.0;
         }
         while (angle < 0.0) {
-            watchdog.feed();
             angle += 360.0;
         }
         if (angle > 180) {

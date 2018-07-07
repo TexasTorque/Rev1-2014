@@ -25,7 +25,7 @@ public class AutonomousRearIntake extends AutonomousCommand {
             startTime = Timer.getFPGATimestamp();
             firstCycle = false;
         }
-        Hashtable autonOutputs = new Hashtable();
+        Hashtable<String, Boolean> autonOutputs = new Hashtable<String, Boolean>();
         
         autonOutputs.put("rearIn", Boolean.TRUE);
         

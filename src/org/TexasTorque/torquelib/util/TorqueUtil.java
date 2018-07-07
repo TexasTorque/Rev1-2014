@@ -1,4 +1,4 @@
-package org.TexasTorque.TorqueLib.util;
+package org.TexasTorque.torquelib.util;
 
 import java.util.Vector;
 
@@ -33,7 +33,7 @@ public class TorqueUtil
      */
     public static String[] split(String input, String delimiter)
     {
-        Vector node = new Vector();
+        Vector<String> node = new Vector<String>();
         int index = input.indexOf(delimiter);
         
         while (index >= 0)

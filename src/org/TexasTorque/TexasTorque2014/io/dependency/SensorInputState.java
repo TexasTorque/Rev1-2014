@@ -1,8 +1,9 @@
 package org.TexasTorque.TexasTorque2014.io.dependency;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.io.SensorInput;
-import org.TexasTorque.TorqueLib.util.Parameters;
+import org.TexasTorque.torquelib.util.Parameters;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SensorInputState {
 
@@ -70,7 +71,7 @@ public class SensorInputState {
         rearIntakeTiltVoltage = input.getRearIntakeTiltVoltage();
 
         //----- Gyro -----
-        gyroAngle = input.getGyroAngle();
+        gyroAngle = input.getAnalogGyroAngle();
 
         //----- Misc -----
         catapultLimitSwitch = input.getCatapultLimitSwitch();

@@ -1,25 +1,25 @@
 package org.TexasTorque.TexasTorque2014;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Watchdog;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.TexasTorque.TexasTorque2014.autonomous.AutonomousManager;
 import org.TexasTorque.TexasTorque2014.constants.Constants;
-import org.TexasTorque.TexasTorque2014.io.*;
+import org.TexasTorque.TexasTorque2014.io.DriverInput;
+import org.TexasTorque.TexasTorque2014.io.RobotOutput;
+import org.TexasTorque.TexasTorque2014.io.SensorInput;
 import org.TexasTorque.TexasTorque2014.subsystem.drivebase.Drivebase;
 import org.TexasTorque.TexasTorque2014.subsystem.manipulator.Manipulator;
-import org.TexasTorque.TorqueLib.component.CheesyVisionServer;
-import org.TexasTorque.TorqueLib.util.DashboardManager;
-import org.TexasTorque.TorqueLib.util.Parameters;
-import org.TexasTorque.TorqueLib.util.TorqueLogging;
+import org.TexasTorque.torquelib.component.CheesyVisionServer;
+import org.TexasTorque.torquelib.util.DashboardManager;
+import org.TexasTorque.torquelib.util.Parameters;
+import org.TexasTorque.torquelib.util.TorqueLogging;
+
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotBase extends IterativeRobot implements Runnable {
 
     
     Thread continuousThread;
-
-    Watchdog watchdog;
     Parameters params;
     TorqueLogging logging;
     DashboardManager dashboardManager;
@@ -40,9 +40,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
     double previousTime;
 
     public void robotInit() {
-        watchdog = getWatchdog();
-        watchdog.setEnabled(true);
-        watchdog.setExpiration(0.5);
 
         params = Parameters.getTeleopInstance();
 
@@ -91,7 +88,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
         previousTime = Timer.getFPGATimestamp();
 
         while (true) {
-            watchdog.feed();
             if (isAutonomous() && isEnabled()) {
                 autonomousContinuous();
                 Timer.delay(0.004);
@@ -109,7 +105,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void autonomousPeriodic() {
-        watchdog.feed();
 
         robotOutput.updateState();
         driverInput.updateState();
@@ -138,7 +133,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
     }
 
     public void teleopPeriodic() {
-        watchdog.feed();
 
         robotOutput.updateState();
         driverInput.updateState();
@@ -163,7 +157,6 @@ public class RobotBase extends IterativeRobot implements Runnable {
         sensorInput.updateState();
         robotOutput.runLights();
         pushToDashboard();
-        watchdog.feed();
     }
 
     public void disabledContinuous() {

@@ -1,4 +1,4 @@
-package org.TexasTorque.TorqueLib.component;
+package org.TexasTorque.torquelib.component;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
@@ -16,19 +16,14 @@ public class TorqueEncoder
     private double rate;
     private double acceleration;
     
-    public TorqueEncoder(int aSlot, int aChannel, int bSlot, int bChannel, boolean reverseDirection)
+    public TorqueEncoder(int aChannel,int bChannel, boolean reverseDirection)
     {
-        encoder = new Encoder(aSlot, aChannel, bSlot, bChannel, reverseDirection);
+        encoder = new Encoder(aChannel,bChannel, reverseDirection);
     }
     
-    public TorqueEncoder(int aSlot, int aChannel, int bSlot, int bChannel, boolean reverseDireciton, CounterBase.EncodingType encodingType)
+    public TorqueEncoder(int aChannel,int bChannel, boolean reverseDireciton, CounterBase.EncodingType encodingType)
     {
-        encoder = new Encoder(aSlot, aChannel, bSlot, bChannel, reverseDireciton, encodingType);
-    }
-    
-    public void start()
-    {
-        encoder.start();
+        encoder = new Encoder(aChannel,bChannel, reverseDireciton, encodingType);
     }
     
     public void reset()

@@ -1,4 +1,4 @@
-package org.TexasTorque.TorqueLib.controlLoop;
+package org.TexasTorque.torquelib.controlLoop;
 
 public/* abstract*/ class TorquePIDThread extends Thread
 {
@@ -149,10 +149,10 @@ public/* abstract*/ class TorquePIDThread extends Thread
     }
     
     
-    public void stop()
+    /*public void stop()
     {
         waiting = true;
-    }
+    }*/
     
     public void run()
     {

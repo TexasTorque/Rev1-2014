@@ -4,11 +4,11 @@ import java.util.Vector;
 
 public class AutonomousBuilder
 {
-    private Vector commands;
+    private Vector<AutonomousCommand> commands;
     
     public AutonomousBuilder()
     {
-        commands = new Vector();
+        commands = new Vector<AutonomousCommand>();
     }
     
     public void addCommand(AutonomousCommand cmd)

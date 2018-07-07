@@ -1,20 +1,19 @@
-package org.TexasTorque.TorqueLib.util;
+package org.TexasTorque.torquelib.util;
 
-import com.sun.squawk.io.BufferedReader;
-import com.sun.squawk.microedition.io.*;
-import edu.wpi.first.wpilibj.Watchdog;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
+
 import javax.microedition.io.*;
+import javax.microedition.io.file.FileConnection;
 
 public class Parameters {
 
     private static Parameters teleopInstance;
     private static Parameters autonInstance;
     private static Parameters visionInstance;
-    private Watchdog watchdog;
-    private Hashtable map;
+    private static Hashtable<Object,Object> map;
     private String fileName;
     private String filePath;
     private FileConnection fileConnection = null;
@@ -33,20 +32,18 @@ public class Parameters {
     }
 
     public Parameters(String fileNm) {
-        watchdog = Watchdog.getInstance();
-        map = new Hashtable();
+        map = new Hashtable<Object,Object>();
         filePath = "file:///ni-rt/startup/";
         fileName = fileNm;
     }
 
     public Parameters(String fileNm, String path) {
-        watchdog = Watchdog.getInstance();
-        map = new Hashtable();
+        map = new Hashtable<Object,Object>();
         filePath = path;
         fileName = fileNm;
     }
 
-    public void load() {
+	public void load() {
         try {
             clearList();
             fileConnection = (FileConnection) Connector.open(filePath + fileName);
@@ -55,7 +52,6 @@ public class Parameters {
                 String line;
                 int index;
                 while ((line = fileIO.readLine()) != null) {
-                    watchdog.feed();
                     if (!line.equals("")) {
                         map.put(line.substring(0, index = line.indexOf(" ")), line.substring(index + 1));
                     }
